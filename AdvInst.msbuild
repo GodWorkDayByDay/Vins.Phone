@@ -1,0 +1,24 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="advinst">
+
+  <PropertyGroup>
+   <ProgramFiles32 Condition="Exists('$(PROGRAMFILES) (x86)')">$(PROGRAMFILES) (x86)</ProgramFiles32>
+   <ProgramFiles32 Condition="$(ProgramFiles32) == ''">$(PROGRAMFILES)</ProgramFiles32>
+   <AiApp761CHS>&quot;C:\Program Files (x86)\Caphyon\Advanced Installer\bin\x86\AdvancedInstaller.com&quot;</AiApp761CHS>
+   <AiApp76>&quot;C:\Program Files (x86)\Caphyon\Advanced Installer 7.6\bin\x86\AdvancedInstaller.com&quot;</AiApp76>
+   <AiApp85>&quot;C:\Program Files (x86)\Caphyon\Advanced Installer 8.5\bin\x86\AdvancedInstaller.com&quot;</AiApp85>
+   <AiApp85x86>&quot;$(ProgramFiles32)\Caphyon\Advanced Installer 8.5\bin\x86\AdvancedInstaller.com&quot;</AiApp85x86>
+   <proj>&quot;AdvInst.aip&quot;</proj>
+   <AiApp>AdvancedInstaller.com</AiApp>
+   <para></para>
+   <NewProductCode>$([System.Guid]::NewGuid())</NewProductCode> 
+  </PropertyGroup>
+  
+   <ItemGroup>
+   </ItemGroup>
+   
+<Target Name="advinst">
+   <Exec Command="$(AiApp85x86) /edit AdvInst.aip /SetVersion $(InstVer)"/>
+   <Exec Command="$(AiApp85x86) /edit AdvInst.aip /SetProductCode -langid 1033 -guid {$(NewProductCode)}"/>
+   <Exec Command="$(AiApp85x86) /build AdvInst.aip"/>
+</Target>
+</Project>

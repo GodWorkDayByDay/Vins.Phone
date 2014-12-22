@@ -1,0 +1,20 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	xmlns:local="clr-namespace:ODM.Controls.MultiIndicatorDemos"
+	xmlns:hdc="http://schemas.hdcrd.com/xaml"
+	x:Class="ODM.Controls.MultiIndicatorDemos.MultiIndicatorDemoView"
+	d:DesignWidth="640" d:DesignHeight="480">
+	<UserControl.Resources>
+		<local:MultiIndicatorDemoViewModel x:Key="MultiIndicatorDemoViewModelDataSource" />
+	</UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot"
+          DataContext="{Binding Source={StaticResource MultiIndicatorDemoViewModelDataSource}}">
+        <hdc:ZoomImageViewerR2 BitmapSource="..\SampleStd_96DPI.png"
+                               x:Name="ZoomImageViewer"></hdc:ZoomImageViewerR2>
+    </Grid>
+</UserControl>

@@ -1,0 +1,47 @@
+﻿<InspectionSchema xmlns="clr-namespace:Hdc.Mv.Inspection;assembly=Hdc.Mv.Inspection"
+                  TestImageFilePath="ImageStore\2014-12-11\2014-12-11_04.38.56_WI0.SI0._f1adc3ba-3b77-4f55-85d9-5a099be2691e.tif"
+                  CircleSearchingEnable="True"
+                  InspectorName="Mil">
+  <InspectionSchema.BaselineOriginCircle> 
+     <CircleSearchingDefinition CenterX="5302" CenterY="6838" InnerRadius="128" OuterRadius="136"  Name="C1"
+                                LowThreshold="25" HighThreshold="255" CenterDiffer="6.0" RadiusDiffer="4.0" Ratio="0.15" CircleSearchingMethod="HoughWithFilter"/>
+  </InspectionSchema.BaselineOriginCircle> 
+  
+  <InspectionSchema.BaselineReferenceCircles> 
+     <CircleSearchingDefinition CenterX="5789" CenterY="7202" InnerRadius="128" OuterRadius="136" Name="C2"
+                                LowThreshold="25" HighThreshold="255" CenterDiffer="6.0" RadiusDiffer="4.0" Ratio="0.2" CircleSearchingMethod="HoughWithFilter" 
+								BaselineAngle="37.102" BaselineX="7.699" BaselineY="5.823"/>
+     <CircleSearchingDefinition CenterX="5635" CenterY="3670" InnerRadius="80" OuterRadius="88"  Name="C3"
+                                LowThreshold="0" HighThreshold="10" CenterDiffer="6.0" RadiusDiffer="4.0" Ratio="0.2" CircleSearchingMethod="HoughWithFilter" 
+								BaselineAngle="-83.711" BaselineX="5.595" BaselineY="-87.896"/>
+     <CircleSearchingDefinition CenterX="4135" CenterY="9970" InnerRadius="45" OuterRadius="51"  Name="C4"
+                                LowThreshold="0" HighThreshold="12" CenterDiffer="6.0" RadiusDiffer="4.0" Ratio="0.3" CircleSearchingMethod="HoughWithFilter" 
+								BaselineAngle="110.752" BaselineX="-18.936" BaselineY="49.976"/>
+     <CircleSearchingDefinition CenterX="2563" CenterY="3008" InnerRadius="40" OuterRadius="48"  Name="C5"
+                                LowThreshold="0" HighThreshold="10" CenterDiffer="6.0" RadiusDiffer="4.0" Ratio="0.2" CircleSearchingMethod="HoughWithFilter" 
+								BaselineAngle="-125.289" BaselineX="-43.554" BaselineY="-61.540"/>
+  </InspectionSchema.BaselineReferenceCircles> 
+  
+  <InspectionSchema.CircleSearchingDefinitions> 
+  <!-- 8270 -->
+  
+
+     <CircleSearchingDefinition CenterX="5302" CenterY="6838" InnerRadius="128" OuterRadius="136"  Name="C1"
+                                LowThreshold="25" HighThreshold="255" CenterDiffer="6.0" RadiusDiffer="4.0" Ratio="0.15" CircleSearchingMethod="HoughWithFilter"/>
+     <CircleSearchingDefinition CenterX="5789" CenterY="7202" InnerRadius="128" OuterRadius="136" Name="C2"
+                                LowThreshold="25" HighThreshold="255" CenterDiffer="6.0" RadiusDiffer="4.0" Ratio="0.2" CircleSearchingMethod="HoughWithFilter" 
+								BaselineAngle="37.102" BaselineX="7.699" BaselineY="5.823"/>
+     <CircleSearchingDefinition CenterX="5635" CenterY="3670" InnerRadius="80" OuterRadius="88"  Name="C3"
+                                LowThreshold="0" HighThreshold="10" CenterDiffer="6.0" RadiusDiffer="4.0" Ratio="0.2" CircleSearchingMethod="HoughWithFilter" 
+								BaselineAngle="-83.711" BaselineX="5.595" BaselineY="-87.896"/>
+     <CircleSearchingDefinition CenterX="4135" CenterY="9970" InnerRadius="45" OuterRadius="51"  Name="C4"
+                                LowThreshold="0" HighThreshold="12" CenterDiffer="6.0" RadiusDiffer="4.0" Ratio="0.3" CircleSearchingMethod="HoughWithFilter" 
+								BaselineAngle="110.752" BaselineX="-18.936" BaselineY="49.976"/>
+     <CircleSearchingDefinition CenterX="2563" CenterY="3008" InnerRadius="40" OuterRadius="48"  Name="C5"
+                                LowThreshold="0" HighThreshold="10" CenterDiffer="6.0" RadiusDiffer="4.0" Ratio="0.2" CircleSearchingMethod="HoughWithFilter" 
+								BaselineAngle="-125.289" BaselineX="-43.554" BaselineY="-61.540"/>
+	
+  </InspectionSchema.CircleSearchingDefinitions>
+  <InspectionSchema.EdgeSearchingDefinitions>
+  </InspectionSchema.EdgeSearchingDefinitions>
+</InspectionSchema>

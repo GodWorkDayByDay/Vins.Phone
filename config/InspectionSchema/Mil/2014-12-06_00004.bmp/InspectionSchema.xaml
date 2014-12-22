@@ -1,0 +1,18 @@
+﻿<InspectionSchema xmlns="clr-namespace:Hdc.Mv.Inspection;assembly=Hdc.Mv.Inspection"
+                  TestImageFilePath="D:\SVN\HDC.MV\images\2014-12-06_3, Photos\00004.bmp"
+                  CircleSearchingEnable="True"
+                  InspectorName="Mil">
+  <InspectionSchema.CircleSearchingDefinitions> 
+  
+  <!-- 8270 -->
+  
+    <CircleSearchingDefinition CenterX="3340" CenterY="4228" InnerRadius="85" OuterRadius="100" 
+    LowThreshold="0" HighThreshold="10" CenterDiffer="6.0" RadiusDiffer="4.0" Ratio="0.2" FilterEnable="True"/>
+	
+    <CircleSearchingDefinition CenterX="5159" CenterY="3020" InnerRadius="85" OuterRadius="100" 
+    LowThreshold="0" HighThreshold="10" CenterDiffer="6.0" RadiusDiffer="4.0" Ratio="0.2" FilterEnable="True"/>
+	
+  </InspectionSchema.CircleSearchingDefinitions>
+  <InspectionSchema.EdgeSearchingDefinitions>
+  </InspectionSchema.EdgeSearchingDefinitions>
+</InspectionSchema>

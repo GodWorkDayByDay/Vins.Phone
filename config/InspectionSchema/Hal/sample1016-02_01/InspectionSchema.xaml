@@ -1,0 +1,9 @@
+﻿<InspectionSchema xmlns="clr-namespace:Hdc.Mv.Inspection;assembly=Hdc.Mv.Inspection"
+                  TestImageFilePath="D:\@\Hdc.Mv\2014-12-04, Maoyue\images\sample1016-02_01.png"
+                  CircleSearchingEnable="True">
+  <InspectionSchema.CircleSearchingDefinitions>
+    <CircleSearchingDefinition CenterX="136" CenterY="139" InnerRadius="80" OuterRadius="120"/>
+  </InspectionSchema.CircleSearchingDefinitions>
+  <InspectionSchema.EdgeSearchingDefinitions>
+  </InspectionSchema.EdgeSearchingDefinitions>
+</InspectionSchema>

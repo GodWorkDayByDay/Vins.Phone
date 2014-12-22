@@ -1,0 +1,14 @@
+﻿<InspectionSchema xmlns="clr-namespace:Hdc.Mv.Inspection;assembly=Hdc.Mv.Inspection"
+                  InspectorName="Hal"
+                  TestImageFilePath="sample\2014-12-09_21.08.09.tif"
+                  EdgeSearchingEnable="True">
+  <InspectionSchema.CircleSearchingDefinitions>
+  </InspectionSchema.CircleSearchingDefinitions>
+  <InspectionSchema.EdgeSearchingDefinitions>
+    <EdgeSearchingDefinition StartX="2077" StartY="2490"  EndX="2009" EndY="2490" ROIWidth="50" LowThreshold="20" HighThreshold="40" FilterAlpha="6"/>
+    <EdgeSearchingDefinition StartX="2108" StartY="8859"  EndX="2038" EndY="8859" ROIWidth="50" LowThreshold="20" HighThreshold="40" FilterAlpha="6"/>
+    
+    <EdgeSearchingDefinition StartX="3617" StartY="10200"  EndX="3617" EndY="10300" ROIWidth="50" LowThreshold="20" HighThreshold="40" FilterAlpha="6"/>
+    <EdgeSearchingDefinition StartX="5665" StartY="10180"  EndX="5665" EndY="10280" ROIWidth="50" LowThreshold="20" HighThreshold="40" FilterAlpha="6"/>
+  </InspectionSchema.EdgeSearchingDefinitions>
+</InspectionSchema>

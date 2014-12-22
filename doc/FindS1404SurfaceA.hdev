@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.0" halcon_version="11.0.3.4" cs="123091156">
+<procedure name="main">
+<interface/>
+<body>
+<c></c>
+<l>*read_image(Image,'D:/@/Vins.Phone/RegionExtract/2014-12-19_19.05.27_LeftBottom.tif')</l>
+<l>*read_image(Image,'D:/@/Vins.Phone/RegionExtract/2014-12-19_19.05.27_TopLeft2.tif')</l>
+<l>*read_image(Image,'D:/@/Vins.Phone/RegionExtract/2014-12-19_19.05.27_Top.tif')</l>
+<l>*read_image(Image,'B:/RegionsExtract/2014-12-19_19.05.27_WI2.SI0._ffd512f4-9c92-4000-a325-4155847a0115.tif')</l>
+<l>*read_image(Image,'B:/RegionsExtract/2014-12-19_19.23.23.jpg')</l>
+<l>*read_image(Image,'B:/RegionsExtract/2014-12-19_19.23.23_Bottom_FullWidth.tif')</l>
+<c></c>
+<l>gen_empty_region(MaskRegions)</l>
+<l>gen_empty_region(FoundRegions)</l>
+<c></c>
+<l>read_image(Image,'D:/Projects/BYD/_Temp/2014-12-22/2014-12-19_19.03.01_WI1.SI0._784ae6b2-aaa5-4bf5-8d34-7750559e0133.jpg')</l>
+<c></c>
+<c></c>
+<l>FindS1404SurfaceA (Image, BinImage, 2)</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="FindS1404SurfaceA">
+<interface>
+<io>
+<par name="Image"/>
+</io>
+<oo>
+<par name="BinImage"/>
+</oo>
+<ic>
+<par name="DilationRadius"/>
+</ic>
+</interface>
+<body>
+<l>gen_empty_region(MaskRegions)</l>
+<l>gen_empty_region(FoundRegions)</l>
+<c></c>
+<c></c>
+<c>******* Top Left</c>
+<c>*** TL3</c>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2662, 766, 400, 36, 0, ['row','column'], [(766-30),(2662-50)], [(766+30),(2662+50)])</l>
+<l>union2(MaskRegion, MaskRegions,MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions,FoundRegions)</l>
+<c></c>
+<c>*** TL0</c>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2072, 1280, 36, 400, 0, ['row','column'], [(1280-50),(2072-30)], [(1280+50),(2072+30)])</l>
+<l>union2(MaskRegion, MaskRegions,MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions,FoundRegions)</l>
+<c></c>
+<c>*** TL1.5</c>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2202, 907, 100, 320, -45, ['row','column'], [(907-50),(2202-50)], [(907+50),(2202+50)])</l>
+<l>union2(MaskRegion, MaskRegions,MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions,FoundRegions)</l>
+<c></c>
+<c></c>
+<c>******* Top Right</c>
+<c>*** TR3</c>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6342, 740, 400, 40, 0, ['row','column'], [(740-30),(6342-50)], [(740+30),(6342+50)])</l>
+<l>union2(MaskRegion, MaskRegions,MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions,FoundRegions)</l>
+<c></c>
+<c>*** TR0</c>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6892, 1327, 40, 400, 0, ['row','column'], [(1327-50),(6892-30)], [(1327+50),(6892+30)])</l>
+<l>union2(MaskRegion, MaskRegions,MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions,FoundRegions)</l>
+<c></c>
+<c>*** TR1.5</c>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6752, 907, 80, 300, 45, ['row','column'], [(907-50),(6752-50)], [(907+50),(6752+50)])</l>
+<l>union2(MaskRegion, MaskRegions,MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions,FoundRegions)</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c>******* Bottom Left</c>
+<c>*** BL Vertical</c>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2114, 9600, 40, 400, 0, ['row','column'], [(9600-50),(2114-30)], [(9600+50),(2114+30)])</l>
+<l>union2(MaskRegion, MaskRegions,MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions,FoundRegions)</l>
+<c></c>
+<c>*** BL Horizontal</c>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2802, 10200, 400, 40, 0, ['row','column'], [(10200-30),(2802-50)], [(10200+30),(2802+50)])</l>
+<l>union2(MaskRegion, MaskRegions,MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions,FoundRegions)</l>
+<c></c>
+<c>*** BL Center</c>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2246, 10030, 100, 300, 45, ['row','column'], [(10040-50),(2256-50)], [(10040+50),(2256+50)])</l>
+<l>union2(MaskRegion, MaskRegions,MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions,FoundRegions)</l>
+<c></c>
+<c></c>
+<c></c>
+<c>******* Bottom Right</c>
+<c>*** BR Hori</c>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6352, 10140, 400, 45, 0, ['row','column'], [(10140-30),(6352-50)], [(10140+30),(6352+50)])</l>
+<l>union2(MaskRegion, MaskRegions,MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions,FoundRegions)</l>
+<c></c>
+<c>*** BR Vertical</c>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6912, 9600, 45, 400, 0, ['row','column'], [(9600-50),(6912-30)], [(9600+50),(6912+30)])</l>
+<l>union2(MaskRegion, MaskRegions,MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions,FoundRegions)</l>
+<c></c>
+<c>*** BR Center</c>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6802, 10030, 100, 300, -45, ['row','column'], [(10030-50),(6802-50)], [(10030+50),(6802+50)])</l>
+<l>union2(MaskRegion, MaskRegions,MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions,FoundRegions)</l>
+<c></c>
+<c></c>
+<c></c>
+<c>******* Left</c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 2071, 1839, 50, 512, 0, ['row','column'], [(1839-75),(2071-20)], [(1839+75),(2071+20)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2071, 1839, 50, 512, 0, ['column'], [(2071-20)], [(2071+20)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 2087, 3839, 50, 1536, 0, ['row','column'], [(3839-75),(2087-20)], [(3839+75),(2087+20)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2087, 3839, 55, 1536, 0, ['column'], [(2087-30)], [(2087+30)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 2090, 5839, 50, 1024, 0, ['row','column'], [(5839-75),(2090-20)], [(5839+75),(2090+20)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2090, 5839, 55, 1024, 0, ['column'], [(2090-30)], [(2090+30)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 2111, 7839, 50, 1536, 0, ['row','column'], [(7839-75),(2111-20)], [(7839+75),(2111+20)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2111, 7839, 55, 1536, 0, ['column'], [(2111-30)], [(2111+30)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 2123, 9439, 50, 300, 0, ['row','column'], [(9439-75),(2123-20)], [(9439+75),(2123+20)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2123, 9439, 55, 300, 0, ['column'], [(2123-30)], [(2123+30)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<c></c>
+<c></c>
+<c>**Right</c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 6897, 1839, 50, 512, 0, ['row','column'], [(1839-100),(6897-20)], [(1839+100),(6897+20)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6897, 1839, 55, 512, 0, ['column'], [(6897-30)], [(6897+30)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 6906, 3839, 50, 1536, 0, ['row','column'], [(3839-100),(6906-20)], [(3839+100),(6906+20)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6906, 3839, 55, 1536, 0, ['column'], [(6906-30)], [(6906+30)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 6918, 5839, 50, 1024, 0, ['row','column'], [(5839-100),(6918-20)], [(5839+100),(6918+20)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6918, 5839, 55, 1024, 0, ['column'], [(6918-30)], [(6918+30)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 6930, 7839, 50, 1536, 0, ['row','column'], [(7839-100),(6930-20)], [(7839+100),(6930+20)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6930, 7839, 55, 1536, 0, ['column'], [(6930-30)], [(6930+30)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 6942, 9439, 50, 300, 0, ['row','column'], [(9439-100),(6942-20)], [(9439+100),(6942+20)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6942, 9439, 55, 300, 0, ['column'], [(6942-30)], [(6942+30)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c>** Top</c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 5850, 732, 768, 50, 0, ['row','column'], [(732-20),(5850-100)], [(732+20),(5850+100)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 5850, 732, 768, 50, 0, ['row'], [(732-25)], [(732+25)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 4850, 736, 768, 50, 0, ['row','column'], [(736-20),(4850-100)], [(736+20),(4850+100)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 4850, 736, 768, 50, 0, ['row'], [(736-25)], [(736+25)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 3850, 740, 768, 50, 0, ['row','column'], [(740-20),(3850-100)], [(740+20),(3850+100)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 3850, 740, 768, 50, 0, ['row'], [(740-25)], [(740+25)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 3050, 745, 512, 50, 0, ['row','column'], [(745-20),(3050-100)], [(745+20),(3050+100)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 3050, 745, 512, 50, 0, ['row'], [(745-25)], [(745+25)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c>******* Bottom</c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 5850, 10191, 768, 50, 0, ['row','column'], [(10191-20),(5850-100)], [(10191+20),(5850+100)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 5850, 10191, 768, 50, 0, ['row'], [(10191-25)], [(10191+25)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 4850, 10195, 768, 50, 0, ['row','column'], [(10195-20),(4850-100)], [(10195+20),(4850+100)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 4850, 10195, 768, 50, 0, ['row'], [(10195-25)], [(10195+25)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 3850, 10201, 768, 50, 0, ['row','column'], [(10201-20),(3850-100)], [(10201+20),(3850+100)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 3850, 10201, 768, 50, 0, ['row'], [(10201-25)], [(10201+25)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c></c>
+<l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 3050, 10203, 512, 50, 0, ['row','column'], [(10203-20),(3050-100)], [(10203+20),(3050+100)])</l>
+<l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 3050, 10203, 512, 50, 0, ['row'], [(10203-25)], [(10203+25)])</l>
+<l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
+<l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<c>******* Get result</c>
+<c></c>
+<l>connection(FoundRegions, ConnectedFoundRegions)</l>
+<l>select_shape (ConnectedFoundRegions, ConnectedFoundRegions,'area', 'and', 300000, 9999999999)</l>
+<c></c>
+<c></c>
+<l>*closing_rectangle1(ConnectedFoundRegions,ClosedRegions,1000,1000)</l>
+<l>dilation_circle(ConnectedFoundRegions, DilationRegions, DilationRadius)</l>
+<l>*closing_circle (DilationRegions, DilationRegions, 500)</l>
+<l>*region_to_bin (RDs, BinImage2, 255, 0, Width, Height)</l>
+<l>closing_circle (DilationRegions, DilationRegions, 5)</l>
+<l>closing_rectangle1(DilationRegions,ClosedRegions,1000,1000)</l>
+<c></c>
+<l>get_image_size(Image, Width, Height)</l>
+<l>region_to_bin (ClosedRegions, BinImage, 255, 0, Width, Height)</l>
+<c></c>
+<l>reduce_domain(Image, ClosedRegions, ReducedImage)</l>
+<c></c>
+<l>*stop()</l>
+<l>return ()</l>
+</body>
+<docu id="FindS1404SurfaceA">
+<parameters>
+<parameter id="BinImage"/>
+<parameter id="DilationRadius"/>
+<parameter id="Image"/>
+</parameters>
+</docu>
+</procedure>
+<procedure name="FindGrowingRegion">
+<interface>
+<io>
+<par name="Image"/>
+</io>
+<oo>
+<par name="FoundRegion"/>
+<par name="MaskRegion"/>
+</oo>
+<ic>
+<par name="MaskCenterX"/>
+<par name="MaskCenterY"/>
+<par name="MaskWidth"/>
+<par name="MaskHeight"/>
+<par name="Angle"/>
+<par name="Features"/>
+<par name="Min"/>
+<par name="Max"/>
+</ic>
+</interface>
+<body>
+<l>gen_rectangle2 (MaskRegion, MaskCenterY, MaskCenterX, rad(Angle),MaskWidth, MaskHeight)</l>
+<l>reduce_domain(Image, MaskRegion, MaskImage)</l>
+<c></c>
+<l>*get_domain (MaskImage, RegionDomain)</l>
+<c></c>
+<c></c>
+<l>median_image (MaskImage, ImageMedian, 'circle', 6, 'continued')</l>
+<l>regiongrowing (ImageMedian, Regions, 1, 1, 1.2, 10000)</l>
+<l>fill_up_shape (Regions, RegionFillUp, 'area', 1, 100)</l>
+<l>*closing_circle (RegionFillUp, RegionClosing, 200)</l>
+<l>closing_circle (RegionFillUp, RegionClosing, 5)</l>
+<l>closing_rectangle1(RegionClosing,RegionClosing,200,200)</l>
+<l>* select_shape (RegionClosing, FoundRegion, 'area', 'and', Min, Max)</l>
+<l>select_shape (RegionClosing, FoundRegion, [Features], 'and', [Min], [Max])</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="FindGrowingRegion">
+<parameters>
+<parameter id="Angle"/>
+<parameter id="Features"/>
+<parameter id="FoundRegion"/>
+<parameter id="Image"/>
+<parameter id="MaskCenterX"/>
+<parameter id="MaskCenterY"/>
+<parameter id="MaskHeight"/>
+<parameter id="MaskRegion"/>
+<parameter id="MaskWidth"/>
+<parameter id="Max"/>
+<parameter id="Min"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>
