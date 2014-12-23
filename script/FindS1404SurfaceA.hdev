@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<hdevelop file_version="1.0" halcon_version="11.0.3.4" cs="123091156">
+<hdevelop file_version="1.0" halcon_version="11.0.3.4" cs="233838486">
 <procedure name="main">
 <interface/>
 <body>
@@ -14,7 +14,7 @@
 <l>gen_empty_region(MaskRegions)</l>
 <l>gen_empty_region(FoundRegions)</l>
 <c></c>
-<l>read_image(Image,'D:/Projects/BYD/_Temp/2014-12-22/2014-12-19_19.03.01_WI1.SI0._784ae6b2-aaa5-4bf5-8d34-7750559e0133.jpg')</l>
+<l>read_image(Image,'B:/New Folder/2014-12-22_22.31.11_WI0.SI0._42554a58-fbc3-4ba4-b9ef-441269a276f5.jpg')</l>
 <c></c>
 <c></c>
 <l>FindS1404SurfaceA (Image, BinImage, 2)</l>
@@ -39,6 +39,7 @@
 <body>
 <l>gen_empty_region(MaskRegions)</l>
 <l>gen_empty_region(FoundRegions)</l>
+<l>gen_empty_region(LineRegions)</l>
 <c></c>
 <c></c>
 <c>******* Top Left</c>
@@ -117,56 +118,76 @@
 <c>******* Left</c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 2071, 1839, 50, 512, 0, ['row','column'], [(1839-75),(2071-20)], [(1839+75),(2071+20)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2071, 1839, 50, 512, 0, ['column'], [(2071-20)], [(2071+20)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 2087, 3839, 50, 1536, 0, ['row','column'], [(3839-75),(2087-20)], [(3839+75),(2087+20)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2087, 3839, 55, 1536, 0, ['column'], [(2087-30)], [(2087+30)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 2090, 5839, 50, 1024, 0, ['row','column'], [(5839-75),(2090-20)], [(5839+75),(2090+20)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2090, 5839, 55, 1024, 0, ['column'], [(2090-30)], [(2090+30)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 2111, 7839, 50, 1536, 0, ['row','column'], [(7839-75),(2111-20)], [(7839+75),(2111+20)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2111, 7839, 55, 1536, 0, ['column'], [(2111-30)], [(2111+30)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 2123, 9439, 50, 300, 0, ['row','column'], [(9439-75),(2123-20)], [(9439+75),(2123+20)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 2123, 9439, 55, 300, 0, ['column'], [(2123-30)], [(2123+30)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <c></c>
 <c></c>
 <c>**Right</c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 6897, 1839, 50, 512, 0, ['row','column'], [(1839-100),(6897-20)], [(1839+100),(6897+20)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6897, 1839, 55, 512, 0, ['column'], [(6897-30)], [(6897+30)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 6906, 3839, 50, 1536, 0, ['row','column'], [(3839-100),(6906-20)], [(3839+100),(6906+20)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6906, 3839, 55, 1536, 0, ['column'], [(6906-30)], [(6906+30)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 6918, 5839, 50, 1024, 0, ['row','column'], [(5839-100),(6918-20)], [(5839+100),(6918+20)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6918, 5839, 55, 1024, 0, ['column'], [(6918-30)], [(6918+30)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 6930, 7839, 50, 1536, 0, ['row','column'], [(7839-100),(6930-20)], [(7839+100),(6930+20)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6930, 7839, 55, 1536, 0, ['column'], [(6930-30)], [(6930+30)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 6942, 9439, 50, 300, 0, ['row','column'], [(9439-100),(6942-20)], [(9439+100),(6942+20)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 6942, 9439, 55, 300, 0, ['column'], [(6942-30)], [(6942+30)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <c></c>
 <c></c>
@@ -174,23 +195,31 @@
 <c>** Top</c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 5850, 732, 768, 50, 0, ['row','column'], [(732-20),(5850-100)], [(732+20),(5850+100)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 5850, 732, 768, 50, 0, ['row'], [(732-25)], [(732+25)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 4850, 736, 768, 50, 0, ['row','column'], [(736-20),(4850-100)], [(736+20),(4850+100)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 4850, 736, 768, 50, 0, ['row'], [(736-25)], [(736+25)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 3850, 740, 768, 50, 0, ['row','column'], [(740-20),(3850-100)], [(740+20),(3850+100)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 3850, 740, 768, 50, 0, ['row'], [(740-25)], [(740+25)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 3050, 745, 512, 50, 0, ['row','column'], [(745-20),(3050-100)], [(745+20),(3050+100)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 3050, 745, 512, 50, 0, ['row'], [(745-25)], [(745+25)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <c></c>
 <c></c>
@@ -198,35 +227,49 @@
 <c>******* Bottom</c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 5850, 10191, 768, 50, 0, ['row','column'], [(10191-20),(5850-100)], [(10191+20),(5850+100)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 5850, 10191, 768, 50, 0, ['row'], [(10191-25)], [(10191+25)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 4850, 10195, 768, 50, 0, ['row','column'], [(10195-20),(4850-100)], [(10195+20),(4850+100)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 4850, 10195, 768, 50, 0, ['row'], [(10195-25)], [(10195+25)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 3850, 10201, 768, 50, 0, ['row','column'], [(10201-20),(3850-100)], [(10201+20),(3850+100)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 3850, 10201, 768, 50, 0, ['row'], [(10201-25)], [(10201+25)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
 <c></c>
 <l>*FindGrowingRegion (Image, FoundRegion, MaskRegion, 3050, 10203, 512, 50, 0, ['row','column'], [(10203-20),(3050-100)], [(10203+20),(3050+100)])</l>
 <l>FindGrowingRegion (Image, FoundRegion, MaskRegion, 3050, 10203, 512, 50, 0, ['row'], [(10203-25)], [(10203+25)])</l>
+<l>*dilation_circle(FoundRegion, FoundRegion, DilationRadius)</l>
 <l>union2(MaskRegion, MaskRegions, MaskRegions)</l>
 <l>union2(FoundRegion, FoundRegions, FoundRegions)</l>
+<l>union2(FoundRegion, LineRegions, LineRegions)</l>
+<c></c>
+<c></c>
+<c></c>
 <c>******* Get result</c>
 <c></c>
 <l>connection(FoundRegions, ConnectedFoundRegions)</l>
 <l>select_shape (ConnectedFoundRegions, ConnectedFoundRegions,'area', 'and', 300000, 9999999999)</l>
 <c></c>
+<l>intersection(ConnectedFoundRegions, LineRegions, LineRegions)</l>
+<l>dilation_circle(LineRegions, LineRegions, DilationRadius)</l>
+<l>union2(ConnectedFoundRegions, LineRegions, ConnectedFoundRegions)</l>
 <c></c>
 <l>*closing_rectangle1(ConnectedFoundRegions,ClosedRegions,1000,1000)</l>
-<l>dilation_circle(ConnectedFoundRegions, DilationRegions, DilationRadius)</l>
+<l>*dilation_circle(ConnectedFoundRegions, DilationRegions, DilationRadius)</l>
 <l>*closing_circle (DilationRegions, DilationRegions, 500)</l>
 <l>*region_to_bin (RDs, BinImage2, 255, 0, Width, Height)</l>
-<l>closing_circle (DilationRegions, DilationRegions, 5)</l>
-<l>closing_rectangle1(DilationRegions,ClosedRegions,1000,1000)</l>
+<l>*closing_circle (DilationRegions, DilationRegions, 50)</l>
+<l>closing_rectangle1(ConnectedFoundRegions,ClosedRegions,100,100)</l>
 <c></c>
 <l>get_image_size(Image, Width, Height)</l>
 <l>region_to_bin (ClosedRegions, BinImage, 255, 0, Width, Height)</l>

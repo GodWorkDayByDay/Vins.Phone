@@ -116,7 +116,7 @@ namespace Hdc.Mv.Inspection
 
         public DefectResultCollection SearchDefects(ImageInfo imageInfo, ImageInfo mask)
         {
-            throw new NotImplementedException();
+            return new DefectResultCollection();
         }
 
         public ImageInfo FindRegions(ImageInfo imageInfo)

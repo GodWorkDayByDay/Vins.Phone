@@ -194,6 +194,9 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
                                               if (x.EndsWith(".tif"))
                                                   return true;
 
+                                              if (x.EndsWith(".jpg"))
+                                                  return true;
+
                                               return false;
                                           }).ToList();
             }

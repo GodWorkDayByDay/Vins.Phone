@@ -213,6 +213,12 @@ namespace Hdc.Mv.Inspection
             var circlesResult = circlesInspector.Inspect(_imageInfo, _inspectionSchema);
             _inspectionResult.Circles = circlesResult.Circles;
 
+//            var ori = new CircleSearchingResult()
+//                      {
+//                          RelativeCircle = new Circle(0,0,10),
+//                          Circle = new Circle(_coordinate.GetOriginalVector(new Vector(0,0)).ToPoint(), 10),
+//                      };
+
             // edges
             var edgesInspector = GetOrAddInspector(_inspectionSchema.InspectorNameForEdges);
             var edgesResult = edgesInspector.Inspect(_imageInfo, _inspectionSchema);
@@ -220,13 +226,16 @@ namespace Hdc.Mv.Inspection
             _inspectionResult.DistanceBetweenPointsResults = edgesResult.DistanceBetweenPointsResults;
 
             // defects
-            var halInspector = GetOrAddInspector("Hal");
-            var maskImageInfo = halInspector.FindRegions();
+            if (_inspectionSchema.InspectorNameForDefects == "Mil")
+            {
+                var halInspector = GetOrAddInspector("Hal");
+                var maskImageInfo = halInspector.FindRegions();
 
-            var inspector = GetOrAddInspector(_inspectionSchema.InspectorNameForDefects);
-            var defects = inspector.SearchDefects(_imageInfo, maskImageInfo);
-            _inspectionResult.DefectResults = defects;
-
+                var inspector = GetOrAddInspector(_inspectionSchema.InspectorNameForDefects);
+                var defects = inspector.SearchDefects(_imageInfo, maskImageInfo);
+                _inspectionResult.DefectResults = defects;
+            }
+         
             return this;
         }
 

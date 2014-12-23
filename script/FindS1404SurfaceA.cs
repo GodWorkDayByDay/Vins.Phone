@@ -7,21 +7,68 @@ using HalconDotNet;
 public partial class HDevelopExport
 {
 #if !(NO_EXPORT_MAIN || NO_EXPORT_APP_MAIN)
-  public HDevelopExport()
-  {
-    // Default settings used in HDevelop 
-    HOperatorSet.SetSystem("width", 512);
-    HOperatorSet.SetSystem("height", 512);
-    action();
-  }
 #endif
 
-  public void HDevelopStop()
+  // Procedures 
+  public void FindGrowingRegion (HObject ho_Image, out HObject ho_FoundRegion, out HObject ho_MaskRegion, 
+      HTuple hv_MaskCenterX, HTuple hv_MaskCenterY, HTuple hv_MaskWidth, HTuple hv_MaskHeight, 
+      HTuple hv_Angle, HTuple hv_Features, HTuple hv_Min, HTuple hv_Max)
   {
+
+
+
+    // Stack for temporary objects 
+    HObject[] OTemp = new HObject[20];
+
+    // Local iconic variables 
+
+    HObject ho_MaskImage, ho_ImageMedian, ho_Regions;
+    HObject ho_RegionFillUp, ho_RegionClosing;
+
+    // Initialize local and output iconic variables 
+    HOperatorSet.GenEmptyObj(out ho_FoundRegion);
+    HOperatorSet.GenEmptyObj(out ho_MaskRegion);
+    HOperatorSet.GenEmptyObj(out ho_MaskImage);
+    HOperatorSet.GenEmptyObj(out ho_ImageMedian);
+    HOperatorSet.GenEmptyObj(out ho_Regions);
+    HOperatorSet.GenEmptyObj(out ho_RegionFillUp);
+    HOperatorSet.GenEmptyObj(out ho_RegionClosing);
+
+    ho_MaskRegion.Dispose();
+    HOperatorSet.GenRectangle2(out ho_MaskRegion, hv_MaskCenterY, hv_MaskCenterX, 
+        hv_Angle.TupleRad(), hv_MaskWidth, hv_MaskHeight);
+    ho_MaskImage.Dispose();
+    HOperatorSet.ReduceDomain(ho_Image, ho_MaskRegion, out ho_MaskImage);
+
+    //get_domain (MaskImage, RegionDomain)
+
+
+    ho_ImageMedian.Dispose();
+    HOperatorSet.MedianImage(ho_MaskImage, out ho_ImageMedian, "circle", 6, "continued");
+    ho_Regions.Dispose();
+    HOperatorSet.Regiongrowing(ho_ImageMedian, out ho_Regions, 1, 1, 1.2, 10000);
+    ho_RegionFillUp.Dispose();
+    HOperatorSet.FillUpShape(ho_Regions, out ho_RegionFillUp, "area", 1, 100);
+    //closing_circle (RegionFillUp, RegionClosing, 200)
+    ho_RegionClosing.Dispose();
+    HOperatorSet.ClosingCircle(ho_RegionFillUp, out ho_RegionClosing, 5);
+    HOperatorSet.ClosingRectangle1(ho_RegionClosing, out OTemp[0], 200, 200);
+    ho_RegionClosing.Dispose();
+    ho_RegionClosing = OTemp[0];
+    //select_shape (RegionClosing, FoundRegion, 'area', 'and', Min, Max)
+    ho_FoundRegion.Dispose();
+    HOperatorSet.SelectShape(ho_RegionClosing, out ho_FoundRegion, hv_Features, "and", 
+        hv_Min, hv_Max);
+
+    ho_MaskImage.Dispose();
+    ho_ImageMedian.Dispose();
+    ho_Regions.Dispose();
+    ho_RegionFillUp.Dispose();
+    ho_RegionClosing.Dispose();
+
+    return;
   }
 
-  // Procedures 
-  // Local procedures 
   public void FindS1404SurfaceA (HObject ho_Image, out HObject ho_BinImage, HTuple hv_DilationRadius)
   {
 
@@ -32,9 +79,9 @@ public partial class HDevelopExport
 
     // Local iconic variables 
 
-    HObject ho_MaskRegions, ho_FoundRegions, ho_FoundRegion;
-    HObject ho_MaskRegion, ho_ConnectedFoundRegions, ho_ClosedRegions;
-    HObject ho_DilationRegions, ho_ReducedImage;
+    HObject ho_MaskRegions, ho_FoundRegions, ho_LineRegions;
+    HObject ho_FoundRegion, ho_MaskRegion, ho_ConnectedFoundRegions;
+    HObject ho_ClosedRegions, ho_ReducedImage;
 
 
     // Local control variables 
@@ -45,17 +92,19 @@ public partial class HDevelopExport
     HOperatorSet.GenEmptyObj(out ho_BinImage);
     HOperatorSet.GenEmptyObj(out ho_MaskRegions);
     HOperatorSet.GenEmptyObj(out ho_FoundRegions);
+    HOperatorSet.GenEmptyObj(out ho_LineRegions);
     HOperatorSet.GenEmptyObj(out ho_FoundRegion);
     HOperatorSet.GenEmptyObj(out ho_MaskRegion);
     HOperatorSet.GenEmptyObj(out ho_ConnectedFoundRegions);
     HOperatorSet.GenEmptyObj(out ho_ClosedRegions);
-    HOperatorSet.GenEmptyObj(out ho_DilationRegions);
     HOperatorSet.GenEmptyObj(out ho_ReducedImage);
 
     ho_MaskRegions.Dispose();
     HOperatorSet.GenEmptyRegion(out ho_MaskRegions);
     ho_FoundRegions.Dispose();
     HOperatorSet.GenEmptyRegion(out ho_FoundRegions);
+    ho_LineRegions.Dispose();
+    HOperatorSet.GenEmptyRegion(out ho_LineRegions);
 
 
     //****** Top Left
@@ -233,60 +282,80 @@ public partial class HDevelopExport
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 2071, 1839, 
         50, 512, 0, "column", 2071-20, 2071+20);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 2087, 3839, 50, 1536, 0, ['row','column'], [(3839-75),(2087-20)], [(3839+75),(2087+20)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 2087, 3839, 
         55, 1536, 0, "column", 2087-30, 2087+30);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 2090, 5839, 50, 1024, 0, ['row','column'], [(5839-75),(2090-20)], [(5839+75),(2090+20)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 2090, 5839, 
         55, 1024, 0, "column", 2090-30, 2090+30);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 2111, 7839, 50, 1536, 0, ['row','column'], [(7839-75),(2111-20)], [(7839+75),(2111+20)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 2111, 7839, 
         55, 1536, 0, "column", 2111-30, 2111+30);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 2123, 9439, 50, 300, 0, ['row','column'], [(9439-75),(2123-20)], [(9439+75),(2123+20)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 2123, 9439, 
         55, 300, 0, "column", 2123-30, 2123+30);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
 
 
@@ -296,60 +365,80 @@ public partial class HDevelopExport
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 6897, 1839, 
         55, 512, 0, "column", 6897-30, 6897+30);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 6906, 3839, 50, 1536, 0, ['row','column'], [(3839-100),(6906-20)], [(3839+100),(6906+20)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 6906, 3839, 
         55, 1536, 0, "column", 6906-30, 6906+30);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 6918, 5839, 50, 1024, 0, ['row','column'], [(5839-100),(6918-20)], [(5839+100),(6918+20)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 6918, 5839, 
         55, 1024, 0, "column", 6918-30, 6918+30);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 6930, 7839, 50, 1536, 0, ['row','column'], [(7839-100),(6930-20)], [(7839+100),(6930+20)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 6930, 7839, 
         55, 1536, 0, "column", 6930-30, 6930+30);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 6942, 9439, 50, 300, 0, ['row','column'], [(9439-100),(6942-20)], [(9439+100),(6942+20)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 6942, 9439, 
         55, 300, 0, "column", 6942-30, 6942+30);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
 
 
@@ -360,48 +449,64 @@ public partial class HDevelopExport
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 5850, 732, 
         768, 50, 0, "row", 732-25, 732+25);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 4850, 736, 768, 50, 0, ['row','column'], [(736-20),(4850-100)], [(736+20),(4850+100)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 4850, 736, 
         768, 50, 0, "row", 736-25, 736+25);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 3850, 740, 768, 50, 0, ['row','column'], [(740-20),(3850-100)], [(740+20),(3850+100)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 3850, 740, 
         768, 50, 0, "row", 740-25, 740+25);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 3050, 745, 512, 50, 0, ['row','column'], [(745-20),(3050-100)], [(745+20),(3050+100)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 3050, 745, 
         512, 50, 0, "row", 745-25, 745+25);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
 
 
@@ -412,48 +517,67 @@ public partial class HDevelopExport
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 5850, 10191, 
         768, 50, 0, "row", 10191-25, 10191+25);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 4850, 10195, 768, 50, 0, ['row','column'], [(10195-20),(4850-100)], [(10195+20),(4850+100)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 4850, 10195, 
         768, 50, 0, "row", 10195-25, 10195+25);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 3850, 10201, 768, 50, 0, ['row','column'], [(10201-20),(3850-100)], [(10201+20),(3850+100)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 3850, 10201, 
         768, 50, 0, "row", 10201-25, 10201+25);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
 
     //FindGrowingRegion (Image, FoundRegion, MaskRegion, 3050, 10203, 512, 50, 0, ['row','column'], [(10203-20),(3050-100)], [(10203+20),(3050+100)])
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     FindGrowingRegion(ho_Image, out ho_FoundRegion, out ho_MaskRegion, 3050, 10203, 
         512, 50, 0, "row", 10203-25, 10203+25);
+    //dilation_circle (FoundRegion, FoundRegion, DilationRadius)
     HOperatorSet.Union2(ho_MaskRegion, ho_MaskRegions, out OTemp[0]);
     ho_MaskRegions.Dispose();
     ho_MaskRegions = OTemp[0];
     HOperatorSet.Union2(ho_FoundRegion, ho_FoundRegions, out OTemp[0]);
     ho_FoundRegions.Dispose();
     ho_FoundRegions = OTemp[0];
+    HOperatorSet.Union2(ho_FoundRegion, ho_LineRegions, out OTemp[0]);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
+
+
+
     //****** Get result
 
     ho_ConnectedFoundRegions.Dispose();
@@ -463,19 +587,25 @@ public partial class HDevelopExport
     ho_ConnectedFoundRegions.Dispose();
     ho_ConnectedFoundRegions = OTemp[0];
 
+    HOperatorSet.Intersection(ho_ConnectedFoundRegions, ho_LineRegions, out OTemp[0]
+        );
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
+    HOperatorSet.DilationCircle(ho_LineRegions, out OTemp[0], hv_DilationRadius);
+    ho_LineRegions.Dispose();
+    ho_LineRegions = OTemp[0];
+    HOperatorSet.Union2(ho_ConnectedFoundRegions, ho_LineRegions, out OTemp[0]);
+    ho_ConnectedFoundRegions.Dispose();
+    ho_ConnectedFoundRegions = OTemp[0];
 
     //closing_rectangle1 (ConnectedFoundRegions, ClosedRegions, 1000, 1000)
-    ho_DilationRegions.Dispose();
-    HOperatorSet.DilationCircle(ho_ConnectedFoundRegions, out ho_DilationRegions, 
-        hv_DilationRadius);
+    //dilation_circle (ConnectedFoundRegions, DilationRegions, DilationRadius)
     //closing_circle (DilationRegions, DilationRegions, 500)
     //region_to_bin (RDs, BinImage2, 255, 0, Width, Height)
-    HOperatorSet.ClosingCircle(ho_DilationRegions, out OTemp[0], 5);
-    ho_DilationRegions.Dispose();
-    ho_DilationRegions = OTemp[0];
+    //closing_circle (DilationRegions, DilationRegions, 50)
     ho_ClosedRegions.Dispose();
-    HOperatorSet.ClosingRectangle1(ho_DilationRegions, out ho_ClosedRegions, 1000, 
-        1000);
+    HOperatorSet.ClosingRectangle1(ho_ConnectedFoundRegions, out ho_ClosedRegions, 
+        100, 100);
 
     HOperatorSet.GetImageSize(ho_Image, out hv_Width, out hv_Height);
     ho_BinImage.Dispose();
@@ -488,119 +618,15 @@ public partial class HDevelopExport
     //stop ()
     ho_MaskRegions.Dispose();
     ho_FoundRegions.Dispose();
+    ho_LineRegions.Dispose();
     ho_FoundRegion.Dispose();
     ho_MaskRegion.Dispose();
     ho_ConnectedFoundRegions.Dispose();
     ho_ClosedRegions.Dispose();
-    ho_DilationRegions.Dispose();
     ho_ReducedImage.Dispose();
 
     return;
   }
-
-  public void FindGrowingRegion (HObject ho_Image, out HObject ho_FoundRegion, out HObject ho_MaskRegion, 
-      HTuple hv_MaskCenterX, HTuple hv_MaskCenterY, HTuple hv_MaskWidth, HTuple hv_MaskHeight, 
-      HTuple hv_Angle, HTuple hv_Features, HTuple hv_Min, HTuple hv_Max)
-  {
-
-
-
-    // Stack for temporary objects 
-    HObject[] OTemp = new HObject[20];
-
-    // Local iconic variables 
-
-    HObject ho_MaskImage, ho_ImageMedian, ho_Regions;
-    HObject ho_RegionFillUp, ho_RegionClosing;
-
-    // Initialize local and output iconic variables 
-    HOperatorSet.GenEmptyObj(out ho_FoundRegion);
-    HOperatorSet.GenEmptyObj(out ho_MaskRegion);
-    HOperatorSet.GenEmptyObj(out ho_MaskImage);
-    HOperatorSet.GenEmptyObj(out ho_ImageMedian);
-    HOperatorSet.GenEmptyObj(out ho_Regions);
-    HOperatorSet.GenEmptyObj(out ho_RegionFillUp);
-    HOperatorSet.GenEmptyObj(out ho_RegionClosing);
-
-    ho_MaskRegion.Dispose();
-    HOperatorSet.GenRectangle2(out ho_MaskRegion, hv_MaskCenterY, hv_MaskCenterX, 
-        hv_Angle.TupleRad(), hv_MaskWidth, hv_MaskHeight);
-    ho_MaskImage.Dispose();
-    HOperatorSet.ReduceDomain(ho_Image, ho_MaskRegion, out ho_MaskImage);
-
-    //get_domain (MaskImage, RegionDomain)
-
-
-    ho_ImageMedian.Dispose();
-    HOperatorSet.MedianImage(ho_MaskImage, out ho_ImageMedian, "circle", 6, "continued");
-    ho_Regions.Dispose();
-    HOperatorSet.Regiongrowing(ho_ImageMedian, out ho_Regions, 1, 1, 1.2, 10000);
-    ho_RegionFillUp.Dispose();
-    HOperatorSet.FillUpShape(ho_Regions, out ho_RegionFillUp, "area", 1, 100);
-    //closing_circle (RegionFillUp, RegionClosing, 200)
-    ho_RegionClosing.Dispose();
-    HOperatorSet.ClosingCircle(ho_RegionFillUp, out ho_RegionClosing, 5);
-    HOperatorSet.ClosingRectangle1(ho_RegionClosing, out OTemp[0], 200, 200);
-    ho_RegionClosing.Dispose();
-    ho_RegionClosing = OTemp[0];
-    //select_shape (RegionClosing, FoundRegion, 'area', 'and', Min, Max)
-    ho_FoundRegion.Dispose();
-    HOperatorSet.SelectShape(ho_RegionClosing, out ho_FoundRegion, hv_Features, "and", 
-        hv_Min, hv_Max);
-
-    ho_MaskImage.Dispose();
-    ho_ImageMedian.Dispose();
-    ho_Regions.Dispose();
-    ho_RegionFillUp.Dispose();
-    ho_RegionClosing.Dispose();
-
-    return;
-  }
-
-#if !NO_EXPORT_MAIN
-  // Main procedure 
-  private void action()
-  {
-
-    // Local iconic variables 
-
-    HObject ho_Image, ho_MaskRegions, ho_FoundRegions;
-    HObject ho_BinImage;
-
-    // Initialize local and output iconic variables 
-    HOperatorSet.GenEmptyObj(out ho_Image);
-    HOperatorSet.GenEmptyObj(out ho_MaskRegions);
-    HOperatorSet.GenEmptyObj(out ho_FoundRegions);
-    HOperatorSet.GenEmptyObj(out ho_BinImage);
-
-
-    //read_image (Image, 'D:/@/Vins.Phone/RegionExtract/2014-12-19_19.05.27_LeftBottom.tif')
-    //read_image (Image, 'D:/@/Vins.Phone/RegionExtract/2014-12-19_19.05.27_TopLeft2.tif')
-    //read_image (Image, 'D:/@/Vins.Phone/RegionExtract/2014-12-19_19.05.27_Top.tif')
-    //read_image (Image, 'B:/RegionsExtract/2014-12-19_19.05.27_WI2.SI0._ffd512f4-9c92-4000-a325-4155847a0115.tif')
-    //read_image (Image, 'B:/RegionsExtract/2014-12-19_19.23.23.jpg')
-    //read_image (Image, 'B:/RegionsExtract/2014-12-19_19.23.23_Bottom_FullWidth.tif')
-
-    ho_MaskRegions.Dispose();
-    HOperatorSet.GenEmptyRegion(out ho_MaskRegions);
-    ho_FoundRegions.Dispose();
-    HOperatorSet.GenEmptyRegion(out ho_FoundRegions);
-
-    ho_Image.Dispose();
-    HOperatorSet.ReadImage(out ho_Image, "D:/Projects/BYD/_Temp/2014-12-22/2014-12-19_19.03.01_WI1.SI0._784ae6b2-aaa5-4bf5-8d34-7750559e0133.jpg");
-
-
-    ho_BinImage.Dispose();
-    FindS1404SurfaceA(ho_Image, out ho_BinImage, 2);
-
-    ho_Image.Dispose();
-    ho_MaskRegions.Dispose();
-    ho_FoundRegions.Dispose();
-    ho_BinImage.Dispose();
-
-  }
-
-#endif
 
 
 }
