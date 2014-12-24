@@ -294,11 +294,11 @@ namespace ODM.Presentation.ViewModels.Inspection
                 .ObserveOnDispatcher()
                 .Subscribe(inspectInfo =>
                            {
-//                               if (_inspectionCounter % 1 == 0)
-//                               {
-//                                   DefectInfos.Clear();
+                               if (_inspectionCounter % 1 == 0)
+                               {
+                                   DefectInfos.Clear();
 //                                   MeasurementInfos.Clear();
-//                               }
+                               }
 
                                _inspectionCounter++;
 
@@ -323,9 +323,9 @@ namespace ODM.Presentation.ViewModels.Inspection
                                //                                   }    
                                //                               }
 
-                               if (MeasurementInfos.Count > 12)
+                               if (MeasurementInfos.Count > 10)
                                {
-                                   for (int i = 0; i < 6; i++)
+                                   for (int i = 0; i < 5; i++)
                                    {
                                        MeasurementInfos.RemoveAt(0);
                                    }

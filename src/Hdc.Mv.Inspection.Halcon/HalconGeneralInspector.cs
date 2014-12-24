@@ -41,17 +41,17 @@ namespace Hdc.Mv.Inspection
             inspectionResult.Circles = circles;
 
             {
-//                var esds = new List<EdgeSearchingDefinition>();
-//                foreach (var esd in inspectionSchema.EdgeSearchingDefinitions)
-//                {
-//                    var esd2 = esd.DeepClone();
-//                    esd2.Hal_SelectionMode = SelectionMode.First;
-//                    esd2.Hal_Transition = Transition.Negative;
-//                    esd2.Name = esd.Name + "b";
-//                    esd2.Hal_Threshold = 6;
-//                    esds.Add(esd);
-//                    esds.Add(esd2);
-//                }
+                //                var esds = new List<EdgeSearchingDefinition>();
+                //                foreach (var esd in inspectionSchema.EdgeSearchingDefinitions)
+                //                {
+                //                    var esd2 = esd.DeepClone();
+                //                    esd2.Hal_SelectionMode = SelectionMode.First;
+                //                    esd2.Hal_Transition = Transition.Negative;
+                //                    esd2.Name = esd.Name + "b";
+                //                    esd2.Hal_Threshold = 6;
+                //                    esds.Add(esd);
+                //                    esds.Add(esd2);
+                //                }
 
 
                 //                    var x1 = esr.EdgeLine.X1 + (esr2.EdgeLine.X1 - esr.EdgeLine.X1) / 3.0;
@@ -65,22 +65,33 @@ namespace Hdc.Mv.Inspection
                 {
                     var esr = edges[i];
                     var esr2 = edges[i + 1];
-                    var x1 = (esr.EdgeLine.X1 + esr2.EdgeLine.X1) / 2.0;
-                    var x2 = (esr.EdgeLine.X2 + esr2.EdgeLine.X2) / 2.0;
-                    var y1 = (esr.EdgeLine.Y1 + esr2.EdgeLine.Y1) / 2.0;
-                    var y2 = (esr.EdgeLine.Y2 + esr2.EdgeLine.Y2) / 2.0;
-                    esr.EdgeLine = new Line(x1, y1, x2, y2);
-                    finalEdges.Add(esr);
+
+                    var offset = esr.EdgeLine.GetCenterPoint() - esr2.EdgeLine.GetCenterPoint();
+                    var offset2 = esr.Definition.GetLine().GetCenterPoint() - esr2.EdgeLine.GetCenterPoint();
+
+                    if (offset.Length < 8 && offset2.Length < 8)
+                    {
+                        var x1 = (esr.EdgeLine.X1 + esr2.EdgeLine.X1) / 2.0;
+                        var x2 = (esr.EdgeLine.X2 + esr2.EdgeLine.X2) / 2.0;
+                        var y1 = (esr.EdgeLine.Y1 + esr2.EdgeLine.Y1) / 2.0;
+                        var y2 = (esr.EdgeLine.Y2 + esr2.EdgeLine.Y2) / 2.0;
+                        esr.EdgeLine = new Line(x1, y1, x2, y2);
+                        finalEdges.Add(esr);
+                    }
+                    else
+                    {
+                        finalEdges.Add(esr);
+                    }
                 }
 
                 inspectionResult.Edges = finalEdges;
 
-                
-                 
-//                var finalEdges = SearchEdges(inspectionSchema.EdgeSearchingDefinitions);
-//                inspectionResult.Edges = finalEdges;
-                 
-                
+
+
+//                                var finalEdges = SearchEdges(inspectionSchema.EdgeSearchingDefinitions);
+//                                inspectionResult.Edges = finalEdges;
+
+
 
                 var results = GetDistanceBetweenPointsResults2(finalEdges);
                 inspectionResult.DistanceBetweenPointsResults.AddRange(results);

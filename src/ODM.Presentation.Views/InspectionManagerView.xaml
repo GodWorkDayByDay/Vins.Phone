@@ -221,7 +221,7 @@
                 </Grid>
                 <Grid DockPanel.Dock="Top"
                       Background="Silver"
-                      Height="400"
+                      Height="500"
                       Margin="0,8,0,0">
                     <DockPanel DockPanel.Dock="Left"
                                Margin="{DynamicResource {x:Static hdc:HdcLayout.MarginLargeKey}}"

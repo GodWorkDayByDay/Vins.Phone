@@ -247,7 +247,7 @@ namespace Hdc.Mv.Inspection.Halcon
 
             HObject binImageObject;
 
-            HDevelopExport.FindS1404SurfaceA(orignalHImage, out binImageObject, 2);
+            HDevelopExport.FindS1404SurfaceA(orignalHImage, out binImageObject, 1);
 
             var hi = new HImage();
             HobjectToHimage(binImageObject, ref hi);
@@ -260,7 +260,7 @@ namespace Hdc.Mv.Inspection.Halcon
         {
             HObject binImageObject;
 
-            HDevelopExport.FindS1404SurfaceA(_hImage, out binImageObject, 2);
+            HDevelopExport.FindS1404SurfaceA(_hImage, out binImageObject, 1);
 
             var hi = new HImage();
             HobjectToHimage(binImageObject, ref hi);
