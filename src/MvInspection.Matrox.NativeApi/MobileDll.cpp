@@ -156,7 +156,7 @@ ImageInfo __stdcall GrabSingleFrame()
 	MdigProcess(g_Digital, g_SubImage, ChildCounts,M_SEQUENCE+M_COUNT(ChildCounts), M_DEFAULT, (MIL_DIG_HOOK_FUNCTION_PTR)ProcessingFunction, &g_UserHookData);
 	MdigProcess(g_Digital, g_SubImage, ChildCounts,M_STOP+M_WAIT, M_DEFAULT, (MIL_DIG_HOOK_FUNCTION_PTR )ProcessingFunction, &g_UserHookData);
 	MimFlip(g_GrabImage, g_GrabImage, M_FLIP_HORIZONTAL, M_DEFAULT);
-	MimFlip(g_GrabImage, g_GrabImage, M_FLIP_VERTICAL, M_DEFAULT);
+	MimFlip(g_GrabImage, g_GrabImage, M_FLIP_VERTICAL, M_DEFAULT); //20141225 gtc delete
 	if (g_bIsSaveBmp)
 	{
 		MbufCopy(g_GrabImage,g_SaveImage[g_loop1 % 3]);

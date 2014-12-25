@@ -32,8 +32,9 @@ namespace Hdc.Mv.Inspection.Halcon
 
             HImage hImage;
             hImage = HDevelopExportHelper.Calibrate(originalImageInfo, cameraParamsFileName, cameraPoseFileName);
-
-            var bsi = hImage.ToImageInfo();
+            var mirroredImage = hImage.MirrorImage("row");
+            mirroredImage = mirroredImage.MirrorImage("column");
+            var bsi = mirroredImage.ToImageInfo();
             return bsi;
         }
 
