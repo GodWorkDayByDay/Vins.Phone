@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 
+// ReSharper disable InconsistentNaming
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
@@ -30,6 +31,8 @@ namespace Hdc.Mv.Inspection
         public bool CropRectEnable { get; set; }
 
         public bool EdgeSearchingEnable { get; set; }
+        public bool EdgeSearching_EnhanceEdgeArea_Enable { get; set; }
+        public bool EdgeSearching_EnhanceEdgeArea_SaveCacheImageEnable { get; set; }
         public bool CircleSearchingEnable { get; set; }
 
         public Collection<CircleSearchingDefinition> CoordinateCircles { get; set; }
@@ -42,5 +45,8 @@ namespace Hdc.Mv.Inspection
         public bool CoordinateOriginOffsetEnable { get; set; }
         public double CoordinateOriginOffsetX { get; set; }
         public double CoordinateOriginOffsetY { get; set; }
+
+        
     }
 }
+// ReSharper restore InconsistentNaming

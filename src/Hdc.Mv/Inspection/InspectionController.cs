@@ -210,7 +210,8 @@ namespace Hdc.Mv.Inspection
         {
             // circles
             var circlesInspector = GetOrAddInspector(_inspectionSchema.InspectorNameForCircles);
-            var circlesResult = circlesInspector.Inspect(_imageInfo, _inspectionSchema);
+            circlesInspector.SetImageInfo(_imageInfo);
+            var circlesResult = circlesInspector.Inspect(_inspectionSchema);
             _inspectionResult.Circles = circlesResult.Circles;
 
 //            var ori = new CircleSearchingResult()
@@ -221,7 +222,7 @@ namespace Hdc.Mv.Inspection
 
             // edges
             var edgesInspector = GetOrAddInspector(_inspectionSchema.InspectorNameForEdges);
-            var edgesResult = edgesInspector.Inspect(_imageInfo, _inspectionSchema);
+            var edgesResult = edgesInspector.Inspect(_inspectionSchema);
             _inspectionResult.Edges = edgesResult.Edges;
             _inspectionResult.DistanceBetweenPointsResults = edgesResult.DistanceBetweenPointsResults;
 

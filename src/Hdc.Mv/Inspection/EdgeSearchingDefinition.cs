@@ -34,6 +34,14 @@ namespace Hdc.Mv.Inspection
         public SelectionMode Hal_SelectionMode { get; set; }
         public Transition Hal_Transition { get; set; }
 
+        public bool Hal_EnhanceEdgeArea_Enabled { get; set; }
+        public int Hal_EnhanceEdgeArea_EmpMaskWidth { get; set; }
+        public int Hal_EnhanceEdgeArea_EmpMaskHeight { get; set; }
+        public double Hal_EnhanceEdgeArea_EmpMaskFactor { get; set; }
+        public int Hal_EnhanceEdgeArea_MeanMaskWidth { get; set; }
+        public int Hal_EnhanceEdgeArea_MeanMaskHeight { get; set; }
+        public int Hal_EnhanceEdgeArea_IterationCount { get; set; }
+
         public EdgeSearchingDefinition()
         {
         }

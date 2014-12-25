@@ -287,7 +287,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                           StartPointY = ed.StartY,
                                           EndPointX = ed.EndX,
                                           EndPointY = ed.EndY,
-                                          RegionWidth = ed.ROIWidth * 2,
+                                          RegionWidth = ed.ROIWidth,
                                       };
                 RegionIndicators.Add(regionIndicator);
             }

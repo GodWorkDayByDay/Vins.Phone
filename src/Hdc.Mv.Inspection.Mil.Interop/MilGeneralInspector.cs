@@ -12,7 +12,9 @@ namespace Hdc.Mv.Inspection.Mil
 {
     public class MilGeneralInspector : IGeneralInspector
     {
-        public InspectionResult Inspect(ImageInfo imageInfo, InspectionSchema inspectionSchema)
+        private ImageInfo _imageInfo;
+
+        public InspectionResult Inspect(InspectionSchema inspectionSchema)
         {
             var inspectionResult = new InspectionResult();
 
@@ -27,7 +29,7 @@ namespace Hdc.Mv.Inspection.Mil
             // AddEdgeDefinitions(inspectionSchema);
 
             Debug.WriteLine("InteropApi.Calculate begin");
-            errorCode = InteropApi.Calculate(imageInfo);
+            errorCode = InteropApi.Calculate(_imageInfo);
             Debug.WriteLine("InteropApi.Calculate end");
 
             if (errorCode != 0)
@@ -43,6 +45,12 @@ namespace Hdc.Mv.Inspection.Mil
             Debug.WriteLine("MilGeneralInspector.Inspect out");
 
             return inspectionResult;
+        }
+
+        public InspectionResult Inspect(ImageInfo imageInfo, InspectionSchema inspectionSchema)
+        {
+            SetImageInfo(_imageInfo);
+            return Inspect(inspectionSchema);
         }
 
         public CircleSearchingResultCollection SearchCircles(ImageInfo imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions)
@@ -242,6 +250,11 @@ namespace Hdc.Mv.Inspection.Mil
         public void Init()
         {
             InteropApi.InitApp(8192, 12500);
+        }
+
+        public void SetImageInfo(ImageInfo imageInfo)
+        {
+            _imageInfo = imageInfo;
         }
 
         public void Init(int width, int height)

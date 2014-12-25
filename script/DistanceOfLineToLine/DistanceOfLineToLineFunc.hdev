@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.0" halcon_version="11.0.2.1" cs="530270097">
+<procedure name="main">
+<interface/>
+<body>
+<c>*Calculate the distance of two parallel line</c>
+<c>*=====================================</c>
+<c></c>
+<l>read_image (Image, 'DistanceOfLineToLineFunc_sample.tif')</l>
+<l>dev_close_window ()</l>
+<l>get_image_size (Image, Width, Height)</l>
+<l>dev_open_window_fit_image (Image, 0, 0, -1, -1, WindowHandle)</l>
+<l>dev_display (Image)</l>
+<c>*init ROI</c>
+<l>draw_line (3600, Row1, Column1, Row2, Column2)</l>
+<l>LineStartPoint_Row := Row1</l>
+<l>LineStartPoint_Column := Column1</l>
+<l>LineEndPoint_Row := Row2</l>
+<l>LineEndPoint_Column := Column2</l>
+<l>RoiWidthLen := 50</l>
+<c>*first line</c>
+<l>ExtractEdgeLine (Image, LineStartPoint_Row, LineStartPoint_Column, LineEndPoint_Row, LineEndPoint_Column, \
+                 RoiWidthLen, \
+                 FirstLineStartPoint_Row, FirstLineStartPoint_Column, FirstLineEndPoint_Row, FirstLineEndPoint_Column)</l>
+<c></c>
+<l>disp_line (WindowHandle, FirstLineStartPoint_Row , FirstLineStartPoint_Column ,FirstLineEndPoint_Row ,FirstLineEndPoint_Column)</l>
+<l>if (|FirstLineStartPoint_Row|&gt;0)</l>
+<c>*init ROI</c>
+<l>draw_line (3600, Row1, Column1, Row2, Column2)</l>
+<l>LineStartPoint_Row := Row1</l>
+<l>LineStartPoint_Column := Column1</l>
+<l>LineEndPoint_Row := Row2</l>
+<l>LineEndPoint_Column := Column2</l>
+<l>RoiWidthLen := 50</l>
+<c>*second line</c>
+<l>ExtractEdgeLine (Image, LineStartPoint_Row, LineStartPoint_Column, LineEndPoint_Row, LineEndPoint_Column, \
+                 RoiWidthLen, \
+                 SecondLineStartPoint_Row, SecondLineStartPoint_Column, SecondLineEndPoint_Row, SecondLineEndPoint_Column)</l>
+<c></c>
+<l>disp_line (WindowHandle, SecondLineStartPoint_Row , SecondLineStartPoint_Column ,SecondLineEndPoint_Row ,SecondLineEndPoint_Column )</l>
+<l>if (|SecondLineStartPoint_Row|&gt;0)</l>
+<c>*=====================================</c>
+<c>*measure the distance</c>
+<c>*center point</c>
+<l>DistanceOfLineToLine (FirstLineStartPoint_Row, FirstLineStartPoint_Column, FirstLineEndPoint_Row, FirstLineEndPoint_Column, \
+                      SecondLineStartPoint_Row, SecondLineStartPoint_Column, SecondLineEndPoint_Row, SecondLineEndPoint_Column, \
+                      LineToLineDistance, \
+                      DistanceStartPoint_Row, DistanceStartPoint_Column, DistanceEndPoint_Row, DistanceEndPoint_Column, \
+                      DottedLinePoint_Row, DottedLinePoint_Column,\
+                      LineToLineAngle)</l>
+<c></c>
+<l>dev_set_color ('blue')</l>
+<l>disp_message (WindowHandle, 'the distance is:' + LineToLineDistance + ' pixels', 'window', 90, 30, 'black', 'false')</l>
+<l>disp_message (WindowHandle, 'the LineToLineAngle is:' + LineToLineAngle + ' degree', 'window',110, 30, 'black', 'false')</l>
+<l>*dev_display (SelectedContours)</l>
+<l>*stop()</l>
+<c></c>
+<c></c>
+<l>dev_set_color ('green')</l>
+<l>disp_line (WindowHandle, DistanceStartPoint_Row[0], DistanceStartPoint_Column[0], DistanceEndPoint_Row[0], DistanceEndPoint_Column[0])</l>
+<l>dev_set_color ('yellow')</l>
+<l>disp_line (WindowHandle, DottedLinePoint_Row[0],DottedLinePoint_Column[0], DistanceEndPoint_Row[0], DistanceEndPoint_Column[0] )</l>
+<l>endif</l>
+<l>endif</l>
+<l>stop()</l>
+<c></c>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="DistanceOfLineToLine">
+<interface>
+<ic>
+<par name="FirstLineStartPoint_Row"/>
+<par name="FirstLineStartPoint_Column"/>
+<par name="FirstLineEndPoint_Row"/>
+<par name="FirstLineEndPoint_Column"/>
+<par name="SecondLineStartPoint_Row"/>
+<par name="SecondLineStartPoint_Column"/>
+<par name="SecondLineEndPoint_Row"/>
+<par name="SecondLineEndPoint_Column"/>
+</ic>
+<oc>
+<par name="LineToLine_Distance"/>
+<par name="DistanceStartPoint_Row"/>
+<par name="DistanceStartPoint_Column"/>
+<par name="DistanceEndPoint_Row"/>
+<par name="DistanceEndPoint_Column"/>
+<par name="DottedLinePoint_Row"/>
+<par name="DottedLinePoint_Column"/>
+<par name="LineToLineAngle"/>
+</oc>
+</interface>
+<body>
+<c>*center point</c>
+<l>FirstLineCenterPoint_Row := 0.5*(FirstLineStartPoint_Row[0]+FirstLineEndPoint_Row[0])</l>
+<l>FirstLineCenterPoint_Column := 0.5*(FirstLineStartPoint_Column[0]+FirstLineEndPoint_Column[0])</l>
+<c></c>
+<l>projection_pl (FirstLineCenterPoint_Row[0], FirstLineCenterPoint_Column[0],\
+               SecondLineStartPoint_Row[0], SecondLineStartPoint_Column[0], SecondLineEndPoint_Row[0], SecondLineEndPoint_Column[0],\
+               MiddleOfFirstLineToSecondLineRowProj, MiddleOfFirstLineToSecondLineColProj)</l>
+<c></c>
+<l>distance_pp (FirstLineCenterPoint_Row[0], FirstLineCenterPoint_Column[0],\
+             MiddleOfFirstLineToSecondLineRowProj, MiddleOfFirstLineToSecondLineColProj, \
+             LineToLine_Distance)</l>
+<l>angle_ll (FirstLineStartPoint_Row[0], FirstLineStartPoint_Column[0], FirstLineEndPoint_Row[0], FirstLineEndPoint_Column[0],\
+          SecondLineStartPoint_Row[0], SecondLineStartPoint_Column[0], SecondLineEndPoint_Row[0], SecondLineEndPoint_Column[0],\
+          LineToLineAngle)</l>
+<l>DistanceStartPoint_Row:=FirstLineCenterPoint_Row</l>
+<l>DistanceStartPoint_Column:=FirstLineCenterPoint_Column</l>
+<l>DistanceEndPoint_Row:=MiddleOfFirstLineToSecondLineRowProj</l>
+<l>DistanceEndPoint_Column:=MiddleOfFirstLineToSecondLineColProj</l>
+<c></c>
+<l>if (SecondLineStartPoint_Column == SecondLineEndPoint_Column)</l>
+<l>    if (SecondLineStartPoint_Row&lt;SecondLineEndPoint_Row)</l>
+<l>        Max_Column := SecondLineEndPoint_Column</l>
+<l>        Max_Column_Row := SecondLineEndPoint_Row</l>
+<l>        Min_Column := SecondLineStartPoint_Column</l>
+<l>        Min_Column_Row := SecondLineStartPoint_Row</l>
+<l>    else</l>
+<l>        Max_Column := SecondLineStartPoint_Column</l>
+<l>        Max_Column_Row := SecondLineStartPoint_Row</l>
+<l>        Min_Column := SecondLineEndPoint_Column</l>
+<l>        Min_Column_Row := SecondLineEndPoint_Row</l>
+<l>    endif</l>
+<l>    if(MiddleOfFirstLineToSecondLineRowProj&lt;Min_Column_Row)</l>
+<l>        DottedLinePoint_Row := Min_Column_Row</l>
+<l>        DottedLinePoint_Column :=Min_Column</l>
+<l>    elseif(MiddleOfFirstLineToSecondLineRowProj&gt;Max_Column_Row)</l>
+<l>        DottedLinePoint_Row := Max_Column_Row</l>
+<l>        DottedLinePoint_Column :=Max_Column</l>
+<l>    else</l>
+<l>        DottedLinePoint_Row := MiddleOfFirstLineToSecondLineRowProj</l>
+<l>        DottedLinePoint_Column :=MiddleOfFirstLineToSecondLineColProj</l>
+<l>    endif</l>
+<l>else</l>
+<l>    if (SecondLineStartPoint_Column&lt;SecondLineEndPoint_Column)</l>
+<l>        Max_Column := SecondLineEndPoint_Column</l>
+<l>        Max_Column_Row := SecondLineEndPoint_Row</l>
+<l>        Min_Column := SecondLineStartPoint_Column</l>
+<l>        Min_Column_Row := SecondLineStartPoint_Row</l>
+<l>    else</l>
+<l>        Max_Column := SecondLineStartPoint_Column</l>
+<l>        Max_Column_Row := SecondLineStartPoint_Row</l>
+<l>        Min_Column := SecondLineEndPoint_Column</l>
+<l>        Min_Column_Row := SecondLineEndPoint_Row</l>
+<l>    endif</l>
+<l>    if(MiddleOfFirstLineToSecondLineColProj&lt;Min_Column)</l>
+<l>        DottedLinePoint_Row := Min_Column_Row</l>
+<l>        DottedLinePoint_Column :=Min_Column</l>
+<l>    elseif(MiddleOfFirstLineToSecondLineColProj&gt;Max_Column)</l>
+<l>        DottedLinePoint_Row := Max_Column_Row</l>
+<l>        DottedLinePoint_Column :=Max_Column</l>
+<l>    else</l>
+<l>        DottedLinePoint_Row := MiddleOfFirstLineToSecondLineRowProj</l>
+<l>        DottedLinePoint_Column :=MiddleOfFirstLineToSecondLineColProj</l>
+<l>    endif</l>
+<l>endif</l>
+<l>return ()</l>
+</body>
+<docu id="DistanceOfLineToLine">
+<parameters>
+<parameter id="DistanceEndPoint_Column"/>
+<parameter id="DistanceEndPoint_Row"/>
+<parameter id="DistanceStartPoint_Column"/>
+<parameter id="DistanceStartPoint_Row"/>
+<parameter id="DottedLinePoint_Column"/>
+<parameter id="DottedLinePoint_Row"/>
+<parameter id="FirstLineEndPoint_Column"/>
+<parameter id="FirstLineEndPoint_Row"/>
+<parameter id="FirstLineStartPoint_Column"/>
+<parameter id="FirstLineStartPoint_Row"/>
+<parameter id="LineToLineAngle"/>
+<parameter id="LineToLine_Distance"/>
+<parameter id="SecondLineEndPoint_Column"/>
+<parameter id="SecondLineEndPoint_Row"/>
+<parameter id="SecondLineStartPoint_Column"/>
+<parameter id="SecondLineStartPoint_Row"/>
+</parameters>
+</docu>
+</procedure>
+<procedure name="ExtractEdgeLine">
+<interface>
+<io>
+<par name="InputImage"/>
+</io>
+<ic>
+<par name="LineStartPoint_Row"/>
+<par name="LineStartPoint_Column"/>
+<par name="LineEndPoint_Row"/>
+<par name="LineEndPoint_Column"/>
+<par name="RoiWidthLen"/>
+</ic>
+<oc>
+<par name="EdgeLineStartPoint_Row"/>
+<par name="EdgeLineStartPoint_Column"/>
+<par name="EdgeLineEndPoint_Row"/>
+<par name="EdgeLineEndPoint_Column"/>
+</oc>
+</interface>
+<body>
+<c>* </c>
+<c>* init</c>
+<l>FilterAlpha := 6</l>
+<c>* Measure 01: Convert coordinates to rectangle2 type</c>
+<l>TmpCtrl_Row := 0.5*(LineStartPoint_Row+LineEndPoint_Row)</l>
+<l>TmpCtrl_Column := 0.5*(LineStartPoint_Column+LineEndPoint_Column)</l>
+<l>TmpCtrl_Dr := LineStartPoint_Row-LineEndPoint_Row</l>
+<l>TmpCtrl_Dc := LineEndPoint_Column-LineStartPoint_Column</l>
+<l>TmpCtrl_Phi := atan2(TmpCtrl_Dr, TmpCtrl_Dc)</l>
+<l>TmpCtrl_Len1 := 0.5*sqrt(TmpCtrl_Dr*TmpCtrl_Dr + TmpCtrl_Dc*TmpCtrl_Dc)</l>
+<l>TmpCtrl_Len2 := RoiWidthLen</l>
+<l>gen_rectangle2 (Rectangle, TmpCtrl_Row, TmpCtrl_Column, TmpCtrl_Phi, TmpCtrl_Len1, TmpCtrl_Len2)</l>
+<l>reduce_domain (InputImage, Rectangle, ImageReduced)</l>
+<l>edges_sub_pix (ImageReduced, Edges, 'canny', FilterAlpha, 20, 40)</l>
+<l>*dev_clear_window ()</l>
+<l>*dev_display (ImageReduced)</l>
+<c>* 分割边缘</c>
+<l>union_collinear_contours_xld (Edges, UnionContours, 33, 1, 2, 0.1, 'attr_keep')</l>
+<l>union_adjacent_contours_xld (UnionContours, UnionContours1, 33, 8, 'attr_keep')</l>
+<l>segment_contours_xld (UnionContours1, LineSegments, 'lines', 9, 22, 22)</l>
+<c>* 选择想要的轮廓</c>
+<l>select_contours_xld (LineSegments, firstline, 'contour_length', RoiWidthLen/2, 99999, RoiWidthLen/2, 99999)</l>
+<c>* 对直线进行拟合</c>
+<l>fit_line_contour_xld (firstline, 'tukey', -1, 1, 5, 3, EdgeLineStartPoint_Row, EdgeLineStartPoint_Column, EdgeLineEndPoint_Row, EdgeLineEndPoint_Column, Nr, Nc, Dist)</l>
+<l>gen_region_line (firstline, EdgeLineStartPoint_Row, EdgeLineStartPoint_Column, EdgeLineEndPoint_Row, EdgeLineEndPoint_Column)</l>
+<c>* </c>
+<l>return ()</l>
+</body>
+<docu id="ExtractEdgeLine">
+<parameters>
+<parameter id="EdgeLineEndPoint_Column"/>
+<parameter id="EdgeLineEndPoint_Row"/>
+<parameter id="EdgeLineStartPoint_Column"/>
+<parameter id="EdgeLineStartPoint_Row"/>
+<parameter id="InputImage"/>
+<parameter id="LineEndPoint_Column"/>
+<parameter id="LineEndPoint_Row"/>
+<parameter id="LineStartPoint_Column"/>
+<parameter id="LineStartPoint_Row"/>
+<parameter id="RoiWidthLen"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

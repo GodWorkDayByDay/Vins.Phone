@@ -13,7 +13,7 @@ public partial class HDevelopExport
     }
 
     // Local procedures 
-    public void RakeEdgeLine(HObject ho_Image, HTuple hv_Elements, HTuple hv_DetectHeight,
+    public void RakeEdgeLine(HImage ho_Image, HTuple hv_Elements, HTuple hv_DetectHeight,
                              HTuple hv_DetectWidth, HTuple hv_Sigma, HTuple hv_Threshold,
                              HTuple hv_Transition,
                              HTuple hv_Select, HTuple hv_Row1, HTuple hv_Column1, HTuple hv_Row2,

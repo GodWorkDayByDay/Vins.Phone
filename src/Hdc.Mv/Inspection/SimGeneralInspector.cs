@@ -8,12 +8,24 @@ namespace Hdc.Mv.Inspection
 {
     public class SimGeneralInspector : IGeneralInspector
     {
+        private ImageInfo _imageInfo;
+
         public void Dispose()
         {
         }
 
         public void Init()
         {
+        }
+
+        public void SetImageInfo(ImageInfo imageInfo)
+        {
+            _imageInfo = imageInfo;
+        }
+
+        public InspectionResult Inspect(InspectionSchema inspectionSchema)
+        {
+            return Inspect(_imageInfo, inspectionSchema);
         }
 
         public InspectionResult Inspect(ImageInfo imageInfo, InspectionSchema inspectionSchema)

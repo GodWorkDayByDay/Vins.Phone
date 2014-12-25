@@ -9,6 +9,10 @@ namespace Hdc.Mv.Inspection
     {
         void Init();
 
+        void SetImageInfo(ImageInfo imageInfo);
+
+        InspectionResult Inspect(InspectionSchema inspectionSchema);
+
         InspectionResult Inspect(ImageInfo imageInfo, InspectionSchema inspectionSchema);
 
         CircleSearchingResultCollection SearchCircles(ImageInfo imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions);

@@ -37,6 +37,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\HalconDotNet\hdevenginedotnet.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,6 +51,7 @@
     <Compile Include="CropImage.cs" />
     <Compile Include="Exports\Calibrate.cs" />
     <Compile Include="Exports\DistanceOfLineToLineFunc.cs" />
+    <Compile Include="Exports\EnhanceEdgeArea.cs" />
     <Compile Include="Exports\ExtractCircleFunc.cs" />
     <Compile Include="Exports\ExtractEdgeLineFunc.cs" />
     <Compile Include="Exports\FindS1404SurfaceA.cs" />
