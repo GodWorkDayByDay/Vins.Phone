@@ -3,29 +3,76 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Windows;
 using HalconDotNet;
+using Hdc.Diagnostics;
 using Hdc.Mv.Inspection.Halcon;
+using Hdc.Windows.Media.Imaging;
 
 namespace Hdc.Mv.Inspection.Halcon
 {
-    public class HDevelopExportHelper: IDisposable
+    public class HDevelopExportHelper : IDisposable
     {
         private readonly HImage _hImage;
         private readonly HImage _equHistoImage;
+        private readonly HImage _horizontalMeanImage;
+        private readonly HImage _verticalMeanImage;
+        private readonly HImage _emphasizeHorizontalMeanImage;
+        private readonly HImage _emphasizeVerticalMeanImage;
         private HImage _hImageCache;
 
         private static readonly HDevelopExport HDevelopExport = new HDevelopExport();
+        private HImage _borderImage;
+
+        public bool SaveCacheImages { get; set; }
 
         public HDevelopExportHelper(HImage hImage)
         {
-            _hImage = hImage;
+            SaveCacheImages = false;
 
-            HObject imageEquHisto;
-            HOperatorSet.EquHistoImage(_hImage, out imageEquHisto);
-            _equHistoImage = new HImage(imageEquHisto);
+            var outerRegion = new HRegion(812.0, 612, 812.0 + 11200, 612 + 6050);
+
+            var innerRegion = new HRegion(1748.0, 1436, 1748.0 + 9000, 1436 + 4400);
+
+            var border = outerRegion.Difference(innerRegion);
+
+            _hImage = hImage.ReduceDomain(outerRegion);
+            _borderImage = hImage.ReduceDomain(border);
+
+            using (var sw = new NotifyStopwatch("EquHistoImage"))
+            {
+                _equHistoImage = _hImage.EquHistoImage();
+            }
+
+            using (var sw = new NotifyStopwatch("MeanImage 6,2"))
+            {
+                //_horizontalMeanImage = _hImage.MeanImage(6, 1);
+                _horizontalMeanImage = _borderImage.MeanSp(6, 3, 100, 200);
+                _emphasizeHorizontalMeanImage = _horizontalMeanImage.Emphasize(3, 7, 5);
+            }
+
+            using (var sw = new NotifyStopwatch("MeanImage 2,6"))
+            {
+                //_verticalMeanImage = _hImage.MeanImage(1, 6);
+                _verticalMeanImage = _borderImage.MeanSp(3, 6, 120, 200);
+                _emphasizeVerticalMeanImage = _verticalMeanImage.Emphasize(7, 3, 5);
+
+            }
+
+
+            if (SaveCacheImages)
+                _emphasizeHorizontalMeanImage.ToImageInfo().ToBitmapSource().SaveToJpeg("_EmphasizeHorizontalMeanImage.jpg");
+
+            if (SaveCacheImages)
+                _emphasizeVerticalMeanImage.ToImageInfo().ToBitmapSource().SaveToJpeg("_EmphasizeVerticalMeanImage.jpg");
+
+            _horizontalMeanImage.Dispose();
+            _verticalMeanImage.Dispose();
+//            _emphasizeHorizontalMeanImage.Dispose();
+//            _emphasizeVerticalMeanImage.Dispose();
+//            _borderImage.Dispose();
         }
 
         public HDevelopExportHelper(ImageInfo imageInfo)
-            : this((HImage) imageInfo.To8BppHImage())
+            : this((HImage)imageInfo.To8BppHImage())
         {
         }
 
@@ -34,12 +81,32 @@ namespace Hdc.Mv.Inspection.Halcon
             get { return _hImage; }
         }
 
+        public HImage HorizontalMeanImage
+        {
+            get { return _horizontalMeanImage; }
+        }
+
+        public HImage VerticalMeanImage
+        {
+            get { return _verticalMeanImage; }
+        }
+
+        public HImage EmphasizeHorizontalMeanImage
+        {
+            get { return _emphasizeHorizontalMeanImage; }
+        }
+
+        public HImage EmphasizeVerticalMeanImage
+        {
+            get { return _emphasizeVerticalMeanImage; }
+        }
+
         public HImage HImageCache
         {
             get { return _hImageCache; }
             set
             {
-                if (_hImageCache!=null)
+                if (_hImageCache != null)
                     _hImageCache.Dispose();
                 _hImageCache = value;
             }
@@ -145,7 +212,7 @@ namespace Hdc.Mv.Inspection.Halcon
         public bool ExtractCircle(double centerX, double centerY, double innerCircleRadius, double outerCircleRadius,
                                   out Circle foundCircle, out double roundness,
                                   int regionsCount,
-//                                  int regionHeight,
+            //                                  int regionHeight,
                                   int regionWidth,
                                   double sigma, double threshold, SelectionMode selectionMode, Transition transition,
                                   CircleDirect direct)
@@ -153,7 +220,8 @@ namespace Hdc.Mv.Inspection.Halcon
             try
             {
                 HTuple centerX2, centerY2, radius, roundness2;
-                HDevelopExport.SpokeCircle(_equHistoImage, centerY, centerX, outerCircleRadius, innerCircleRadius, regionsCount, regionWidth,
+                HDevelopExport.SpokeCircle(_equHistoImage, centerY, centerX, outerCircleRadius, innerCircleRadius,
+                    regionsCount, regionWidth,
                     sigma, threshold,
                     transition.ToHalconString(),
                     selectionMode.ToHalconString(),
@@ -161,7 +229,8 @@ namespace Hdc.Mv.Inspection.Halcon
                     out centerY2, out centerX2, out radius, out roundness2);
 
                 foundCircle = new Circle(centerX2, centerY2, radius);
-                roundness = roundness2;
+                //roundness = roundness2;
+                roundness = 0;
                 return true;
             }
             catch (HOperatorException e)
@@ -314,7 +383,8 @@ namespace Hdc.Mv.Inspection.Halcon
 
         public IList<Line> RakeEdgeLine(HImage hImage, double startX, double startY, double endX, double endY,
                                         int regionsCount, int regionHeight, int regionWidth,
-                                        double sigma, double threshold, Transition transition, SelectionMode selectionMode)
+                                        double sigma, double threshold, Transition transition,
+                                        SelectionMode selectionMode)
         {
             // Local iconic variables 
 
@@ -373,31 +443,41 @@ namespace Hdc.Mv.Inspection.Halcon
         }
 
         public HImage EnhanceEdgeArea(HImage hImage, Line line, double hv_RoiWidthLen, int hv_EmpMaskWidth,
-                                    int hv_EmpMaskHeight, double hv_EmpMaskFactor, int hv_MeanMaskWidth,
-                                    int hv_MeanMaskHeight,
-                                    int hv_IterationCount)
+                                      int hv_EmpMaskHeight, double hv_EmpMaskFactor, int hv_MeanMaskWidth,
+                                      int hv_MeanMaskHeight,
+                                      int hv_IterationCount,
+                                      int hv_MinGray, int hv_MaxGray, int hv_Grayval,
+                                      double hv_ClosingWidth, double hv_ClosingHeight, double hv_DilationRadius)
         {
-            return EnhanceEdgeArea(hImage, line.Y1, line.X1, line.Y2, line.X2, hv_RoiWidthLen, hv_EmpMaskWidth, hv_EmpMaskHeight,
-                hv_EmpMaskFactor, hv_MeanMaskWidth, hv_MeanMaskHeight, hv_IterationCount);
+            return EnhanceEdgeArea(hImage, line.Y1, line.X1, line.Y2, line.X2, hv_RoiWidthLen, hv_EmpMaskWidth,
+                hv_EmpMaskHeight,
+                hv_EmpMaskFactor, hv_MeanMaskWidth, hv_MeanMaskHeight, hv_IterationCount,
+                hv_MinGray, hv_MaxGray, hv_Grayval,
+                hv_ClosingWidth, hv_ClosingHeight, hv_DilationRadius);
         }
 
         public HImage EnhanceEdgeArea(HObject ho_InputImage,
-                                    double hv_LineStartPoint_Row, double hv_LineStartPoint_Column,
-                                    double hv_LineEndPoint_Row,
-                                    double hv_LineEndPoint_Column, double hv_RoiWidthLen, int hv_EmpMaskWidth,
-                                    int hv_EmpMaskHeight, double hv_EmpMaskFactor, int hv_MeanMaskWidth,
-                                    int hv_MeanMaskHeight,
-                                    int hv_IterationCount)
+                                      double hv_LineStartPoint_Row, double hv_LineStartPoint_Column,
+                                      double hv_LineEndPoint_Row,
+                                      double hv_LineEndPoint_Column, double hv_RoiWidthLen, int hv_EmpMaskWidth,
+                                      int hv_EmpMaskHeight, double hv_EmpMaskFactor, int hv_MeanMaskWidth,
+                                      int hv_MeanMaskHeight,
+                                      int hv_IterationCount,
+                                      int hv_MinGray, int hv_MaxGray, int hv_Grayval,
+                                      double hv_ClosingWidth, double hv_ClosingHeight, double hv_DilationRadius)
         {
             HObject ho_EnhancedImage = null;
             HDevelopExport.EnhanceEdgeArea(
-              ho_InputImage, out  ho_EnhancedImage,
-                                    hv_LineStartPoint_Row,  hv_LineStartPoint_Column,
-                                    hv_LineEndPoint_Row,
-                                    hv_LineEndPoint_Column,  hv_RoiWidthLen,  hv_EmpMaskWidth,
-                                    hv_EmpMaskHeight,  hv_EmpMaskFactor,  hv_MeanMaskWidth,
-                                    hv_MeanMaskHeight,
-                                    hv_IterationCount);
+                ho_InputImage, out ho_EnhancedImage,
+                hv_LineStartPoint_Row, hv_LineStartPoint_Column,
+                hv_LineEndPoint_Row,
+                hv_LineEndPoint_Column, hv_RoiWidthLen, hv_EmpMaskWidth,
+                hv_EmpMaskHeight, hv_EmpMaskFactor, hv_MeanMaskWidth,
+                hv_MeanMaskHeight,
+                hv_IterationCount,
+                hv_MinGray, hv_MaxGray, hv_Grayval,
+                hv_ClosingWidth, hv_ClosingHeight, hv_DilationRadius
+                );
             return new HImage(ho_EnhancedImage);
         }
 
@@ -412,6 +492,11 @@ namespace Hdc.Mv.Inspection.Halcon
         {
             if (_hImage != null) _hImage.Dispose();
             if (_hImageCache != null) _hImageCache.Dispose();
+            if (_horizontalMeanImage != null) _horizontalMeanImage.Dispose();
+            if (_verticalMeanImage != null) _verticalMeanImage.Dispose();
+            if (_emphasizeHorizontalMeanImage != null) _emphasizeHorizontalMeanImage.Dispose();
+            if (_emphasizeVerticalMeanImage != null) _emphasizeVerticalMeanImage.Dispose();
+            if (_borderImage != null) _borderImage.Dispose();
         }
     }
 }

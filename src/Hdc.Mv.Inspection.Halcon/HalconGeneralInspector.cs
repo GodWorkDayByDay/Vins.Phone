@@ -319,7 +319,7 @@ namespace Hdc.Mv.Inspection
         public EdgeSearchingResultCollection SearchEdges(EdgeSearchingDefinition edgeSearchingDefinition,
                                                          bool enhanceEdgeAreaEnabled)
         {
-            return SearchEdges(new[] {edgeSearchingDefinition}, enhanceEdgeAreaEnabled);
+            return SearchEdges(new[] { edgeSearchingDefinition }, enhanceEdgeAreaEnabled);
         }
 
         public EdgeSearchingResultCollection SearchEdges(IList<EdgeSearchingDefinition> edgeSearchingDefinitions,
@@ -364,35 +364,56 @@ namespace Hdc.Mv.Inspection
                     var sw = new NotifyStopwatch("EnhanceEdgeArea");
                     sw.Start();
 
-                    var enhImage = _hDevelopExportHelper.EnhanceEdgeArea(
-                        _hDevelopExportHelper.HImage,
-                        line: esd.Line,
-                        hv_RoiWidthLen: esd.ROIWidth,
-                        hv_EmpMaskWidth: esd.Hal_EnhanceEdgeArea_EmpMaskWidth,
-                        hv_EmpMaskHeight: esd.Hal_EnhanceEdgeArea_EmpMaskHeight,
-                        hv_EmpMaskFactor: esd.Hal_EnhanceEdgeArea_EmpMaskFactor,
-                        hv_MeanMaskWidth: esd.Hal_EnhanceEdgeArea_MeanMaskWidth,
-                        hv_MeanMaskHeight: esd.Hal_EnhanceEdgeArea_MeanMaskHeight,
-                        hv_IterationCount: esd.Hal_EnhanceEdgeArea_IterationCount
-                        );
+                    //                    var enhImage = _hDevelopExportHelper.EnhanceEdgeArea(
+                    //                        _hDevelopExportHelper.HImage,
+                    //                        line: esd.Line,
+                    //                        hv_RoiWidthLen: esd.ROIWidth,
+                    //                        hv_EmpMaskWidth: esd.Hal_EnhanceEdgeArea_EmpMaskWidth,
+                    //                        hv_EmpMaskHeight: esd.Hal_EnhanceEdgeArea_EmpMaskHeight,
+                    //                        hv_EmpMaskFactor: esd.Hal_EnhanceEdgeArea_EmpMaskFactor,
+                    //                        hv_MeanMaskWidth: esd.Hal_EnhanceEdgeArea_MeanMaskWidth,
+                    //                        hv_MeanMaskHeight: esd.Hal_EnhanceEdgeArea_MeanMaskHeight,
+                    //                        hv_IterationCount: esd.Hal_EnhanceEdgeArea_IterationCount,
+                    //                        hv_MinGray: esd.Hal_EnhanceEdgeArea_MinGray,
+                    //                        hv_MaxGray: esd.Hal_EnhanceEdgeArea_MaxGray,
+                    //                        hv_Grayval: esd.Hal_EnhanceEdgeArea_Grayval,
+                    //                        hv_ClosingWidth: esd.Hal_EnhanceEdgeArea_ClosingWidth,
+                    //                        hv_ClosingHeight: esd.Hal_EnhanceEdgeArea_ClosingHeight,
+                    //                        hv_DilationRadius: esd.Hal_EnhanceEdgeArea_DilationRadius
+                    //                        );
+                    //
+                    //                    sw.Stop();
+                    //                    sw.Dispose();
 
-                    sw.Stop();
-                    sw.Dispose();
-                    
+                    switch (esd.Hal_EnhanceEdgeArea_Orientation)
+                    {
+                        case Orientation.Horizontal:
+                            image = _hDevelopExportHelper.EmphasizeHorizontalMeanImage;
+                            break;
+                        default:
+                            image = _hDevelopExportHelper.EmphasizeVerticalMeanImage;
+                            break;
+                    }
 
-                    image = enhImage;
-//                    image = enhImage.Clone();
-//
-//                    if (mergedImage == null) mergedImage = image;
-//                    else
-//                    {
-//                        var merge = _hDevelopExportHelper.AddImagesWithFullDomain(mergedImage, image);
-//                        mergedImage.Dispose();
-//                        image.Dispose();
-//                        mergedImage = merge;
-//                    }
-//
-//                    enhImage.Dispose();
+                    //                    if (esd.Hal_EnhanceEdgeArea_SaveCacheImageEnabled)
+                    //                    {
+                    //                                            _hDevelopExportHelper.HImage.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_ori.jpg");
+                    //                        var fullDomain = enhImage.FullDomain();
+                    //                        fullDomain.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_enhance_" + esd.Name + ".jpg");
+                    //                    }
+
+                    //                    image = enhImage.Clone();
+                    //
+                    //                    if (mergedImage == null) mergedImage = image;
+                    //                    else
+                    //                    {
+                    //                        var merge = _hDevelopExportHelper.AddImagesWithFullDomain(mergedImage, image);
+                    //                        mergedImage.Dispose();
+                    //                        image.Dispose();
+                    //                        mergedImage = merge;
+                    //                    }
+                    //
+                    //                    enhImage.Dispose();
                 }
                 else
                 {

@@ -114,6 +114,7 @@
     <Compile Include="Inspection\InspectionInfo.cs" />
     <Compile Include="Inspection\InspectorExtensions.cs" />
     <Compile Include="Inspection\MeasurementInfo.cs" />
+    <Compile Include="Orientation.cs" />
     <Compile Include="Polarity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Coordination\RelativeCoordinate.cs" />

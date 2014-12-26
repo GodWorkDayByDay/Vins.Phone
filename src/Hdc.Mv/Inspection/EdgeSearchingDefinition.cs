@@ -35,12 +35,22 @@ namespace Hdc.Mv.Inspection
         public Transition Hal_Transition { get; set; }
 
         public bool Hal_EnhanceEdgeArea_Enabled { get; set; }
+        public Orientation Hal_EnhanceEdgeArea_Orientation { get; set; }
         public int Hal_EnhanceEdgeArea_EmpMaskWidth { get; set; }
         public int Hal_EnhanceEdgeArea_EmpMaskHeight { get; set; }
         public double Hal_EnhanceEdgeArea_EmpMaskFactor { get; set; }
         public int Hal_EnhanceEdgeArea_MeanMaskWidth { get; set; }
         public int Hal_EnhanceEdgeArea_MeanMaskHeight { get; set; }
         public int Hal_EnhanceEdgeArea_IterationCount { get; set; }
+
+        public int Hal_EnhanceEdgeArea_MinGray { get; set; }
+        public int Hal_EnhanceEdgeArea_MaxGray { get; set; }
+        public int Hal_EnhanceEdgeArea_Grayval { get; set; }
+        public double Hal_EnhanceEdgeArea_ClosingWidth { get; set; }
+        public double Hal_EnhanceEdgeArea_ClosingHeight { get; set; }
+        public double Hal_EnhanceEdgeArea_DilationRadius { get; set; }
+
+        public bool Hal_EnhanceEdgeArea_SaveCacheImageEnabled { get; set; }
 
         public EdgeSearchingDefinition()
         {

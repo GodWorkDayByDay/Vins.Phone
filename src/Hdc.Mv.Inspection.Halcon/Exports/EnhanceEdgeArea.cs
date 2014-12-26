@@ -14,14 +14,21 @@ public partial class HDevelopExport
       HTuple hv_LineStartPoint_Row, HTuple hv_LineStartPoint_Column, HTuple hv_LineEndPoint_Row, 
       HTuple hv_LineEndPoint_Column, HTuple hv_RoiWidthLen, HTuple hv_EmpMaskWidth, 
       HTuple hv_EmpMaskHeight, HTuple hv_EmpMaskFactor, HTuple hv_MeanMaskWidth, HTuple hv_MeanMaskHeight, 
-      HTuple hv_IterationCount)
+      HTuple hv_IterationCount, HTuple hv_MinGray, HTuple hv_MaxGray, HTuple hv_Grayval, 
+      HTuple hv_ClosingWidth, HTuple hv_ClosingHeight, HTuple hv_DilationRadius)
   {
 
 
 
+    // Stack for temporary objects 
+    HObject[] OTemp = new HObject[20];
+
     // Local iconic variables 
 
-    HObject ho_Rectangle, ho_RegionDilation, ho_ImageEmphasize=null;
+    HObject ho_Rectangle, ho_RegionDilation, ho_MeanImage=null;
+    HObject ho_ImageEmphasize=null, ho_Seg, ho_ConnectedRegions;
+    HObject ho_SelectedRegions, ho_RegionClosing, ho_RegionBorder;
+    HObject ho_RegionBorder2;
 
 
     // Local control variables 
@@ -35,7 +42,14 @@ public partial class HDevelopExport
     HOperatorSet.GenEmptyObj(out ho_EnhancedImage);
     HOperatorSet.GenEmptyObj(out ho_Rectangle);
     HOperatorSet.GenEmptyObj(out ho_RegionDilation);
+    HOperatorSet.GenEmptyObj(out ho_MeanImage);
     HOperatorSet.GenEmptyObj(out ho_ImageEmphasize);
+    HOperatorSet.GenEmptyObj(out ho_Seg);
+    HOperatorSet.GenEmptyObj(out ho_ConnectedRegions);
+    HOperatorSet.GenEmptyObj(out ho_SelectedRegions);
+    HOperatorSet.GenEmptyObj(out ho_RegionClosing);
+    HOperatorSet.GenEmptyObj(out ho_RegionBorder);
+    HOperatorSet.GenEmptyObj(out ho_RegionBorder2);
 
     //
     //init
@@ -64,17 +78,56 @@ public partial class HDevelopExport
     HTuple step_val17 = 1;
     for (hv_Index=1; hv_Index.Continue(end_val17, step_val17); hv_Index = hv_Index.TupleAdd(step_val17))
     {
+      ho_MeanImage.Dispose();
+      HOperatorSet.MeanImage(ho_EnhancedImage, out ho_MeanImage, hv_MeanMaskWidth, 
+          hv_MeanMaskHeight);
       ho_ImageEmphasize.Dispose();
-      HOperatorSet.Emphasize(ho_EnhancedImage, out ho_ImageEmphasize, hv_EmpMaskWidth, 
+      HOperatorSet.Emphasize(ho_MeanImage, out ho_ImageEmphasize, hv_EmpMaskWidth, 
           hv_EmpMaskHeight, hv_EmpMaskFactor);
       ho_EnhancedImage.Dispose();
-      HOperatorSet.MeanImage(ho_ImageEmphasize, out ho_EnhancedImage, hv_MeanMaskWidth, 
-          hv_MeanMaskHeight);
+      HOperatorSet.MeanImage(ho_ImageEmphasize, out ho_EnhancedImage, 2, 2);
+      //median_separate (ImageEmphasize, EnhancedImage, MeanMaskWidth, MeanMaskHeight, 'continued')
+
     }
+
+
+    ho_Seg.Dispose();
+    HOperatorSet.FastThreshold(ho_EnhancedImage, out ho_Seg, hv_MinGray, hv_MaxGray, 
+        150);
+    ho_ConnectedRegions.Dispose();
+    HOperatorSet.Connection(ho_Seg, out ho_ConnectedRegions);
+    ho_SelectedRegions.Dispose();
+    HOperatorSet.SelectShape(ho_ConnectedRegions, out ho_SelectedRegions, "area", 
+        "and", 1000, 9999999);
+    //opening_rectange1(SelectedRegions, RegionOpening, ClosingWidth, ClosingHeight)
+    ho_RegionClosing.Dispose();
+    HOperatorSet.ClosingRectangle1(ho_SelectedRegions, out ho_RegionClosing, hv_ClosingWidth, 
+        hv_ClosingHeight);
+
+    ho_RegionBorder.Dispose();
+    HOperatorSet.Boundary(ho_RegionClosing, out ho_RegionBorder, "inner");
+    ho_RegionDilation.Dispose();
+    HOperatorSet.DilationCircle(ho_RegionClosing, out ho_RegionDilation, hv_DilationRadius);
+    ho_RegionBorder2.Dispose();
+    HOperatorSet.Boundary(ho_RegionDilation, out ho_RegionBorder2, "inner");
+
+
+    HOperatorSet.PaintRegion(ho_RegionDilation, ho_EnhancedImage, out OTemp[0], hv_Grayval, 
+        "fill");
+    ho_EnhancedImage.Dispose();
+    ho_EnhancedImage = OTemp[0];
+    //region_to_bin (RegionDilation, EnhancedImage, 255, 0, 512, 512)
 
     ho_Rectangle.Dispose();
     ho_RegionDilation.Dispose();
+    ho_MeanImage.Dispose();
     ho_ImageEmphasize.Dispose();
+    ho_Seg.Dispose();
+    ho_ConnectedRegions.Dispose();
+    ho_SelectedRegions.Dispose();
+    ho_RegionClosing.Dispose();
+    ho_RegionBorder.Dispose();
+    ho_RegionBorder2.Dispose();
 
     return;
   }
