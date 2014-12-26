@@ -52,6 +52,7 @@
     <Compile Include="Exports\Calibrate.cs" />
     <Compile Include="Exports\DistanceOfLineToLineFunc.cs" />
     <Compile Include="Exports\EnhanceEdgeArea.cs" />
+    <Compile Include="Exports\EnhanceEdgeArea2.cs" />
     <Compile Include="Exports\ExtractCircleFunc.cs" />
     <Compile Include="Exports\ExtractEdgeLineFunc.cs" />
     <Compile Include="Exports\FindS1404SurfaceA.cs" />

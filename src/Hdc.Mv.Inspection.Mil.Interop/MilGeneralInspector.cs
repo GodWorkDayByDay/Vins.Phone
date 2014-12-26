@@ -53,7 +53,7 @@ namespace Hdc.Mv.Inspection.Mil
             return Inspect(inspectionSchema);
         }
 
-        public CircleSearchingResultCollection SearchCircles(ImageInfo imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions)
+        public CircleSearchingResultCollection SearchCircles(IList<CircleSearchingDefinition> circleSearchingDefinitions)
         {
             var inspectionResult = new CircleSearchingResultCollection();
 
@@ -66,7 +66,7 @@ namespace Hdc.Mv.Inspection.Mil
             AddCirclesDefinitions(circleSearchingDefinitions);
 
             Debug.WriteLine("InteropApi.Calculate begin");
-            errorCode = InteropApi.Calculate(imageInfo);
+            errorCode = InteropApi.Calculate(_imageInfo);
             Debug.WriteLine("InteropApi.Calculate end");
 
             if (errorCode != 0)
@@ -82,6 +82,12 @@ namespace Hdc.Mv.Inspection.Mil
             return inspectionResult;
         }
 
+        public CircleSearchingResultCollection SearchCircles(ImageInfo imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions)
+        {
+            SetImageInfo(imageInfo);
+            return SearchCircles(circleSearchingDefinitions);
+        }
+
         public EdgeSearchingResultCollection SearchEdges(ImageInfo imageInfo, IList<EdgeSearchingDefinition> edgeSearchingDefinitions)
         {
             throw new NotImplementedException();
@@ -90,7 +96,7 @@ namespace Hdc.Mv.Inspection.Mil
         public DefectResultCollection SearchDefects(ImageInfo imageInfo)
         {
             var drs = new DefectResultCollection();
-//            return drs;
+            //            return drs;
 
             InspectInfo inspectInfo;
 
@@ -124,7 +130,7 @@ namespace Hdc.Mv.Inspection.Mil
 
             int errorCode = 0;
 
-            errorCode = InteropApi.InspectCalculate(imageInfo, mask,  out inspectInfo);
+            errorCode = InteropApi.InspectCalculate(imageInfo, mask, out inspectInfo);
 
             if (errorCode != 0)
                 throw new MilInteropException("InteropApi.InspectCalculate", errorCode);

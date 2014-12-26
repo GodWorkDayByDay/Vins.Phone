@@ -38,7 +38,7 @@ namespace Hdc.Mv.Inspection
             return ir;
         }
 
-        public CircleSearchingResultCollection SearchCircles(ImageInfo imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions)
+        public CircleSearchingResultCollection SearchCircles(IList<CircleSearchingDefinition> circleSearchingDefinitions)
         {
             var searchingResult = new CircleSearchingResultCollection();
             Random random = new Random();
@@ -64,6 +64,11 @@ namespace Hdc.Mv.Inspection
             }
 
             return searchingResult;
+        }
+
+        public CircleSearchingResultCollection SearchCircles(ImageInfo imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions)
+        {
+            return SearchCircles(circleSearchingDefinitions);
         }
 
         public EdgeSearchingResultCollection SearchEdges(ImageInfo imageInfo, IList<EdgeSearchingDefinition> edgeSearchingDefinitions)

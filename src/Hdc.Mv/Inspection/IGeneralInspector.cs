@@ -15,6 +15,8 @@ namespace Hdc.Mv.Inspection
 
         InspectionResult Inspect(ImageInfo imageInfo, InspectionSchema inspectionSchema);
 
+        CircleSearchingResultCollection SearchCircles(IList<CircleSearchingDefinition> circleSearchingDefinitions);
+
         CircleSearchingResultCollection SearchCircles(ImageInfo imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions);
 
         EdgeSearchingResultCollection SearchEdges(ImageInfo imageInfo, IList<EdgeSearchingDefinition> edgeSearchingDefinitions);

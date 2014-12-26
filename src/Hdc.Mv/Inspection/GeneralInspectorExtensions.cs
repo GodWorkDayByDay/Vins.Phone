@@ -7,13 +7,13 @@ namespace Hdc.Mv.Inspection
 {
     public static class GeneralInspectorExtensions
     {
-        public static CircleSearchingResultCollection SearchCoordinateCircles(this IGeneralInspector inspector,
-                                                               ImageInfo imageInfo,
-                                                               InspectionSchema inspectionSchema)
-        {
-            var circles = inspector.SearchCircles(imageInfo, inspectionSchema.CoordinateCircles);
-            return circles;
-        }
+//        public static CircleSearchingResultCollection SearchCoordinateCircles(this IGeneralInspector inspector,
+//                                                               ImageInfo imageInfo,
+//                                                               InspectionSchema inspectionSchema)
+//        {
+//            var circles = inspector.SearchCircles(imageInfo, inspectionSchema.CoordinateCircles);
+//            return circles;
+//        }
 
 //        public static InspectionResult SearchCircles(this IGeneralInspector inspector,
 //                                                     ImageInfo imageInfo,

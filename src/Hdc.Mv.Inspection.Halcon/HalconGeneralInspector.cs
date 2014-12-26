@@ -50,51 +50,6 @@ namespace Hdc.Mv.Inspection
             inspectionResult.Circles = circles;
 
             {
-                //                var esds = new List<EdgeSearchingDefinition>();
-                //                foreach (var esd in inspectionSchema.EdgeSearchingDefinitions)
-                //                {
-                //                    var esd2 = esd.DeepClone();
-                //                    esd2.Hal_SelectionMode = SelectionMode.First;
-                //                    esd2.Hal_Transition = Transition.Negative;
-                //                    esd2.Name = esd.Name + "b";
-                //                    esd2.Hal_Threshold = 6;
-                //                    esds.Add(esd);
-                //                    esds.Add(esd2);
-                //                }
-
-
-                //                    var x1 = esr.EdgeLine.X1 + (esr2.EdgeLine.X1 - esr.EdgeLine.X1) / 3.0;
-                //                    var y1 = esr.EdgeLine.Y1 + (esr2.EdgeLine.Y1 - esr.EdgeLine.Y1) / 3.0;
-                //                    var x2 = esr.EdgeLine.X2 + (esr2.EdgeLine.X2 - esr.EdgeLine.X2) / 3.0;
-                //                    var y2 = esr.EdgeLine.Y2 + (esr2.EdgeLine.Y2 - esr.EdgeLine.Y2) / 3.0;
-
-                //                var edges = SearchEdges(inspectionSchema.EdgeSearchingDefinitions);
-                //                var finalEdges = new EdgeSearchingResultCollection();
-                //                for (int i = 0; i < edges.Count; i += 2)
-                //                {
-                //                    var esr = edges[i];
-                //                    var esr2 = edges[i + 1];
-                //
-                //                    var offset = esr.EdgeLine.GetCenterPoint() - esr2.EdgeLine.GetCenterPoint();
-                //                    var offset2 = esr.Definition.GetLine().GetCenterPoint() - esr2.EdgeLine.GetCenterPoint();
-                //
-                //                    if (offset.Length < 8 && offset2.Length < 8)
-                //                    {
-                //                        var x1 = (esr.EdgeLine.X1 + esr2.EdgeLine.X1) / 2.0;
-                //                        var x2 = (esr.EdgeLine.X2 + esr2.EdgeLine.X2) / 2.0;
-                //                        var y1 = (esr.EdgeLine.Y1 + esr2.EdgeLine.Y1) / 2.0;
-                //                        var y2 = (esr.EdgeLine.Y2 + esr2.EdgeLine.Y2) / 2.0;
-                //                        esr.EdgeLine = new Line(x1, y1, x2, y2);
-                //                        finalEdges.Add(esr);
-                //                    }
-                //                    else
-                //                    {
-                //                        finalEdges.Add(esr);
-                //                    }
-                //                }
-                //
-                //                inspectionResult.Edges = finalEdges;
-
 
                 var finalEdges = SearchEdges(inspectionSchema.EdgeSearchingDefinitions,
                     inspectionSchema.EdgeSearching_EnhanceEdgeArea_Enable);
@@ -240,7 +195,7 @@ namespace Hdc.Mv.Inspection
             return results;
         }
 
-        private CircleSearchingResultCollection SearchCircles(
+        public  CircleSearchingResultCollection SearchCircles(
             IList<CircleSearchingDefinition> circleSearchingDefinitions)
         {
             var result = new CircleSearchingResultCollection();
@@ -361,46 +316,44 @@ namespace Hdc.Mv.Inspection
 
                 if (esr.Definition.Hal_EnhanceEdgeArea_Enabled && enhanceEdgeAreaEnabled)
                 {
-                    var sw = new NotifyStopwatch("EnhanceEdgeArea");
+                    var sw = new NotifyStopwatch("EnhanceEdgeArea2");
                     sw.Start();
 
-                    //                    var enhImage = _hDevelopExportHelper.EnhanceEdgeArea(
-                    //                        _hDevelopExportHelper.HImage,
-                    //                        line: esd.Line,
-                    //                        hv_RoiWidthLen: esd.ROIWidth,
-                    //                        hv_EmpMaskWidth: esd.Hal_EnhanceEdgeArea_EmpMaskWidth,
-                    //                        hv_EmpMaskHeight: esd.Hal_EnhanceEdgeArea_EmpMaskHeight,
-                    //                        hv_EmpMaskFactor: esd.Hal_EnhanceEdgeArea_EmpMaskFactor,
-                    //                        hv_MeanMaskWidth: esd.Hal_EnhanceEdgeArea_MeanMaskWidth,
-                    //                        hv_MeanMaskHeight: esd.Hal_EnhanceEdgeArea_MeanMaskHeight,
-                    //                        hv_IterationCount: esd.Hal_EnhanceEdgeArea_IterationCount,
-                    //                        hv_MinGray: esd.Hal_EnhanceEdgeArea_MinGray,
-                    //                        hv_MaxGray: esd.Hal_EnhanceEdgeArea_MaxGray,
-                    //                        hv_Grayval: esd.Hal_EnhanceEdgeArea_Grayval,
-                    //                        hv_ClosingWidth: esd.Hal_EnhanceEdgeArea_ClosingWidth,
-                    //                        hv_ClosingHeight: esd.Hal_EnhanceEdgeArea_ClosingHeight,
-                    //                        hv_DilationRadius: esd.Hal_EnhanceEdgeArea_DilationRadius
-                    //                        );
-                    //
-                    //                    sw.Stop();
-                    //                    sw.Dispose();
+                    var enhImage = _hDevelopExportHelper.EnhanceEdgeArea2(
+                        _hDevelopExportHelper.HImage,
+                        line: esd.Line,
+                        hv_RoiWidthLen: esd.ROIWidth,
+                        hv_EmpMaskWidth: esd.Hal_EnhanceEdgeArea_EmpMaskWidth,
+                        hv_EmpMaskHeight: esd.Hal_EnhanceEdgeArea_EmpMaskHeight,
+                        hv_EmpMaskFactor: esd.Hal_EnhanceEdgeArea_EmpMaskFactor,
+                        hv_MeanMaskWidth: esd.Hal_EnhanceEdgeArea_MeanMaskWidth,
+                        hv_MeanMaskHeight: esd.Hal_EnhanceEdgeArea_MeanMaskHeight,
+                        hv_MinThresh: esd.Hal_EnhanceEdgeArea_MinThresh,
+                        hv_MaxThresh: esd.Hal_EnhanceEdgeArea_MaxThresh
+                        );
 
-                    switch (esd.Hal_EnhanceEdgeArea_Orientation)
-                    {
-                        case Orientation.Horizontal:
-                            image = _hDevelopExportHelper.EmphasizeHorizontalMeanImage;
-                            break;
-                        default:
-                            image = _hDevelopExportHelper.EmphasizeVerticalMeanImage;
-                            break;
-                    }
+                    image = enhImage;
 
-                    //                    if (esd.Hal_EnhanceEdgeArea_SaveCacheImageEnabled)
+                    sw.Stop();
+                    sw.Dispose();
+
+                    //                    switch (esd.Hal_EnhanceEdgeArea_Orientation)
                     //                    {
-                    //                                            _hDevelopExportHelper.HImage.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_ori.jpg");
-                    //                        var fullDomain = enhImage.FullDomain();
-                    //                        fullDomain.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_enhance_" + esd.Name + ".jpg");
+                    //                        case Orientation.Horizontal:
+                    //                            image = _hDevelopExportHelper.EmphasizeHorizontalMeanImage;
+                    //                            break;
+                    //                        default:
+                    //                            image = _hDevelopExportHelper.EmphasizeVerticalMeanImage;
+                    //                            break;
                     //                    }
+
+//                    if (esd.Hal_EnhanceEdgeArea_SaveCacheImageEnabled)
+                    if (true)
+                    {
+//                        _hDevelopExportHelper.HImage.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_ori.jpg");
+//                        var fullDomain = enhImage.FullDomain();
+//                        enhImage.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_enhance_" + esd.Name + ".jpg");
+                    }
 
                     //                    image = enhImage.Clone();
                     //
@@ -419,8 +372,8 @@ namespace Hdc.Mv.Inspection
                 {
                     image = _hDevelopExportHelper.HImage;
                 }
-                var sw2 = new NotifyStopwatch("RakeEdgeLine");
-                sw2.Start();
+//                var sw2 = new NotifyStopwatch("RakeEdgeLine");
+//                sw2.Start();
 
                 var lines = _hDevelopExportHelper.RakeEdgeLine(image,
                     line: esd.Line,
@@ -431,9 +384,9 @@ namespace Hdc.Mv.Inspection
                     threshold: esd.Hal_Threshold,
                     transition: esd.Hal_Transition,
                     selectionMode: esd.Hal_SelectionMode);
-
-                sw2.Stop();
-                sw2.Dispose();
+//
+//                sw2.Stop();
+//                sw2.Dispose();
 
                 var line = lines[0];
                 esr.EdgeLine = line;

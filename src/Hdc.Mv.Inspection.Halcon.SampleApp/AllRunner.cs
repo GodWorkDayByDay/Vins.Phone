@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Media;
+using Hdc.Diagnostics;
 using Hdc.Mv.Inspection.Halcon.BatchInspector;
 
 namespace Hdc.Mv.Inspection.Halcon.SampleApp
@@ -11,18 +12,23 @@ namespace Hdc.Mv.Inspection.Halcon.SampleApp
     {
         public override void Run(ImageInfo imageInfo, InspectionSchema schema)
         {
-            InspectionController
-                .StartInspect()
-                .SetInspectionSchema()
-                .SetImageInfo(imageInfo)
-                .CreateCoordinate()
-                .Inspect()
-                ;
+            using (var sw = new NotifyStopwatch("AllRunner.InspectionController.Inspect()"))
+            {
+                InspectionController
+                    .StartInspect()
+                    .SetInspectionSchema()
+                    .SetImageInfo(imageInfo)
+                    .CreateCoordinate()
+                    .Inspect()
+                    ;
+            }
 
-            MainWindow.Show_CircleSearchingDefinitions(InspectionController.InspectionResult.GetCoordinateCircleSearchingDefinitions());
+            MainWindow.Show_CircleSearchingDefinitions(
+                InspectionController.InspectionResult.GetCoordinateCircleSearchingDefinitions());
             MainWindow.Show_CircleSearchingResults(InspectionController.InspectionResult.CoordinateCircles);
 
-            MainWindow.Show_CircleSearchingDefinitions(InspectionController.InspectionResult.GetCircleSearchingDefinitions(), Brushes.DodgerBlue);
+            MainWindow.Show_CircleSearchingDefinitions(
+                InspectionController.InspectionResult.GetCircleSearchingDefinitions(), Brushes.DodgerBlue);
             MainWindow.Show_CircleSearchingResults(InspectionController.InspectionResult.Circles, Brushes.DodgerBlue);
 
             MainWindow.Show_EdgeSearchingDefinitions(InspectionController.InspectionResult.GetEdgeSearchingDefinitions());

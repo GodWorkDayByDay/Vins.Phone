@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<hdevelop file_version="1.0" halcon_version="11.0.3.4" cs="283189044">
+<hdevelop file_version="1.0" halcon_version="11.0.3.4" cs="933758111">
 <procedure name="main">
 <interface/>
 <body>
@@ -182,7 +182,7 @@
 </parameters>
 </docu>
 </procedure>
-<procedure name="EnhanceEdgeArea">
+<procedure name="EnhanceEdgeArea2">
 <interface>
 <io>
 <par name="InputImage"/>
@@ -201,13 +201,8 @@
 <par name="EmpMaskFactor"/>
 <par name="MeanMaskWidth"/>
 <par name="MeanMaskHeight"/>
-<par name="IterationCount"/>
-<par name="MinGray"/>
-<par name="MaxGray"/>
-<par name="Grayval"/>
-<par name="ClosingWidth"/>
-<par name="ClosingHeight"/>
-<par name="DilationRadius"/>
+<par name="MinThresh"/>
+<par name="MaxThresh"/>
 </ic>
 </interface>
 <body>
@@ -224,55 +219,31 @@
 <l>TmpCtrl_Len2 := RoiWidthLen</l>
 <l>gen_rectangle2 (Rectangle, TmpCtrl_Row, TmpCtrl_Column, TmpCtrl_Phi, TmpCtrl_Len1, TmpCtrl_Len2)</l>
 <c></c>
-<l>dilation_rectangle1(Rectangle, RegionDilation, 100, 100)</l>
+<l>dilation_rectangle1(Rectangle, RegionDilation, 50, 50)</l>
 <c></c>
 <l>reduce_domain (InputImage, RegionDilation, EnhancedImage)</l>
 <c></c>
-<l>  for Index := 1 to IterationCount by 1</l>
-<l>    mean_image(EnhancedImage, MeanImage, MeanMaskWidth, MeanMaskHeight)</l>
-<l>    emphasize (MeanImage, ImageEmphasize, EmpMaskWidth, EmpMaskHeight, EmpMaskFactor) </l>
-<l>    mean_image(ImageEmphasize, EnhancedImage, 2, 2)</l>
-<l>*    median_separate(ImageEmphasize, EnhancedImage, MeanMaskWidth, MeanMaskHeight, 'continued')</l>
-<c></c>
-<l>  endfor</l>
-<c>  </c>
-<c>  </c>
-<l>fast_threshold(EnhancedImage,Seg,MinGray,MaxGray, 150)</l>
-<l>connection(Seg, ConnectedRegions)</l>
-<l>select_shape(ConnectedRegions, SelectedRegions, 'area', 'and', 1000, 9999999)</l>
-<c>*opening_rectange1(SelectedRegions, RegionOpening, ClosingWidth, ClosingHeight)</c>
-<l>closing_rectangle1(SelectedRegions, RegionClosing, ClosingWidth, ClosingHeight)</l>
-<c></c>
-<l>boundary (RegionClosing,RegionBorder, 'inner')</l>
-<l>dilation_circle(RegionClosing, RegionDilation, DilationRadius)</l>
-<l>boundary (RegionDilation,RegionBorder2, 'inner')</l>
+<l>mean_sp(EnhancedImage, MeanImage, MeanMaskWidth, MeanMaskHeight, MinThresh, MaxThresh)</l>
+<l>emphasize (MeanImage, EnhancedImage, EmpMaskWidth, EmpMaskHeight, EmpMaskFactor) </l>
 <c></c>
 <c></c>
-<l>paint_region(RegionDilation,EnhancedImage,EnhancedImage,Grayval,'fill') </l>
-<l>*region_to_bin(RegionDilation, EnhancedImage, 255, 0, 512, 512)</l>
-<c> </c>
 <l>return ()</l>
 </body>
-<docu id="EnhanceEdgeArea">
+<docu id="EnhanceEdgeArea2">
 <parameters>
-<parameter id="ClosingHeight"/>
-<parameter id="ClosingWidth"/>
-<parameter id="DilationRadius"/>
 <parameter id="EmpMaskFactor"/>
 <parameter id="EmpMaskHeight"/>
 <parameter id="EmpMaskWidth"/>
 <parameter id="EnhancedImage"/>
-<parameter id="Grayval"/>
 <parameter id="InputImage"/>
-<parameter id="IterationCount"/>
 <parameter id="LineEndPoint_Column"/>
 <parameter id="LineEndPoint_Row"/>
 <parameter id="LineStartPoint_Column"/>
 <parameter id="LineStartPoint_Row"/>
-<parameter id="MaxGray"/>
+<parameter id="MaxThresh"/>
 <parameter id="MeanMaskHeight"/>
 <parameter id="MeanMaskWidth"/>
-<parameter id="MinGray"/>
+<parameter id="MinThresh"/>
 <parameter id="RoiWidthLen"/>
 </parameters>
 </docu>
