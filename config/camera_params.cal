@@ -37,15 +37,15 @@
 ParGroup: LinescanCamera: Parameter;
 	"Internal linescan camera parameters";
 
-Focus:foc:	100.146;
+Focus:foc:	99.7038;
 	DOUBLE:0.0:;
 	"Focal length of the lens [meter]";
 
-Kappa:kappa:	-0.15221;
+Kappa:kappa:	1.03723;
 	DOUBLE::;
 	"Radial distortion coefficient [1/(meter*meter)]";
 
-Sx:sx:	4.99296e-006;
+Sx:sx:	5.01482e-006;
 	DOUBLE:0.0:;
 	"Width of a cell on the sensor [meter]";
 
@@ -53,11 +53,11 @@ Sy:sy:	5e-006;
 	DOUBLE:0.0:;
 	"Height of a cell on the sensor [meter]";
 
-Cx:cx:	4097.51;
+Cx:cx:	4103.47;
 	DOUBLE:0.0:;
 	"X-coordinate of the image center [pixel]";
 
-Cy:cy:	0.284875;
+Cy:cy:	-0.628098;
 	DOUBLE:0.0:;
 	"Y-coordinate of the image center [pixel]";
 
@@ -69,20 +69,20 @@ ImageHeight:imgh:	12500;
 	INT:1:32767;
 	"Height of the images [pixel]";
 
-Vx:vx:	4.61736e-009;
+Vx:vx:	2.67018e-008;
 	DOUBLE::;
 	"X-component of the motion vector [m/scanline]";
 
-Vy:vy:	1.60014e-005;
+Vy:vy:	1.59978e-005;
 	DOUBLE::;
 	"Y-component of the motion vector [m/scanline]";
 
-Vz:vz:	1.06306e-006;
+Vz:vz:	3.76709e-007;
 	DOUBLE::;
 	"Z-component of the motion vector [m/scanline]";
 
 
 #
-# HALCON Version 11.0 --  Tue Dec 09 19:24:37 2014
+# HALCON Version 11.0 --  Thu Dec 25 19:56:02 2014
 
 #
