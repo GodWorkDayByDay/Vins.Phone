@@ -171,7 +171,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
         }
 
 
-        private void Show_DistanceBetweenLinesResults(
+        public void Show_DistanceBetweenLinesResults(
             IEnumerable<DistanceBetweenLinesResult> distanceBetweenLinesResults)
         {
             foreach (var result in distanceBetweenLinesResults)
@@ -182,6 +182,24 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                                 StartPointY = result.FootPoint1.Y,
                                                 EndPointX = result.FootPoint2.X,
                                                 EndPointY = result.FootPoint2.Y,
+                                                Stroke = Brushes.Lime,
+                                                StrokeThickness = 2,
+                                                StrokeDashArray = new DoubleCollection() { 2, 2 },
+                                            };
+                LineIndicators.Add(distanceLineIndicator);
+            }
+        }
+        public void Show_DistanceBetweenPointsResults(
+            DistanceBetweenPointsResultCollection pointsResultCollection)
+        {
+            foreach (var result in pointsResultCollection)
+            {
+                var distanceLineIndicator = new LineIndicatorViewModel
+                                            {
+                                                StartPointX = result.Point1.X,
+                                                StartPointY = result.Point1.Y,
+                                                EndPointX = result.Point2.X,
+                                                EndPointY = result.Point2.Y,
                                                 Stroke = Brushes.Lime,
                                                 StrokeThickness = 2,
                                                 StrokeDashArray = new DoubleCollection() { 2, 2 },

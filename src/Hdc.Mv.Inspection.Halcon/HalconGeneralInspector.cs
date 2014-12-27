@@ -88,26 +88,46 @@ namespace Hdc.Mv.Inspection
             Debug.WriteLine("HalconGeneralInspector.Inspect out");
 
 
-            var t1Result = edges.Single(x => x.Name == "T1");
-            var t1 = t1Result.EdgeLine.GetCenterPoint();
-            var t2Result = edges.Single(x => x.Name == "T2");
-            var t2 = t2Result.EdgeLine.GetCenterPoint();
+
+
+            var t1R = edges.Single(x => x.Name == "T1");
+            var t2R = edges.Single(x => x.Name == "T2");
             var b1R = edges.Single(x => x.Name == "B1");
-            var b1 = b1R.EdgeLine.GetCenterPoint();
             var b2R = edges.Single(x => x.Name == "B2");
-            var b2 = b2R.EdgeLine.GetCenterPoint();
             var l1R = edges.Single(x => x.Name == "L1");
-            var l1 = l1R.EdgeLine.GetCenterPoint();
             var l2R = edges.Single(x => x.Name == "L2");
-            var l2 = l2R.EdgeLine.GetCenterPoint();
             var l3R = edges.Single(x => x.Name == "L3");
-            var l3 = l3R.EdgeLine.GetCenterPoint();
             var r1R = edges.Single(x => x.Name == "R1");
-            var r1 = r1R.EdgeLine.GetCenterPoint();
             var r2R = edges.Single(x => x.Name == "R2");
-            var r2 = r2R.EdgeLine.GetCenterPoint();
             var r3R = edges.Single(x => x.Name == "R3");
-            var r3 = r3R.EdgeLine.GetCenterPoint();
+
+            var t1Center = t1R.Definition.Line.GetCenterPoint();
+            var t2Center = t2R.Definition.Line.GetCenterPoint();
+            var b1Center = b1R.Definition.Line.GetCenterPoint();
+            var b2Center = b2R.Definition.Line.GetCenterPoint();
+            var l1Center = l1R.Definition.Line.GetCenterPoint();
+            var l2Center = l2R.Definition.Line.GetCenterPoint();
+            var l3Center = l3R.Definition.Line.GetCenterPoint();
+            var r1Center = r1R.Definition.Line.GetCenterPoint();
+            var r2Center = r2R.Definition.Line.GetCenterPoint();
+            var r3Center = r3R.Definition.Line.GetCenterPoint();
+
+            var lineT1B1 = new Line(t1Center, b1Center);
+            var lineT2B2 = new Line(t2Center, b2Center);
+            var lineL1R1 = new Line(l1Center, r1Center);
+            var lineL2R2 = new Line(l2Center, r2Center);
+            var lineL3R3 = new Line(l3Center, r3Center);
+
+            var t1 = t1R.EdgeLine.IntersectionWith(lineT1B1);
+            var t2 = t2R.EdgeLine.IntersectionWith(lineT2B2);
+            var b1 = b1R.EdgeLine.IntersectionWith(lineT1B1);
+            var b2 = b2R.EdgeLine.IntersectionWith(lineT2B2);
+            var l1 = l1R.EdgeLine.IntersectionWith(lineL1R1);
+            var l2 = l2R.EdgeLine.IntersectionWith(lineL2R2);
+            var l3 = l3R.EdgeLine.IntersectionWith(lineL3R3);
+            var r1 = r1R.EdgeLine.IntersectionWith(lineL1R1);
+            var r2 = r2R.EdgeLine.IntersectionWith(lineL2R2);
+            var r3 = r3R.EdgeLine.IntersectionWith(lineL3R3);
 
             if (t1.X == 0 ||
                 t2.X == 0 ||
@@ -319,17 +339,22 @@ namespace Hdc.Mv.Inspection
                     var sw = new NotifyStopwatch("EnhanceEdgeArea2");
                     sw.Start();
 
-                    var enhImage = _hDevelopExportHelper.EnhanceEdgeArea2(
+                    var reducedImage = _hDevelopExportHelper.ReduceDomainForRectangle(
                         _hDevelopExportHelper.HImage,
                         line: esd.Line,
-                        hv_RoiWidthLen: esd.ROIWidth,
+                        hv_RoiWidthLen: esd.ROIWidth, 
+                        margin: 20);
+
+                    var enhImage = _hDevelopExportHelper.EnhanceEdgeArea3(
+                        reducedImage,
                         hv_EmpMaskWidth: esd.Hal_EnhanceEdgeArea_EmpMaskWidth,
                         hv_EmpMaskHeight: esd.Hal_EnhanceEdgeArea_EmpMaskHeight,
                         hv_EmpMaskFactor: esd.Hal_EnhanceEdgeArea_EmpMaskFactor,
                         hv_MeanMaskWidth: esd.Hal_EnhanceEdgeArea_MeanMaskWidth,
                         hv_MeanMaskHeight: esd.Hal_EnhanceEdgeArea_MeanMaskHeight,
-                        hv_MinThresh: esd.Hal_EnhanceEdgeArea_MinThresh,
-                        hv_MaxThresh: esd.Hal_EnhanceEdgeArea_MaxThresh
+                        hv_IterationCount: esd.Hal_EnhanceEdgeArea_IterationCount,
+                        hv_ScaleAdd: esd.Hal_EnhanceEdgeArea_ScaleAdd,
+                        hv_ScaleMult: esd.Hal_EnhanceEdgeArea_ScaleMult
                         );
 
                     image = enhImage;
@@ -347,12 +372,12 @@ namespace Hdc.Mv.Inspection
                     //                            break;
                     //                    }
 
-//                    if (esd.Hal_EnhanceEdgeArea_SaveCacheImageEnabled)
-                    if (true)
+                    if (esd.Hal_EnhanceEdgeArea_SaveCacheImageEnabled)
+//                    if (true)
                     {
 //                        _hDevelopExportHelper.HImage.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_ori.jpg");
 //                        var fullDomain = enhImage.FullDomain();
-//                        enhImage.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_enhance_" + esd.Name + ".jpg");
+                        enhImage.CropDomain().ToImageInfo().ToBitmapSource().SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + ".jpg");
                     }
 
                     //                    image = enhImage.Clone();

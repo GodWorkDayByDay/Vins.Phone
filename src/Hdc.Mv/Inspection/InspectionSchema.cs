@@ -33,6 +33,7 @@ namespace Hdc.Mv.Inspection
         public bool EdgeSearchingEnable { get; set; }
         public bool EdgeSearching_EnhanceEdgeArea_Enable { get; set; }
         public bool EdgeSearching_EnhanceEdgeArea_SaveCacheImageEnable { get; set; }
+        public bool EdgeSearching_EnhanceEdgeArea_SaveAllCacheImageEnable { get; set; }
         public bool CircleSearchingEnable { get; set; }
 
         public Collection<CircleSearchingDefinition> CoordinateCircles { get; set; }

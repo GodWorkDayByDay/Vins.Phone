@@ -21,7 +21,9 @@ public partial class HDevelopExport
 
     // Local iconic variables 
 
-    HObject ho_Rectangle, ho_RegionDilation, ho_MeanImage;
+    HObject ho_Rectangle, ho_RegionDilation, ho_ReducedImage;
+    HObject ho_ImageOpening=null, ho_EmphasizeImage, ho_ImageOpening2=null;
+    HObject ho_ImageMean;
 
 
     // Local control variables 
@@ -34,7 +36,11 @@ public partial class HDevelopExport
     HOperatorSet.GenEmptyObj(out ho_EnhancedImage);
     HOperatorSet.GenEmptyObj(out ho_Rectangle);
     HOperatorSet.GenEmptyObj(out ho_RegionDilation);
-    HOperatorSet.GenEmptyObj(out ho_MeanImage);
+    HOperatorSet.GenEmptyObj(out ho_ReducedImage);
+    HOperatorSet.GenEmptyObj(out ho_ImageOpening);
+    HOperatorSet.GenEmptyObj(out ho_EmphasizeImage);
+    HOperatorSet.GenEmptyObj(out ho_ImageOpening2);
+    HOperatorSet.GenEmptyObj(out ho_ImageMean);
 
     //
     //init
@@ -53,23 +59,62 @@ public partial class HDevelopExport
         hv_TmpCtrl_Phi, hv_TmpCtrl_Len1, hv_TmpCtrl_Len2);
 
     ho_RegionDilation.Dispose();
-    HOperatorSet.DilationRectangle1(ho_Rectangle, out ho_RegionDilation, 10, 10);
+    HOperatorSet.DilationRectangle1(ho_Rectangle, out ho_RegionDilation, 20, 20);
 
-    ho_EnhancedImage.Dispose();
-    HOperatorSet.ReduceDomain(ho_InputImage, ho_RegionDilation, out ho_EnhancedImage
+    ho_ReducedImage.Dispose();
+    HOperatorSet.ReduceDomain(ho_InputImage, ho_RegionDilation, out ho_ReducedImage
         );
 
-    ho_MeanImage.Dispose();
-    HOperatorSet.MeanSp(ho_EnhancedImage, out ho_MeanImage, hv_MeanMaskWidth, hv_MeanMaskHeight, 
+    if ((int)(new HTuple(hv_EmpMaskWidth.TupleLess(hv_EmpMaskHeight))) != 0)
+    {
+      ho_ImageOpening.Dispose();
+      HOperatorSet.GrayOpeningRect(ho_ReducedImage, out ho_ImageOpening, 3, 7);
+    }
+    else
+    {
+      ho_ImageOpening.Dispose();
+      HOperatorSet.GrayOpeningRect(ho_ReducedImage, out ho_ImageOpening, 7, 3);
+    }
+
+    ho_EmphasizeImage.Dispose();
+    HOperatorSet.Emphasize(ho_ImageOpening, out ho_EmphasizeImage, hv_EmpMaskWidth, 
+        hv_EmpMaskHeight, hv_EmpMaskFactor);
+
+    if ((int)(new HTuple(hv_EmpMaskWidth.TupleLess(hv_EmpMaskHeight))) != 0)
+    {
+      ho_ImageOpening2.Dispose();
+      HOperatorSet.GrayOpeningRect(ho_EmphasizeImage, out ho_ImageOpening2, 3, 7);
+    }
+    else
+    {
+      ho_ImageOpening2.Dispose();
+      HOperatorSet.GrayOpeningRect(ho_EmphasizeImage, out ho_ImageOpening2, 7, 3);
+    }
+
+
+    ho_ImageMean.Dispose();
+    HOperatorSet.MeanSp(ho_ImageOpening2, out ho_ImageMean, hv_MeanMaskWidth, hv_MeanMaskHeight, 
         hv_MinThresh, hv_MaxThresh);
-    ho_EnhancedImage.Dispose();
-    HOperatorSet.Emphasize(ho_MeanImage, out ho_EnhancedImage, hv_EmpMaskWidth, hv_EmpMaskHeight, 
-        hv_EmpMaskFactor);
+
+    if ((int)(new HTuple(hv_EmpMaskWidth.TupleLess(hv_EmpMaskHeight))) != 0)
+    {
+      ho_EnhancedImage.Dispose();
+      HOperatorSet.GrayOpeningRect(ho_ImageMean, out ho_EnhancedImage, 3, 7);
+    }
+    else
+    {
+      ho_EnhancedImage.Dispose();
+      HOperatorSet.GrayOpeningRect(ho_ImageMean, out ho_EnhancedImage, 7, 3);
+    }
 
 
     ho_Rectangle.Dispose();
     ho_RegionDilation.Dispose();
-    ho_MeanImage.Dispose();
+    ho_ReducedImage.Dispose();
+    ho_ImageOpening.Dispose();
+    ho_EmphasizeImage.Dispose();
+    ho_ImageOpening2.Dispose();
+    ho_ImageMean.Dispose();
 
     return;
   }

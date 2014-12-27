@@ -35,7 +35,7 @@ namespace Hdc.Mv.Inspection.Halcon
             var border = outerRegion.Difference(innerRegion);
 
             _hImage = hImage.ReduceDomain(outerRegion);
-//            _borderImage = hImage.ReduceDomain(border);
+            //            _borderImage = hImage.ReduceDomain(border);
 
             using (var sw = new NotifyStopwatch("EquHistoImage"))
             {
@@ -45,15 +45,15 @@ namespace Hdc.Mv.Inspection.Halcon
             using (var sw = new NotifyStopwatch("MeanImage 6,2"))
             {
                 //_horizontalMeanImage = _hImage.MeanImage(6, 1);
-//                _horizontalMeanImage = _borderImage.MeanSp(6, 3, 100, 200);
-//                _emphasizeHorizontalMeanImage = _horizontalMeanImage.Emphasize(3, 7, 5);
+                //                _horizontalMeanImage = _borderImage.MeanSp(6, 3, 100, 200);
+                //                _emphasizeHorizontalMeanImage = _horizontalMeanImage.Emphasize(3, 7, 5);
             }
 
             using (var sw = new NotifyStopwatch("MeanImage 2,6"))
             {
                 //_verticalMeanImage = _hImage.MeanImage(1, 6);
-//                _verticalMeanImage = _borderImage.MeanSp(3, 6, 120, 200);
-//                _emphasizeVerticalMeanImage = _verticalMeanImage.Emphasize(7, 3, 5);
+                //                _verticalMeanImage = _borderImage.MeanSp(3, 6, 120, 200);
+                //                _emphasizeVerticalMeanImage = _verticalMeanImage.Emphasize(7, 3, 5);
 
             }
 
@@ -63,11 +63,11 @@ namespace Hdc.Mv.Inspection.Halcon
             if (SaveCacheImages)
                 _emphasizeVerticalMeanImage.ToImageInfo().ToBitmapSource().SaveToJpeg("_EmphasizeVerticalMeanImage.jpg");
 
-//            _horizontalMeanImage.Dispose();
-//            _verticalMeanImage.Dispose();
-//            _emphasizeHorizontalMeanImage.Dispose();
-//            _emphasizeVerticalMeanImage.Dispose();
-//            _borderImage.Dispose();
+            //            _horizontalMeanImage.Dispose();
+            //            _verticalMeanImage.Dispose();
+            //            _emphasizeHorizontalMeanImage.Dispose();
+            //            _emphasizeVerticalMeanImage.Dispose();
+            //            _borderImage.Dispose();
         }
 
         public HDevelopExportHelper(ImageInfo imageInfo)
@@ -354,23 +354,6 @@ namespace Hdc.Mv.Inspection.Halcon
             return binImageInfo;
         }
 
-        public static Point IntersectionLines(Line line1, Line line2)
-        {
-            HTuple pX, pY, pp;
-            HOperatorSet.IntersectionLines(line1.Y1, line1.X1, line1.Y2, line1.X2,
-                line2.Y1, line2.X1, line2.Y2, line2.X2,
-                out pY, out pX, out pp);
-
-            if (pp != 0)
-            {
-                throw new HalconInspectorException();
-            }
-
-            var p = new Point(pX, pY);
-            return p;
-        }
-
-
         public IList<Line> RakeEdgeLine(HImage hImage, Line line,
                                         int regionsCount, int regionHeight, int regionWidth,
                                         double sigma, double threshold, Transition transition,
@@ -487,7 +470,7 @@ namespace Hdc.Mv.Inspection.Halcon
         {
             return EnhanceEdgeArea2(hImage, line.Y1, line.X1, line.Y2, line.X2, hv_RoiWidthLen, hv_EmpMaskWidth,
                 hv_EmpMaskHeight,
-                hv_EmpMaskFactor, hv_MeanMaskWidth, hv_MeanMaskHeight, hv_MinThresh,hv_MaxThresh);
+                hv_EmpMaskFactor, hv_MeanMaskWidth, hv_MeanMaskHeight, hv_MinThresh, hv_MaxThresh);
         }
 
         public HImage EnhanceEdgeArea2(HObject ho_InputImage,
@@ -508,6 +491,54 @@ namespace Hdc.Mv.Inspection.Halcon
                 hv_MeanMaskHeight,
                 hv_MinThresh,
                 hv_MaxThresh
+                );
+            return new HImage(ho_EnhancedImage);
+        }
+
+        public HImage EnhanceEdgeArea3(HImage ho_InputImage, int hv_EmpMaskWidth,
+                                      int hv_EmpMaskHeight, double hv_EmpMaskFactor, int hv_MeanMaskWidth,
+                                      int hv_MeanMaskHeight,
+                                      int hv_IterationCount, double hv_ScaleMult, double hv_ScaleAdd)
+        {
+            HObject ho_EnhancedImage = null;
+            HDevelopExport.EnhanceEdgeArea3(
+                ho_InputImage, out ho_EnhancedImage,
+                hv_EmpMaskWidth,
+                hv_EmpMaskHeight, hv_EmpMaskFactor, hv_MeanMaskWidth,
+                hv_MeanMaskHeight,
+                hv_IterationCount,
+                hv_ScaleMult,
+                hv_ScaleAdd
+                );
+            return new HImage(ho_EnhancedImage);
+        }
+
+        public HImage ReduceDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
+            double dilationWidth, double dilationHeight)
+        {
+            return ReduceDomainForRectangle(hImage, line.Y1, line.X1, line.Y2, line.X2, hv_RoiWidthLen,
+                dilationWidth, dilationHeight);
+        }
+
+        public HImage ReduceDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
+            double margin)
+        {
+            return ReduceDomainForRectangle(hImage, line, hv_RoiWidthLen, margin, margin);
+        }
+
+        public HImage ReduceDomainForRectangle(HObject ho_InputImage,
+                                      double hv_LineStartPoint_Row, double hv_LineStartPoint_Column,
+                                      double hv_LineEndPoint_Row,
+                                      double hv_LineEndPoint_Column, double hv_RoiWidthLen,
+                                      double hv_DilationWidth, double hv_DilationHeight)
+        {
+            HObject ho_EnhancedImage = null;
+            HDevelopExport.ReduceDomainForRectangle(
+                ho_InputImage, out ho_EnhancedImage,
+                hv_LineStartPoint_Row, hv_LineStartPoint_Column,
+                hv_LineEndPoint_Row,
+                hv_LineEndPoint_Column, hv_RoiWidthLen,
+                hv_DilationWidth, hv_DilationHeight
                 );
             return new HImage(ho_EnhancedImage);
         }

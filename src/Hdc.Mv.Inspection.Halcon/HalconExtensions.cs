@@ -7,10 +7,10 @@ namespace Hdc.Mv.Inspection.Halcon
 {
     public static class HalconExtensions
     {
-        public static Point IntersectionWith(this Line sourceLine, Line targetLine)
-        {
-            return HDevelopExportHelper.IntersectionLines(sourceLine, targetLine);
-        }
+//        public static Point IntersectionWith(this Line sourceLine, Line targetLine)
+//        {
+//            return HDevelopExportHelper.IntersectionLines(sourceLine, targetLine);
+//        }
 
 
         public static ImageInfo ToImageInfo(this HImage hImage)

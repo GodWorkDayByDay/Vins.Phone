@@ -42,8 +42,9 @@ namespace Hdc.Mv.Inspection
         public int Hal_EnhanceEdgeArea_MeanMaskWidth { get; set; }
         public int Hal_EnhanceEdgeArea_MeanMaskHeight { get; set; }
 
-        public int Hal_EnhanceEdgeArea_MinThresh { get; set; }
-        public int Hal_EnhanceEdgeArea_MaxThresh { get; set; }
+        public int Hal_EnhanceEdgeArea_IterationCount { get; set; }
+        public double Hal_EnhanceEdgeArea_ScaleMult { get; set; }
+        public double Hal_EnhanceEdgeArea_ScaleAdd { get; set; }
 
         public bool Hal_EnhanceEdgeArea_SaveCacheImageEnabled { get; set; }
 

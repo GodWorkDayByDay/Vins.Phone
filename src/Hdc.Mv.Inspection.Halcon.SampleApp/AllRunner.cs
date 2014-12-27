@@ -33,6 +33,7 @@ namespace Hdc.Mv.Inspection.Halcon.SampleApp
 
             MainWindow.Show_EdgeSearchingDefinitions(InspectionController.InspectionResult.GetEdgeSearchingDefinitions());
             MainWindow.Show_EdgeSearchingResults(InspectionController.InspectionResult.Edges);
+            MainWindow.Show_DistanceBetweenPointsResults(InspectionController.InspectionResult.DistanceBetweenPointsResults);
             MainWindow.Show_DefectResults(InspectionController.InspectionResult.DefectResults);
         }
     }

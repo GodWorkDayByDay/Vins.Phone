@@ -137,10 +137,22 @@ namespace Hdc.Mv.Inspection
         {
             _inspectionSchema = inspectionSchema;
 
+            
+
             GetOrAddInspector(_inspectionSchema.InspectorNameForCoordinate);
             GetOrAddInspector(_inspectionSchema.InspectorNameForCircles);
             GetOrAddInspector(_inspectionSchema.InspectorNameForEdges);
             GetOrAddInspector(_inspectionSchema.InspectorNameForDefects);
+
+            if (_inspectionSchema.EdgeSearching_EnhanceEdgeArea_SaveAllCacheImageEnable &&
+                _inspectionSchema.EdgeSearching_EnhanceEdgeArea_Enable)
+            {
+                foreach (var esd in _inspectionSchema.EdgeSearchingDefinitions)
+                {
+                    esd.Hal_EnhanceEdgeArea_SaveCacheImageEnabled = true;
+                }
+            }
+
 
             return this;
         }

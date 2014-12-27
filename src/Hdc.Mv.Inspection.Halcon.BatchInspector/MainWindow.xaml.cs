@@ -215,10 +215,10 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
             foreach (var fileName in fileNames)
             {
                 string name = fileName;
-                var task = new Task(
-                    (x) =>
-                    {
-                        var fn = (string)x;
+//                var task = new Task(
+//                    (x) =>
+//                    {
+                var fn = (string)name;
                         Debug.WriteLine("Task.Started: " + fn);
 
                         BitmapImage bi = null;
@@ -273,9 +273,9 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
                         //
                         //                targetResult.CircleSearchingResults.UpdateRelativeCircles(coord);
                      
-                    }, name);
-                tasks.Add(task);
-                task.Start();
+//                    }, name);
+//                tasks.Add(task);
+//                task.Start();
 
             }
 
