@@ -343,7 +343,7 @@ namespace Hdc.Mv.Inspection
                         _hDevelopExportHelper.HImage,
                         line: esd.Line,
                         hv_RoiWidthLen: esd.ROIWidth, 
-                        margin: 20);
+                        margin: 0.5);
 
                     var enhImage = _hDevelopExportHelper.EnhanceEdgeArea3(
                         reducedImage,
