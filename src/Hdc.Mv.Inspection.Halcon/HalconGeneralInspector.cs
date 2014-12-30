@@ -50,7 +50,6 @@ namespace Hdc.Mv.Inspection
             inspectionResult.Circles = circles;
 
             {
-
                 var finalEdges = SearchEdges(inspectionSchema.EdgeSearchingDefinitions,
                     inspectionSchema.EdgeSearching_EnhanceEdgeArea_Enable);
                 inspectionResult.Edges = finalEdges;
@@ -64,8 +63,47 @@ namespace Hdc.Mv.Inspection
                     bitmapSource.SaveToTiff(@"Cache\EdgeSearchingCacheImage.tif");
                 }
 
-                var results = GetDistanceBetweenPointsResults2(finalEdges);
-                inspectionResult.DistanceBetweenPointsResults.AddRange(results);
+                foreach (var def in inspectionSchema.DistanceBetweenIntersectionPointsDefinitions)
+                {
+                    var line1 = finalEdges.Single(x => x.Name == def.Line1Name);
+                    var line2 = finalEdges.Single(x => x.Name == def.Line2Name);
+
+                    var line1Center = line1.Definition.Line.GetCenterPoint();
+                    var line2Center = line2.Definition.Line.GetCenterPoint();
+
+                    var linkLine = new Line(line1Center, line2Center);
+
+                    var intersection1 = line1.EdgeLine.IntersectionWith(linkLine);
+                    var intersection2 = line2.EdgeLine.IntersectionWith(linkLine);
+
+                    if (Math.Abs(intersection1.X) < 0.00001 ||
+                        Math.Abs(intersection2.X) < 0.00001)
+                    {
+                        Debug.WriteLine(@"DistanceBetweenIntersectionPointsDefinitions failed: {0}", def.Name);
+                    }
+
+                    //var distance = t1.ToVector() - t2.ToVector();
+                    var distance = (intersection1 - intersection2).Length;
+
+                    Debug.WriteLine("Distance {0}: {1}\t", def.Name, distance);
+
+                    var distanceBetweenPointsResult = new DistanceBetweenPointsResult()
+                                                      {
+                                                          Index = 0,
+                                                          Name = def.Name,
+                                                          Point1 = intersection1,
+                                                          Point2 = intersection2,
+                                                          DistanceInPixel = (intersection1 - intersection2).Length,
+                                                          DistanceInWorld =
+                                                              (intersection1 - intersection2).Length
+                                                              .ToMillimeterFromPixel(16),
+                                                      };
+
+                    inspectionResult.DistanceBetweenPointsResults.Add(distanceBetweenPointsResult);
+                }
+
+                //                var results = GetDistanceBetweenPointsResults2(finalEdges);
+                //                inspectionResult.DistanceBetweenPointsResults.AddRange(results);
             }
 
             return inspectionResult;
@@ -86,8 +124,6 @@ namespace Hdc.Mv.Inspection
             EdgeSearchingResultCollection edges)
         {
             Debug.WriteLine("HalconGeneralInspector.Inspect out");
-
-
 
 
             var t1R = edges.Single(x => x.Name == "T1");
@@ -215,7 +251,7 @@ namespace Hdc.Mv.Inspection
             return results;
         }
 
-        public  CircleSearchingResultCollection SearchCircles(
+        public CircleSearchingResultCollection SearchCircles(
             IList<CircleSearchingDefinition> circleSearchingDefinitions)
         {
             var result = new CircleSearchingResultCollection();
@@ -224,8 +260,7 @@ namespace Hdc.Mv.Inspection
             int index = 0;
             foreach (var circleDefinition in circleSearchingDefinitions)
             {
-                //                if (!inspectionSchema.CircleSearchingEnable) continue;
-
+              
                 var circleSearchingResult = new CircleSearchingResult
                                             {
                                                 Definition = circleDefinition.DeepClone(),
@@ -235,6 +270,51 @@ namespace Hdc.Mv.Inspection
 
                 Circle foundCircle;
                 double roundless;
+
+                if (circleDefinition.ProcessMethod != null)
+                {
+                    var hcd = circleDefinition.ProcessMethod as HoughCircleDetectProcessMethod;
+                    if (hcd == null) continue;
+
+                    double cX, cY;
+
+                    var isOK2 = _hDevelopExportHelper.FindCircleCenterUseHough(
+                          _hDevelopExportHelper.HImage,
+                          circleDefinition.CenterY,
+                          circleDefinition.CenterX,
+                          circleDefinition.InnerRadius,
+                          circleDefinition.OuterRadius,
+                          hcd.Sigma,
+                          hcd.MinGray,
+                          hcd.MaxGray,
+                          hcd.ExpectRadius,
+                          hcd.Percent,
+                          out cY,
+                          out cX
+                          );
+
+                    if (isOK2)
+                    {
+                        circleSearchingResult.Circle = new Circle(
+                            cX,
+                            cY,
+                            hcd.ExpectRadius);
+                    }
+                    else
+                    {
+                        circleSearchingResult.HasError = true;
+                        circleSearchingResult.IsNotFound = true;
+                    }
+
+                    result.Add(circleSearchingResult);
+
+                    index++;
+
+
+                    continue;
+                }
+
+
 
                 //                var isOK = _hDevelopExportHelper.ExtractCircle(circleDefinition.CenterX, circleDefinition.CenterY,
                 //                    circleDefinition.InnerRadius, circleDefinition.OuterRadius, out foundCircle, out roundless);
@@ -294,7 +374,7 @@ namespace Hdc.Mv.Inspection
         public EdgeSearchingResultCollection SearchEdges(EdgeSearchingDefinition edgeSearchingDefinition,
                                                          bool enhanceEdgeAreaEnabled)
         {
-            return SearchEdges(new[] { edgeSearchingDefinition }, enhanceEdgeAreaEnabled);
+            return SearchEdges(new[] {edgeSearchingDefinition}, enhanceEdgeAreaEnabled);
         }
 
         public EdgeSearchingResultCollection SearchEdges(IList<EdgeSearchingDefinition> edgeSearchingDefinitions,
@@ -303,28 +383,6 @@ namespace Hdc.Mv.Inspection
             var sr = new EdgeSearchingResultCollection();
 
             HImage mergedImage = null;
-            //            foreach (var esd in edgeSearchingDefinitions)
-            //            {
-            //                if (enhanceEdgeAreaEnabled && !esd.Hal_EnhanceEdgeArea_Enabled)
-            //                    continue;
-            //
-            //                var image = _hDevelopExportHelper.EnhanceEdgeArea(
-            //                    _hDevelopExportHelper.HImage,
-            //                    line: esd.Line,
-            //                    hv_RoiWidthLen: esd.ROIWidth,
-            //                    hv_EmpMaskWidth: esd.Hal_EnhanceEdgeArea_EmpMaskWidth,
-            //                    hv_EmpMaskHeight: esd.Hal_EnhanceEdgeArea_EmpMaskHeight,
-            //                    hv_EmpMaskFactor: esd.Hal_EnhanceEdgeArea_EmpMaskFactor,
-            //                    hv_MeanMaskWidth: esd.Hal_EnhanceEdgeArea_MeanMaskWidth,
-            //                    hv_MeanMaskHeight: esd.Hal_EnhanceEdgeArea_MeanMaskHeight,
-            //                    hv_IterationCount: esd.Hal_EnhanceEdgeArea_IterationCount
-            //                    );
-            //                if (hImage == null) hImage = image;
-            //                else
-            //                {
-            //                    hImage = _hDevelopExportHelper.AddImagesWithFullDomain(hImage, image);
-            //                }
-            //            }
 
             foreach (var esd in edgeSearchingDefinitions)
             {
@@ -342,7 +400,7 @@ namespace Hdc.Mv.Inspection
                     var reducedImage = _hDevelopExportHelper.ReduceDomainForRectangle(
                         _hDevelopExportHelper.HImage,
                         line: esd.Line,
-                        hv_RoiWidthLen: esd.ROIWidth, 
+                        hv_RoiWidthLen: esd.ROIWidth,
                         margin: 0.5);
 
                     var enhImage = _hDevelopExportHelper.EnhanceEdgeArea3(
@@ -362,22 +420,20 @@ namespace Hdc.Mv.Inspection
                     sw.Stop();
                     sw.Dispose();
 
-                    //                    switch (esd.Hal_EnhanceEdgeArea_Orientation)
-                    //                    {
-                    //                        case Orientation.Horizontal:
-                    //                            image = _hDevelopExportHelper.EmphasizeHorizontalMeanImage;
-                    //                            break;
-                    //                        default:
-                    //                            image = _hDevelopExportHelper.EmphasizeVerticalMeanImage;
-                    //                            break;
-                    //                    }
-
-                    if (esd.Hal_EnhanceEdgeArea_SaveCacheImageEnabled)
-//                    if (true)
+                    using (var sw3 = new NotifyStopwatch("Hal_EnhanceEdgeArea_SaveCacheImageEnabled"))
                     {
-//                        _hDevelopExportHelper.HImage.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_ori.jpg");
-//                        var fullDomain = enhImage.FullDomain();
-                        enhImage.CropDomain().ToImageInfo().ToBitmapSource().SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + ".jpg");
+                        if (esd.Hal_EnhanceEdgeArea_SaveCacheImageEnabled)
+                            //                    if (true)
+                        {
+                            //                        _hDevelopExportHelper.HImage.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_ori.jpg");
+                            //                        var fullDomain = enhImage.FullDomain();
+                            var savingImage = _hDevelopExportHelper.HImage.Clone();
+                            savingImage.OverpaintGray(enhImage);
+                            //                        enhImage.CropDomain().ToImageInfo().ToBitmapSource().SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + ".jpg");
+                            savingImage.ToImageInfo()
+                                .ToBitmapSource()
+                                .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + ".jpg");
+                        }
                     }
 
                     //                    image = enhImage.Clone();
@@ -397,8 +453,8 @@ namespace Hdc.Mv.Inspection
                 {
                     image = _hDevelopExportHelper.HImage;
                 }
-//                var sw2 = new NotifyStopwatch("RakeEdgeLine");
-//                sw2.Start();
+                //                var sw2 = new NotifyStopwatch("RakeEdgeLine");
+                //                sw2.Start();
 
                 var lines = _hDevelopExportHelper.RakeEdgeLine(image,
                     line: esd.Line,
@@ -409,9 +465,9 @@ namespace Hdc.Mv.Inspection
                     threshold: esd.Hal_Threshold,
                     transition: esd.Hal_Transition,
                     selectionMode: esd.Hal_SelectionMode);
-//
-//                sw2.Stop();
-//                sw2.Dispose();
+                //
+                //                sw2.Stop();
+                //                sw2.Dispose();
 
                 var line = lines[0];
                 esr.EdgeLine = line;

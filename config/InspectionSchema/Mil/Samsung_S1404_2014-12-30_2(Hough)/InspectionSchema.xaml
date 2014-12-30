@@ -1,0 +1,141 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  TestImageFilePath="B:\2014-12-27_00.39.13.jpg"
+                  CircleSearchingEnable="True"
+                  InspectorNameForCoordinate="Hal"
+                  InspectorNameForEdges="Hal"
+                  InspectorNameForCircles="Hal"
+                  InspectorNameForDefects="Sim"
+                  ImagePixelWidth="8192"
+                  ImagePixelHeight="12500"
+                  CoordinateType="VectorsCenter"
+                  CoordinateOriginOffsetEnable="True"
+                  CoordinateOriginOffsetX="-533.516"
+                  CoordinateOriginOffsetY="-539.359"
+                  EdgeSearching_EnhanceEdgeArea_Enable="True"
+                  EdgeSearching_EnhanceEdgeArea_SaveCacheImageEnable="False"
+                  EdgeSearching_EnhanceEdgeArea_SaveAllCacheImageEnable="False"
+                  >
+  <!--Baseline or VextoraCenter or NearOrigin-->
+  <InspectionSchema.CoordinateCircles>
+  
+    <CircleSearchingDefinition CenterX="3666"
+                               CenterY="2475"
+                               InnerRadius="25"
+                               OuterRadius="40"
+                               Name="O"
+                               
+                               BaselineAngle="0"
+                               BaselineX="-37.568"
+                               BaselineY="114.224"
+                               >
+      <HoughCircleDetectProcessMethod Sigma="2"
+                                      MinGray="1"
+                                      MaxGray="9"
+                                      ExpectRadius="31"
+                                      Percent="60"></HoughCircleDetectProcessMethod>
+    </CircleSearchingDefinition>
+
+    <CircleSearchingDefinition CenterX="3681"
+                               CenterY="9771"
+                               InnerRadius="25"
+                               OuterRadius="40"
+                               Name="R1"
+                               
+                               BaselineAngle="0"
+                               BaselineX="-37.568"
+                               BaselineY="114.224"
+                               >
+      <HoughCircleDetectProcessMethod Sigma="2"
+                                      MinGray="1"
+                                      MaxGray="9"
+                                      ExpectRadius="31"
+                                      Percent="60"></HoughCircleDetectProcessMethod>
+    </CircleSearchingDefinition>
+    
+    <CircleSearchingDefinition CenterX="4298"
+                               CenterY="2837"
+                               InnerRadius="70"
+                               OuterRadius="85"
+                               Name="R2"
+                               
+                               Hal_RegionsCount="60"
+                               Hal_RegionWidth="10"
+                               Hal_Sigma="1"
+                               Hal_Threshold="5"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Negative"
+                               Hal_Direct="Outer"
+                               />
+
+    <CircleSearchingDefinition CenterX="2008"
+                               CenterY="2425"
+                               InnerRadius="65"
+                               OuterRadius="85"
+                               Name="R3"
+                               
+                               BaselineAngle="-170"
+                               BaselineX="-36.672"
+                               BaselineY="-6.672"
+                               
+                               Hal_RegionsCount="60"
+                               Hal_RegionWidth="10"
+                               Hal_Sigma="1"
+                               Hal_Threshold="5"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Negative"
+                               Hal_Direct="Outer"
+                               />
+    <CircleSearchingDefinition CenterX="5343"
+                               CenterY="10303"
+                               InnerRadius="55"
+                               OuterRadius="67"
+                               Name="R4"
+                               
+                               BaselineAngle="0"
+                               BaselineX="16.832"
+                               BaselineY="119.584"
+
+                               Hal_RegionsCount="100"
+                               Hal_RegionWidth="20"
+                               Hal_Sigma="1"
+                               Hal_Threshold="5"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Negative"
+                               Hal_Direct="Outer"
+                               />
+
+    <CircleSearchingDefinition CenterX="1953"
+                               CenterY="9972"
+                               InnerRadius="70"
+                               OuterRadius="85"
+                               Name="R5"
+                               
+                               BaselineAngle="0"
+                               BaselineX="-37.568"
+                               BaselineY="114.224"
+
+                               Hal_RegionsCount="100"
+                               Hal_RegionWidth="20"
+                               Hal_Sigma="1"
+                               Hal_Threshold="5"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Negative"
+                               Hal_Direct="Outer"
+                               />
+
+
+  </InspectionSchema.CoordinateCircles>
+
+
+  <InspectionSchema.CircleSearchingDefinitions>
+  </InspectionSchema.CircleSearchingDefinitions>
+
+  <InspectionSchema.EdgeSearchingDefinitions>
+
+  </InspectionSchema.EdgeSearchingDefinitions>
+
+  <InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+
+  </InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+
+</InspectionSchema>

@@ -71,9 +71,6 @@ namespace Hdc.Mv.Inspection
 
         private Func<string, IGeneralInspector> _inspectorFactory;
 
-
-
-        //        private IGeneralInspector _inspector;
         private IRelativeCoordinate _coordinate;
         private IObservable<InspectionResult> _coordinateCreatedEvent = new Subject<InspectionResult>();
         private ImageInfo _imageInfo;
@@ -96,18 +93,6 @@ namespace Hdc.Mv.Inspection
 
             return this;
         }
-
-        //        public InspectionController SetInspector(IGeneralInspector inspector)
-        //        {
-        //            _inspector = inspector;
-        //            return this;
-        //        }
-
-        //        public InspectionController SetInspector(Func<InspectionSchema, IGeneralInspector> getInspector)
-        //        {
-        //            _inspector = getInspector(_inspectionSchema);
-        //            return this;
-        //        }
 
         public static InspectionSchema GetInspectionSchema()
         {

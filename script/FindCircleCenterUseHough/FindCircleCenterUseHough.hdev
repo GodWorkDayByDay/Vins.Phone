@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.0" halcon_version="11.0.3.4" cs="80950049">
+<procedure name="main">
+<interface/>
+<body>
+<l>dev_set_draw('margin')</l>
+<c></c>
+<l>* read_image(Image, 'B:/2014-12-27_00.41.04_OriginBottom.tif')</l>
+<l>*read_image(Image, 'B:/2014-12-27_00.38.54_OriginBottom.tif')</l>
+<l>*read_image(Image, 'B:/2014-12-27_00.38.54_OriginTop.tif')</l>
+<l>*read_image(Image, 'B:/2014-12-27_00.41.04_OriginTop.tif')</l>
+<l>read_image(Image, 'B:/2014-12-27_00.39.13_Origin2.jpg')</l>
+<c></c>
+<l>*laplace_of_gauss(Image,ImageLaplace, 2)</l>
+<c></c>
+<c></c>
+<l>*mean_image(Image, ImageMean, 3, 3)</l>
+<c></c>
+<l>*emphasize(ImageMean,ImageEmphasize, 7, 7, 3)</l>
+<c></c>
+<l>FindCircleCenterUseHough (Image, HoughCenterRegion, 77, 100, 25, 40, 2, 1, 9, 31, 60, CenterRow, CenterColumn)</l>
+<c></c>
+<l>gen_circle(Circle, CenterRow, CenterColumn, 31)</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="FindCircleCenterUseHough">
+<interface>
+<io>
+<par name="Image"/>
+</io>
+<oo>
+<par name="HoughCenterRegion"/>
+</oo>
+<ic>
+<par name="CenterRow"/>
+<par name="CenterColumn"/>
+<par name="InnerRadius"/>
+<par name="OuterRadius"/>
+<par name="Sigma"/>
+<par name="MinGray"/>
+<par name="MaxGray"/>
+<par name="ExpectRadius"/>
+<par name="Percent"/>
+</ic>
+<oc>
+<par name="CenterRegionRow"/>
+<par name="CenterRegionColumn"/>
+</oc>
+</interface>
+<body>
+<l>gen_circle (OuterCircle, CenterRow, CenterColumn, OuterRadius)</l>
+<l>gen_circle (InnerCircle, CenterRow, CenterColumn, InnerRadius)</l>
+<c></c>
+<l>difference(OuterCircle,InnerCircle,RegionDifference)</l>
+<c></c>
+<l>reduce_domain(Image,RegionDifference, ImageReduced)</l>
+<c></c>
+<l>laplace_of_gauss(ImageReduced,ImageLaplace, Sigma)</l>
+<c></c>
+<l>threshold (ImageLaplace, Regions2, MinGray, MaxGray)</l>
+<c></c>
+<l>hough_circles(Regions2,RegionOut2, ExpectRadius, Percent, 0)</l>
+<c></c>
+<l>area_center(RegionOut2, Area, CenterRegionRow, CenterRegionColumn)</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="FindCircleCenterUseHough">
+<parameters>
+<parameter id="CenterColumn"/>
+<parameter id="CenterRegionColumn"/>
+<parameter id="CenterRegionRow"/>
+<parameter id="CenterRow"/>
+<parameter id="ExpectRadius"/>
+<parameter id="HoughCenterRegion"/>
+<parameter id="Image"/>
+<parameter id="InnerRadius"/>
+<parameter id="MaxGray"/>
+<parameter id="MinGray"/>
+<parameter id="OuterRadius"/>
+<parameter id="Percent"/>
+<parameter id="Sigma"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

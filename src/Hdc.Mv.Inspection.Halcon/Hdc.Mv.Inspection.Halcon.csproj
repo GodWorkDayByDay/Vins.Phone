@@ -56,6 +56,7 @@
     <Compile Include="Exports\EnhanceEdgeArea3.cs" />
     <Compile Include="Exports\ExtractCircleFunc.cs" />
     <Compile Include="Exports\ExtractEdgeLineFunc.cs" />
+    <Compile Include="Exports\FindCircleCenterUseHough.cs" />
     <Compile Include="Exports\FindS1404SurfaceA.cs" />
     <Compile Include="Exports\GetCalibratedImage.cs" />
     <Compile Include="Exports\GetCalibrationParameters.cs" />

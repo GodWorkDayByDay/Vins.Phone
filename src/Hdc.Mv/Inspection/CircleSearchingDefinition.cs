@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Windows.Markup;
 
 namespace Hdc.Mv.Inspection
 {
     // ReSharper disable InconsistentNaming
     [Serializable]
+    [ContentProperty("ProcessMethod")]
     public class CircleSearchingDefinition
     {
         public string Name { get; set; }
@@ -37,6 +39,26 @@ namespace Hdc.Mv.Inspection
         public SelectionMode Hal_SelectionMode { get; set; }
         public Transition Hal_Transition { get; set; }
         public CircleDirect Hal_Direct { get; set; }
+
+        public IProcessMethod ProcessMethod { get; set; }
     }
+
     // ReSharper restore InconsistentNaming
+
+    public interface IProcessMethod
+    {
+//        string Name { get; }
+    }
+
+    [Serializable]
+    public class HoughCircleDetectProcessMethod : IProcessMethod
+    {
+//        public string Name { get { return "HoughCircleDetect"; } }
+
+        public double Sigma { get; set; }
+        public int MinGray { get; set; }
+        public int MaxGray { get; set; }
+        public int ExpectRadius { get; set; }
+        public int Percent { get; set; }
+    }
 }

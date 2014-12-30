@@ -1,9 +1,0 @@
-﻿<InspectionSchema xmlns="clr-namespace:ODM.Inspectors.Halcon;assembly=Hdc.Mv.Inspection.Halcon"
-                  TestImageFilePath="sample\00007_ResizeY.bmp">
-  <InspectionSchema.SearchCircleDefinitions>
-    <SearchCircleDefinition CenterX="2797" CenterY="5155" InnerRadius="70" OuterRadius="120"/>
-    <SearchCircleDefinition CenterX="4893" CenterY="7267" InnerRadius="70" OuterRadius="120"/>
-  </InspectionSchema.SearchCircleDefinitions>
-  <InspectionSchema.SearchEdgeDefinitions>
-  </InspectionSchema.SearchEdgeDefinitions>
-</InspectionSchema>

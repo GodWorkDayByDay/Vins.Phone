@@ -10,10 +10,11 @@ namespace Hdc.Mv.Inspection
     {
         public InspectionSchema()
         {
-            EdgeSearchingDefinitions = new Collection<EdgeSearchingDefinition>();
-            CircleSearchingDefinitions = new Collection<CircleSearchingDefinition>();
-            DistanceBetweenLinesDefinitions = new Collection<DistanceBetweenLinesDefinition>();
             CoordinateCircles = new Collection<CircleSearchingDefinition>();
+            CircleSearchingDefinitions = new Collection<CircleSearchingDefinition>();
+            EdgeSearchingDefinitions = new Collection<EdgeSearchingDefinition>();
+            DistanceBetweenLinesDefinitions = new Collection<DistanceBetweenLinesDefinition>();
+            DistanceBetweenIntersectionPointsDefinitions = new Collection<DistanceBetweenLinesDefinition>();
         }
 
 //        public string InspectorName { get; set; }
@@ -40,6 +41,7 @@ namespace Hdc.Mv.Inspection
         public Collection<EdgeSearchingDefinition> EdgeSearchingDefinitions { get; set; }
         public Collection<CircleSearchingDefinition> CircleSearchingDefinitions { get; set; }
         public Collection<DistanceBetweenLinesDefinition> DistanceBetweenLinesDefinitions { get; set; }
+        public Collection<DistanceBetweenLinesDefinition> DistanceBetweenIntersectionPointsDefinitions { get; set; }
 
         public CoordinateType CoordinateType { get; set; }
 

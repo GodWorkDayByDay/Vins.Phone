@@ -54,11 +54,12 @@ namespace Hdc.Mv.Inspection.Halcon
                 //_verticalMeanImage = _hImage.MeanImage(1, 6);
                 //                _verticalMeanImage = _borderImage.MeanSp(3, 6, 120, 200);
                 //                _emphasizeVerticalMeanImage = _verticalMeanImage.Emphasize(7, 3, 5);
-
             }
 
             if (SaveCacheImages)
-                _emphasizeHorizontalMeanImage.ToImageInfo().ToBitmapSource().SaveToJpeg("_EmphasizeHorizontalMeanImage.jpg");
+                _emphasizeHorizontalMeanImage.ToImageInfo()
+                    .ToBitmapSource()
+                    .SaveToJpeg("_EmphasizeHorizontalMeanImage.jpg");
 
             if (SaveCacheImages)
                 _emphasizeVerticalMeanImage.ToImageInfo().ToBitmapSource().SaveToJpeg("_EmphasizeVerticalMeanImage.jpg");
@@ -71,7 +72,7 @@ namespace Hdc.Mv.Inspection.Halcon
         }
 
         public HDevelopExportHelper(ImageInfo imageInfo)
-            : this((HImage)imageInfo.To8BppHImage())
+            : this((HImage) imageInfo.To8BppHImage())
         {
         }
 
@@ -211,7 +212,7 @@ namespace Hdc.Mv.Inspection.Halcon
         public bool ExtractCircle(double centerX, double centerY, double innerCircleRadius, double outerCircleRadius,
                                   out Circle foundCircle, out double roundness,
                                   int regionsCount,
-            //                                  int regionHeight,
+                                  //                                  int regionHeight,
                                   int regionWidth,
                                   double sigma, double threshold, SelectionMode selectionMode, Transition transition,
                                   CircleDirect direct)
@@ -464,9 +465,9 @@ namespace Hdc.Mv.Inspection.Halcon
         }
 
         public HImage EnhanceEdgeArea2(HImage hImage, Line line, double hv_RoiWidthLen, int hv_EmpMaskWidth,
-                                      int hv_EmpMaskHeight, double hv_EmpMaskFactor, int hv_MeanMaskWidth,
-                                      int hv_MeanMaskHeight,
-                                      int hv_MinThresh, int hv_MaxThresh)
+                                       int hv_EmpMaskHeight, double hv_EmpMaskFactor, int hv_MeanMaskWidth,
+                                       int hv_MeanMaskHeight,
+                                       int hv_MinThresh, int hv_MaxThresh)
         {
             return EnhanceEdgeArea2(hImage, line.Y1, line.X1, line.Y2, line.X2, hv_RoiWidthLen, hv_EmpMaskWidth,
                 hv_EmpMaskHeight,
@@ -474,12 +475,12 @@ namespace Hdc.Mv.Inspection.Halcon
         }
 
         public HImage EnhanceEdgeArea2(HObject ho_InputImage,
-                                      double hv_LineStartPoint_Row, double hv_LineStartPoint_Column,
-                                      double hv_LineEndPoint_Row,
-                                      double hv_LineEndPoint_Column, double hv_RoiWidthLen, int hv_EmpMaskWidth,
-                                      int hv_EmpMaskHeight, double hv_EmpMaskFactor, int hv_MeanMaskWidth,
-                                      int hv_MeanMaskHeight,
-                                      int hv_MinThresh, int hv_MaxThresh)
+                                       double hv_LineStartPoint_Row, double hv_LineStartPoint_Column,
+                                       double hv_LineEndPoint_Row,
+                                       double hv_LineEndPoint_Column, double hv_RoiWidthLen, int hv_EmpMaskWidth,
+                                       int hv_EmpMaskHeight, double hv_EmpMaskFactor, int hv_MeanMaskWidth,
+                                       int hv_MeanMaskHeight,
+                                       int hv_MinThresh, int hv_MaxThresh)
         {
             HObject ho_EnhancedImage = null;
             HDevelopExport.EnhanceEdgeArea2(
@@ -496,9 +497,9 @@ namespace Hdc.Mv.Inspection.Halcon
         }
 
         public HImage EnhanceEdgeArea3(HImage ho_InputImage, int hv_EmpMaskWidth,
-                                      int hv_EmpMaskHeight, double hv_EmpMaskFactor, int hv_MeanMaskWidth,
-                                      int hv_MeanMaskHeight,
-                                      int hv_IterationCount, double hv_ScaleMult, double hv_ScaleAdd)
+                                       int hv_EmpMaskHeight, double hv_EmpMaskFactor, int hv_MeanMaskWidth,
+                                       int hv_MeanMaskHeight,
+                                       int hv_IterationCount, double hv_ScaleMult, double hv_ScaleAdd)
         {
             HObject ho_EnhancedImage = null;
             HDevelopExport.EnhanceEdgeArea3(
@@ -514,23 +515,23 @@ namespace Hdc.Mv.Inspection.Halcon
         }
 
         public HImage ReduceDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
-            double dilationWidth, double dilationHeight)
+                                               double dilationWidth, double dilationHeight)
         {
             return ReduceDomainForRectangle(hImage, line.Y1, line.X1, line.Y2, line.X2, hv_RoiWidthLen,
                 dilationWidth, dilationHeight);
         }
 
         public HImage ReduceDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
-            double margin)
+                                               double margin)
         {
             return ReduceDomainForRectangle(hImage, line, hv_RoiWidthLen, margin, margin);
         }
 
         public HImage ReduceDomainForRectangle(HObject ho_InputImage,
-                                      double hv_LineStartPoint_Row, double hv_LineStartPoint_Column,
-                                      double hv_LineEndPoint_Row,
-                                      double hv_LineEndPoint_Column, double hv_RoiWidthLen,
-                                      double hv_DilationWidth, double hv_DilationHeight)
+                                               double hv_LineStartPoint_Row, double hv_LineStartPoint_Column,
+                                               double hv_LineEndPoint_Row,
+                                               double hv_LineEndPoint_Column, double hv_RoiWidthLen,
+                                               double hv_DilationWidth, double hv_DilationHeight)
         {
             HObject ho_EnhancedImage = null;
             HDevelopExport.ReduceDomainForRectangle(
@@ -559,6 +560,41 @@ namespace Hdc.Mv.Inspection.Halcon
             if (_emphasizeHorizontalMeanImage != null) _emphasizeHorizontalMeanImage.Dispose();
             if (_emphasizeVerticalMeanImage != null) _emphasizeVerticalMeanImage.Dispose();
             if (_borderImage != null) _borderImage.Dispose();
+        }
+
+
+        public bool FindCircleCenterUseHough(HImage ho_Image,
+//                                             out HRegion hv_CenterRegion,
+                                             double hv_CenterRow, double hv_CenterColumn,
+                                             double hv_InnerRadius, double hv_OuterRadius, double hv_Sigma,
+                                             int hv_MinGray,
+                                             int hv_MaxGray, int hv_ExpectRadius, int hv_Percent,
+                                             out double hv_CenterRegionRow, out double hv_CenterRegionColumn)
+        {
+            HObject centerRegion;
+            HOperatorSet.GenEmptyObj(out centerRegion);
+            centerRegion.Dispose();
+
+            HTuple CenterRegionRow;
+            HTuple CenterRegionColumn;
+
+            HDevelopExport.FindCircleCenterUseHough(
+                ho_Image, out centerRegion, hv_CenterRow, hv_CenterColumn,
+                hv_InnerRadius, hv_OuterRadius, hv_Sigma, hv_MinGray,
+                hv_MaxGray, hv_ExpectRadius, hv_Percent,
+                out CenterRegionRow, out CenterRegionColumn
+                );
+
+//            hv_CenterRegion = new HRegion(centerRegion);
+            hv_CenterRegionRow = CenterRegionRow;
+            hv_CenterRegionColumn = CenterRegionColumn;
+
+            if (Math.Abs(hv_CenterRegionRow) > 0.000001 && Math.Abs(hv_CenterRegionColumn) > 0.000001)
+                return true;
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -1,0 +1,628 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  TestImageFilePath="D:\@\Vins.Phone\_Photos\Samsung S1404\2014-12-27, Measure test -3\12500, 280us, 1dB, 2dB\03\jpg\2014-12-27_16.22.54.jpg"
+                  CircleSearchingEnable="True"
+                  InspectorNameForCoordinate="Hal"
+                  InspectorNameForEdges="Hal"
+                  InspectorNameForCircles="Hal"
+                  InspectorNameForDefects="Sim"
+                  ImagePixelWidth="8192"
+                  ImagePixelHeight="12500"
+                  CoordinateType="VectorsCenter"
+                  CoordinateOriginOffsetEnable="True"
+                  CoordinateOriginOffsetX="-533.516"
+                  CoordinateOriginOffsetY="-539.359"
+                  EdgeSearching_EnhanceEdgeArea_Enable="True"
+                  EdgeSearching_EnhanceEdgeArea_SaveCacheImageEnable="False"
+                  EdgeSearching_EnhanceEdgeArea_SaveAllCacheImageEnable="False"
+                  >
+                  <!--Baseline or VextoraCenter or NearOrigin-->
+  <InspectionSchema.CoordinateCircles>
+    <CircleSearchingDefinition CenterX="3633"
+                               CenterY="3173"
+                               InnerRadius="22"
+                               OuterRadius="38"
+                               Name="O"
+                               
+                               Hal_RegionsCount="60"
+                               Hal_RegionWidth="10"
+                               Hal_Sigma="1"
+                               Hal_Threshold="7"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Positive"
+                               Hal_Direct="Inner"
+                               />
+                               
+    <CircleSearchingDefinition CenterX="3668"
+                               CenterY="10250"
+                               InnerRadius="22"
+                               OuterRadius="38"
+                               Name="R1"
+                               
+                               BaselineAngle="90"
+                               BaselineX="0"
+                               BaselineY="113.28275"
+                               
+                               Hal_RegionsCount="60"
+                               Hal_RegionWidth="10"
+                               Hal_Sigma="1"
+                               Hal_Threshold="7"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Positive"
+                               Hal_Direct="Inner"
+                               />
+                               <!-- -->
+    <CircleSearchingDefinition CenterX="4475"
+                               CenterY="7613"
+                               InnerRadius="120"
+                               OuterRadius="140"
+                               Name="R2"
+                               
+                               BaselineAngle="79.528422"
+                               BaselineX="13.13646"
+                               BaselineY="71.074762"
+
+                               Hal_RegionsCount="100"
+                               Hal_RegionWidth="20"
+                               Hal_Sigma="1"
+                               Hal_Threshold="25"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Positive"
+                               Hal_Direct="Outer"
+                               />
+                               
+    <CircleSearchingDefinition CenterX="4958"
+                               CenterY="7971"
+                               InnerRadius="120"
+                               OuterRadius="145"
+                               Name="R3"
+                               
+                               BaselineAngle="74.85129"
+                               BaselineX="20.81575"
+                               BaselineY="76.88667"
+
+                               Hal_RegionsCount="100"
+                               Hal_RegionWidth="20"
+                               Hal_Sigma="1"
+                               Hal_Threshold="25"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Positive"
+                               Hal_Direct="Outer"
+                               />
+
+  </InspectionSchema.CoordinateCircles>
+
+
+  <InspectionSchema.CircleSearchingDefinitions>
+  </InspectionSchema.CircleSearchingDefinitions>
+
+  <InspectionSchema.EdgeSearchingDefinitions>
+  
+  
+  <!--        -->
+    <EdgeSearchingDefinition Name="L1"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="40"
+                             LowThreshold="20"
+                             HighThreshold="40"
+                             FilterAlpha="6"
+                             Orientation="1"
+                             Polarity="0" 
+                             Hal_RegionsCount="25"
+                             Hal_RegionHeight="40"
+                             Hal_RegionWidth="40"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Vertical"
+                             Hal_EnhanceEdgeArea_SaveCacheImageEnabled="False"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="13"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="3"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="7"
+                             Hal_EnhanceEdgeArea_IterationCount="3"
+                             Hal_EnhanceEdgeArea_ScaleMult="1.6"
+                             
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-2363"
+              Y1="-4041"
+              X2="-2363"
+              Y2="-3041" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+
+    
+    <EdgeSearchingDefinition Name="L2"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="40"
+                             LowThreshold="20"
+                             HighThreshold="40"
+                             FilterAlpha="6"
+                             Orientation="1"
+                             Polarity="0"
+                             Hal_RegionsCount="25"
+                             Hal_RegionHeight="40"
+                             Hal_RegionWidth="40"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Vertical"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="13"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="3"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="7"
+                             Hal_EnhanceEdgeArea_IterationCount="3"
+                             Hal_EnhanceEdgeArea_ScaleMult="1.6"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-2360"
+              Y1="-500"
+              X2="-2360"
+              Y2="500" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+
+    
+    <EdgeSearchingDefinition Name="L3"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="40"
+                             LowThreshold="20"
+                             HighThreshold="40"
+                             FilterAlpha="6"
+                             Orientation="1"
+                             Polarity="0"
+                             Hal_RegionsCount="15"
+                             Hal_RegionHeight="40"
+                             Hal_RegionWidth="30"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Vertical"
+                             Hal_EnhanceEdgeArea_SaveCacheImageEnabled="False"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="13"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="3"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="7"
+                             Hal_EnhanceEdgeArea_IterationCount="3"
+                             Hal_EnhanceEdgeArea_ScaleMult="1.6"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-2352"
+              Y1="3341"
+              X2="-2352"
+              Y2="3741" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+    
+    <EdgeSearchingDefinition Name="R1"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="40"
+                             LowThreshold="20"
+                             HighThreshold="40"
+                             FilterAlpha="6"
+                             Orientation="1"
+                             Polarity="0"
+                             Hal_RegionsCount="25"
+                             Hal_RegionHeight="40"
+                             Hal_RegionWidth="40"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Vertical"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="13"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="3"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="7"
+                             Hal_EnhanceEdgeArea_IterationCount="3"
+                             Hal_EnhanceEdgeArea_ScaleMult="1.6"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="2410"
+              Y1="-3041"
+              X2="2410"
+              Y2="-4041" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+
+    <EdgeSearchingDefinition Name="R2"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="40"
+                             LowThreshold="20"
+                             HighThreshold="40"
+                             FilterAlpha="6"
+                             Orientation="1"
+                             Polarity="0"
+                             Hal_RegionsCount="25"
+                             Hal_RegionHeight="40"
+                             Hal_RegionWidth="40"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Vertical"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="13"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="3"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="7"
+                             Hal_EnhanceEdgeArea_IterationCount="3"
+                             Hal_EnhanceEdgeArea_ScaleMult="1.6"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="2410"
+              Y1="500"
+              X2="2410"
+              Y2="-500" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+
+    <EdgeSearchingDefinition Name="R3"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="40"
+                             LowThreshold="20"
+                             HighThreshold="40"
+                             FilterAlpha="6"
+                             Orientation="1"
+                             Polarity="0"
+                             Hal_RegionsCount="15"
+                             Hal_RegionHeight="50"
+                             Hal_RegionWidth="30"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Vertical"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="13"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="3"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="7"
+                             Hal_EnhanceEdgeArea_IterationCount="3"
+                             Hal_EnhanceEdgeArea_ScaleMult="1.6"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="2416"
+              Y1="3741"
+              X2="2416"
+              Y2="3341" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+
+    <EdgeSearchingDefinition Name="T1"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="50"
+                             LowThreshold="20"
+                             HighThreshold="40"
+                             FilterAlpha="6"
+                             Orientation="0"
+                             Polarity="0"
+                             Hal_RegionsCount="30"
+                             Hal_RegionHeight="50"
+                             Hal_RegionWidth="30"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Horizontal"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="15"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="7"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="2"
+                             Hal_EnhanceEdgeArea_IterationCount="4"
+                             Hal_EnhanceEdgeArea_ScaleMult="1.7"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-950"
+              Y1="-5178"
+              X2="-1550"
+              Y2="-5178" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+
+    <EdgeSearchingDefinition Name="T2"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="50"
+                             LowThreshold="20"
+                             HighThreshold="40"
+                             FilterAlpha="6"
+                             Orientation="0"
+                             Polarity="0"   
+                             Hal_RegionsCount="30"
+                             Hal_RegionHeight="50"
+                             Hal_RegionWidth="30"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Horizontal"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="15"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="7"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="2"
+                             Hal_EnhanceEdgeArea_IterationCount="4"
+                             Hal_EnhanceEdgeArea_ScaleMult="1.7"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="1550"
+              Y1="-5182"
+              X2="950"
+              Y2="-5182" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+    
+    <EdgeSearchingDefinition Name="B1"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="50"
+                             LowThreshold="20"
+                             HighThreshold="40"
+                             FilterAlpha="6"
+                             Orientation="0"
+                             Polarity="0"
+                             Hal_RegionsCount="30"
+                             Hal_RegionHeight="50"
+                             Hal_RegionWidth="50"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Horizontal"
+                             Hal_EnhanceEdgeArea_SaveCacheImageEnabled="False"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="15"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="7"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="3"
+                             Hal_EnhanceEdgeArea_IterationCount="4"
+                             Hal_EnhanceEdgeArea_ScaleMult="1.7"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-1750"
+              Y1="4224"
+              X2="-750"
+              Y2="4224" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+
+    <EdgeSearchingDefinition Name="B2"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="50"
+                             LowThreshold="20"
+                             HighThreshold="40"
+                             FilterAlpha="6"
+                             Orientation="0"
+                             Polarity="0"  
+                             Hal_RegionsCount="30"
+                             Hal_RegionHeight="50"
+                             Hal_RegionWidth="50"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Horizontal"
+                             Hal_EnhanceEdgeArea_SaveCacheImageEnabled="False"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="15"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="7"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="3"
+                             Hal_EnhanceEdgeArea_IterationCount="4"
+                             Hal_EnhanceEdgeArea_ScaleMult="1.7"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="750"
+              Y1="4224"
+              X2="1750"
+              Y2="4224" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+    
+    
+    <EdgeSearchingDefinition Name="ThickBottom"
+                             ROIWidth="50"
+                             
+                             Hal_RegionsCount="30"
+                             Hal_RegionHeight="50"
+                             Hal_RegionWidth="50"
+                             Hal_Sigma="1"
+                             Hal_Threshold="100"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Horizontal"
+                             Hal_EnhanceEdgeArea_SaveCacheImageEnabled="False"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="15"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="15"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="3"
+                             Hal_EnhanceEdgeArea_IterationCount="1"
+                             Hal_EnhanceEdgeArea_ScaleMult="1.7"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-1050"
+              Y1="4324"
+              X2="-1650"
+              Y2="4324" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+    <EdgeSearchingDefinition Name="ThickTop"
+                             ROIWidth="50"
+                             
+                             Hal_RegionsCount="30"
+                             Hal_RegionHeight="50"
+                             Hal_RegionWidth="50"
+                             Hal_Sigma="1"
+                             Hal_Threshold="50"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Positive"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Horizontal"
+                             Hal_EnhanceEdgeArea_SaveCacheImageEnabled="True"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="15"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="15"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="3"
+                             Hal_EnhanceEdgeArea_IterationCount="1"
+                             Hal_EnhanceEdgeArea_ScaleMult="1.7"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-1550"
+              Y1="4104"
+              X2="-1150"
+              Y2="4104" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+     
+        <EdgeSearchingDefinition Name="LeftButtonL1"
+                             ROIWidth="40"
+                             
+                             Hal_RegionsCount="25"
+                             Hal_RegionHeight="40"
+                             Hal_RegionWidth="40"
+                             Hal_Sigma="1"
+                             Hal_Threshold="50"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Vertical"
+                             Hal_EnhanceEdgeArea_SaveCacheImageEnabled="True"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="13"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="3"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="7"
+                             Hal_EnhanceEdgeArea_IterationCount="1"
+                             Hal_EnhanceEdgeArea_ScaleMult="2"
+                             
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-2783"
+              Y1="-3741"
+              X2="-2783"
+              Y2="-3341" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+
+        <EdgeSearchingDefinition Name="LeftButtonR1"
+                             ROIWidth="40"
+                             
+                             Hal_RegionsCount="25"
+                             Hal_RegionHeight="40"
+                             Hal_RegionWidth="40"
+                             Hal_Sigma="1"
+                             Hal_Threshold="50"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             Hal_EnhanceEdgeArea_Enabled="True"
+                             Hal_EnhanceEdgeArea_Orientation="Vertical"
+                             Hal_EnhanceEdgeArea_SaveCacheImageEnabled="True"
+                             
+                             Hal_EnhanceEdgeArea_EmpMaskWidth="3"
+                             Hal_EnhanceEdgeArea_EmpMaskHeight="3"
+                             Hal_EnhanceEdgeArea_EmpMaskFactor="13"
+                             Hal_EnhanceEdgeArea_MeanMaskWidth="3"
+                             Hal_EnhanceEdgeArea_MeanMaskHeight="7"
+                             Hal_EnhanceEdgeArea_IterationCount="1"
+                             Hal_EnhanceEdgeArea_ScaleMult="2"
+                             
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-2673"
+              Y1="-3341"
+              X2="-2673"
+              Y2="-3741" />
+      </EdgeSearchingDefinition.RelativeLine>
+    </EdgeSearchingDefinition>
+  </InspectionSchema.EdgeSearchingDefinitions>
+  
+  <InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+  <!--   -->
+      <DistanceBetweenLinesDefinition Name="L1R1" Line1Name="L1" Line2Name="R1"/>
+      <DistanceBetweenLinesDefinition Name="L2R2" Line1Name="L2" Line2Name="R2"/>
+      <DistanceBetweenLinesDefinition Name="L3R3" Line1Name="L3" Line2Name="R3"/>
+      <DistanceBetweenLinesDefinition Name="T1B1" Line1Name="T1" Line2Name="B1"/>
+      <DistanceBetweenLinesDefinition Name="T2B2" Line1Name="T2" Line2Name="B2"/>
+            <DistanceBetweenLinesDefinition Name="Thick" Line1Name="ThickTop" Line2Name="ThickBottom"/>
+          
+            <DistanceBetweenLinesDefinition Name="LeftButtonWidth1" Line1Name="LeftButtonL1" Line2Name="LeftButtonR1"/>
+  </InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+  
+</InspectionSchema>

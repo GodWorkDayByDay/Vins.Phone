@@ -1,9 +1,0 @@
-﻿<InspectionSchema xmlns="clr-namespace:ODM.Inspectors.Halcon;assembly=Hdc.Mv.Inspection.Halcon"
-                  TestImageFilePath="D:\@\Hdc.Mv\image to upload\00007_ResizeY.bmp"
-                  CropRect="2177,2213,582,458" EnableSearchCircle="True">
-  <InspectionSchema.SearchCircleDefinitions>
-    <SearchCircleDefinition CenterX="298" CenterY="246" InnerRadius="65" OuterRadius="80"/>
-  </InspectionSchema.SearchCircleDefinitions>
-  <InspectionSchema.SearchEdgeDefinitions>
-  </InspectionSchema.SearchEdgeDefinitions>
-</InspectionSchema>
