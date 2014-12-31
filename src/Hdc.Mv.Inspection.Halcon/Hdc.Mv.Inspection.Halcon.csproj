@@ -48,6 +48,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoordinateCircleCalculator.cs" />
     <Compile Include="CropImage.cs" />
     <Compile Include="Exports\Calibrate.cs" />
     <Compile Include="Exports\DistanceOfLineToLineFunc.cs" />

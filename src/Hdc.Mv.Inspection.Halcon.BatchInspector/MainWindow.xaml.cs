@@ -108,6 +108,7 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
             var c = new BatchInspectorConfig();
             c.Directories.AddRange(Directories);
             c.InspectionSchemaFileName = InspectionSchemaTextBox.Text;
+            c.InspectionReportFileName = InspectionReportTextBox.Text;
 
             c.SerializeToXamlFile(configFileName);
         }
@@ -123,6 +124,7 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
             Directories.AddRange(config.Directories);
 
             InspectionSchemaTextBox.Text = config.InspectionSchemaFileName;
+            InspectionReportTextBox.Text = config.InspectionReportFileName;
         }
 
         private void StartButton_OnClick(object sender, RoutedEventArgs e)
@@ -215,74 +217,74 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
             foreach (var fileName in fileNames)
             {
                 string name = fileName;
-//                var task = new Task(
-//                    (x) =>
-//                    {
+                //                var task = new Task(
+                //                    (x) =>
+                //                    {
                 var fn = (string)name;
-                        Debug.WriteLine("Task.Started: " + fn);
+                Debug.WriteLine("Task.Started: " + fn);
 
-                        BitmapImage bi = null;
-                        try
-                        {
-                            Debug.WriteLine("BitmapImage() begin");
-                            bi = new BitmapImage(new Uri(fn, UriKind.RelativeOrAbsolute));
-                            Debug.WriteLine("BitmapImage() end");
-                        }
-                        catch (Exception e2)
-                        {
-                            MessageBox.Show("BitmapImage loading error: " + fn);
-                        }
+                BitmapImage bi = null;
+                try
+                {
+                    Debug.WriteLine("BitmapImage() begin");
+                    bi = new BitmapImage(new Uri(fn, UriKind.RelativeOrAbsolute));
+                    Debug.WriteLine("BitmapImage() end");
+                }
+                catch (Exception e2)
+                {
+                    MessageBox.Show("BitmapImage loading error: " + fn);
+                }
 
-                        Debug.WriteLine("ToImageInfoWith8Bpp() begin");
-                        var imageInfo = bi.ToImageInfoWith8Bpp();
-                        Debug.WriteLine("ToImageInfoWith8Bpp() end");
+                Debug.WriteLine("ToImageInfoWith8Bpp() begin");
+                var imageInfo = bi.ToImageInfoWith8Bpp();
+                Debug.WriteLine("ToImageInfoWith8Bpp() end");
 
-                        using (var inspectionController = new InspectionController())
-                        {
-                            inspectionController
-                               .SetInspectorFactory(_inspectorFactory);
+                using (var inspectionController = new InspectionController())
+                {
+                    inspectionController
+                       .SetInspectorFactory(_inspectorFactory);
 
-                            inspectionController
-                                .StartInspect()
-                                .SetInspectionSchema(schema.DeepClone())
-                                .SetImageInfo(imageInfo)
-                                .CreateCoordinate()
-                                .Inspect()
-                                ;
+                    inspectionController
+                        .StartInspect()
+                        .SetInspectionSchema(schema.DeepClone())
+                        .SetImageInfo(imageInfo)
+                        .CreateCoordinate()
+                        .Inspect()
+                        ;
 
-                            Debug.WriteLine("ACT.X " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterX);
-                            Debug.WriteLine("ACT.Y " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterY);
+                    Debug.WriteLine("ACT.X " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterX);
+                    Debug.WriteLine("ACT.Y " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterY);
 
-                            inspectionController.InspectionResult.Comment = fn;
+                    inspectionController.InspectionResult.Comment = fn;
 
-                            inspectionResults.Add(inspectionController.InspectionResult);
-                        }
+                    inspectionResults.Add(inspectionController.InspectionResult);
+                }
 
-                        //                var targetTask = new SearchingTask();
-                        //                foreach (var csd in schema.CircleSearchingDefinitions)
-                        //                {
-                        //                    var relativeVector = new Vector(csd.BaselineX*1000.0/16.0, csd.BaselineY*1000.0/16.0);
-                        //                    var originalVector = coord.GetOriginalVector(relativeVector);
-                        //                    csd.CenterX = originalVector.X;
-                        //                    csd.CenterY = originalVector.Y;
-                        //                }
-                        //                targetTask.CircleDefinitions.AddRange(schema.CircleSearchingDefinitions);
-                        //
-                        //
-                        //                var targetResult = inspector.Search(imageInfo, targetTask);
-                        //
-                        //                targetResult.CircleSearchingResults.UpdateRelativeCircles(coord);
-                     
-//                    }, name);
-//                tasks.Add(task);
-//                task.Start();
+                //                var targetTask = new SearchingTask();
+                //                foreach (var csd in schema.CircleSearchingDefinitions)
+                //                {
+                //                    var relativeVector = new Vector(csd.BaselineX*1000.0/16.0, csd.BaselineY*1000.0/16.0);
+                //                    var originalVector = coord.GetOriginalVector(relativeVector);
+                //                    csd.CenterX = originalVector.X;
+                //                    csd.CenterY = originalVector.Y;
+                //                }
+                //                targetTask.CircleDefinitions.AddRange(schema.CircleSearchingDefinitions);
+                //
+                //
+                //                var targetResult = inspector.Search(imageInfo, targetTask);
+                //
+                //                targetResult.CircleSearchingResults.UpdateRelativeCircles(coord);
+
+                //                    }, name);
+                //                tasks.Add(task);
+                //                task.Start();
 
             }
 
             Task.WaitAll(tasks.ToArray());
 
             var coordinateResultGroups = inspectionResults.Select(x => x.CoordinateCircles).ToList();
-            var objectsResultGroups = inspectionResults.Select(x => x.Circles).ToList();
+            List<CircleSearchingResultCollection> objectsResultGroups = inspectionResults.Select(x => x.Circles).ToList();
 
             foreach (var task in objectsResultGroups)
             {
@@ -316,7 +318,11 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
             // SaveToXaml
             ReportManager.SaveToXaml(coordinateResultGroups, exportDir, "Coordinate");
             ReportManager.SaveToXaml(objectsResultGroups, exportDir, "Objects");
+            ReportManager.SaveToXaml(inspectionResults, exportDir, "All");
             Debug.WriteLine("SaveToXaml() end");
+
+
+            var cs = CoordinateCircleCalculator.Calculate(inspectionResults);
 
 
             //            var allResultGroup = new List<CircleSearchingResultCollection>();
@@ -354,6 +360,52 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
             Save();
 
             MessageBox.Show(configFileName + " has saved.");
+        }
+
+        private void CalculateButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Save();
+
+            var fileName = InspectionReportTextBox.Text;
+
+            var inspectionReport = fileName.DeserializeFromXamlFile<InspectionReport>();
+
+            var cs = CoordinateCircleCalculator.Calculate(inspectionReport.Results);
+
+            var dt = DateTime.Now.ToString("_yyyy-MM-dd_HH.mm.ss");
+
+            var newFileName = fileName + dt + ".csv";
+            using (var csvWriterContainer = new CsvWriterContainer(newFileName))
+            {
+                var writer = csvWriterContainer.CsvWriter;
+
+                writer.WriteField("Name.");
+                writer.WriteField("X");
+                writer.WriteField("Y");
+                writer.WriteField("Angle");
+                writer.WriteField("Length");
+                writer.WriteField("|");
+                writer.WriteField("X mm");
+                writer.WriteField("Y mm");
+                writer.WriteField("Angle");
+                writer.NextRecord();
+
+                foreach (ReferenceCircleInfo c in cs)
+                {
+                    writer.WriteField(c.Name);
+                    writer.WriteField(c.Offset.X);
+                    writer.WriteField(c.Offset.Y);
+                    writer.WriteField(c.Angle);
+                    writer.WriteField(c.Length);
+                    writer.WriteField("|");
+                    writer.WriteField(c.Offset.X.ToNumbericStringInMillimeterFromPixel(16));
+                    writer.WriteField(c.Offset.Y.ToNumbericStringInMillimeterFromPixel(16));
+                    writer.WriteField(c.Angle);
+                    writer.NextRecord();
+                }
+            }
+
+            MessageBox.Show(newFileName + " has exported.");
         }
     }
 }

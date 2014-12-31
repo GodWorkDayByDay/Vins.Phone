@@ -6,6 +6,8 @@
 
         public string InspectionSchemaFileName { get; set; }
 
+        public string InspectionReportFileName { get; set; }
+
         public BatchInspectorConfig()
         {
             Directories = new DirectoryViewModelCollection();

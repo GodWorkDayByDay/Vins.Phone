@@ -387,6 +387,24 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
             report.SerializeToXamlFile(fileFullName);
         }
 
+
+        public static void SaveToXaml(IEnumerable<InspectionResult> tasks, string dir,
+                                      string suffix = null)
+        {
+            var report = new InspectionReport();
+
+            foreach (var task in tasks)
+            {
+                report.Results.Add(task);
+            }
+
+            DateTime dateTime = DateTime.Now;
+            var fileName = dateTime.ToString("yyyy-MM-dd_HH.mm.ss_") + suffix + "" + ".xaml";
+            //            var reportsDir = Path.Combine(dir, "_reports" + dateTime.ToString("_yyyy-MM-dd_HH.mm.ss"));
+            var fileFullName = Path.Combine(dir, fileName);
+            report.SerializeToXamlFile(fileFullName);
+        }
+
         public static void SaveCsvGroupByEdge(IList<DistanceBetweenPointsResultCollection> tasks, string dir, string suffix = null)
         {
             DateTime dateTime = DateTime.Now;
