@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>dev_set_draw('margin')</l>
+<c></c>
+<c></c>
+<c>* demo1</c>
+<l>read_image(Image, '2014-12-27_15.26.26_A_TopMiddle.tif')</l>
+<l>get_image_size(Image, Width, Height)</l>
+<l>get_domain(Image, Domain)</l>
+<l>GetRegionByGrowing (Image, Domain, FoundRegion, 5, 1, 1, 2, 1000, 5, 1, 1, 25000, 99999999999, 0, 99999999999, 0, 99999999999)</l>
+<l>stop()</l>
+<c></c>
+<c>* demo2</c>
+<l>read_image(Image, '2014-12-27_16.09.18_B_Bottom.tif')</l>
+<l>get_image_size(Image, Width, Height)</l>
+<l>get_domain(Image, Domain)</l>
+<l>GetRegionByGrowing (Image, Domain, FoundRegion, 5, 1, 1, 2, 1000, 5, 1, 1, 500000, 99999999999, 0, 99999999999, 0, 99999999999)</l>
+<l>stop()</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="GetRegionByGrowing">
+<interface>
+<io>
+<par name="Image" base_type="iconic" dimension="0"/>
+<par name="Domain" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="FoundRegion" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="MedianRadius" base_type="ctrl" dimension="0"/>
+<par name="GrowingRow" base_type="ctrl" dimension="0"/>
+<par name="GrowingColumn" base_type="ctrl" dimension="0"/>
+<par name="GrowingTolerance" base_type="ctrl" dimension="0"/>
+<par name="GrowingMinSize" base_type="ctrl" dimension="0"/>
+<par name="ClosingCircleRadius" base_type="ctrl" dimension="0"/>
+<par name="ClosingRectangleWidth" base_type="ctrl" dimension="0"/>
+<par name="ClosingRectangleHeight" base_type="ctrl" dimension="0"/>
+<par name="AreaMin" base_type="ctrl" dimension="0"/>
+<par name="AreaMax" base_type="ctrl" dimension="0"/>
+<par name="RowMin" base_type="ctrl" dimension="0"/>
+<par name="RowMax" base_type="ctrl" dimension="0"/>
+<par name="ColumnMin" base_type="ctrl" dimension="0"/>
+<par name="ColumnMax" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>reduce_domain(Image, Domain, MaskImage)</l>
+<c></c>
+<l>median_image (MaskImage, ImageMedian, 'circle', MedianRadius, 'continued')</l>
+<l>regiongrowing (ImageMedian, Regions, GrowingRow, GrowingColumn, GrowingTolerance, GrowingMinSize)</l>
+<l>fill_up (Regions, RegionFillUp)</l>
+<l>closing_circle (RegionFillUp, RegionClosing, ClosingCircleRadius)</l>
+<l>closing_rectangle1(RegionClosing,RegionClosing2,ClosingRectangleWidth,ClosingRectangleHeight)</l>
+<c></c>
+<l>select_shape (RegionClosing2, RegionsByArea, 'area', 'and', AreaMin, AreaMax)</l>
+<l>select_shape (RegionsByArea, RegionsByRow, 'row', 'and', RowMin, RowMax)</l>
+<l>select_shape (RegionsByRow, RegionsByColumn, 'column', 'and', ColumnMin, ColumnMax)</l>
+<c></c>
+<l>move_region(RegionsByColumn, FoundRegion, 0, 0)</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="GetRegionByGrowing">
+<parameters>
+<parameter id="AreaMax">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="AreaMin">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ClosingCircleRadius">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ClosingRectangleHeight">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ClosingRectangleWidth">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ColumnMax">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ColumnMin">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="Domain">
+<sem_type>region</sem_type>
+</parameter>
+<parameter id="FoundRegion">
+<sem_type>region</sem_type>
+</parameter>
+<parameter id="GrowingColumn">
+<sem_type>extent.x</sem_type>
+</parameter>
+<parameter id="GrowingMinSize">
+<default_type>integer</default_type>
+<sem_type>integer</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="GrowingRow">
+<sem_type>extent.y</sem_type>
+</parameter>
+<parameter id="GrowingTolerance">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="Image">
+<sem_type>image</sem_type>
+<type_list>
+<item>byte</item>
+</type_list>
+</parameter>
+<parameter id="MedianRadius">
+<default_type>integer</default_type>
+<sem_type>integer</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="RowMax">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="RowMin">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>
