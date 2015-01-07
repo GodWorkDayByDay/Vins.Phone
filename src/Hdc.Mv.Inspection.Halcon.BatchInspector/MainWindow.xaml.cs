@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -16,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HalconDotNet;
 using Hdc.Collections.Generic;
 using Hdc.Collections.ObjectModel;
 using Hdc.Linq;
@@ -212,72 +214,104 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
             // Inspect
             IList<InspectionResult> inspectionResults = new List<InspectionResult>();
 
-            IList<Task> tasks = new List<Task>();
+//            IList<ImageInfo> imageInfos = new List<ImageInfo>();
+            IList<HImage> images = new List<HImage>();
 
             foreach (var fileName in fileNames)
             {
                 string name = fileName;
-                //                var task = new Task(
-                //                    (x) =>
-                //                    {
+
                 var fn = (string)name;
                 Debug.WriteLine("Task.Started: " + fn);
+                
+//                BitmapImage bi = null;
+//                try
+//                {
+//                    Debug.WriteLine("BitmapImage() begin");
+//                    bi = new BitmapImage(new Uri(fn, UriKind.RelativeOrAbsolute));
+//                    Debug.WriteLine("BitmapImage() end");
+//                }
+//                catch (Exception e2)
+//                {
+//                    MessageBox.Show("BitmapImage loading error: " + fn);
+//                }
+//
+//                Debug.WriteLine("ToImageInfoWith8Bpp() begin");
+//                var imageInfo = bi.ToImageInfoWith8Bpp();
+//                Debug.WriteLine("ToImageInfoWith8Bpp() end");
+//
+//                imageInfos.Add(imageInfo);
 
-                BitmapImage bi = null;
-                try
-                {
-                    Debug.WriteLine("BitmapImage() begin");
-                    bi = new BitmapImage(new Uri(fn, UriKind.RelativeOrAbsolute));
-                    Debug.WriteLine("BitmapImage() end");
-                }
-                catch (Exception e2)
-                {
-                    MessageBox.Show("BitmapImage loading error: " + fn);
-                }
+                images.Add(new HImage(name));
+            }
 
-                Debug.WriteLine("ToImageInfoWith8Bpp() begin");
-                var imageInfo = bi.ToImageInfoWith8Bpp();
-                Debug.WriteLine("ToImageInfoWith8Bpp() end");
+            IList<Task> tasks = new List<Task>();
 
-                using (var inspectionController = new InspectionController())
-                {
-                    inspectionController
-                       .SetInspectorFactory(_inspectorFactory);
+            foreach (var imageInfo in images)
+            {
+//                string name = fileName;
+                var imageInfo2 = imageInfo;
+                var task = new Task(
+                    (x) =>
+                    {
+                        HImage imageInfo3 = (HImage)imageInfo2;
+//                        Debug.WriteLine("Task.Started: " + fn);
+//
+//                        BitmapImage bi = null;
+//                        try
+//                        {
+//                            Debug.WriteLine("BitmapImage() begin");
+//                            bi = new BitmapImage(new Uri(fn, UriKind.RelativeOrAbsolute));
+//                            Debug.WriteLine("BitmapImage() end");
+//                        }
+//                        catch (Exception e2)
+//                        {
+//                            MessageBox.Show("BitmapImage loading error: " + fn);
+//                        }
+//
+//                        Debug.WriteLine("ToImageInfoWith8Bpp() begin");
+//                        var imageInfo = bi.ToImageInfoWith8Bpp();
+//                        Debug.WriteLine("ToImageInfoWith8Bpp() end");
 
-                    inspectionController
-                        .StartInspect()
-                        .SetInspectionSchema(schema.DeepClone())
-                        .SetImageInfo(imageInfo)
-                        .CreateCoordinate()
-                        .Inspect()
-                        ;
+                        using (var inspectionController = new InspectionController())
+                        {
+                            inspectionController
+                               .SetInspectorFactory(_inspectorFactory);
 
-                    Debug.WriteLine("ACT.X " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterX);
-                    Debug.WriteLine("ACT.Y " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterY);
+                            inspectionController
+                                .StartInspect()
+                                .SetInspectionSchema(schema.DeepClone())
+                                .SetImageInfo(imageInfo3)
+                                .CreateCoordinate()
+                                .Inspect()
+                                ;
 
-                    inspectionController.InspectionResult.Comment = fn;
+                            Debug.WriteLine("ACT.X " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterX);
+                            Debug.WriteLine("ACT.Y " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterY);
 
-                    inspectionResults.Add(inspectionController.InspectionResult);
-                }
+                            inspectionController.InspectionResult.Comment = "";
 
-                //                var targetTask = new SearchingTask();
-                //                foreach (var csd in schema.CircleSearchingDefinitions)
-                //                {
-                //                    var relativeVector = new Vector(csd.BaselineX*1000.0/16.0, csd.BaselineY*1000.0/16.0);
-                //                    var originalVector = coord.GetOriginalVector(relativeVector);
-                //                    csd.CenterX = originalVector.X;
-                //                    csd.CenterY = originalVector.Y;
-                //                }
-                //                targetTask.CircleDefinitions.AddRange(schema.CircleSearchingDefinitions);
-                //
-                //
-                //                var targetResult = inspector.Search(imageInfo, targetTask);
-                //
-                //                targetResult.CircleSearchingResults.UpdateRelativeCircles(coord);
+                            inspectionResults.Add(inspectionController.InspectionResult);
+                        }
 
-                //                    }, name);
-                //                tasks.Add(task);
-                //                task.Start();
+                        //                var targetTask = new SearchingTask();
+                        //                foreach (var csd in schema.CircleSearchingDefinitions)
+                        //                {
+                        //                    var relativeVector = new Vector(csd.BaselineX*1000.0/16.0, csd.BaselineY*1000.0/16.0);
+                        //                    var originalVector = coord.GetOriginalVector(relativeVector);
+                        //                    csd.CenterX = originalVector.X;
+                        //                    csd.CenterY = originalVector.Y;
+                        //                }
+                        //                targetTask.CircleDefinitions.AddRange(schema.CircleSearchingDefinitions);
+                        //
+                        //
+                        //                var targetResult = inspector.Search(imageInfo, targetTask);
+                        //
+                        //                targetResult.CircleSearchingResults.UpdateRelativeCircles(coord);
+
+                    }, imageInfo);
+                tasks.Add(task);
+                task.Start();
 
             }
 

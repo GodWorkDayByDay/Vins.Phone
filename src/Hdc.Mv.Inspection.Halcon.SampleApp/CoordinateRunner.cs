@@ -14,7 +14,7 @@ namespace Hdc.Mv.Inspection.Halcon.SampleApp
             InspectionController
               .StartInspect()
               .SetInspectionSchema()
-              .SetImageInfo(imageInfo)
+              .SetImageInfo(imageInfo.To8BppHImage())
               .CreateCoordinate()
 //              .Inspect()
               ;

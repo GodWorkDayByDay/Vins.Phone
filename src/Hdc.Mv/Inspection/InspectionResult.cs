@@ -12,16 +12,18 @@ namespace Hdc.Mv.Inspection
             CoordinateCircles = new CircleSearchingResultCollection();
             Circles = new CircleSearchingResultCollection();
             Edges = new EdgeSearchingResultCollection();
-//            DistanceBetweenLinesResults = new DistanceBetweenLinesResultCollection();
+            DistanceBetweenLinesResults = new DistanceBetweenLinesResultCollection();
             DistanceBetweenPointsResults = new DistanceBetweenPointsResultCollection();
             DefectResults = new DefectResultCollection();
+            ClosedRegionResults = new ClosedRegionResultCollection();
         }
 
         public CircleSearchingResultCollection CoordinateCircles { get; set; }
         public CircleSearchingResultCollection Circles { get; set; }
         public EdgeSearchingResultCollection Edges { get; set; }
-//        public DistanceBetweenLinesResultCollection DistanceBetweenLinesResults { get; set; }
+        public DistanceBetweenLinesResultCollection DistanceBetweenLinesResults { get; set; }
         public DistanceBetweenPointsResultCollection DistanceBetweenPointsResults { get; set; }
         public DefectResultCollection DefectResults { get; set; }
+        public ClosedRegionResultCollection ClosedRegionResults { get; set; }
     }
 }

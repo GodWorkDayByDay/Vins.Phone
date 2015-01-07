@@ -27,6 +27,11 @@ namespace Hdc.Mv
         public static IRelativeCoordinate CreateCoordinate(IList<Vector> actualVectors,
                                                            IList<Vector> expectVectors)
         {
+            if (actualVectors.Count == 0 || expectVectors.Count == 0)
+            {
+                return new MockRelativeCoordinate();
+            }
+
 //            var actualVectors = actualVectors2.ToList();
 //            var expectVectors = expectVectors2.Select(x => new Vector(
 //                x.X * 1000.0 / 16.0,

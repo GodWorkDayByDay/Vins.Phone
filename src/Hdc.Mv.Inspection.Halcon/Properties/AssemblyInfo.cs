@@ -5,6 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
+using System.Windows.Markup;
+
 [assembly: AssemblyTitle("Hdc.Mv.Inspection.Halcon")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
@@ -34,3 +36,9 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+[assembly: XmlnsPrefix("http://schemas.hdcrd.com/mv", "hdc")]
+[assembly: XmlnsDefinition("http://schemas.hdcrd.com/mv", "Hdc.Mv")]
+[assembly: XmlnsDefinition("http://schemas.hdcrd.com/mv", "Hdc.Mv.Inspection")]
+[assembly: XmlnsDefinition("http://schemas.hdcrd.com/mv", "Hdc.Mv.Inspection.Halcon")]
+

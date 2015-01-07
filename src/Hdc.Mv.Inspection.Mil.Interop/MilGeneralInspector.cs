@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
 using System.Windows;
+using HalconDotNet;
 using Hdc.Collections.Generic;
+using Hdc.Mv.Inspection.Halcon;
 using Hdc.Mv.Inspection.Mil.Interop;
 using Omu.ValueInjecter;
 
@@ -47,9 +49,9 @@ namespace Hdc.Mv.Inspection.Mil
             return inspectionResult;
         }
 
-        public InspectionResult Inspect(ImageInfo imageInfo, InspectionSchema inspectionSchema)
+        public InspectionResult Inspect(HImage imageInfo, InspectionSchema inspectionSchema)
         {
-            SetImageInfo(_imageInfo);
+            SetImageInfo(imageInfo);
             return Inspect(inspectionSchema);
         }
 
@@ -82,18 +84,18 @@ namespace Hdc.Mv.Inspection.Mil
             return inspectionResult;
         }
 
-        public CircleSearchingResultCollection SearchCircles(ImageInfo imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions)
+        public CircleSearchingResultCollection SearchCircles(HImage imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions)
         {
             SetImageInfo(imageInfo);
             return SearchCircles(circleSearchingDefinitions);
         }
 
-        public EdgeSearchingResultCollection SearchEdges(ImageInfo imageInfo, IList<EdgeSearchingDefinition> edgeSearchingDefinitions)
+        public EdgeSearchingResultCollection SearchEdges(HImage imageInfo, IList<EdgeSearchingDefinition> edgeSearchingDefinitions)
         {
             throw new NotImplementedException();
         }
 
-        public DefectResultCollection SearchDefects(ImageInfo imageInfo)
+        public DefectResultCollection SearchDefects(HImage imageInfo)
         {
             var drs = new DefectResultCollection();
             //            return drs;
@@ -102,7 +104,7 @@ namespace Hdc.Mv.Inspection.Mil
 
             int errorCode = 0;
 
-            errorCode = InteropApi.InspectCalculate(imageInfo, imageInfo, out inspectInfo);
+            errorCode = InteropApi.InspectCalculate(_imageInfo, imageInfo.ToImageInfo(), out inspectInfo);
 
             if (errorCode != 0)
                 throw new MilInteropException("InteropApi.InspectCalculate", errorCode);
@@ -122,7 +124,7 @@ namespace Hdc.Mv.Inspection.Mil
             return drs;
         }
 
-        public DefectResultCollection SearchDefects(ImageInfo imageInfo, ImageInfo mask)
+        public DefectResultCollection SearchDefects(HImage imageInfo, HImage mask)
         {
             var drs = new DefectResultCollection();
 
@@ -130,7 +132,7 @@ namespace Hdc.Mv.Inspection.Mil
 
             int errorCode = 0;
 
-            errorCode = InteropApi.InspectCalculate(imageInfo, mask, out inspectInfo);
+            errorCode = InteropApi.InspectCalculate(imageInfo.ToImageInfo(), mask.ToImageInfo(), out inspectInfo);
 
             if (errorCode != 0)
                 throw new MilInteropException("InteropApi.InspectCalculate", errorCode);
@@ -150,12 +152,12 @@ namespace Hdc.Mv.Inspection.Mil
             return drs;
         }
 
-        public ImageInfo FindRegions(ImageInfo imageInfo)
+        public HImage FindRegions(HImage imageInfo)
         {
             throw new NotImplementedException();
         }
 
-        public ImageInfo FindRegions()
+        public HImage FindRegions()
         {
             throw new NotImplementedException();
         }
@@ -258,9 +260,9 @@ namespace Hdc.Mv.Inspection.Mil
             InteropApi.InitApp(8192, 12500);
         }
 
-        public void SetImageInfo(ImageInfo imageInfo)
+        public void SetImageInfo(HImage imageInfo)
         {
-            _imageInfo = imageInfo;
+            _imageInfo = imageInfo.ToImageInfo();
         }
 
         public void Init(int width, int height)

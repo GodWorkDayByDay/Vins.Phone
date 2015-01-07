@@ -40,4 +40,5 @@ using System.Windows.Markup;
 [assembly: XmlnsPrefix("http://schemas.hdcrd.com/mv", "hdc")]
 [assembly: XmlnsDefinition("http://schemas.hdcrd.com/mv", "Hdc.Mv")]
 [assembly: XmlnsDefinition("http://schemas.hdcrd.com/mv", "Hdc.Mv.Inspection")]
+[assembly: XmlnsDefinition("http://schemas.hdcrd.com/mv", "Hdc.Mv.Inspection.Halcon")]
 [assembly: XmlnsDefinition("http://schemas.hdcrd.com/mv", "Hdc.Mv.ImageAcquisition")]

@@ -1,0 +1,53 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  TestImageFilePath="D:\@\Vins.Phone\_Photos\Samsung S1404\2014-12-27, Measure test -3\12500, 280us, 1dB, 2dB\03\jpg\2014-12-27_16.22.54.jpg"
+                  CircleSearchingEnable="True"
+                  InspectorNameForCoordinate="Hal"
+                  InspectorNameForEdges="Hal"
+                  InspectorNameForCircles="Hal"
+                  InspectorNameForDefects="Sim"
+                  ImagePixelWidth="8192"
+                  ImagePixelHeight="12500"
+                  CoordinateType="VectorsCenter"
+                  CoordinateOriginOffsetEnable="True"
+                  CoordinateOriginOffsetX="-533.516"
+                  CoordinateOriginOffsetY="-539.359"
+                  EdgeSearching_EnhanceEdgeArea_Enable="True"
+                  EdgeSearching_EnhanceEdgeArea_SaveCacheImageEnable="False"
+                  EdgeSearching_EnhanceEdgeArea_SaveAllCacheImageEnable="False"
+                  >
+                  <!--Baseline or VextoraCenter or NearOrigin-->
+  <InspectionSchema.CoordinateCircles>
+  </InspectionSchema.CoordinateCircles>
+
+  <InspectionSchema.CircleSearchingDefinitions>
+  </InspectionSchema.CircleSearchingDefinitions>
+
+  <InspectionSchema.EdgeSearchingDefinitions>
+  </InspectionSchema.EdgeSearchingDefinitions>
+  
+  <InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+  </InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+  
+  <InspectionSchema.ClosedRegionDefinitions>
+      <ClosedRegionDefinitions Name=""
+                               MedianRadius=""
+                               EmpWidth=""
+                               EmpHeight=""
+                               EmpFactor=""
+                               ThresholdMinGray=""
+                               ThresholdMaxGray=""
+                               AreaMin=""
+                               AreaMax=""
+                               ClosingRadius=""
+                               DilationRadius=""
+                               >
+          <Rectangle2Def X=""
+                         Y=""
+                         Angle="0"
+                         HalfWidth=""
+                         HalfHeight="">
+          </Rectangle2Def>
+      </ClosedRegionDefinitions>
+  </InspectionSchema.ClosedRegionDefinitions>
+  
+</InspectionSchema>

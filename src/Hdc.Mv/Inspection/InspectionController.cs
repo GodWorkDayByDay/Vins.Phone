@@ -6,13 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Reactive.Subjects;
 using System.Windows;
+using HalconDotNet;
 using Hdc.Diagnostics;
 using Hdc.Reflection;
 using Hdc.Serialization;
 
 namespace Hdc.Mv.Inspection
 {
-
     public interface IInspectionController : ISetInspectorFactory,
         IStartInspect,
         ISetImageInfo,
@@ -22,7 +22,9 @@ namespace Hdc.Mv.Inspection
 
         IRelativeCoordinate Coordinate { get; }
 
-        ImageInfo ImageInfo { get; }
+        //        ImageInfo ImageInfo { get; }
+
+        HImage Image { get; }
 
         InspectionSchema InspectionSchema { get; }
     }
@@ -55,7 +57,7 @@ namespace Hdc.Mv.Inspection
 
     public interface ISetImageInfo
     {
-        ICreateCoordinate SetImageInfo(ImageInfo imageInfo);
+        ICreateCoordinate SetImageInfo(HImage imageInfo);
     }
 
     public class InspectionController :
@@ -67,13 +69,14 @@ namespace Hdc.Mv.Inspection
         ICreateCoordinate,
         IInspect
     {
-        private readonly ConcurrentDictionary<string, IGeneralInspector> _inspectors = new ConcurrentDictionary<string, IGeneralInspector>();
+        private readonly ConcurrentDictionary<string, IGeneralInspector> _inspectors =
+            new ConcurrentDictionary<string, IGeneralInspector>();
 
         private Func<string, IGeneralInspector> _inspectorFactory;
 
         private IRelativeCoordinate _coordinate;
         private IObservable<InspectionResult> _coordinateCreatedEvent = new Subject<InspectionResult>();
-        private ImageInfo _imageInfo;
+        private HImage _imageInfo;
         private InspectionSchema _inspectionSchema;
         private InspectionResult _inspectionResult;
 
@@ -81,7 +84,7 @@ namespace Hdc.Mv.Inspection
         {
         }
 
-        public ICreateCoordinate SetImageInfo(ImageInfo imageInfo)
+        public ICreateCoordinate SetImageInfo(HImage imageInfo)
         {
             _inspectionResult = new InspectionResult();
             _imageInfo = imageInfo;
@@ -96,7 +99,7 @@ namespace Hdc.Mv.Inspection
 
         public static InspectionSchema GetInspectionSchema()
         {
-            var dir = typeof(InspectionController).Assembly.GetAssemblyDirectoryPath();
+            var dir = typeof (InspectionController).Assembly.GetAssemblyDirectoryPath();
             var fileName = Path.Combine(dir, "InspectionSchema.xaml");
             if (!File.Exists(fileName))
             {
@@ -113,7 +116,7 @@ namespace Hdc.Mv.Inspection
                 ? GetInspectionSchema()
                 : fileName.DeserializeFromXamlFile<InspectionSchema>();
 
-            ((ISetInspectionSchema)this).SetInspectionSchema(inspectionSchema);
+            ((ISetInspectionSchema) this).SetInspectionSchema(inspectionSchema);
 
             return this;
         }
@@ -122,7 +125,6 @@ namespace Hdc.Mv.Inspection
         {
             _inspectionSchema = inspectionSchema;
 
-            
 
             GetOrAddInspector(_inspectionSchema.InspectorNameForCoordinate);
             GetOrAddInspector(_inspectionSchema.InspectorNameForCircles);
@@ -134,7 +136,7 @@ namespace Hdc.Mv.Inspection
             {
                 foreach (var esd in _inspectionSchema.EdgeSearchingDefinitions)
                 {
-                    esd.Hal_EnhanceEdgeArea_SaveCacheImageEnabled = true;
+                    esd.ImageFilter_SaveCacheImageEnabled = true;
                 }
             }
 
@@ -145,9 +147,9 @@ namespace Hdc.Mv.Inspection
         public InspectionController CreateCoordinate()
         {
             var sw = new NotifyStopwatch("InspectionController.CreateCoordinate.Inspect()");
-          
+
             var inspector = GetOrAddInspector(_inspectionSchema.InspectorNameForCircles);
-//            if(inspector.)
+            //            if(inspector.)
 
             var searchCoordinateCircles = inspector.SearchCircles(_inspectionSchema.CoordinateCircles);
             _inspectionResult.CoordinateCircles = searchCoordinateCircles;
@@ -200,17 +202,17 @@ namespace Hdc.Mv.Inspection
                         }
                      */
             // 
-/*            Debug.WriteLine("\n");
-            foreach (var cir in _inspectionResult.CoordinateCircles)
-            {
-                Debug.WriteLine("EXP.X = \t" + cir.Definition.BaselineX);
-                Debug.WriteLine("EXP.Y = \t" + cir.Definition.BaselineY);
-                Debug.WriteLine("REL.X = \t" + cir.RelativeCircle.CenterX);
-                Debug.WriteLine("REL.Y = \t" + cir.RelativeCircle.CenterY);
-                Debug.WriteLine("ACT.X = \t" + cir.Circle.CenterX);
-                Debug.WriteLine("ACT.Y = \t" + cir.Circle.CenterY);
-                Debug.WriteLine("\n");
-            }*/
+            /*            Debug.WriteLine("\n");
+                        foreach (var cir in _inspectionResult.CoordinateCircles)
+                        {
+                            Debug.WriteLine("EXP.X = \t" + cir.Definition.BaselineX);
+                            Debug.WriteLine("EXP.Y = \t" + cir.Definition.BaselineY);
+                            Debug.WriteLine("REL.X = \t" + cir.RelativeCircle.CenterX);
+                            Debug.WriteLine("REL.Y = \t" + cir.RelativeCircle.CenterY);
+                            Debug.WriteLine("ACT.X = \t" + cir.Circle.CenterX);
+                            Debug.WriteLine("ACT.Y = \t" + cir.Circle.CenterY);
+                            Debug.WriteLine("\n");
+                        }*/
 
             sw.Dispose();
 
@@ -223,17 +225,17 @@ namespace Hdc.Mv.Inspection
             var sw = new NotifyStopwatch("InspectionController.Inspect(): circlesInspector.Inspect");
 
             var circlesInspector = GetOrAddInspector(_inspectionSchema.InspectorNameForCircles);
-//            circlesInspector.SetImageInfo(_imageInfo);
+            //            circlesInspector.SetImageInfo(_imageInfo);
             var circlesResult = circlesInspector.SearchCircles(_inspectionSchema.CircleSearchingDefinitions);
             sw.Dispose();
 
             _inspectionResult.Circles = circlesResult;
 
-//            var ori = new CircleSearchingResult()
-//                      {
-//                          RelativeCircle = new Circle(0,0,10),
-//                          Circle = new Circle(_coordinate.GetOriginalVector(new Vector(0,0)).ToPoint(), 10),
-//                      };
+            //            var ori = new CircleSearchingResult()
+            //                      {
+            //                          RelativeCircle = new Circle(0,0,10),
+            //                          Circle = new Circle(_coordinate.GetOriginalVector(new Vector(0,0)).ToPoint(), 10),
+            //                      };
 
             // edges
             var sw2 = new NotifyStopwatch("InspectionController.Inspect(): edgesInspector.Inspect()");
@@ -263,7 +265,7 @@ namespace Hdc.Mv.Inspection
         {
             if (!_inspectors.ContainsKey(inspectorName))
             {
-                Debug.WriteLine("_inspectorFactory create: "+ inspectorName);
+                Debug.WriteLine("_inspectorFactory create: " + inspectorName);
                 var newInspector = _inspectorFactory(inspectorName);
                 var isAdded = _inspectors.TryAdd(inspectorName, newInspector);
                 if (!isAdded)
@@ -279,10 +281,15 @@ namespace Hdc.Mv.Inspection
             get { return _coordinate; }
         }
 
-        public ImageInfo ImageInfo
+        public HImage Image
         {
             get { return _imageInfo; }
         }
+
+        //        public ImageInfo ImageInfo
+        //        {
+        //            get { return _imageInfo; }
+        //        }
 
         public InspectionSchema InspectionSchema
         {
@@ -319,7 +326,6 @@ namespace Hdc.Mv.Inspection
         {
             return this;
         }
-
 
         IInspect ICreateCoordinate.CreateCoordinate()
         {

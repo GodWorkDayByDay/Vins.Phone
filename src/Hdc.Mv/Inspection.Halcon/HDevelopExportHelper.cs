@@ -19,7 +19,7 @@ namespace Hdc.Mv.Inspection.Halcon
         private readonly HImage _emphasizeVerticalMeanImage;
         private HImage _hImageCache;
 
-        private static readonly HDevelopExport HDevelopExport = new HDevelopExport();
+        private readonly HDevelopExport HDevelopExport = new HDevelopExport();
         private HImage _borderImage;
 
         public bool SaveCacheImages { get; set; }
@@ -72,7 +72,7 @@ namespace Hdc.Mv.Inspection.Halcon
         }
 
         public HDevelopExportHelper(ImageInfo imageInfo)
-            : this((HImage) imageInfo.To8BppHImage())
+            : this((HImage)imageInfo.To8BppHImage())
         {
         }
 
@@ -212,7 +212,7 @@ namespace Hdc.Mv.Inspection.Halcon
         public bool ExtractCircle(double centerX, double centerY, double innerCircleRadius, double outerCircleRadius,
                                   out Circle foundCircle, out double roundness,
                                   int regionsCount,
-                                  //                                  int regionHeight,
+            //                                  int regionHeight,
                                   int regionWidth,
                                   double sigma, double threshold, SelectionMode selectionMode, Transition transition,
                                   CircleDirect direct)
@@ -250,7 +250,7 @@ namespace Hdc.Mv.Inspection.Halcon
             try
             {
                 HTuple hv_interCamera, hv_PoseNewOrigin, hv_distance;
-                HDevelopExport.GetCalibrationParameters(descriptionFileName, dirName, focus, sx, sy,
+                HDevelopExport.Singletone.GetCalibrationParameters(descriptionFileName, dirName, focus, sx, sy,
                     width, height, cameraType, out hv_interCamera, out hv_PoseNewOrigin, out hv_distance);
 
                 interCamera = hv_interCamera;
@@ -277,7 +277,7 @@ namespace Hdc.Mv.Inspection.Halcon
                 //                ImageInfo calibImage;
 
                 HObject hCalibImage;
-                HDevelopExport.GetCalibratedImage(orignalImage, out hCalibImage, interCamera, PoseNewOrigin, distance);
+                HDevelopExport.Singletone.GetCalibratedImage(orignalImage, out hCalibImage, interCamera, PoseNewOrigin, distance);
 
                 var hi = new HImage();
                 HobjectToHimage(hCalibImage, ref hi);
@@ -314,7 +314,7 @@ namespace Hdc.Mv.Inspection.Halcon
 
                 HObject hCalibImage;
                 HTuple lengthPerPixelX, lengthPerPixelY;
-                HDevelopExport.Calibrate(orignalHImage, out hCalibImage, hv_CameraParams, hv_CameraPose,
+                HDevelopExport.Singletone.Calibrate(orignalHImage, out hCalibImage, hv_CameraParams, hv_CameraPose,
                     out lengthPerPixelX, out lengthPerPixelY);
 
                 var hi = new HImage();
@@ -342,7 +342,7 @@ namespace Hdc.Mv.Inspection.Halcon
             return binImageInfo;
         }
 
-        public ImageInfo FindS1404SurfaceA()
+        public HImage FindS1404SurfaceA()
         {
             HObject binImageObject;
 
@@ -351,8 +351,9 @@ namespace Hdc.Mv.Inspection.Halcon
             var hi = new HImage();
             HobjectToHimage(binImageObject, ref hi);
 
-            var binImageInfo = hi.ToImageInfo();
-            return binImageInfo;
+//            var binImageInfo = hi.ToImageInfo();
+//            return binImageInfo;
+            return hi;
         }
 
         public IList<Line> RakeEdgeLine(HImage hImage, Line line,
@@ -514,6 +515,30 @@ namespace Hdc.Mv.Inspection.Halcon
             return new HImage(ho_EnhancedImage);
         }
 
+/*        public HImage EnhanceEdgeArea4(HImage ho_Image,
+                      int hv_MeanMaskWidth, int hv_MeanMaskHeight, int hv_FirstMinGray, int hv_FirstMaxGray,
+                      int hv_EmpMaskWidth, int hv_EmpMaskHeight, double hv_EmpMaskFactor, int hv_LastMinGray,
+                      int hv_LastMaxGray)
+        {
+            HObject ho_EnhancedImage = null;
+
+            HDevelopExport.EnhanceEdgeArea4(
+                ho_Image,
+                out ho_EnhancedImage,
+                hv_MeanMaskWidth,
+                hv_MeanMaskHeight,
+                hv_FirstMinGray,
+                hv_FirstMaxGray,
+
+                hv_EmpMaskWidth,
+                hv_EmpMaskHeight,
+                hv_EmpMaskFactor,
+                hv_LastMinGray,
+                hv_LastMaxGray
+                );
+            return new HImage(ho_EnhancedImage);
+        }*/
+
         public HImage ReduceDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
                                                double dilationWidth, double dilationHeight)
         {
@@ -564,7 +589,7 @@ namespace Hdc.Mv.Inspection.Halcon
 
 
         public bool FindCircleCenterUseHough(HImage ho_Image,
-//                                             out HRegion hv_CenterRegion,
+            //                                             out HRegion hv_CenterRegion,
                                              double hv_CenterRow, double hv_CenterColumn,
                                              double hv_InnerRadius, double hv_OuterRadius, double hv_Sigma,
                                              int hv_MinGray,
@@ -585,7 +610,7 @@ namespace Hdc.Mv.Inspection.Halcon
                 out CenterRegionRow, out CenterRegionColumn
                 );
 
-//            hv_CenterRegion = new HRegion(centerRegion);
+            //            hv_CenterRegion = new HRegion(centerRegion);
             hv_CenterRegionRow = CenterRegionRow;
             hv_CenterRegionColumn = CenterRegionColumn;
 
@@ -595,6 +620,23 @@ namespace Hdc.Mv.Inspection.Halcon
             {
                 return false;
             }
+        }
+
+        public HRegion GetRegionByGrayAndArea(HImage image, HRegion processRegion,
+                                              int medianRadius,
+                                              int empWidth, int empHeight, double empFactor,
+                                              int thresholdMinGray, int thresholdMaxGray,
+                                              int areaMin, int areaMax,
+                                              double closingRadius, double dilationRadius)
+        {
+            HObject foundRegionObject;
+
+            HDevelopExport.GetRegionByGrayAndArea(image, processRegion, out foundRegionObject, medianRadius,
+                empWidth, empHeight, empFactor, thresholdMinGray, thresholdMaxGray, areaMin,
+                areaMax,
+                closingRadius, dilationRadius);
+
+            return new HRegion(foundRegionObject);
         }
     }
 }

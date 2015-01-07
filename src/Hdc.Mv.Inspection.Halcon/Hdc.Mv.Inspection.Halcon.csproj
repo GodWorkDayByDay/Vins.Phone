@@ -40,6 +40,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,32 +49,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoordinateCircleCalculator.cs" />
-    <Compile Include="CropImage.cs" />
-    <Compile Include="Exports\Calibrate.cs" />
-    <Compile Include="Exports\DistanceOfLineToLineFunc.cs" />
-    <Compile Include="Exports\EnhanceEdgeArea.cs" />
-    <Compile Include="Exports\EnhanceEdgeArea2.cs" />
-    <Compile Include="Exports\EnhanceEdgeArea3.cs" />
-    <Compile Include="Exports\ExtractCircleFunc.cs" />
-    <Compile Include="Exports\ExtractEdgeLineFunc.cs" />
-    <Compile Include="Exports\FindCircleCenterUseHough.cs" />
-    <Compile Include="Exports\FindS1404SurfaceA.cs" />
-    <Compile Include="Exports\GetCalibratedImage.cs" />
-    <Compile Include="Exports\GetCalibrationParameters.cs" />
-    <Compile Include="Exports\ReduceDomainForRectangle.cs" />
-    <Compile Include="HalconExtensions.cs" />
-    <Compile Include="HalconImageCalibrator.cs" />
-    <Compile Include="HalconInspectorException.cs" />
-    <Compile Include="HDevelopExport.Partials.cs" />
-    <Compile Include="HDevelopExportHelper.cs" />
-    <Compile Include="HalconGeneralInspector.cs" />
-    <Compile Include="HOperatorSetExtensions.cs" />
-    <Compile Include="ImageInfoExtensions.cs" />
-    <Compile Include="Procedures\HdcProcedures.SpokeCircle.cs" />
-    <Compile Include="Procedures\HdcProcedures.RakeEdgeLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimInspector.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hdc.Mv\Hdc.Mv.csproj">

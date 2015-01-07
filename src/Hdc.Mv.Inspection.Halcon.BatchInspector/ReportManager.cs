@@ -522,8 +522,8 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
                     writer.WriteField(@group.Select(x => x.Point1.Y).Average().ToNumbericStringInMillimeterFromPixel(16));
                     writer.WriteField(@group.Select(x => x.Point2.X).Average().ToNumbericStringInMillimeterFromPixel(16));
                     writer.WriteField(@group.Select(x => x.Point2.Y).Average().ToNumbericStringInMillimeterFromPixel(16));
+                    writer.WriteField(@group.Select(x => x.DistanceInPixel).Average());
                     writer.WriteField(@group.Select(x => x.DistanceInPixel).Average().ToNumbericStringInMillimeterFromPixel(16));
-                    writer.WriteField(@group.Select(x => x.DistanceInWorld).Average().ToNumbericStringInMillimeterFromPixel(16));
                     writer.WriteField("mm");
                     writer.NextRecord();
                     writer.NextRecord();

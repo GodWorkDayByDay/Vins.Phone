@@ -6,6 +6,13 @@ public partial class HDevelopExport
 {
     private HDevEngine MyEngine = new HDevEngine();
 
+    public static HDevelopExport Singletone { get; set; }
+
+    static HDevelopExport()
+    {
+        Singletone = new HDevelopExport();
+    }
+
     public HDevelopExport()
     {
         string ProcedurePath = this.GetType().Assembly.GetAssemblyDirectoryPath();

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
+using HalconDotNet;
 
 namespace Hdc.Mv.Inspection
 {
     public class SimGeneralInspector : IGeneralInspector
     {
-        private ImageInfo _imageInfo;
+//        private ImageInfo _imageInfo;
+        private HImage _image;
 
         public void Dispose()
         {
@@ -18,17 +20,27 @@ namespace Hdc.Mv.Inspection
         {
         }
 
+        public void SetImageInfo(HImage image)
+        {
+            _image = image;
+        }
+
         public void SetImageInfo(ImageInfo imageInfo)
         {
-            _imageInfo = imageInfo;
+//            _imageInfo = imageInfo;
         }
 
         public InspectionResult Inspect(InspectionSchema inspectionSchema)
         {
-            return Inspect(_imageInfo, inspectionSchema);
+            return Inspect(_image, inspectionSchema);
         }
 
-        public InspectionResult Inspect(ImageInfo imageInfo, InspectionSchema inspectionSchema)
+//        public InspectionResult Inspect(HImage image, InspectionSchema inspectionSchema)
+//        {
+//            throw new NotImplementedException();
+//        }
+
+        public InspectionResult Inspect(HImage imageInfo, InspectionSchema inspectionSchema)
         {
             var ir = new InspectionResult();
             var circles = SearchCircles(imageInfo, inspectionSchema.CircleSearchingDefinitions);
@@ -66,12 +78,12 @@ namespace Hdc.Mv.Inspection
             return searchingResult;
         }
 
-        public CircleSearchingResultCollection SearchCircles(ImageInfo imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions)
+        public CircleSearchingResultCollection SearchCircles(HImage imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions)
         {
             return SearchCircles(circleSearchingDefinitions);
         }
 
-        public EdgeSearchingResultCollection SearchEdges(ImageInfo imageInfo, IList<EdgeSearchingDefinition> edgeSearchingDefinitions)
+        public EdgeSearchingResultCollection SearchEdges(HImage imageInfo, IList<EdgeSearchingDefinition> edgeSearchingDefinitions)
         {
             var sr = new EdgeSearchingResultCollection();
 
@@ -112,7 +124,7 @@ namespace Hdc.Mv.Inspection
             return sr;
         }
 
-        public DefectResultCollection SearchDefects(ImageInfo imageInfo)
+        public DefectResultCollection SearchDefects(HImage imageInfo)
         {
             var drc = new DefectResultCollection();
             for (int i = 0; i < 10; i++)
@@ -131,17 +143,17 @@ namespace Hdc.Mv.Inspection
             return drc;
         }
 
-        public DefectResultCollection SearchDefects(ImageInfo imageInfo, ImageInfo mask)
+        public DefectResultCollection SearchDefects(HImage imageInfo, HImage mask)
         {
             return new DefectResultCollection();
         }
 
-        public ImageInfo FindRegions(ImageInfo imageInfo)
+        public HImage FindRegions(HImage imageInfo)
         {
             throw new NotImplementedException();
         }
 
-        public ImageInfo FindRegions()
+        public HImage FindRegions()
         {
             throw new NotImplementedException();
         }

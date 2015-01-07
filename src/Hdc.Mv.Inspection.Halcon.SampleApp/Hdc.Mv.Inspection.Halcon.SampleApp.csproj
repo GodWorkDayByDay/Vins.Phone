@@ -123,10 +123,6 @@
       <Project>{9EE03764-4F87-4D27-9C2A-D54E0228C326}</Project>
       <Name>Hdc.Mv.Inspection.Halcon.BatchInspector</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hdc.Mv.Inspection.Halcon\Hdc.Mv.Inspection.Halcon.csproj">
-      <Project>{11AB1F7D-7638-47B3-8D93-9EE07CDFB746}</Project>
-      <Name>Hdc.Mv.Inspection.Halcon</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Hdc.Mv.Inspection.Mil.Interop\Hdc.Mv.Inspection.Mil.Interop.csproj">
       <Project>{FAECBE0C-329A-4510-9B73-371515E411CC}</Project>
       <Name>Hdc.Mv.Inspection.Mil.Interop</Name>
