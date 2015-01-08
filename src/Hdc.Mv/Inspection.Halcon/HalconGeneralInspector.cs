@@ -56,7 +56,7 @@ namespace Hdc.Mv.Inspection
 
 //            lock (locker)
 //            {
-                _hDevelopExportHelper = new HDevelopExportHelper(_hImage);
+            _hDevelopExportHelper = new HDevelopExportHelper(_hImage);
 //            }
         }
 
@@ -74,11 +74,11 @@ namespace Hdc.Mv.Inspection
             }
 
 
-            if (inspectionSchema.ClosedRegionDefinitions.Any())
+            if (inspectionSchema.SurfaceDefinitions.Any())
             {
-                var regionResults = SearchClosedRegions(inspectionSchema.ClosedRegionDefinitions);
+                var regionResults = SearchClosedRegions(inspectionSchema.SurfaceDefinitions);
 
-                inspectionResult.ClosedRegionResults = regionResults;
+//                inspectionResult.ClosedRegionResults = regionResults;
             }
 
             var finalEdges = SearchEdges(inspectionSchema.EdgeSearchingDefinitions,
@@ -143,13 +143,112 @@ namespace Hdc.Mv.Inspection
             return inspectionResult;
         }
 
-        private ClosedRegionResultCollection SearchClosedRegions(IList<ClosedRegionDefinition> closedRegionDefinitions)
+        private SurfaceResultCollection SearchClosedRegions(IList<SurfaceDefinition> surfaceDefinitions)
         {
-            var cs = new ClosedRegionResultCollection();
+            var cs = new SurfaceResultCollection();
 
-            foreach (var def in closedRegionDefinitions)
+            foreach (var def in surfaceDefinitions)
             {
-                var processRegion = new HRegion();
+                var unionIncludeRegion = new HRegion();
+                var unionIncludeDomain = new HRegion();
+                unionIncludeRegion.GenEmptyRegion();
+                unionIncludeDomain.GenEmptyRegion();
+
+                var unionExcludeRegion = new HRegion();
+                var unionExcludeDomain = new HRegion();
+                unionExcludeRegion.GenEmptyRegion();
+                unionExcludeDomain.GenEmptyRegion();
+
+                foreach (var includeRegion in def.IncludeRegions)
+                {
+                    var region = includeRegion.Process(_hImage);
+                    var domain = includeRegion.GetRegion();
+
+                    unionIncludeRegion = unionIncludeRegion.Union2(region);
+                    unionIncludeDomain = unionIncludeDomain.Union2(domain);
+
+                    if (includeRegion.SaveCacheImageEnabled)
+                    {
+                        var fileName = "_SurfaceDefinition_" + def.Name + "_Include_" + includeRegion.Name;
+                        _hDevelopExportHelper.HImage.SaveCacheImages(domain, region, fileName);
+
+//                        var domian = includeRegion.GetRegion();
+//                        var reducedImage = _hDevelopExportHelper.HImage.ReduceDomain(domian);
+//                        var croppedImage = reducedImage.CropDomain();
+//                        croppedImage.ToBitmapSource().SaveToTiff("_ClosedRegionDefinition_" + def.Name + "_" + includeRegion.Name + ".Ori.tif");
+//
+//                        var paintRegion = reducedImage.PaintRegion(region, 255.0, "margin");
+//                        var croppedImage2 = paintRegion.CropDomain();
+//                        croppedImage2.ToBitmapSource().SaveToTiff("_ClosedRegionDefinition_" + def.Name + "_" + includeRegion.Name + ".Full.tif");
+//
+//                        domian.Dispose();
+//                        reducedImage.Dispose();
+//                        croppedImage.Dispose();
+//                        croppedImage2.Dispose();
+//                        paintRegion.Dispose();
+                    }
+                }
+
+                foreach (var excludeRegion in def.ExcludeRegions)
+                {
+                    var region = excludeRegion.Process(_hImage);
+                    var domain = excludeRegion.GetRegion();
+
+                    unionExcludeRegion = unionExcludeRegion.Union2(region);
+                    unionExcludeDomain = unionExcludeDomain.Union2(domain);
+
+                    if (excludeRegion.SaveCacheImageEnabled)
+                    {
+                        var fileName = "_SurfaceDefinition_" + def.Name + "_Exclude_" + excludeRegion.Name;
+                        _hDevelopExportHelper.HImage.SaveCacheImages(domain, region, fileName);
+
+//                        var reducedImage = _hDevelopExportHelper.HImage.ReduceDomain(domian);
+//                        var croppedImage = reducedImage.CropDomain();
+//                        croppedImage.ToBitmapSource().SaveToTiff("_ClosedRegionDefinition_" + def.Name + "_" + includeRegion.Name + ".Ori.tif");
+//
+//                        var paintRegion = reducedImage.PaintRegion(region, 255.0, "margin");
+//                        var croppedImage2 = paintRegion.CropDomain();
+//                        croppedImage2.ToBitmapSource().SaveToTiff("_ClosedRegionDefinition_" + def.Name + "_" + includeRegion.Name + ".Full.tif");
+//
+//                        domian.Dispose();
+//                        reducedImage.Dispose();
+//                        croppedImage.Dispose();
+//                        croppedImage2.Dispose();
+//                        paintRegion.Dispose();
+                    }
+
+                    region.Dispose();
+                    domain.Dispose();
+                }
+
+                if (def.SaveCacheImageEnabled && def.IncludeRegions.Any())
+                {
+                    var fileName = "_SurfaceDefinition_" + def.Name + "_Include";
+                    _hDevelopExportHelper.HImage.SaveCacheImages(unionIncludeDomain, unionIncludeRegion, fileName);
+
+//                    var domian = unionIncludeDomain;
+//                    var reducedImage = _hDevelopExportHelper.HImage.ReduceDomain(domian);
+//                    var croppedImage = reducedImage.CropDomain();
+//                    croppedImage.ToBitmapSource().SaveToTiff("_ClosedRegionDefinition_" + def.Name + ".Ori.tif");
+//
+//                    var paintRegion = reducedImage.PaintRegion(unionIncludeRegion, 255.0, "margin");
+//                    var croppedImage2 = paintRegion.CropDomain();
+//                    croppedImage2.ToBitmapSource().SaveToTiff("_ClosedRegionDefinition_" + def.Name + ".Full.tif");
+//
+//                    domian.Dispose();
+//                    reducedImage.Dispose();
+//                    croppedImage.Dispose();
+//                    croppedImage2.Dispose();
+//                    paintRegion.Dispose();
+                }
+
+                if (def.SaveCacheImageEnabled && def.ExcludeRegions.Any())
+                {
+                    var fileName = "_SurfaceDefinition_" + def.Name + "_Exclude";
+                    _hDevelopExportHelper.HImage.SaveCacheImages(unionExcludeDomain, unionExcludeRegion, fileName);
+                }
+
+/*                var processRegion = new HRegion();
                 processRegion.GenRectangle2(def.Rect.Y, def.Rect.X, def.Rect.Angle, def.Rect.HalfWidth, def.Rect.HalfHeight);
 
                 var foundRegion = _hDevelopExportHelper.GetRegionByGrayAndArea(_hImage, processRegion, def.MedianRadius, def.EmpWidth,
@@ -171,11 +270,13 @@ namespace Hdc.Mv.Inspection
                            .ToBitmapSource()
                            .SaveToJpeg("_ClosedRegionDefinition_" + def.Name + ".jpg");
                 }
+ */
 
-                cs.Add(new ClosedRegionResult()
+
+                cs.Add(new SurfaceResult()
                        {
                            Definition = def.DeepClone(),
-                           Region = foundRegion,
+                           IncludeRegion = unionIncludeRegion,
                        });
             }
 
@@ -185,12 +286,6 @@ namespace Hdc.Mv.Inspection
         public void Init(int width, int height)
         {
         }
-
-//        public InspectionResult Inspect(ImageInfo imageInfo, InspectionSchema inspectionSchema)
-//        {
-//            SetImageInfo(imageInfo);
-//            return Inspect(inspectionSchema);
-//        }
 
         public InspectionResult Inspect(HImage imageInfo, InspectionSchema inspectionSchema)
         {
@@ -207,7 +302,6 @@ namespace Hdc.Mv.Inspection
             int index = 0;
             foreach (var circleDefinition in circleSearchingDefinitions)
             {
-
                 var circleSearchingResult = new CircleSearchingResult
                                             {
                                                 Definition = circleDefinition.DeepClone(),
@@ -226,19 +320,19 @@ namespace Hdc.Mv.Inspection
                     double cX, cY;
 
                     var isOK2 = _hDevelopExportHelper.FindCircleCenterUseHough(
-                          _hDevelopExportHelper.HImage,
-                          circleDefinition.CenterY,
-                          circleDefinition.CenterX,
-                          circleDefinition.InnerRadius,
-                          circleDefinition.OuterRadius,
-                          hcd.Sigma,
-                          hcd.MinGray,
-                          hcd.MaxGray,
-                          hcd.ExpectRadius,
-                          hcd.Percent,
-                          out cY,
-                          out cX
-                          );
+                        _hDevelopExportHelper.HImage,
+                        circleDefinition.CenterY,
+                        circleDefinition.CenterX,
+                        circleDefinition.InnerRadius,
+                        circleDefinition.OuterRadius,
+                        hcd.Sigma,
+                        hcd.MinGray,
+                        hcd.MaxGray,
+                        hcd.ExpectRadius,
+                        hcd.Percent,
+                        out cY,
+                        out cX
+                        );
 
                     if (isOK2)
                     {
@@ -260,7 +354,6 @@ namespace Hdc.Mv.Inspection
 
                     continue;
                 }
-
 
 
                 //                var isOK = _hDevelopExportHelper.ExtractCircle(circleDefinition.CenterX, circleDefinition.CenterY,
@@ -321,7 +414,7 @@ namespace Hdc.Mv.Inspection
         public EdgeSearchingResultCollection SearchEdges(EdgeSearchingDefinition edgeSearchingDefinition,
                                                          bool enhanceEdgeAreaEnabled)
         {
-            return SearchEdges(new[] { edgeSearchingDefinition }, enhanceEdgeAreaEnabled);
+            return SearchEdges(new[] {edgeSearchingDefinition}, enhanceEdgeAreaEnabled);
         }
 
         public EdgeSearchingResultCollection SearchEdges(IList<EdgeSearchingDefinition> edgeSearchingDefinitions,
@@ -347,16 +440,22 @@ namespace Hdc.Mv.Inspection
                     var reducedImage = _hDevelopExportHelper.ReduceDomainForRectangle(
                         _hDevelopExportHelper.HImage,
                         line: esd.Line,
-                        hv_RoiWidthLen: esd.ROIWidth / 2.0,
+                        hv_RoiWidthLen: esd.ROIWidth/2.0,
                         margin: 0.5);
 
                     if (esd.ImageFilter_SaveCacheImageEnabled)
-                        reducedImage.CropDomain().ToImageInfo().ToBitmapSource().SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Ori.jpg");
+                        reducedImage.CropDomain()
+                            .ToImageInfo()
+                            .ToBitmapSource()
+                            .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Ori.jpg");
 
                     var enhImage = esr.Definition.ImageFilter.Process(reducedImage);
 
                     if (esd.ImageFilter_SaveCacheImageEnabled)
-                        enhImage.CropDomain().ToImageInfo().ToBitmapSource().SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Mod.jpg");
+                        enhImage.CropDomain()
+                            .ToImageInfo()
+                            .ToBitmapSource()
+                            .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Mod.jpg");
 
                     //                    var enhImage = _hDevelopExportHelper.EnhanceEdgeArea3(
                     //                        reducedImage,
@@ -378,7 +477,7 @@ namespace Hdc.Mv.Inspection
                     using (var sw3 = new NotifyStopwatch("ImageFilter_SaveCacheImageEnabled"))
                     {
                         if (esd.ImageFilter_SaveCacheImageEnabled)
-                        //                    if (true)
+                            //                    if (true)
                         {
                             //                        _hDevelopExportHelper.HImage.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_ori.jpg");
                             //                        var fullDomain = enhImage.FullDomain();

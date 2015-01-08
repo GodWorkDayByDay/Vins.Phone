@@ -1,0 +1,155 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  TestImageFilePath="B:\2014-12-27_16.09.18.jpg"
+                  CircleSearchingEnable="True"
+                  InspectorNameForCoordinate="Hal"
+                  InspectorNameForEdges="Hal"
+                  InspectorNameForCircles="Hal"
+                  InspectorNameForDefects="Sim"
+                  ImagePixelWidth="8192"
+                  ImagePixelHeight="12500"
+                  CoordinateType="VectorsCenter"
+                  CoordinateOriginOffsetEnable="True"
+                  CoordinateOriginOffsetX="-533.516"
+                  CoordinateOriginOffsetY="-539.359"
+                  EdgeSearching_EnhanceEdgeArea_Enable="True"
+                  EdgeSearching_EnhanceEdgeArea_SaveCacheImageEnable="False"
+                  EdgeSearching_EnhanceEdgeArea_SaveAllCacheImageEnable="False"
+                  >
+                  <!--Baseline or VextoraCenter or NearOrigin-->
+  <InspectionSchema.CoordinateCircles>
+    <CircleSearchingDefinition CenterX="3633"
+                               CenterY="3173"
+                               InnerRadius="22"
+                               OuterRadius="38"
+                               Name="O"
+                               
+                               Hal_RegionsCount="60"
+                               Hal_RegionWidth="10"
+                               Hal_Sigma="1"
+                               Hal_Threshold="7"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Positive"
+                               Hal_Direct="Inner"
+                               />
+                               
+    <CircleSearchingDefinition CenterX="3668"
+                               CenterY="10250"
+                               InnerRadius="22"
+                               OuterRadius="38"
+                               Name="R1"
+                               
+                               BaselineAngle="90"
+                               BaselineX="0"
+                               BaselineY="113.28275"
+                               
+                               Hal_RegionsCount="60"
+                               Hal_RegionWidth="10"
+                               Hal_Sigma="1"
+                               Hal_Threshold="7"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Positive"
+                               Hal_Direct="Inner"
+                               />
+                               <!-- -->
+    <CircleSearchingDefinition CenterX="4475"
+                               CenterY="7613"
+                               InnerRadius="120"
+                               OuterRadius="140"
+                               Name="R2"
+                               
+                               BaselineAngle="79.528422"
+                               BaselineX="13.13646"
+                               BaselineY="71.074762"
+
+                               Hal_RegionsCount="100"
+                               Hal_RegionWidth="20"
+                               Hal_Sigma="1"
+                               Hal_Threshold="25"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Positive"
+                               Hal_Direct="Outer"
+                               />
+                               
+    <CircleSearchingDefinition CenterX="4958"
+                               CenterY="7971"
+                               InnerRadius="120"
+                               OuterRadius="145"
+                               Name="R3"
+                               
+                               BaselineAngle="74.85129"
+                               BaselineX="20.81575"
+                               BaselineY="76.88667"
+
+                               Hal_RegionsCount="100"
+                               Hal_RegionWidth="20"
+                               Hal_Sigma="1"
+                               Hal_Threshold="25"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Positive"
+                               Hal_Direct="Outer"
+                               />
+  </InspectionSchema.CoordinateCircles>
+
+
+  <InspectionSchema.CircleSearchingDefinitions>
+  </InspectionSchema.CircleSearchingDefinitions>
+
+  <InspectionSchema.EdgeSearchingDefinitions>
+  </InspectionSchema.EdgeSearchingDefinitions>
+  
+  <InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+  </InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+  
+  <InspectionSchema.SurfaceDefinitions>
+      <SurfaceDefinition Name="A-Top"
+                         SaveCacheImageEnabled="True">
+          <SurfaceDefinition.ExcludeRegions>
+              <GrayAndAreaRegionExtractor Name="Ex.Hole"
+                                          SaveCacheImageEnabled="True"
+                                          
+                                          X="4832"
+                                          Y="1054"
+                                          Angle="0"
+                                          HalfWidth="100"
+                                          HalfHeight="100"
+                                          
+                                          MedianRadius="7"
+                                          EmpWidth="100"
+                                          EmpHeight="100"
+                                          EmpFactor="3"
+                                          ThresholdMinGray="0"
+                                          ThresholdMaxGray="180"
+                                          AreaMin="10000"
+                                          AreaMax="99999999"
+                                          ClosingRadius="5"
+                                          DilationRadius="2"
+                                          >
+              </GrayAndAreaRegionExtractor>
+              <GrayAndAreaRegionExtractor Name="Ex.Hole2"
+                                          SaveCacheImageEnabled="True"
+                                          
+                                          X="2490"
+                                          Y="1210"
+                                          Angle="0"
+                                          HalfWidth="150"
+                                          HalfHeight="150"
+                                          
+                                          MedianRadius="7"
+                                          EmpWidth="100"
+                                          EmpHeight="100"
+                                          EmpFactor="3"
+                                          ThresholdMinGray="0"
+                                          ThresholdMaxGray="180"
+                                          AreaMin="10000"
+                                          AreaMax="99999999"
+                                          ClosingRadius="5"
+                                          DilationRadius="2"
+                                          >
+              </GrayAndAreaRegionExtractor>
+          </SurfaceDefinition.ExcludeRegions>
+          <SurfaceDefinition.IncludeRegions>
+          </SurfaceDefinition.IncludeRegions>
+      </SurfaceDefinition>
+  </InspectionSchema.SurfaceDefinitions>
+  
+</InspectionSchema>

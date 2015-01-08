@@ -622,7 +622,7 @@ namespace Hdc.Mv.Inspection.Halcon
             }
         }
 
-        public HRegion GetRegionByGrayAndArea(HImage image, HRegion processRegion,
+        public HRegion GetRegionByGrayAndArea(HImage image,
                                               int medianRadius,
                                               int empWidth, int empHeight, double empFactor,
                                               int thresholdMinGray, int thresholdMaxGray,
@@ -631,7 +631,7 @@ namespace Hdc.Mv.Inspection.Halcon
         {
             HObject foundRegionObject;
 
-            HDevelopExport.GetRegionByGrayAndArea(image, processRegion, out foundRegionObject, medianRadius,
+            HDevelopExport.GetRegionByGrayAndArea(image, out foundRegionObject, medianRadius,
                 empWidth, empHeight, empFactor, thresholdMinGray, thresholdMaxGray, areaMin,
                 areaMax,
                 closingRadius, dilationRadius);

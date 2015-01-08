@@ -15,7 +15,7 @@ namespace Hdc.Mv.Inspection
             EdgeSearchingDefinitions = new Collection<EdgeSearchingDefinition>();
             DistanceBetweenLinesDefinitions = new Collection<DistanceBetweenLinesDefinition>();
             DistanceBetweenIntersectionPointsDefinitions = new Collection<DistanceBetweenLinesDefinition>();
-            ClosedRegionDefinitions = new Collection<ClosedRegionDefinition>();
+            SurfaceDefinitions = new Collection<SurfaceDefinition>();
         }
 
 //        public string InspectorName { get; set; }
@@ -43,7 +43,7 @@ namespace Hdc.Mv.Inspection
         public Collection<CircleSearchingDefinition> CircleSearchingDefinitions { get; set; }
         public Collection<DistanceBetweenLinesDefinition> DistanceBetweenLinesDefinitions { get; set; }
         public Collection<DistanceBetweenLinesDefinition> DistanceBetweenIntersectionPointsDefinitions { get; set; }
-        public Collection<ClosedRegionDefinition> ClosedRegionDefinitions { get; set; }
+        public Collection<SurfaceDefinition> SurfaceDefinitions { get; set; }
 
         public CoordinateType CoordinateType { get; set; }
 

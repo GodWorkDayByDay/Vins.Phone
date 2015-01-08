@@ -129,6 +129,7 @@
     <Compile Include="Inspection\EdgeSearchingResultCollection.cs" />
     <Compile Include="Inspection\Ex.cs" />
     <Compile Include="Inspection\GeneralInspectorExtensions.cs" />
+    <Compile Include="Inspection.Halcon\RegionExtractors\GrayAndAreaRegionExtractor.cs" />
     <Compile Include="Inspection\IImageFilter.cs" />
     <Compile Include="Inspection\IGeneralInspector.cs" />
     <Compile Include="Calibration\IImageCalibrator.cs" />
@@ -140,8 +141,15 @@
     <Compile Include="Inspection\InspectionSchema.cs" />
     <Compile Include="Inspection\InspectionSchemaExtensions.cs" />
     <Compile Include="Inspection\InspectionSchemaFactory.cs" />
+    <Compile Include="Inspection\IRegionExtractor.cs" />
+    <Compile Include="Inspection\RegionExtractorCollection.cs" />
     <Compile Include="Inspection\SimGeneralInspector.cs" />
     <Compile Include="Calibration\SimImageCalibrator.cs" />
+    <Compile Include="Inspection\SurfaceDefinition.cs" />
+    <Compile Include="Inspection\SurfaceDefinitionCollection.cs" />
+    <Compile Include="Inspection\SurfaceResult.cs" />
+    <Compile Include="Inspection\SurfaceResultCollection.cs" />
+    <Compile Include="IRectangle2Def.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="ImageAcquisition\CameraExtensions.cs" />
     <Compile Include="ImageAcquisition\ICamera.cs" />

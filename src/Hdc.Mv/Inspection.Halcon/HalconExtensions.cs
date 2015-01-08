@@ -1,6 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using HalconDotNet;
 
 namespace Hdc.Mv.Inspection.Halcon
@@ -40,6 +42,44 @@ namespace Hdc.Mv.Inspection.Halcon
             return bsi;
         }
 
+        public static BitmapSource ToBitmapSource(this HImage hImage)
+        {
+            int pixelHeight;
+            int pixelWidth;
+            string type;
+            IntPtr intPtr = hImage.GetImagePointer1(out type, out pixelWidth, out pixelHeight);
+
+            var stride = pixelWidth;
+            var size = stride * pixelHeight;
+
+/*            int bufferSize = stride * pixelHeight;
+            IntPtr bufferPtr = Marshal.AllocHGlobal(bufferSize);
+
+            var buffer = new byte[bufferSize];
+            Marshal.Copy(intPtr, buffer, 0, bufferSize);
+            Marshal.Copy(buffer, 0, bufferPtr, bufferSize);
+
+            var bs = BitmapSource.Create(
+            pixelWidth, pixelHeight,
+            96, 96,
+            PixelFormats.Gray8,
+            BitmapPalettes.Gray256,
+            bufferPtr,
+            size,
+            stride);*/
+
+            var bs = BitmapSource.Create(
+            pixelWidth, pixelHeight,
+            96, 96,
+            PixelFormats.Gray8,
+            BitmapPalettes.Gray256,
+            intPtr,
+            size,
+            stride);
+
+            return bs;
+        }
+
         public static HImage EnhanceEdgeArea4(this HImage image,
               int meanMaskWidth, int meanMaskHeight, int firstMinGray, int firstMaxGray,
             Order order,
@@ -72,6 +112,23 @@ namespace Hdc.Mv.Inspection.Halcon
             region.Dispose();
 
             return new HImage(enhancedImage);
+        }
+
+        public static HRegion GetRegionByGrayAndArea(this HImage image, 
+                                           int medianRadius,
+                                           int empWidth, int empHeight, double empFactor,
+                                           int thresholdMinGray, int thresholdMaxGray,
+                                           int areaMin, int areaMax,
+                                           double closingRadius, double dilationRadius)
+        {
+            HObject foundRegionObject;
+
+            HDevelopExport.Singletone.GetRegionByGrayAndArea(image, out foundRegionObject, medianRadius,
+                empWidth, empHeight, empFactor, thresholdMinGray, thresholdMaxGray, areaMin,
+                areaMax,
+                closingRadius, dilationRadius);
+
+            return new HRegion(foundRegionObject);
         }
     }
 }

@@ -2,6 +2,9 @@
 using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Media;
+using HalconDotNet;
+using Hdc.Mv.Inspection.Halcon;
+using Hdc.Windows.Media.Imaging;
 
 namespace Hdc.Mv
 {
@@ -117,7 +120,8 @@ namespace Hdc.Mv
         {
             var vFromOriginToTarget = point.GetVectorTo(baseLine.GetPoint1());
             var vFromOriginToRight = baseLine.GetPoint2().GetVectorTo(baseLine.GetPoint1());
-            var coordinateVector = vFromOriginToRight.Rotate(angle); // 0 degree mains: the line is X, direct to right. x>0, follow the clock.
+            var coordinateVector = vFromOriginToRight.Rotate(angle);
+                // 0 degree mains: the line is X, direct to right. x>0, follow the clock.
 
             var angleBetweenTargetAndRight = vFromOriginToTarget.GetAngleTo(coordinateVector);
 
@@ -130,7 +134,8 @@ namespace Hdc.Mv
         {
             var vFromOriginToTarget = point.GetVectorTo(baseLine.GetPoint1());
             var vFromOriginToRight = baseLine.GetPoint2().GetVectorTo(baseLine.GetPoint1());
-            var coordinateVector = vFromOriginToRight.Rotate(angle); // 0 degree mains: the line is X, direct to right. x>0, follow the clock.
+            var coordinateVector = vFromOriginToRight.Rotate(angle);
+                // 0 degree mains: the line is X, direct to right. x>0, follow the clock.
 
             var angleBetweenTargetAndRight = vFromOriginToTarget.GetAngleTo(coordinateVector);
 
@@ -141,7 +146,7 @@ namespace Hdc.Mv
 
         public static Point GetCenterPoint(this Line line)
         {
-            return new Point((line.X1 + line.X2) / 2.0, (line.Y1 + line.Y2) / 2.0);
+            return new Point((line.X1 + line.X2)/2.0, (line.Y1 + line.Y2)/2.0);
         }
 
         public static string ToNumbericString(this double value, int intCount = 4)
@@ -168,22 +173,22 @@ namespace Hdc.Mv
 
         public static double ToMillimeterFromPixel(this double value, double factor)
         {
-            return value * factor / 1000.0;
+            return value*factor/1000.0;
         }
 
         public static double ToMicrometerFromPixel(this double value, double factor)
         {
-            return value * factor;
+            return value*factor;
         }
 
         public static string ToNumbericStringInMillimeterFromPixel(this double value, double factor, int intCount = 4)
         {
-            return value.ToMillimeterFromPixel(factor).ToNumbericString(intCount);//+" mm";
+            return value.ToMillimeterFromPixel(factor).ToNumbericString(intCount); //+" mm";
         }
 
         public static string ToNumbericStringInMicrometerFromPixel(this double value, double factor, int intCount = 4)
         {
-            return value.ToMicrometerFromPixel(factor).ToNumbericString(intCount);// + " um";
+            return value.ToMicrometerFromPixel(factor).ToNumbericString(intCount); // + " um";
         }
 
         public static string ToHalconString(this Polarity polarity)
@@ -266,5 +271,29 @@ namespace Hdc.Mv
             return selectionModeString;
         }
 
+
+        public static HRegion GetRegion(this IRectangle2Def rect)
+        {
+            var processRegion = new HRegion();
+            processRegion.GenRectangle2(rect.Y, rect.X, rect.Angle, rect.HalfWidth, rect.HalfHeight);
+            return processRegion;
+        }
+
+        public static void SaveCacheImages(this HImage image, HRegion domain, HRegion region, string fileName)
+        {
+            var reducedImage = image.ReduceDomain(domain);
+            var croppedImage = reducedImage.CropDomain();
+            croppedImage.ToBitmapSource().SaveToTiff(fileName + ".Ori.tif");
+
+            var paintRegion = reducedImage.PaintRegion(region, 255.0, "margin");
+            var croppedImage2 = paintRegion.CropDomain();
+            croppedImage2.ToBitmapSource().SaveToTiff(fileName + ".Mod.tif");
+
+            domain.Dispose();
+            reducedImage.Dispose();
+            croppedImage.Dispose();
+            croppedImage2.Dispose();
+            paintRegion.Dispose();
+        }
     }
 }
