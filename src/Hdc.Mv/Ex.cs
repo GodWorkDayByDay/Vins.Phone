@@ -1,9 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Media;
 using HalconDotNet;
+using Hdc.IO;
 using Hdc.Mv.Inspection.Halcon;
+using Hdc.Reflection;
 using Hdc.Windows.Media.Imaging;
 
 namespace Hdc.Mv
@@ -279,15 +282,23 @@ namespace Hdc.Mv
             return processRegion;
         }
 
-        public static void SaveCacheImages(this HImage image, HRegion domain, HRegion region, string fileName)
+        public static void SaveCacheImagesForRegion(this HImage image, HRegion domain, HRegion region, string fileName)
         {
+            var dir = typeof(Ex).Assembly.GetAssemblyDirectoryPath();
+            var cacheDir = Path.Combine(dir, "CacheImages");
+
+            if (!Directory.Exists(cacheDir))
+            {
+                Directory.CreateDirectory(cacheDir);
+            }
+
             var reducedImage = image.ReduceDomain(domain);
             var croppedImage = reducedImage.CropDomain();
-            croppedImage.ToBitmapSource().SaveToTiff(fileName + ".Ori.tif");
+            croppedImage.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Ori.tif");
 
             var paintRegion = reducedImage.PaintRegion(region, 255.0, "margin");
             var croppedImage2 = paintRegion.CropDomain();
-            croppedImage2.ToBitmapSource().SaveToTiff(fileName + ".Mod.tif");
+            croppedImage2.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Mod.tif");
 
             domain.Dispose();
             reducedImage.Dispose();

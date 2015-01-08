@@ -100,13 +100,35 @@ namespace Hdc.Mv.Inspection
         public static InspectionSchema GetInspectionSchema()
         {
             var dir = typeof (InspectionController).Assembly.GetAssemblyDirectoryPath();
-            var fileName = Path.Combine(dir, "InspectionSchema.xaml");
-            if (!File.Exists(fileName))
+
+            var inspectionSchemaDirPath = dir + "\\InspectionSchema";
+            var inspectionSchemaFilePath = dir + "\\InspectionSchema\\InspectionSchema.xaml";
+//            var fileName = Path.Combine(inspectionSchemaDirPath, "InspectionSchema.xaml");
+
+            if (!Directory.Exists(inspectionSchemaDirPath))
+            {
+                Directory.CreateDirectory(inspectionSchemaDirPath);
+            }
+
+            if (!File.Exists(inspectionSchemaFilePath))
             {
                 var ds = InspectionSchemaFactory.CreateDefaultSchema();
-                ds.SerializeToXamlFile(fileName);
+                ds.SerializeToXamlFile(inspectionSchemaFilePath);
             }
-            var schema = fileName.DeserializeFromXamlFile<InspectionSchema>();
+
+            var schema = inspectionSchemaFilePath.DeserializeFromXamlFile<InspectionSchema>();
+
+
+            var files = Directory.GetFiles(inspectionSchemaDirPath);
+            foreach (var file in files)
+            {
+                if (file == inspectionSchemaFilePath)
+                    continue;
+
+                var slaveSchema = file.DeserializeFromXamlFile<InspectionSchema>();
+                schema.Merge(slaveSchema);
+            }
+
             return schema;
         }
 

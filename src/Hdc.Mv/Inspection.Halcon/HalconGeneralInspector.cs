@@ -169,8 +169,8 @@ namespace Hdc.Mv.Inspection
 
                     if (includeRegion.SaveCacheImageEnabled)
                     {
-                        var fileName = "_SurfaceDefinition_" + def.Name + "_Include_" + includeRegion.Name;
-                        _hDevelopExportHelper.HImage.SaveCacheImages(domain, region, fileName);
+                        var fileName = "SurfaceDefinition_" + def.Name + "_Include_" + includeRegion.Name;
+                        _hDevelopExportHelper.HImage.SaveCacheImagesForRegion(domain, region, fileName);
 
 //                        var domian = includeRegion.GetRegion();
 //                        var reducedImage = _hDevelopExportHelper.HImage.ReduceDomain(domian);
@@ -199,8 +199,8 @@ namespace Hdc.Mv.Inspection
 
                     if (excludeRegion.SaveCacheImageEnabled)
                     {
-                        var fileName = "_SurfaceDefinition_" + def.Name + "_Exclude_" + excludeRegion.Name;
-                        _hDevelopExportHelper.HImage.SaveCacheImages(domain, region, fileName);
+                        var fileName = "SurfaceDefinition_" + def.Name + "_Exclude_" + excludeRegion.Name;
+                        _hDevelopExportHelper.HImage.SaveCacheImagesForRegion(domain, region, fileName);
 
 //                        var reducedImage = _hDevelopExportHelper.HImage.ReduceDomain(domian);
 //                        var croppedImage = reducedImage.CropDomain();
@@ -223,8 +223,8 @@ namespace Hdc.Mv.Inspection
 
                 if (def.SaveCacheImageEnabled && def.IncludeRegions.Any())
                 {
-                    var fileName = "_SurfaceDefinition_" + def.Name + "_Include";
-                    _hDevelopExportHelper.HImage.SaveCacheImages(unionIncludeDomain, unionIncludeRegion, fileName);
+                    var fileName = "SurfaceDefinition_" + def.Name + "_Include";
+                    _hDevelopExportHelper.HImage.SaveCacheImagesForRegion(unionIncludeDomain, unionIncludeRegion, fileName);
 
 //                    var domian = unionIncludeDomain;
 //                    var reducedImage = _hDevelopExportHelper.HImage.ReduceDomain(domian);
@@ -244,8 +244,8 @@ namespace Hdc.Mv.Inspection
 
                 if (def.SaveCacheImageEnabled && def.ExcludeRegions.Any())
                 {
-                    var fileName = "_SurfaceDefinition_" + def.Name + "_Exclude";
-                    _hDevelopExportHelper.HImage.SaveCacheImages(unionExcludeDomain, unionExcludeRegion, fileName);
+                    var fileName = "SurfaceDefinition_" + def.Name + "_Exclude";
+                    _hDevelopExportHelper.HImage.SaveCacheImagesForRegion(unionExcludeDomain, unionExcludeRegion, fileName);
                 }
 
 /*                var processRegion = new HRegion();

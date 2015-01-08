@@ -81,7 +81,8 @@ namespace ODM.Inspectors.Halcon.SampleApp
 
 
             // Tests
-            var schema = "InspectionSchema.xaml".LoadFromAssemblyDir();
+//            var schema = "InspectionSchema.xaml".LoadFromAssemblyDir();
+            var schema = InspectionController.GetInspectionSchema();
 
 
             var inspectorFactory = new Func<string, IGeneralInspector>(
@@ -394,7 +395,8 @@ namespace ODM.Inspectors.Halcon.SampleApp
 
         private void Refresh()
         {
-            var schema = "InspectionSchema.xaml".LoadFromAssemblyDir();
+//            var schema = "InspectionSchema.xaml".LoadFromAssemblyDir();
+            var schema = InspectionController.GetInspectionSchema();
 
             Inspect(schema);
         }

@@ -1,0 +1,67 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  >
+  <InspectionSchema.CoordinateCircles>
+  </InspectionSchema.CoordinateCircles>
+
+  <InspectionSchema.CircleSearchingDefinitions>
+  </InspectionSchema.CircleSearchingDefinitions>
+
+  <InspectionSchema.EdgeSearchingDefinitions>
+  </InspectionSchema.EdgeSearchingDefinitions>
+  
+  <InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+  </InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+  
+  <InspectionSchema.SurfaceDefinitions>
+      <SurfaceDefinition Name="A-Top"
+                         SaveCacheImageEnabled="True">
+          <SurfaceDefinition.ExcludeRegions>
+              <GrayAndAreaRegionExtractor Name="Ex.Hole"
+                                          SaveCacheImageEnabled="True"
+                                          
+                                          X="4832"
+                                          Y="1054"
+                                          Angle="0"
+                                          HalfWidth="100"
+                                          HalfHeight="100"
+                                          
+                                          MedianRadius="7"
+                                          EmpWidth="100"
+                                          EmpHeight="100"
+                                          EmpFactor="3"
+                                          ThresholdMinGray="0"
+                                          ThresholdMaxGray="180"
+                                          AreaMin="10000"
+                                          AreaMax="99999999"
+                                          ClosingRadius="5"
+                                          DilationRadius="2"
+                                          >
+              </GrayAndAreaRegionExtractor>
+              <GrayAndAreaRegionExtractor Name="Ex.Hole2"
+                                          SaveCacheImageEnabled="True"
+                                          
+                                          X="2490"
+                                          Y="1210"
+                                          Angle="0"
+                                          HalfWidth="150"
+                                          HalfHeight="150"
+                                          
+                                          MedianRadius="7"
+                                          EmpWidth="100"
+                                          EmpHeight="100"
+                                          EmpFactor="3"
+                                          ThresholdMinGray="0"
+                                          ThresholdMaxGray="180"
+                                          AreaMin="10000"
+                                          AreaMax="99999999"
+                                          ClosingRadius="5"
+                                          DilationRadius="2"
+                                          >
+              </GrayAndAreaRegionExtractor>
+          </SurfaceDefinition.ExcludeRegions>
+          <SurfaceDefinition.IncludeRegions>
+          </SurfaceDefinition.IncludeRegions>
+      </SurfaceDefinition>
+  </InspectionSchema.SurfaceDefinitions>
+  
+</InspectionSchema>

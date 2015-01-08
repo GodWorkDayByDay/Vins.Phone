@@ -30,5 +30,15 @@ namespace Hdc.Mv.Inspection
             var schema = fileName.DeserializeFromXamlFile<InspectionSchema>();
             return schema;
         }
+
+        public static void Merge(this InspectionSchema masterInspectionSchema, InspectionSchema slaveInspectionSchema)
+        {
+            masterInspectionSchema.CoordinateCircles.AddRange(slaveInspectionSchema.CoordinateCircles);
+            masterInspectionSchema.EdgeSearchingDefinitions.AddRange(slaveInspectionSchema.EdgeSearchingDefinitions);
+            masterInspectionSchema.CircleSearchingDefinitions.AddRange(slaveInspectionSchema.CircleSearchingDefinitions);
+            masterInspectionSchema.DistanceBetweenLinesDefinitions.AddRange(slaveInspectionSchema.DistanceBetweenLinesDefinitions);
+            masterInspectionSchema.DistanceBetweenIntersectionPointsDefinitions.AddRange(slaveInspectionSchema.DistanceBetweenIntersectionPointsDefinitions);
+            masterInspectionSchema.SurfaceDefinitions.AddRange(slaveInspectionSchema.SurfaceDefinitions);
+        }
     }
 }
