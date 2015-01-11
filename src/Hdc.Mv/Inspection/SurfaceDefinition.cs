@@ -14,6 +14,8 @@ namespace Hdc.Mv.Inspection
 
         public string Name { get; set; }
 
+        public string GroupName { get; set; }
+
         public bool SaveCacheImageEnabled { get; set; }
 
         public RegionExtractorCollection ExcludeRegions { get; set; }

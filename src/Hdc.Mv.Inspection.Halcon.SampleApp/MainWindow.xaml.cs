@@ -171,7 +171,6 @@ namespace ODM.Inspectors.Halcon.SampleApp
             _runner.Run(imageInfo, schema);
         }
 
-
         public void Show_DistanceBetweenLinesResults(
             IEnumerable<DistanceBetweenLinesResult> distanceBetweenLinesResults)
         {

@@ -5,6 +5,7 @@ using System.Windows.Ink;
 using System.Windows.Media;
 using HalconDotNet;
 using Hdc.IO;
+using Hdc.Linq;
 using Hdc.Mv.Inspection.Halcon;
 using Hdc.Reflection;
 using Hdc.Windows.Media.Imaging;
@@ -13,6 +14,10 @@ namespace Hdc.Mv
 {
     public static class Ex
     {
+        static Ex()
+        {
+        }
+
         public static Point ToPoint(this Vector vector)
         {
             return new Point(vector.X, vector.Y);
@@ -298,13 +303,97 @@ namespace Hdc.Mv
 
             var paintRegion = reducedImage.PaintRegion(region, 255.0, "margin");
             var croppedImage2 = paintRegion.CropDomain();
-            croppedImage2.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Mod.tif");
+            croppedImage2.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Paint.Margin.tif");
+
+            var paintRegion2 = reducedImage.PaintRegion(region, 255.0, "fill");
+            var croppedImage2b = paintRegion2.CropDomain();
+            croppedImage2b.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Paint.Fill.tif");
+
+            var reducedImage3 = image.ReduceDomain(region);
+            var croppedImage3 = reducedImage3.CropDomain();
+            croppedImage3.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Crop.tif");
 
             domain.Dispose();
             reducedImage.Dispose();
+            reducedImage3.Dispose();
             croppedImage.Dispose();
             croppedImage2.Dispose();
+            croppedImage2b.Dispose();
+            croppedImage3.Dispose();
             paintRegion.Dispose();
+        }
+
+        public static void SaveCacheImagesForRegion(this HImage image, HRegion domain, HRegion includeRegion, HRegion excludeRegion, string fileName)
+        {
+            var dir = typeof(Ex).Assembly.GetAssemblyDirectoryPath();
+            var cacheDir = Path.Combine(dir, "CacheImages");
+
+            if (!Directory.Exists(cacheDir))
+            {
+                Directory.CreateDirectory(cacheDir);
+            }
+
+            var imageWidth = image.GetWidth();
+            var imageHeight = image.GetHeight();
+
+            // Domain.Ori
+            var reducedImage = image.ReduceDomain(domain);
+            var croppedImage = reducedImage.CropDomain();
+            croppedImage.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Domain.Ori.tif");
+            reducedImage.Dispose();
+            croppedImage.Dispose();
+
+            // Domain.PaintMargin
+            var reducedImage4 = image.ReduceDomain(domain);
+            var paintRegionImage = reducedImage4.PaintRegion(includeRegion, 250.0, "margin");
+            var paintRegion2Image = paintRegionImage.PaintRegion(excludeRegion, 5.0, "margin");
+            var croppedImage2 = paintRegion2Image.CropDomain();
+            croppedImage2.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Domain.PaintMargin.tif");
+            reducedImage4.Dispose();
+            croppedImage2.Dispose();
+            paintRegionImage.Dispose();
+            paintRegion2Image.Dispose();
+
+            // PaintFill
+//            var paintRegion3Image = reducedImage.PaintRegion(includeRegion, 250.0, "fill");
+//            var croppedImage2bImage = paintRegion3Image.CropDomain();
+//            croppedImage2bImage.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Domain.PaintFill.tif");
+//            croppedImage2bImage.Dispose();
+
+            // Domain.Crop
+            var reducedImage3 = image.ReduceDomain(includeRegion);
+            var croppedImage3 = reducedImage3.CropDomain();
+            croppedImage3.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Domain.Crop.tif");
+            reducedImage3.Dispose();
+            croppedImage3.Dispose();
+
+            // bin image in domain
+            var row1 = domain.GetRow1();
+            var column1 = domain.GetColumn1();
+            var movedRegion= includeRegion.MoveRegion(-row1, -column1);
+
+            var w = domain.GetWidth();
+            var h = domain.GetHeight();
+            var binImage = movedRegion.RegionToBin(255, 0, w, h);
+            binImage.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Domain.Bin.tif");
+            binImage.Dispose();
+            movedRegion.Dispose();
+
+            // Full.Bin, 
+            var binImage2 = includeRegion.RegionToBin(255, 0, imageWidth, imageHeight);
+            binImage2.ToBitmapSource().SaveToJpeg(cacheDir.CombilePath(fileName) + ".Full.Bin.jpg");
+            binImage2.Dispose();
+
+            // Full.BinOnlyDomain
+            var binImage3 = includeRegion.RegionToBin(255, 0, imageWidth, imageHeight);
+            var reducedImage5= binImage3.ReduceDomain(domain);
+            var binOnlyDomainImage = image.Clone();
+            binOnlyDomainImage.OverpaintGray(reducedImage5);
+            binOnlyDomainImage.ToBitmapSource().SaveToJpeg(cacheDir.CombilePath(fileName) + ".Full.BinOnlyDomain.jpg");
+
+            binImage3.Dispose();
+            reducedImage5.Dispose();
+            binOnlyDomainImage.Dispose();
         }
     }
 }

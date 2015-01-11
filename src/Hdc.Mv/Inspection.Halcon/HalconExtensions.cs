@@ -113,22 +113,5 @@ namespace Hdc.Mv.Inspection.Halcon
 
             return new HImage(enhancedImage);
         }
-
-        public static HRegion GetRegionByGrayAndArea(this HImage image, 
-                                           int medianRadius,
-                                           int empWidth, int empHeight, double empFactor,
-                                           int thresholdMinGray, int thresholdMaxGray,
-                                           int areaMin, int areaMax,
-                                           double closingRadius, double dilationRadius)
-        {
-            HObject foundRegionObject;
-
-            HDevelopExport.Singletone.GetRegionByGrayAndArea(image, out foundRegionObject, medianRadius,
-                empWidth, empHeight, empFactor, thresholdMinGray, thresholdMaxGray, areaMin,
-                areaMax,
-                closingRadius, dilationRadius);
-
-            return new HRegion(foundRegionObject);
-        }
     }
 }

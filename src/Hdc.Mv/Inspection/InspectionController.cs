@@ -99,11 +99,11 @@ namespace Hdc.Mv.Inspection
 
         public static InspectionSchema GetInspectionSchema()
         {
-            var dir = typeof (InspectionController).Assembly.GetAssemblyDirectoryPath();
+            var dir = typeof(InspectionController).Assembly.GetAssemblyDirectoryPath();
 
             var inspectionSchemaDirPath = dir + "\\InspectionSchema";
             var inspectionSchemaFilePath = dir + "\\InspectionSchema\\InspectionSchema.xaml";
-//            var fileName = Path.Combine(inspectionSchemaDirPath, "InspectionSchema.xaml");
+            //            var fileName = Path.Combine(inspectionSchemaDirPath, "InspectionSchema.xaml");
 
             if (!Directory.Exists(inspectionSchemaDirPath))
             {
@@ -126,7 +126,8 @@ namespace Hdc.Mv.Inspection
                     continue;
 
                 var slaveSchema = file.DeserializeFromXamlFile<InspectionSchema>();
-                schema.Merge(slaveSchema);
+                if (!slaveSchema.Disabled)
+                    schema.Merge(slaveSchema);
             }
 
             return schema;
@@ -138,7 +139,7 @@ namespace Hdc.Mv.Inspection
                 ? GetInspectionSchema()
                 : fileName.DeserializeFromXamlFile<InspectionSchema>();
 
-            ((ISetInspectionSchema) this).SetInspectionSchema(inspectionSchema);
+            ((ISetInspectionSchema)this).SetInspectionSchema(inspectionSchema);
 
             return this;
         }
@@ -346,6 +347,16 @@ namespace Hdc.Mv.Inspection
 
         public ISetInspectionSchema StartInspect()
         {
+            var dir = typeof(Ex).Assembly.GetAssemblyDirectoryPath();
+            var cacheDir = Path.Combine(dir, "CacheImages");
+            if (Directory.Exists(cacheDir))
+            {
+                foreach (var file in Directory.GetFiles(cacheDir))
+                {
+                    File.Delete(file);
+                }
+            }
+
             return this;
         }
 

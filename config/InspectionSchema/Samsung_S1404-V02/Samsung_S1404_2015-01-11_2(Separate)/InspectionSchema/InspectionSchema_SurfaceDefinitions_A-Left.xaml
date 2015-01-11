@@ -1,0 +1,74 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.SurfaceDefinitions>
+      <SurfaceDefinition Name="A-Left"
+                         SaveCacheImageEnabled="true"
+                         GroupName="A">
+          <SurfaceDefinition.ExcludeRegions>
+          </SurfaceDefinition.ExcludeRegions>
+          <SurfaceDefinition.IncludeRegions>
+              <GrayInvertRegionExtractor Name="Area-01"
+                                         SaveCacheImageEnabled="False"
+                                         
+                                         X="1244"
+                                         Y="3862"
+                                         Angle="0"
+                                         HalfWidth="50"
+                                         HalfHeight="1445"
+                                         
+                                         MeanMaskWidth="3"
+                                         MeanMaskHeight="55"
+                                         EmpMaskWidth="100"
+                                         EmpMaskHeight="50"
+                                         EmpFactor1="1"
+                                         EmpFactor2="1"
+                                         ThresholdMinGray="0"
+                                         ThresholdMaxGray="250"
+                                         AreaMin="110000"
+                                         AreaMax="99999999"
+                                         />
+              <GrayInvertRegionExtractor Name="Area-02"
+                                         SaveCacheImageEnabled="False"
+                                         
+                                         X="1254"
+                                         Y="6869"
+                                         Angle="0"
+                                         HalfWidth="50"
+                                         HalfHeight="1600"
+                                         
+                                         MeanMaskWidth="3"
+                                         MeanMaskHeight="55"
+                                         EmpMaskWidth="100"
+                                         EmpMaskHeight="50"
+                                         EmpFactor1="1"
+                                         EmpFactor2="1"
+                                         ThresholdMinGray="0"
+                                         ThresholdMaxGray="250"
+                                         AreaMin="110000"
+                                         AreaMax="99999999"
+                                         />
+              <GrayInvertRegionExtractor Name="Area-03"
+                                         SaveCacheImageEnabled="False"
+                                         
+                                         X="1264"
+                                         Y="9253"
+                                         Angle="0"
+                                         HalfWidth="50"
+                                         HalfHeight="800"
+                                         
+                                         MeanMaskWidth="3"
+                                         MeanMaskHeight="55"
+                                         EmpMaskWidth="100"
+                                         EmpMaskHeight="50"
+                                         EmpFactor1="1"
+                                         EmpFactor2="1"
+                                         ThresholdMinGray="0"
+                                         ThresholdMaxGray="250"
+                                         AreaMin="50000"
+                                         AreaMax="99999999"
+                                         />
+          </SurfaceDefinition.IncludeRegions>
+      </SurfaceDefinition>
+  </InspectionSchema.SurfaceDefinitions>
+  
+</InspectionSchema>

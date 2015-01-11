@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>dev_set_draw('margin')</l>
+<c></c>
+<l>read_image(Image, '2014-12-24_22.31.23_Middle.jpg')</l>
+<l>get_image_size(Image, Width, Height)</l>
+<l>get_domain(Image, Domain)</l>
+<c></c>
+<l>GetRegionByGray (Image, FoundRegion, 1, 21, 30, 10, 1, 1, 0, 0, 250, 10, 5, 5, 5, 0.5, 4000000, 99999999999)</l>
+<c></c>
+<l>boundary(FoundRegion, RegionBorder, 'inner')</l>
+<l>stop()</l>
+<c></c>
+<l>reduce_domain(Image, FoundRegion, ImageReduced)</l>
+<l>stop()</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="GetRegionByGray">
+<interface>
+<io>
+<par name="Image" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="FoundRegion" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="MeanMaskWidth" base_type="ctrl" dimension="0"/>
+<par name="MeanMaskHeight" base_type="ctrl" dimension="0"/>
+<par name="EmpMaskWidth" base_type="ctrl" dimension="0"/>
+<par name="EmpMaskHeight" base_type="ctrl" dimension="0"/>
+<par name="EmpFactor" base_type="ctrl" dimension="0"/>
+<par name="ScaleMult" base_type="ctrl" dimension="0"/>
+<par name="ScaleAdd" base_type="ctrl" dimension="0"/>
+<par name="ThresholdMinGray" base_type="ctrl" dimension="0"/>
+<par name="ThresholdMaxGray" base_type="ctrl" dimension="0"/>
+<par name="ErosionRadius" base_type="ctrl" dimension="0"/>
+<par name="ClosingCircleRadius" base_type="ctrl" dimension="0"/>
+<par name="ClosingRectWidth" base_type="ctrl" dimension="0"/>
+<par name="ClosingRectHeight" base_type="ctrl" dimension="0"/>
+<par name="DilationRadius" base_type="ctrl" dimension="0"/>
+<par name="AreaMin" base_type="ctrl" dimension="0"/>
+<par name="AreaMax" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<c>* extract and enhance edges</c>
+<l>mean_image(Image, ImageMean, MeanMaskWidth, MeanMaskHeight)</l>
+<l>emphasize(ImageMean, ImageEmphasize, EmpMaskWidth, EmpMaskHeight, EmpFactor)</l>
+<l>scale_image(ImageEmphasize, ImageScaleMax, ScaleMult, ScaleAdd)</l>
+<c></c>
+<c>* extract regions</c>
+<l>threshold(ImageScaleMax,Areas,ThresholdMinGray,ThresholdMaxGray)</l>
+<l>erosion_circle(Areas, RegionErosion, ErosionRadius)</l>
+<l>connection(RegionErosion, ConnectedRegions1)</l>
+<l>fill_up(ConnectedRegions1, RegionFillUp)</l>
+<l>closing_circle (RegionFillUp, RegionClosing, ClosingCircleRadius)</l>
+<l>closing_rectangle1(RegionClosing,RegionClosing2,ClosingRectWidth,ClosingRectHeight)</l>
+<l>dilation_circle(RegionClosing2, RegionDilation, DilationRadius)</l>
+<c></c>
+<c>* select region</c>
+<l>select_shape (RegionDilation, SelectedRegions, 'area', 'and', AreaMin, AreaMax)</l>
+<l>move_region(SelectedRegions, FoundRegion, 0, 0)</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="GetRegionByGray">
+<parameters>
+<parameter id="AreaMax">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="AreaMin">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ClosingCircleRadius">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ClosingRectHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="ClosingRectWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="DilationRadius">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="EmpFactor">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="EmpMaskHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="EmpMaskWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="ErosionRadius">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="FoundRegion">
+<sem_type>region</sem_type>
+</parameter>
+<parameter id="Image">
+<sem_type>image</sem_type>
+</parameter>
+<parameter id="MeanMaskHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="MeanMaskWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="ScaleAdd">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ScaleMult">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ThresholdMaxGray">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ThresholdMinGray">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

@@ -50,6 +50,8 @@ namespace Hdc.Mv.Inspection
         public bool CoordinateOriginOffsetEnable { get; set; }
         public double CoordinateOriginOffsetX { get; set; }
         public double CoordinateOriginOffsetY { get; set; }
+
+        public bool Disabled { get; set; }
     }
 }
 // ReSharper restore InconsistentNaming

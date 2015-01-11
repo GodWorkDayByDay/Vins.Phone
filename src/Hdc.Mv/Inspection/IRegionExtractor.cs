@@ -6,6 +6,8 @@ namespace Hdc.Mv.Inspection
     {
         HRegion Process(HImage image);
 
+        HRegion Process(HImage image, HRegion domain);
+
         string Name { get; set; }
 
         bool SaveCacheImageEnabled { get; set; }
