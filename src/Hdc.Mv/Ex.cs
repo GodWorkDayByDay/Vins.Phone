@@ -129,7 +129,7 @@ namespace Hdc.Mv
             var vFromOriginToTarget = point.GetVectorTo(baseLine.GetPoint1());
             var vFromOriginToRight = baseLine.GetPoint2().GetVectorTo(baseLine.GetPoint1());
             var coordinateVector = vFromOriginToRight.Rotate(angle);
-                // 0 degree mains: the line is X, direct to right. x>0, follow the clock.
+            // 0 degree mains: the line is X, direct to right. x>0, follow the clock.
 
             var angleBetweenTargetAndRight = vFromOriginToTarget.GetAngleTo(coordinateVector);
 
@@ -143,7 +143,7 @@ namespace Hdc.Mv
             var vFromOriginToTarget = point.GetVectorTo(baseLine.GetPoint1());
             var vFromOriginToRight = baseLine.GetPoint2().GetVectorTo(baseLine.GetPoint1());
             var coordinateVector = vFromOriginToRight.Rotate(angle);
-                // 0 degree mains: the line is X, direct to right. x>0, follow the clock.
+            // 0 degree mains: the line is X, direct to right. x>0, follow the clock.
 
             var angleBetweenTargetAndRight = vFromOriginToTarget.GetAngleTo(coordinateVector);
 
@@ -289,7 +289,7 @@ namespace Hdc.Mv
 
         public static void SaveCacheImagesForRegion(this HImage image, HRegion domain, HRegion region, string fileName)
         {
-            var dir = typeof(Ex).Assembly.GetAssemblyDirectoryPath();
+            var dir = typeof (Ex).Assembly.GetAssemblyDirectoryPath();
             var cacheDir = Path.Combine(dir, "CacheImages");
 
             if (!Directory.Exists(cacheDir))
@@ -323,9 +323,10 @@ namespace Hdc.Mv
             paintRegion.Dispose();
         }
 
-        public static void SaveCacheImagesForRegion(this HImage image, HRegion domain, HRegion includeRegion, HRegion excludeRegion, string fileName)
+        public static void SaveCacheImagesForRegion(this HImage image, HRegion domain, HRegion includeRegion,
+                                                    HRegion excludeRegion, string fileName)
         {
-            var dir = typeof(Ex).Assembly.GetAssemblyDirectoryPath();
+            var dir = typeof (Ex).Assembly.GetAssemblyDirectoryPath();
             var cacheDir = Path.Combine(dir, "CacheImages");
 
             if (!Directory.Exists(cacheDir))
@@ -370,7 +371,7 @@ namespace Hdc.Mv
             // bin image in domain
             var row1 = domain.GetRow1();
             var column1 = domain.GetColumn1();
-            var movedRegion= includeRegion.MoveRegion(-row1, -column1);
+            var movedRegion = includeRegion.MoveRegion(-row1, -column1);
 
             var w = domain.GetWidth();
             var h = domain.GetHeight();
@@ -386,7 +387,7 @@ namespace Hdc.Mv
 
             // Full.BinOnlyDomain
             var binImage3 = includeRegion.RegionToBin(255, 0, imageWidth, imageHeight);
-            var reducedImage5= binImage3.ReduceDomain(domain);
+            var reducedImage5 = binImage3.ReduceDomain(domain);
             var binOnlyDomainImage = image.Clone();
             binOnlyDomainImage.OverpaintGray(reducedImage5);
             binOnlyDomainImage.ToBitmapSource().SaveToJpeg(cacheDir.CombilePath(fileName) + ".Full.BinOnlyDomain.jpg");
@@ -394,6 +395,19 @@ namespace Hdc.Mv
             binImage3.Dispose();
             reducedImage5.Dispose();
             binOnlyDomainImage.Dispose();
+        }
+
+        public static string ToHalconString(this LightDark lightDark)
+        {
+            switch (lightDark)
+            {
+                case LightDark.Dark:
+                    return "dark";
+                case LightDark.Light:
+                    return "light";
+                default:
+                    throw new InvalidOperationException("LightDark cannot convert to string");
+            }
         }
     }
 }

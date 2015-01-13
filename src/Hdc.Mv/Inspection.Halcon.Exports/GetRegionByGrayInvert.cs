@@ -36,8 +36,10 @@ public partial class HDevelopExport
     HOperatorSet.GenEmptyObj(out ho_RegionFillUp);
     HOperatorSet.GenEmptyObj(out ho_SelectedRegions);
     //extract and enhance edges
+
     ho_ImageMean.Dispose();
-    HOperatorSet.MeanImage(ho_Image, out ho_ImageMean, hv_MeanMaskWidth, hv_MeanMaskHeight);
+    HOperatorSet.MeanSp(ho_Image, out ho_ImageMean, hv_MeanMaskHeight, hv_MeanMaskWidth, 
+        1, 254);
 
     ho_ImageEmphasize.Dispose();
     HOperatorSet.Emphasize(ho_ImageMean, out ho_ImageEmphasize, hv_EmpMaskWidth, 

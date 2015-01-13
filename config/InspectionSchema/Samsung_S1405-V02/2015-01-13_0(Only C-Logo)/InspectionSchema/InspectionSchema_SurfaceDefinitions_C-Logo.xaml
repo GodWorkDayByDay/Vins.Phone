@@ -1,0 +1,32 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.SurfaceDefinitions>
+      <SurfaceDefinition Name="C-Logo"
+                         SaveCacheImageEnabled="true">
+          <SurfaceDefinition.ExcludeRegions>
+          </SurfaceDefinition.ExcludeRegions>
+          <SurfaceDefinition.IncludeRegions>
+              <BinaryThresholdRegionExtractor Name="Logo"
+                                              SaveCacheImageEnabled="true"
+                                              
+                                              X="3701"
+                                              Y="4585"
+                                              Angle="0"
+                                              HalfWidth="815"
+                                              HalfHeight="250"
+                                              
+                                              MedianRadius="7"
+                                              EmpWidth="1630"
+                                              EmpHeight="500"
+                                              EmpFactor="1"
+                                              LightDark="Dark"
+                                              AreaMin="20000"
+                                              AreaMax="9999999"
+                                              ClosingRadius="0"
+                                              DilationRadius="2"
+                                              />
+          </SurfaceDefinition.IncludeRegions>
+      </SurfaceDefinition>
+  </InspectionSchema.SurfaceDefinitions>
+  
+</InspectionSchema>

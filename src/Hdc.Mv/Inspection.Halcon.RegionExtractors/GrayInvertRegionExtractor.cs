@@ -26,8 +26,8 @@ namespace Hdc.Mv.Inspection
 
             HDevelopExport.Singletone.GetRegionByGrayInvert(image,
                 out foundRegionObject,
-                MeanMaskWidth,
-                MeanMaskHeight,
+                MeanMaskWidth, // Halcon 12, mean_sp has a bug that height and width are invert
+                MeanMaskHeight, // 
                 EmpMaskWidth,
                 EmpMaskHeight,
                 EmpFactor1,
@@ -40,8 +40,14 @@ namespace Hdc.Mv.Inspection
             var hRegion = new HRegion(foundRegionObject);
 
 /*            image.Clone().CropDomain().WriteImage("tiff", 100, @"B:\Temp_0_ori_crop.tif");
-            
-            var meanImage = image.MeanImage(MeanMaskWidth, MeanMaskHeight);
+
+//            var x1 = image.Clone().ScaleImage(1.0, -2.0);
+//            var x2 = x1.ScaleImage(1.0, 1.0);
+
+            image.Clone().CropDomain().WriteImage("tiff", 100, @"B:\Temp_0_ScaleImage_crop.tif");
+
+            var meanImage = image.MeanSp(MeanMaskHeight, MeanMaskWidth, 1, 254);
+//            var meanImage = x2.MeanImage(MeanMaskWidth, MeanMaskHeight);
 //            meanImage.Clone().WriteImage("tiff", 100, @"B:\Temp_1_meanImage.tif");
             meanImage.Clone().CropDomain().WriteImage("tiff", 100, @"B:\Temp_1_meanImage_crop.tif");
 
@@ -55,12 +61,12 @@ namespace Hdc.Mv.Inspection
 
             var absDiffImage = empImage.AbsDiffImage(invertEmpImage, 1.0);
 //            absDiffImage.Clone().WriteImage("tiff", 100, @"B:\Temp_4_absDiffImage.tif");
-            absDiffImage.Clone().CropDomain().WriteImage("tiff", 100, @"B:\Temp_4_absDiffImage_crop.tif");*/
+            absDiffImage.Clone().CropDomain().WriteImage("tiff", 100, @"B:\Temp_4_absDiffImage_crop.tif");
 
-//            var hRegion = new HRegion();
-//            var x =image.Clone();
-//            x.OverpaintRegion(hRegion, 100.0, "fill");
-//            x.CropDomain().WriteImage("tiff", 100, @"B:\Temp2.tiff");
+            var hRegion = new HRegion();
+            var x =image.Clone();
+            x.OverpaintRegion(hRegion, 100.0, "fill");
+            x.CropDomain().WriteImage("tiff", 100, @"B:\Temp2.tiff");*/
             return hRegion;
         }
 

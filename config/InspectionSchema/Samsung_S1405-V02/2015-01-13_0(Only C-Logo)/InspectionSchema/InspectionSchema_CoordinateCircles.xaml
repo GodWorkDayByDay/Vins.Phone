@@ -1,0 +1,76 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  >
+  <InspectionSchema.CoordinateCircles>
+    <CircleSearchingDefinition CenterX="3633"
+                               CenterY="3173"
+                               InnerRadius="22"
+                               OuterRadius="38"
+                               Name="O"
+                               
+                               Hal_RegionsCount="60"
+                               Hal_RegionWidth="10"
+                               Hal_Sigma="1"
+                               Hal_Threshold="7"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Positive"
+                               Hal_Direct="Inner"
+                               />
+                               
+    <CircleSearchingDefinition CenterX="3668"
+                               CenterY="10250"
+                               InnerRadius="22"
+                               OuterRadius="38"
+                               Name="R1"
+                               
+                               BaselineAngle="90"
+                               BaselineX="0"
+                               BaselineY="113.28275"
+                               
+                               Hal_RegionsCount="60"
+                               Hal_RegionWidth="10"
+                               Hal_Sigma="1"
+                               Hal_Threshold="7"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Positive"
+                               Hal_Direct="Inner"
+                               />
+                               <!-- -->
+    <CircleSearchingDefinition CenterX="4475"
+                               CenterY="7613"
+                               InnerRadius="120"
+                               OuterRadius="140"
+                               Name="R2"
+                               
+                               BaselineAngle="79.528422"
+                               BaselineX="13.13646"
+                               BaselineY="71.074762"
+
+                               Hal_RegionsCount="100"
+                               Hal_RegionWidth="20"
+                               Hal_Sigma="1"
+                               Hal_Threshold="25"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Positive"
+                               Hal_Direct="Outer"
+                               />
+                               
+    <CircleSearchingDefinition CenterX="4958"
+                               CenterY="7971"
+                               InnerRadius="120"
+                               OuterRadius="145"
+                               Name="R3"
+                               
+                               BaselineAngle="74.85129"
+                               BaselineX="20.81575"
+                               BaselineY="76.88667"
+
+                               Hal_RegionsCount="100"
+                               Hal_RegionWidth="20"
+                               Hal_Sigma="1"
+                               Hal_Threshold="25"
+                               Hal_SelectionMode="First"
+                               Hal_Transition="Positive"
+                               Hal_Direct="Outer"
+                               />
+  </InspectionSchema.CoordinateCircles>
+</InspectionSchema>

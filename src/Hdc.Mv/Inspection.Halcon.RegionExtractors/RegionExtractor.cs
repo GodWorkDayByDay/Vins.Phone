@@ -18,8 +18,8 @@ namespace Hdc.Mv.Inspection
 
         public HRegion Process(HImage image, HRegion domain)
         {
-//            var row1 = Convert.ToInt32(domain.RegionFeatures("row1"));
-//            var column1 = Convert.ToInt32(domain.RegionFeatures("column1"));
+            //            var row1 = Convert.ToInt32(domain.RegionFeatures("row1"));
+            //            var column1 = Convert.ToInt32(domain.RegionFeatures("column1"));
             var row1 = domain.GetRow1();
             var column1 = domain.GetColumn1();
 

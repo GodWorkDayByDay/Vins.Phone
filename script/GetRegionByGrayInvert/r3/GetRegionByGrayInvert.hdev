@@ -9,7 +9,7 @@
 <l>get_image_size(Image, Width, Height)</l>
 <l>get_domain(Image, Domain)</l>
 <c></c>
-<l>GetRegionByGrayInvert (Image, FoundRegion, 3, 55, 100, 50, 1, 1, 0, 250, 18000, 99999999999)</l>
+<l>GetRegionByGrayInvert (Image, FoundRegion, 55, 3, 100, 50, 1, 1, 0, 250, 18000, 99999999999)</l>
 <c></c>
 <l>*boundary(FoundRegion, RegionBorder, 'inner')</l>
 <l>*stop()</l>
@@ -45,7 +45,8 @@
 </interface>
 <body>
 <c>* extract and enhance edges</c>
-<l>mean_image(Image, ImageMean, MeanMaskWidth, MeanMaskHeight)</l>
+<c></c>
+<l>mean_sp(Image, ImageMean, MeanMaskHeight, MeanMaskWidth, 1, 254)</l>
 <c></c>
 <l>emphasize (ImageMean, ImageEmphasize, EmpMaskWidth, EmpMaskHeight, EmpFactor1)</l>
 <c></c>

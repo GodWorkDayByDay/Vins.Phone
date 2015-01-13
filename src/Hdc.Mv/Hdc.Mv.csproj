@@ -75,12 +75,18 @@
     <Compile Include="CircleDirect.cs" />
     <Compile Include="Coordination\IRelativeCoordinate.cs" />
     <Compile Include="Coordination\MockRelativeCoordinate.cs" />
+    <Compile Include="Inspection.Halcon.RegionExtractors\CircleRegionExtractor.cs" />
+    <Compile Include="Inspection.Halcon.RegionExtractors\Rectanle2RegionExtractor.cs" />
+    <Compile Include="Inspection.Halcon.RegionExtractors\SharpSelector.cs" />
+    <Compile Include="LightDark.cs" />
     <Compile Include="Ex.cs" />
     <Compile Include="ImageAcquisition\SimCameraExtensions.cs" />
+    <Compile Include="Inspection.Halcon.Exports\GetRegionByBinaryThreshold.cs" />
     <Compile Include="Inspection.Halcon.Exports\GetRegionByGray.cs" />
     <Compile Include="Inspection.Halcon.Exports\GetRegionByGrayInvert.cs" />
     <Compile Include="Inspection.Halcon.Exports\GetRegionBySobelAmp.cs" />
     <Compile Include="Inspection.Halcon.Exports\HDevelopExportExtensions.cs" />
+    <Compile Include="Inspection.Halcon.RegionExtractors\BinaryThresholdRegionExtractor.cs" />
     <Compile Include="Inspection.Halcon.RegionExtractors\GrayInvertRegionExtractor.cs" />
     <Compile Include="Inspection.Halcon.RegionExtractors\GrayRegionExtractor.cs" />
     <Compile Include="Inspection.Halcon.RegionExtractors\GrowingRegionExtractor.cs" />
@@ -186,6 +192,7 @@
     <Compile Include="Coordination\RelativeCoordinateFactory.cs" />
     <Compile Include="Rectangle2Def.cs" />
     <Compile Include="SelectionMode.cs" />
+    <Compile Include="SharpFeature.cs" />
     <Compile Include="Transition.cs" />
   </ItemGroup>
   <ItemGroup>
