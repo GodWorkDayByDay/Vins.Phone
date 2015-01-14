@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Windows;
 using HalconDotNet;
 using Hdc.Diagnostics;
-using Hdc.Mv.Inspection.Halcon;
+using Hdc.Mv.Halcon;
 using Hdc.Windows.Media.Imaging;
 
-namespace Hdc.Mv.Inspection.Halcon
+namespace Hdc.Mv.Inspection
 {
     public class HDevelopExportHelper : IDisposable
     {

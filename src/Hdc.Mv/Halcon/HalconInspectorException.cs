@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Hdc.Mv.Inspection.Halcon
+namespace Hdc.Mv.Halcon
 {
     public class HalconInspectorException: Exception
     {

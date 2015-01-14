@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Markup;
 using HalconDotNet;
-using Hdc.Mv.Inspection.Halcon;
 
 namespace Hdc.Mv.Inspection
 {

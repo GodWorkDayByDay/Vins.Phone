@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Hdc.Collections.Generic;
 using Hdc.Mv;
+using Hdc.Mv.Halcon;
 using Hdc.Mv.Inspection;
 using Hdc.Mv.Inspection.Halcon;
 using Hdc.Mv.Inspection.Halcon.SampleApp;

@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Windows;
 using HalconDotNet;
 using Hdc.Collections.Generic;
-using Hdc.Mv.Inspection.Halcon;
+using Hdc.Mv.Halcon;
 using Hdc.Mv.Inspection.Mil.Interop;
 using Omu.ValueInjecter;
 

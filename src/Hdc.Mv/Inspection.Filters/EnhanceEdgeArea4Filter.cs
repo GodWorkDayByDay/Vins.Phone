@@ -1,7 +1,8 @@
 ﻿using System;
 using HalconDotNet;
+using Hdc.Mv.Halcon;
 
-namespace Hdc.Mv.Inspection.Halcon
+namespace Hdc.Mv.Inspection
 {
     [Serializable]
     public class EnhanceEdgeArea4Filter : IImageFilter

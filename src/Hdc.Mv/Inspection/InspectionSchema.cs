@@ -16,9 +16,9 @@ namespace Hdc.Mv.Inspection
             DistanceBetweenLinesDefinitions = new Collection<DistanceBetweenLinesDefinition>();
             DistanceBetweenIntersectionPointsDefinitions = new Collection<DistanceBetweenLinesDefinition>();
             SurfaceDefinitions = new Collection<SurfaceDefinition>();
+            DefectDefinitions = new Collection<DefectDefinition>();
         }
 
-//        public string InspectorName { get; set; }
         public string InspectorNameForCoordinate { get; set; }
         public string InspectorNameForCircles { get; set; }
         public string InspectorNameForEdges { get; set; }
@@ -44,6 +44,7 @@ namespace Hdc.Mv.Inspection
         public Collection<DistanceBetweenLinesDefinition> DistanceBetweenLinesDefinitions { get; set; }
         public Collection<DistanceBetweenLinesDefinition> DistanceBetweenIntersectionPointsDefinitions { get; set; }
         public Collection<SurfaceDefinition> SurfaceDefinitions { get; set; }
+        public Collection<DefectDefinition> DefectDefinitions { get; set; }
 
         public CoordinateType CoordinateType { get; set; }
 
@@ -52,6 +53,7 @@ namespace Hdc.Mv.Inspection
         public double CoordinateOriginOffsetY { get; set; }
 
         public bool Disabled { get; set; }
+        public string Comment { get; set; }
     }
 }
 // ReSharper restore InconsistentNaming

@@ -9,7 +9,7 @@ using System.Windows;
 using HalconDotNet;
 using Hdc.Collections.Generic;
 using Hdc.Diagnostics;
-using Hdc.Mv.Inspection.Halcon;
+using Hdc.Mv.Halcon;
 using Hdc.Windows.Media.Imaging;
 
 namespace Hdc.Mv.Inspection

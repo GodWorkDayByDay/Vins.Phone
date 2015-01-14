@@ -6,7 +6,7 @@ using System.Windows.Media;
 using HalconDotNet;
 using Hdc.IO;
 using Hdc.Linq;
-using Hdc.Mv.Inspection.Halcon;
+using Hdc.Mv.Halcon;
 using Hdc.Reflection;
 using Hdc.Windows.Media.Imaging;
 
@@ -407,6 +407,55 @@ namespace Hdc.Mv
                     return "light";
                 default:
                     throw new InvalidOperationException("LightDark cannot convert to string");
+            }
+        }
+
+
+        public static string ToHalconString(this LogicOperation operation)
+        {
+            switch (operation)
+            {
+                case LogicOperation.And:
+                    return "and";
+                case LogicOperation.Or:
+                    return "or";
+                default:
+                    throw new InvalidOperationException("LogicOperation cannot convert to string: " + operation);
+            }
+        }
+
+        public static string ToHalconString(this SharpFeature feature)
+        {
+            switch (feature)
+            {
+                case SharpFeature.Area:
+                    return "area";
+                case SharpFeature.Bulkiness:
+                    return "bulkiness";
+                case SharpFeature.Circularity:
+                    return "circularity";
+                case SharpFeature.Column:
+                    return "column";
+                case SharpFeature.Column1:
+                    return "column1";
+                case SharpFeature.Column2:
+                    return "column2";
+                case SharpFeature.Convexity:
+                    return "convexity";
+                case SharpFeature.Height:
+                    return "height";
+                case SharpFeature.Roundness:
+                    return "roundness";
+                case SharpFeature.Row:
+                    return "row";
+                case SharpFeature.Row1:
+                    return "row1";
+                case SharpFeature.Row2:
+                    return "row2";
+                case SharpFeature.Width:
+                    return "width";
+                default:
+                    throw new InvalidOperationException("SharpFeature cannot convert to string: " + feature);
             }
         }
     }

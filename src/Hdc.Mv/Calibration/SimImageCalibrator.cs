@@ -1,4 +1,4 @@
-﻿namespace Hdc.Mv.Inspection
+﻿namespace Hdc.Mv.Calibration
 {
     public class SimImageCalibrator : IImageCalibrator
     {

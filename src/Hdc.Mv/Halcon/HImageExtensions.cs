@@ -2,7 +2,7 @@
 using HalconDotNet;
 using Hdc.Windows;
 
-namespace Hdc.Mv.Inspection.Halcon
+namespace Hdc.Mv.Halcon
 {
     public static class HImageExtensions
     {

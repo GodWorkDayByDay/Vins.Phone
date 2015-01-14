@@ -1,7 +1,7 @@
 ﻿using System;
 using HalconDotNet;
 
-namespace Hdc.Mv.Inspection.Halcon
+namespace Hdc.Mv.Halcon
 {
     public static class HRegionExtensions
     {

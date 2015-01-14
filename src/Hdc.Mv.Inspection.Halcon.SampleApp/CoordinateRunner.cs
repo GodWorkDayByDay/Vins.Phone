@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using Hdc.Collections.Generic;
+using Hdc.Mv.Halcon;
 
 namespace Hdc.Mv.Inspection.Halcon.SampleApp
 {

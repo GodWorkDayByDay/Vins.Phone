@@ -1,6 +1,6 @@
 using System;
 using HalconDotNet;
-using Hdc.Mv.Inspection.Halcon;
+using Hdc.Mv.Halcon;
 
 namespace Hdc.Mv.Inspection
 {

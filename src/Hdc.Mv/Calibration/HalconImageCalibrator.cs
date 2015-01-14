@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using HalconDotNet;
+using Hdc.Mv.Halcon;
+using Hdc.Mv.Inspection;
 using Hdc.Windows.Media.Imaging;
 
-namespace Hdc.Mv.Inspection.Halcon
+namespace Hdc.Mv.Calibration
 {
     public class HalconImageCalibrator : IImageCalibrator
     {

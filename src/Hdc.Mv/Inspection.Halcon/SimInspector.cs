@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Hdc.Mv.Inspection.Halcon
+namespace Hdc.Mv.Inspection
 {
     public class SimInspector : IInspector
     {

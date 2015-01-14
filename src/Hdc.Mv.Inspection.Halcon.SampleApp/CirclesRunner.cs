@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using Hdc.Collections.Generic;
+using Hdc.Mv.Halcon;
 using Hdc.Mv.Inspection.Halcon.BatchInspector;
 
 namespace Hdc.Mv.Inspection.Halcon.SampleApp

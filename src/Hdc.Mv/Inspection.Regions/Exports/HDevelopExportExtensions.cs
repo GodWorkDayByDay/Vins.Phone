@@ -1,6 +1,6 @@
 ﻿using HalconDotNet;
 
-namespace Hdc.Mv.Inspection.Halcon
+namespace Hdc.Mv.Inspection
 {
     public static class HDevelopExportExtensions
     {
