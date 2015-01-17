@@ -4,7 +4,7 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    internal class DynThresholdDefectExtractor : DefectExtractor
+    public class DynThresholdDefectExtractor : DefectExtractor
     {
         public override HRegion GetBlobsInner(HImage image, HRegion domain)
         {

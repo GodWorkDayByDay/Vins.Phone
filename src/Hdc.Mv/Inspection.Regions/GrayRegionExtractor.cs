@@ -32,21 +32,21 @@ namespace Hdc.Mv.Inspection
             return new HRegion(foundRegionObject);
         }
 
-        public HTuple MeanMaskWidth { get; set; }
-        public HTuple MeanMaskHeight { get; set; }
-        public HTuple EmpMaskWidth { get; set; }
-        public HTuple EmpMaskHeight { get; set; }
-        public HTuple EmpFactor { get; set; }
-        public HTuple ScaleMult { get; set; }
-        public HTuple ScaleAdd { get; set; }
-        public HTuple ThresholdMinGray { get; set; }
-        public HTuple ThresholdMaxGray { get; set; }
-        public HTuple ErosionRadius { get; set; }
-        public HTuple ClosingCircleRadius { get; set; }
-        public HTuple ClosingRectWidth { get; set; }
-        public HTuple ClosingRectHeight { get; set; }
-        public HTuple DilationRadius { get; set; }
-        public HTuple AreaMin { get; set; }
-        public HTuple AreaMax { get; set; }
+        public int MeanMaskWidth { get; set; }
+        public int MeanMaskHeight { get; set; }
+        public int EmpMaskWidth { get; set; }
+        public int EmpMaskHeight { get; set; }
+        public double EmpFactor { get; set; }
+        public double ScaleMult { get; set; }
+        public double ScaleAdd { get; set; }
+        public double ThresholdMinGray { get; set; }
+        public double ThresholdMaxGray { get; set; }
+        public double ErosionRadius { get; set; }
+        public double ClosingCircleRadius { get; set; }
+        public int ClosingRectWidth { get; set; }
+        public int ClosingRectHeight { get; set; }
+        public double DilationRadius { get; set; }
+        public double AreaMin { get; set; }
+        public double AreaMax { get; set; }
     }
 }

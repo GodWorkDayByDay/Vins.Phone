@@ -405,6 +405,10 @@ namespace Hdc.Mv
                     return "dark";
                 case LightDark.Light:
                     return "light";
+                case LightDark.Equal:
+                    return "equal";
+                case LightDark.NotEqual:
+                    return "not_equal";
                 default:
                     throw new InvalidOperationException("LightDark cannot convert to string");
             }

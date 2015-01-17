@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -68,6 +70,12 @@ namespace Hdc.Mv.Inspection
         public static void UpdateFromRelativeLine(this EdgeSearchingDefinition def,
                                                 IRelativeCoordinate relativeCoordinate)
         {
+            if (Math.Abs(def.RelativeLine.X1) < 0.000001 ||
+                  Math.Abs(def.RelativeLine.Y1) < 0.000001 ||
+                  Math.Abs(def.RelativeLine.X2) < 0.000001 ||
+                  Math.Abs(def.RelativeLine.Y2) < 0.000001) 
+            { return; }
+
             var p1 = def.RelativeLine.GetPoint1();
             var p2 = def.RelativeLine.GetPoint2();
 
@@ -103,6 +111,19 @@ namespace Hdc.Mv.Inspection
         public static IEnumerable<CircleSearchingDefinition> GetCoordinateCircleSearchingDefinitions(this InspectionResult inspectionResult)
         {
             return inspectionResult.CoordinateCircles.Select(x => x.Definition);
+        }
+
+        public static RegionResult GetRegionResult(this SurfaceResult surfaceResult, string regionName)
+        {
+            var region = surfaceResult.IncludeRegionResults.SingleOrDefault(x => x.RegionName == regionName);
+            return region;
+        }
+
+        public static RegionResult GetRegionResult(this IEnumerable<SurfaceResult> surfaceResults, string surfaceName, string regionName)
+        {
+            var surface = surfaceResults.SingleOrDefault(x => x.Definition.Name == surfaceName);
+            if (surface == null) return null;
+            return surface.GetRegionResult(regionName);
         }
     }
 }

@@ -1,0 +1,27 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="true">
+  <InspectionSchema.DefectDefinitions>
+      <DefectDefinition Name="C-Logo"
+                        SaveCacheImageEnabled="true">
+          <DefectDefinition.RegionReferences>
+              <RegionReference SurfaceName="C-Logo" RegionName="Logo"/>
+          </DefectDefinition.RegionReferences>
+          <DynThresholdDefectExtractor SaveCacheImageEnabled="true"
+                                       MedianRadius="1"
+                                       MeanSpMaskWidth="22"
+                                       MeanSpMaskHeight="22"
+                                       MeanSpMinThreshold="1"
+                                       MeanSpMaxThreshold="254"
+                                       DynOffset="15"
+                                       DynLightDark="NotEqual">
+              <DynThresholdDefectExtractor.Selector>
+                  <SharpSelector Operation="And">
+                      <SharpSelectorEntry Feature="Area"      Min="50"  Max="99999999"/>
+                      <SharpSelectorEntry Feature="Roundness" Min="0.5" Max="1"/>
+                  </SharpSelector>
+              </DynThresholdDefectExtractor.Selector>
+          </DynThresholdDefectExtractor>
+      </DefectDefinition>
+  </InspectionSchema.DefectDefinitions>
+  
+</InspectionSchema>

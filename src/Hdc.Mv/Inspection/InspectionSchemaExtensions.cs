@@ -39,6 +39,7 @@ namespace Hdc.Mv.Inspection
             masterInspectionSchema.DistanceBetweenLinesDefinitions.AddRange(slaveInspectionSchema.DistanceBetweenLinesDefinitions);
             masterInspectionSchema.DistanceBetweenIntersectionPointsDefinitions.AddRange(slaveInspectionSchema.DistanceBetweenIntersectionPointsDefinitions);
             masterInspectionSchema.SurfaceDefinitions.AddRange(slaveInspectionSchema.SurfaceDefinitions);
+            masterInspectionSchema.DefectDefinitions.AddRange(slaveInspectionSchema.DefectDefinitions);
         }
     }
 }

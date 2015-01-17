@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image (Image2, 'test_failed.tif')</l>
+<l>median_image (Image2, ImageMedian1, 'circle', 3, 'mirrored')</l>
+<c></c>
+<c></c>
+<l>threshold (Image2, Region2, 1, 255)</l>
+<l>erosion_circle (Region2, RegionErosion, 10)</l>
+<l>reduce_domain (Image2, RegionErosion, ImageReduced2)</l>
+<l>scale_image_max (ImageReduced2, ImageScaleMax)</l>
+<c></c>
+<l>*median_image (ImageReduced2, ImageMedian, 'circle', 1, 'mirrored')</l>
+<c></c>
+<l>GetBlobsByDynThreshold (ImageScaleMax, FoundRegion, 15, 15, 10, 'not_equal')</l>
+<c></c>
+<l>select_shape (FoundRegion, SelectedRegions, ['area','roundness'], 'and', [45.819,0.5606], [100,1])</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="GetBlobsByDynThreshold">
+<interface>
+<io>
+<par name="Image" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="FoundRegion" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="MeanMaskWidth" base_type="ctrl" dimension="0"/>
+<par name="MeanMaskHeight" base_type="ctrl" dimension="0"/>
+<par name="DynOffset" base_type="ctrl" dimension="0"/>
+<par name="DynLightDark" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>mean_image (Image, ImageMean, MeanMaskHeight, MeanMaskWidth)</l>
+<l>dyn_threshold (Image, ImageMean, RegionDynThresh2, DynOffset, DynLightDark)</l>
+<c></c>
+<l>connection (RegionDynThresh2, ConnectedRegions)</l>
+<l>move_region (ConnectedRegions, FoundRegion, 0, 0)</l>
+<l>return ()</l>
+</body>
+<docu id="GetBlobsByDynThreshold">
+<parameters>
+<parameter id="DynLightDark">
+<default_type>string</default_type>
+<sem_type>string</sem_type>
+<type_list>
+<item>string</item>
+</type_list>
+</parameter>
+<parameter id="DynOffset">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="FoundRegion">
+<multivalue>true</multivalue>
+<sem_type>region</sem_type>
+</parameter>
+<parameter id="Image">
+<sem_type>image</sem_type>
+<type_list>
+<item>byte</item>
+</type_list>
+</parameter>
+<parameter id="MeanMaskHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="MeanMaskWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

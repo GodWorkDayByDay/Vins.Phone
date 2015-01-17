@@ -163,7 +163,8 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
                     }
 
                     //                schema = InspectionSchemaTextBox.Text.LoadFromFile();
-                    schema = InspectionSchemaExtensions.LoadFromFile(InspectionSchemaTextBox.Text);
+                    //schema = InspectionSchemaExtensions.LoadFromFile(InspectionSchemaTextBox.Text);
+                    schema = InspectionController.GetInspectionSchema();
                 }
                 catch (Exception exception)
                 {
@@ -286,8 +287,8 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
                                 .Inspect()
                                 ;
 
-                            Debug.WriteLine("ACT.X " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterX);
-                            Debug.WriteLine("ACT.Y " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterY);
+//                            Debug.WriteLine("ACT.X " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterX);
+//                            Debug.WriteLine("ACT.Y " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterY);
 
                             inspectionController.InspectionResult.Comment = "";
 

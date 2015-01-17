@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using HalconDotNet;
 
 namespace Hdc.Mv.Halcon
@@ -59,6 +60,20 @@ namespace Hdc.Mv.Halcon
             var value = region.RegionFeatures("column2");
             var int32Value = Convert.ToInt32(value);
             return int32Value;
+        }
+
+        public static IList<HRegion> ToList(this HRegion region)
+        {
+            IList<HRegion> list = new List<HRegion>();
+
+            var count = region.CountObj();
+
+            for (int i = 0; i < count; i++)
+            {
+                list.Add(region[i+1]);
+            }
+
+            return list;
         }
     }
 }

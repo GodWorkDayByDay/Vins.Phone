@@ -1,25 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Markup;
 using HalconDotNet;
 
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class SharpSelectorSeries : Collection<SharpSelector>, IRegionSelector
-    {
-        public HRegion SelectRegion(HRegion region)
-        {
-            HRegion selectedRegion = region;
-            foreach (var item in Items)
-            {
-                selectedRegion = item.SelectRegion(selectedRegion);
-            }
-            return selectedRegion;
-        }
-    }
-
-    [Serializable]
+//    [ContentProperty("Items")]
     public class SharpSelector : Collection<SharpSelectorEntry>, IRegionSelector
     {
         public HRegion SelectRegion(HRegion region)
@@ -46,25 +35,5 @@ namespace Hdc.Mv.Inspection
         }
 
         public LogicOperation Operation { get; set; }
-    }
-
-    [Serializable]
-    public class SharpSelectorEntry
-    {
-        public SharpSelectorEntry()
-        {
-        }
-
-        public SharpSelectorEntry(SharpFeature feature, double min, double max)
-        {
-            Feature = feature;
-            Min = min;
-            Max = max;
-        }
-
-        public SharpFeature Feature { get; set; }
-
-        public double Min { get; set; }
-        public double Max { get; set; }
     }
 }

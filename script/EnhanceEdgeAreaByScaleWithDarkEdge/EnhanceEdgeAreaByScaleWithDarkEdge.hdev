@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>dev_set_draw ('margin')</l>
+<c></c>
+<l>read_image (Image, '2015-01-14_00.47.04_A_Bottom')</l>
+<l>get_image_size (Image, Width, Height)</l>
+<l>EnhanceEdgeAreaByScaleWithDarkEdge (Image, EnhancedImage, EnhancedEdge, 55, 2, 'light', 20, 0, 55, 2, 55, 2)</l>
+<c></c>
+<c></c>
+<l>read_image (Image, '2015-01-14_00.26.30_A_RightTop')</l>
+<l>get_image_size (Image, Width, Height)</l>
+<l>EnhanceEdgeAreaByScaleWithDarkEdge (Image, EnhancedImage, EnhancedEdge, 2, 55, 'dark', 20, 0, 2, 55, 2, 55)</l>
+<c></c>
+<c></c>
+<c></c>
+<l>stop()</l>
+<c></c>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="EnhanceEdgeAreaByScaleWithDarkEdge">
+<interface>
+<io>
+<par name="InputImage" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="EnhancedImage" base_type="iconic" dimension="0"/>
+<par name="EnhancedEdge" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="MeanMaskWidth" base_type="ctrl" dimension="0"/>
+<par name="MeanMaskHeight" base_type="ctrl" dimension="0"/>
+<par name="EdgeAreaLightDark" base_type="ctrl" dimension="0"/>
+<par name="ScaleAdd1" base_type="ctrl" dimension="0"/>
+<par name="ScaleAdd2" base_type="ctrl" dimension="0"/>
+<par name="OpeningWidth" base_type="ctrl" dimension="0"/>
+<par name="OpeningHeight" base_type="ctrl" dimension="0"/>
+<par name="ClosingWidth" base_type="ctrl" dimension="0"/>
+<par name="ClosingHeight" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>get_domain(InputImage, Domain)</l>
+<l>region_features(Domain,'width',Width)</l>
+<l>region_features(Domain,'height',Height)</l>
+<c></c>
+<l>scale_image_max (InputImage, ImageScaleMax3)</l>
+<l>mean_image(ImageScaleMax3, ImageMean, MeanMaskWidth, MeanMaskHeight)</l>
+<c></c>
+<l>binary_threshold (ImageMean, Region, 'max_separability', EdgeAreaLightDark, UsedThreshold)</l>
+<l>reduce_domain (ImageMean, Region, ImageReduced)</l>
+<l>gray_features (Region, ImageReduced, 'mean', Value)</l>
+<l>scale_image (ImageReduced, ImageScaled, 1, 255-Value+ScaleAdd1)</l>
+<l>scale_image_max (ImageScaled, ImageScaleMax)</l>
+<c></c>
+<l>gray_features (Region, ImageScaleMax, 'mean', Value)</l>
+<l>scale_image (ImageScaleMax, ImageScaled2, 1, -Value+ScaleAdd2)</l>
+<l>scale_image_max (ImageScaled2, ImageScaleMax2)</l>
+<l>binary_threshold (ImageScaleMax2, Region1, 'max_separability', 'dark', UsedThreshold1)</l>
+<l>opening_rectangle1 (Region1, RegionOpening, OpeningWidth, MeanMaskHeight)</l>
+<l>closing_rectangle1 (RegionOpening, EnhancedEdge, ClosingWidth, ClosingHeight)</l>
+<l>fill_up (EnhancedEdge, RegionFillUp)</l>
+<c></c>
+<l>region_to_bin (RegionFillUp, EnhancedImage, 255, 0, Width, Height)</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="EnhanceEdgeAreaByScaleWithDarkEdge">
+<parameters>
+<parameter id="ClosingHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="ClosingWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="EdgeAreaLightDark">
+<default_type>string</default_type>
+<sem_type>string</sem_type>
+<type_list>
+<item>string</item>
+</type_list>
+<values>
+<item>'light'</item>
+<item>'dark'</item>
+</values>
+</parameter>
+<parameter id="EnhancedEdge">
+<multivalue>false</multivalue>
+<sem_type>region</sem_type>
+</parameter>
+<parameter id="EnhancedImage">
+<sem_type>image</sem_type>
+<type_list>
+<item>byte</item>
+</type_list>
+</parameter>
+<parameter id="InputImage">
+<sem_type>image</sem_type>
+<type_list>
+<item>byte</item>
+</type_list>
+</parameter>
+<parameter id="MeanMaskHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="MeanMaskWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="OpeningHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="OpeningWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="ScaleAdd1">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ScaleAdd2">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

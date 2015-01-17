@@ -9,7 +9,7 @@ namespace Hdc.Mv.Inspection
         protected override HRegion GetRegion(HImage image)
         {
             var rect = new HRegion();
-            rect.GenRectangle2(Y, X, Angle, HalfWidth, HalfHeight);
+            rect.GenRectangle2(HalfHeight, HalfWidth, Angle, HalfWidth, HalfHeight);
             return rect;
         }
     }
