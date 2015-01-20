@@ -97,10 +97,10 @@ namespace Hdc.Mv.Inspection
             if (inspectionSchema.EdgeSearching_EnhanceEdgeArea_Enable &&
                 inspectionSchema.EdgeSearching_EnhanceEdgeArea_SaveCacheImageEnable)
             {
-                var ii = _hDevelopExportHelper.HImageCache.ToImageInfo();
-                var bitmapSource = ii.ToBitmapSource();
-                if (!Directory.Exists(@"Cache")) Directory.CreateDirectory("Cache");
-                bitmapSource.SaveToTiff(@"Cache\EdgeSearchingCacheImage.tif");
+//                var ii = _hDevelopExportHelper.HImageCache.ToImageInfo();
+//                var bitmapSource = ii.ToBitmapSource();
+//                if (!Directory.Exists(@"Cache")) Directory.CreateDirectory("Cache");
+//                bitmapSource.SaveToTiff(@"Cache\EdgeSearchingCacheImage.tif");
             }
 
             int i = 0;
@@ -130,6 +130,7 @@ namespace Hdc.Mv.Inspection
 
                 var distanceBetweenPointsResult = new DistanceBetweenPointsResult()
                                                   {
+                                                      Definition = def.DeepClone(),
                                                       Index = i,
                                                       Name = def.Name,
                                                       Point1 = intersection1,
@@ -425,8 +426,13 @@ namespace Hdc.Mv.Inspection
                 var esr = new EdgeSearchingResult();
                 esr.Definition = esd.DeepClone();
                 esr.Name = esd.Name;
+                int offsetX = 0;
+                int offsetY = 0;
 
-                HImage image;
+                
+
+//                HImage image;
+                HImage enhImage = null;
 
                 if (esr.Definition.ImageFilter_Enabled && enhanceEdgeAreaEnabled)
                 {
@@ -445,7 +451,16 @@ namespace Hdc.Mv.Inspection
                             .ToBitmapSource()
                             .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Ori.jpg");
 
-                    var enhImage = esr.Definition.ImageFilter.Process(reducedImage);
+                    HRegion domain = reducedImage.GetDomain();
+                    offsetX = domain.GetColumn1();
+                    offsetY = domain.GetRow1();
+                   var croppedImage = reducedImage.CropDomain();
+//                   croppedImage.WriteImage("tiff", 0, @"_croppedImage.tif");
+
+                     enhImage = esr.Definition.ImageFilter.Process(croppedImage);
+//                    enhImage.WriteImage("tiff", 0, @"_enhance.tif");
+                    //image.OverpaintGray();
+                    
 
                     if (esd.ImageFilter_SaveCacheImageEnabled)
                         enhImage.CropDomain()
@@ -465,7 +480,7 @@ namespace Hdc.Mv.Inspection
                     //                        hv_ScaleMult: esd.Hal_EnhanceEdgeArea_ScaleMult
                     //                        );
 
-                    image = enhImage;
+                    enhImage = enhImage;
 
                     sw.Stop();
                     sw.Dispose();
@@ -505,13 +520,17 @@ namespace Hdc.Mv.Inspection
                 }
                 else
                 {
-                    image = _hDevelopExportHelper.HImage;
+//                    image = _hDevelopExportHelper.HImage;
                 }
                 //                var sw2 = new NotifyStopwatch("RakeEdgeLine");
                 //                sw2.Start();
+                Line offsetLine = new Line(esd.Line.X1 - offsetX,
+                    esd.Line.Y1 - offsetY, esd.Line.X2 - offsetX,
+                    esd.Line.Y2 - offsetY);
 
-                var lines = _hDevelopExportHelper.RakeEdgeLine(image,
-                    line: esd.Line,
+
+                var lines = _hDevelopExportHelper.RakeEdgeLine(enhImage,
+                    line: offsetLine,
                     regionsCount: esd.Hal_RegionsCount,
                     regionHeight: esd.Hal_RegionHeight,
                     regionWidth: esd.Hal_RegionWidth,
@@ -524,7 +543,12 @@ namespace Hdc.Mv.Inspection
                 //                sw2.Dispose();
 
                 var line = lines[0];
-                esr.EdgeLine = line;
+
+                var translatedLine = new Line(line.X1 + offsetX,
+                    line.Y1 + offsetY, line.X2 + offsetX,
+                    line.Y2 + offsetY);
+
+                esr.EdgeLine = translatedLine;
 
                 if (line.X1 == 0 || line.X2 == 0 || line.Y1 == 0 || line.Y2 == 0)
                 {

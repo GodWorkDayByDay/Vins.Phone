@@ -83,7 +83,7 @@ public partial class HDevelopExport
     HOperatorSet.FillUp(ho_EnhancedEdge, out ho_RegionFillUp);
 
     ho_EnhancedImage.Dispose();
-    HOperatorSet.RegionToBin(ho_RegionFillUp, out ho_EnhancedImage, 255, 0, hv_Width, 
+    HOperatorSet.RegionToBin(ho_RegionFillUp, out ho_EnhancedImage, 0, 255, hv_Width, 
         hv_Height);
 
     ho_Domain.Dispose();

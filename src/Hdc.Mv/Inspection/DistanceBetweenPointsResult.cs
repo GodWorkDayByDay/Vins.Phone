@@ -1,9 +1,12 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace Hdc.Mv.Inspection
 {
+    [Serializable]
     public class DistanceBetweenPointsResult
     {
+        public DistanceBetweenLinesDefinition Definition { get; set; }
         public int Index { get; set; }
         public string Name { get; set; }
         public bool HasError { get; set; }

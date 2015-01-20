@@ -528,6 +528,60 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
                     writer.NextRecord();
                     writer.NextRecord();
 
+                    // Average
+//                    writer.WriteField("");
+//                    writer.WriteField("");
+//                    writer.WriteField("");
+//                    writer.WriteField("");
+//                    writer.WriteField("");
+//                    writer.WriteField("");
+                    writer.WriteField("EXP");
+                    writer.WriteField("POS");
+                    writer.WriteField("NEG");
+                    writer.WriteField("TOL");
+                    writer.WriteField("MIN");
+                    writer.WriteField("MAX");
+                    writer.WriteField("RAG");
+                    writer.WriteField("AVG");
+                    writer.WriteField("Diff");
+                    writer.WriteField("AbsDiff");
+                    writer.WriteField("StdDev");
+                    writer.NextRecord();
+
+//                    writer.WriteField("");
+//                    writer.WriteField("");
+//                    writer.WriteField("");
+//                    writer.WriteField("");
+//                    writer.WriteField("");
+//                    writer.WriteField("");
+
+                    double expectValue = @group.Select(x => x.Definition.ExpectValue).First();
+                    double expectValueInPixel = expectValue*1000.0/16.0;
+                    double posTol = @group.Select(x => x.Definition.PositiveTolerance).First();
+                    double negTol = @group.Select(x => x.Definition.NegativeTolerance).First();
+                    double tol = posTol - negTol;
+                    double min = @group.Select(x => x.DistanceInPixel).Min();
+                    double max = @group.Select(x => x.DistanceInPixel).Max();
+                    double avg = @group.Select(x => x.DistanceInPixel).Average();
+
+                    writer.WriteField(expectValue);
+                    writer.WriteField(posTol);
+                    writer.WriteField(negTol);
+                    writer.WriteField(tol);
+                    writer.WriteField(min.ToNumbericStringInMillimeterFromPixel(16));
+                    writer.WriteField(max.ToNumbericStringInMillimeterFromPixel(16));
+                    writer.WriteField((max - min).ToNumbericStringInMillimeterFromPixel(16));
+                    writer.WriteField(avg.ToNumbericStringInMillimeterFromPixel(16));
+                    writer.WriteField((avg - expectValueInPixel).ToNumbericStringInMillimeterFromPixel(16));
+                    writer.WriteField((Math.Abs(avg - expectValueInPixel)).ToNumbericStringInMillimeterFromPixel(16));
+                    writer.WriteField(@group.Select(x => x.DistanceInPixel).CalculateStdDev().ToNumbericStringInMillimeterFromPixel(16));
+
+                    writer.WriteField("mm");
+                    writer.NextRecord();
+                    writer.NextRecord();
+
+
+                    //
                     for (int i = 0; i < 20; i++)
                     {
                         writer.WriteField("----------------");
