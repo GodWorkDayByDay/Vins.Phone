@@ -66,6 +66,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
         private IRunner _runner;
 
         public ObservableCollection<RegionIndicatorViewModel> RegionIndicators { get; set; }
+        public ObservableCollection<RectangleIndicatorViewModel> DefectIndicators { get; set; }
         public ObservableCollection<LineIndicatorViewModel> LineIndicators { get; set; }
         public ObservableCollection<CircleIndicatorViewModel> CircleIndicators { get; set; }
 
@@ -74,6 +75,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
             InitializeComponent();
 
             RegionIndicators = new ObservableCollection<RegionIndicatorViewModel>();
+            DefectIndicators = new ObservableCollection<RectangleIndicatorViewModel>();
             LineIndicators = new ObservableCollection<LineIndicatorViewModel>();
             CircleIndicators = new ObservableCollection<CircleIndicatorViewModel>();
 
@@ -82,7 +84,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
 
 
             // Tests
-//            var schema = "InspectionSchema.xaml".LoadFromAssemblyDir();
+            //            var schema = "InspectionSchema.xaml".LoadFromAssemblyDir();
             var schema = InspectionController.GetInspectionSchema();
 
 
@@ -123,7 +125,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
             //            new CirclesRunner().Init(inspectorFactory, this).Run(imageInfo, schema);
 
             _runner = new AllRunner();
-//            _runner = new CoordinateRunner();
+            //            _runner = new CoordinateRunner();
             _runner.Init(inspectorFactory, this);
 
             //
@@ -141,6 +143,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
             RegionIndicators.Clear();
             LineIndicators.Clear();
             CircleIndicators.Clear();
+            DefectIndicators.Clear();
 
             BitmapImage bi;
 
@@ -336,26 +339,28 @@ namespace ODM.Inspectors.Halcon.SampleApp
         {
             foreach (var dr in defectResults)
             {
-                var regionIndicator = new RegionIndicatorViewModel
+                var regionIndicator = new RectangleIndicatorViewModel
                 {
-                    StartPointX = dr.X - dr.Width / 2.0,
-                    StartPointY = dr.Y,
-                    EndPointX = dr.X + dr.Width / 2.0,
-                    EndPointY = dr.Y,
-                    RegionWidth = dr.Height / 2.0,
+                    CenterX = dr.X,
+                    CenterY = dr.Y,
+                    Width = dr.Width,
+                    Height = dr.Height,
+                    IsShown = true,
                 };
-                RegionIndicators.Add(regionIndicator);
+                DefectIndicators.Add(regionIndicator);
 
-                var regionIndicator2 = new RegionIndicatorViewModel
-                {
-                    StartPointX = dr.X - dr.Width / 2.0 - 50,
-                    StartPointY = dr.Y,
-                    EndPointX = dr.X + dr.Width / 2.0 + 50,
-                    EndPointY = dr.Y,
-                    RegionWidth = dr.Height / 2.0 + 100,
-                };
-                RegionIndicators.Add(regionIndicator2);
+
+//                var regionIndicator2 = new RegionIndicatorViewModel
+//                {
+//                    StartPointX = dr.X - dr.Width/2,
+//                    StartPointY = dr.Y,
+//                    EndPointX = dr.X + dr.Width / 2,
+//                    EndPointY = dr.Y,
+//                    RegionWidth = dr.Height / 2.0,
+//                };
+//                RegionIndicators.Add(regionIndicator2);
             }
+
         }
 
         private void SaveImageButton_OnClick(object sender, RoutedEventArgs e)
@@ -395,7 +400,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
 
         private void Refresh()
         {
-//            var schema = "InspectionSchema.xaml".LoadFromAssemblyDir();
+            //            var schema = "InspectionSchema.xaml".LoadFromAssemblyDir();
             var schema = InspectionController.GetInspectionSchema();
 
             Inspect(schema);

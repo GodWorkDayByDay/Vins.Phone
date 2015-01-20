@@ -70,6 +70,7 @@
     <Compile Include="EdgesRunner.cs" />
     <Compile Include="IRunner.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="RectangleIndicatorViewModel.cs" />
     <Compile Include="RegionIndicatorViewModel.cs" />
     <Compile Include="Runner.cs" />
     <Page Include="MainWindow.xaml">

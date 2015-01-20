@@ -1,0 +1,18 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  TestImageFilePath="B:\2015-01-13_23.37.45.jpg"
+                  CircleSearchingEnable="false"
+                  InspectorNameForCoordinate="Hal"
+                  InspectorNameForEdges="Hal"
+                  InspectorNameForCircles="Hal"
+                  InspectorNameForDefects="Sim"
+                  ImagePixelWidth="8192"
+                  ImagePixelHeight="12500"
+                  CoordinateType="VectorsCenter"
+                  CoordinateOriginOffsetEnable="false"
+                  CoordinateOriginOffsetX="-533.516"
+                  CoordinateOriginOffsetY="-539.359"
+                  EdgeSearching_EnhanceEdgeArea_Enable="True"
+                  EdgeSearching_EnhanceEdgeArea_SaveCacheImageEnable="False"
+                  EdgeSearching_EnhanceEdgeArea_SaveAllCacheImageEnable="False"
+                  >
+</InspectionSchema>

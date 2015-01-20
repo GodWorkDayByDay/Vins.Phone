@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>dev_set_draw('margin')</l>
+<c></c>
+<l>read_image(Image, 'SurfaceDefinition_C_General_Include_C-Right.Domain.Ori')</l>
+<l>get_image_size(Image, Width, Height)</l>
+<l>get_domain(Image, Domain)</l>
+<c></c>
+<c></c>
+<l>GetRegionByBinaryThresholdRect2 (Image, FoundRegion, 5, 1, 55, 3, 1, 1, 5, 10000, 600000, 99999999, 11, 11, 33, 5, 5, 5, 0, 0)</l>
+<c></c>
+<l>reduce_domain(Image, FoundRegion, ImageReduced)</l>
+<l>stop()</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="GetRegionByBinaryThresholdRect2">
+<interface>
+<io>
+<par name="Image" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="FoundRegion" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="MedianRadius" base_type="ctrl" dimension="0"/>
+<par name="MeanMaskWidth" base_type="ctrl" dimension="0"/>
+<par name="MeanMaskHeight" base_type="ctrl" dimension="0"/>
+<par name="SobelAmpSize" base_type="ctrl" dimension="0"/>
+<par name="GrowingRow" base_type="ctrl" dimension="0"/>
+<par name="GrowingColumn" base_type="ctrl" dimension="0"/>
+<par name="GrowingTolerance" base_type="ctrl" dimension="0"/>
+<par name="GrowingMinSize" base_type="ctrl" dimension="0"/>
+<par name="AreaMin" base_type="ctrl" dimension="0"/>
+<par name="AreaMax" base_type="ctrl" dimension="0"/>
+<par name="OpeningWidth" base_type="ctrl" dimension="0"/>
+<par name="OpeningHeight" base_type="ctrl" dimension="0"/>
+<par name="ClosingWidth" base_type="ctrl" dimension="0"/>
+<par name="ClosingHeight" base_type="ctrl" dimension="0"/>
+<par name="ErosionWidth" base_type="ctrl" dimension="0"/>
+<par name="ErosionHeight" base_type="ctrl" dimension="0"/>
+<par name="DilationWidth" base_type="ctrl" dimension="0"/>
+<par name="DilationHeight" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>get_domain (Image, Domain)</l>
+<c></c>
+<l>median_image (Image, ImageMedian, 'circle', MedianRadius, 'mirrored')</l>
+<l>mean_image(ImageMedian,ImageMean, MeanMaskWidth, MeanMaskHeight)</l>
+<c></c>
+<l>sobel_amp (ImageMean, EdgeAmplitude, 'sum_abs', SobelAmpSize)</l>
+<l>scale_image_max (EdgeAmplitude, ImageScaleMax)</l>
+<l>scale_image (EdgeAmplitude, ImageScaled, 10, 0)</l>
+<l>binary_threshold (ImageScaled, Region, 'max_separability', 'dark', UsedThreshold)</l>
+<l>regiongrowing (ImageScaled, Regions, GrowingRow, GrowingColumn, GrowingTolerance, GrowingMinSize)</l>
+<c></c>
+<c></c>
+<l>connection(Regions, ConnectedRegions)</l>
+<l>select_shape (ConnectedRegions, SelectedRegions, 'area', 'and', AreaMin, AreaMax)</l>
+<l>fill_up(SelectedRegions, RegionFillUp)</l>
+<c></c>
+<l>if (OpeningWidth &gt; 0 and OpeningHeight &gt; 0)</l>
+<l>    opening_rectangle1 (RegionFillUp, RegionFillUp, OpeningWidth, OpeningHeight)</l>
+<l>endif</l>
+<c></c>
+<l>if (ClosingWidth &gt; 0 and ClosingHeight &gt; 0)</l>
+<l>    closing_rectangle1 (RegionFillUp, RegionFillUp, ClosingWidth, ClosingHeight)</l>
+<l>endif</l>
+<c></c>
+<l>if (ErosionWidth &gt; 0 and ErosionHeight &gt; 0)</l>
+<l>    erosion_rectangle1 (RegionFillUp, RegionFillUp, ErosionWidth, ErosionHeight)</l>
+<l>endif</l>
+<c></c>
+<l>if (DilationWidth &gt; 0 and DilationHeight &gt; 0)</l>
+<l>    dilation_rectangle1 (RegionFillUp, RegionFillUp, DilationWidth, DilationHeight)</l>
+<l>endif</l>
+<c></c>
+<l>union1 (RegionFillUp, RegionUnion)</l>
+<l>move_region(RegionUnion, FoundRegion, 0, 0)</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="GetRegionByBinaryThresholdRect2">
+<parameters>
+<parameter id="AreaMax">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="AreaMin">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ClosingHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="ClosingWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="DilationHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="DilationWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+<value_max>0</value_max>
+</parameter>
+<parameter id="ErosionHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="ErosionWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="FoundRegion">
+<sem_type>region</sem_type>
+</parameter>
+<parameter id="GrowingColumn">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="GrowingMinSize">
+<default_type>integer</default_type>
+<sem_type>integer</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="GrowingRow">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="GrowingTolerance">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="Image">
+<sem_type>image</sem_type>
+<type_list>
+<item>byte</item>
+</type_list>
+</parameter>
+<parameter id="MeanMaskHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="MeanMaskWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="MedianRadius">
+<default_type>integer</default_type>
+<sem_type>integer</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="OpeningHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="OpeningWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="SobelAmpSize">
+<default_type>integer</default_type>
+<sem_type>integer</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

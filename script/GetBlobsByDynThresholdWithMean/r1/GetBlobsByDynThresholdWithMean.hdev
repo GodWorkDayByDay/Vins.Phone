@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>dev_set_draw ('margin')</l>
+<c></c>
+<c>* Light</c>
+<l>ZoomFactorLight:=0.25</l>
+<l>MedianRadiusLight:=9</l>
+<l>ScaleAddLight:=5</l>
+<l>DynOffsetLight:=12</l>
+<l>ClosingRadiusLight:=15</l>
+<l>AreaMinLight:=100</l>
+<l>AreaMaxLight:=99999999</l>
+<l>Rect2Length1MinLight:=10</l>
+<l>Rect2Length1MaxLight:=99999999</l>
+<l>DynMeanMaskWidth:=5</l>
+<l>DynMeanMaskHeight:=0</l>
+<c></c>
+<c>* Dark</c>
+<l>ZoomFactorDark:=0.5</l>
+<l>MedianRadiusDark:=1</l>
+<l>ScaleAddDark:=5</l>
+<l>DynOffsetDark:=20</l>
+<l>ClosingRadiusDark:=5</l>
+<l>AreaMinDark:=70</l>
+<l>AreaMaxDark:=99999999</l>
+<l>Rect2Length1MinDark:=10</l>
+<l>Rect2Length1MaxDark:=99999999</l>
+<c></c>
+<c>* OK</c>
+<l>read_image (Image, '2015-01-13_23.51.42_C-Middle-Right')</l>
+<l>GetBlobsByDynThreshold (Image, FoundRegion1a, ZoomFactorLight, MedianRadiusLight, ScaleAddLight, DynMeanMaskWidth, DynMeanMaskHeight, DynOffsetLight, 'dark', ClosingRadiusLight, AreaMinLight, AreaMaxLight, Rect2Length1MinLight, Rect2Length1MaxLight)</l>
+<l>GetBlobsByDynThreshold (Image, FoundRegion1b, ZoomFactorDark, MedianRadiusDark, ScaleAddDark, DynMeanMaskWidth, DynMeanMaskHeight, DynOffsetDark, 'dark', ClosingRadiusDark, AreaMinDark, AreaMaxDark, Rect2Length1MinDark, Rect2Length1MaxDark)</l>
+<c></c>
+<c>* NG</c>
+<l>read_image (Image2, '2015-01-13_23.36.52_C_MiddleLeft')</l>
+<l>GetBlobsByDynThreshold (Image2, FoundRegion2a, ZoomFactorLight, MedianRadiusLight, ScaleAddLight, DynMeanMaskWidth, DynMeanMaskHeight, DynOffsetLight, 'dark', ClosingRadiusLight, AreaMinLight, AreaMaxLight, Rect2Length1MinLight, Rect2Length1MaxLight)</l>
+<l>GetBlobsByDynThreshold (Image2, FoundRegion2b, ZoomFactorDark, MedianRadiusDark, ScaleAddDark, DynMeanMaskWidth, DynMeanMaskHeight, DynOffsetDark, 'dark', ClosingRadiusDark, AreaMinDark, AreaMaxDark, Rect2Length1MinDark, Rect2Length1MaxDark)</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="GetBlobsByDynThreshold">
+<interface>
+<io>
+<par name="Image" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="FoundRegion" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="ZoomFactor" base_type="ctrl" dimension="0"/>
+<par name="MedianRadius" base_type="ctrl" dimension="0"/>
+<par name="ScaleAdd" base_type="ctrl" dimension="0"/>
+<par name="DynMeanMaskWidth" base_type="ctrl" dimension="0"/>
+<par name="DynMeanMaskHeight" base_type="ctrl" dimension="0"/>
+<par name="DynOffset" base_type="ctrl" dimension="0"/>
+<par name="DynLightDark" base_type="ctrl" dimension="0"/>
+<par name="ClosingRedius" base_type="ctrl" dimension="0"/>
+<par name="AreaMin" base_type="ctrl" dimension="0"/>
+<par name="AreaMax" base_type="ctrl" dimension="0"/>
+<par name="Rect2Length1Min" base_type="ctrl" dimension="0"/>
+<par name="Rect2Length1Max" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>zoom_image_factor (Image, ImageZoomed, ZoomFactor, ZoomFactor, 'nearest_neighbor')</l>
+<l>get_domain (ImageZoomed, DomainZoomed)</l>
+<l>region_features (DomainZoomed, 'width', ZoomWidth)</l>
+<l>region_features (DomainZoomed, 'height', ZoomHeight)</l>
+<c></c>
+<l>MedianRadiusZoomed := MedianRadius * ZoomFactor</l>
+<l>ClosingRediusZoomed := ClosingRedius * ZoomFactor</l>
+<l>AreaMinZoomed := AreaMin * ZoomFactor * ZoomFactor</l>
+<l>AreaMaxZoomed := AreaMax * ZoomFactor * ZoomFactor</l>
+<l>Rect2Length1MinZoomed := Rect2Length1Min * ZoomFactor</l>
+<l>Rect2Length1MaxZoomed := Rect2Length1Max * ZoomFactor</l>
+<c></c>
+<l>median_image (ImageZoomed, ImageMedian, 'circle', MedianRadiusZoomed, 'mirrored')</l>
+<c></c>
+<l>gray_features (DomainZoomed, ImageMedian, 'mean', Value)</l>
+<c></c>
+<l>if (DynMeanMaskWidth &gt; 0)</l>
+<l>    MeanWidth := DynMeanMaskWidth</l>
+<l>else</l>
+<l>    MeanWidth := ZoomWidth</l>
+<l>endif</l>
+<c></c>
+<l>if (DynMeanMaskHeight &gt; 0)</l>
+<l>    MeanHeight := DynMeanMaskHeight</l>
+<l>else</l>
+<l>    MeanHeight := ZoomHeight</l>
+<l>endif</l>
+<c></c>
+<l>mean_image (ImageMedian, ImageMean, MeanWidth, MeanHeight)</l>
+<c></c>
+<l>dyn_threshold (ImageMedian, ImageMean, RegionDynThresh2, DynOffset, DynLightDark)</l>
+<c></c>
+<l>closing_circle (RegionDynThresh2, RegionClosing2, ClosingRediusZoomed)</l>
+<l>connection (RegionClosing2, ConnectedRegions2)</l>
+<l>select_shape (ConnectedRegions2, SelectedRegions2, ['area','rect2_len1'], 'or', [AreaMinZoomed,Rect2Length1MinZoomed], [AreaMaxZoomed,Rect2Length1MaxZoomed])</l>
+<c></c>
+<l>zoom_region (SelectedRegions2, RegionZoom, 1/ZoomFactor, 1/ZoomFactor)</l>
+<l>move_region (RegionZoom, FoundRegion, 0, 0)</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="GetBlobsByDynThreshold">
+<parameters>
+<parameter id="AreaMax"/>
+<parameter id="AreaMin"/>
+<parameter id="ClosingRedius"/>
+<parameter id="DynLightDark">
+<default_type>string</default_type>
+<sem_type>string</sem_type>
+<type_list>
+<item>string</item>
+</type_list>
+</parameter>
+<parameter id="DynMeanMaskHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="DynMeanMaskWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="DynOffset">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="FoundRegion">
+<multivalue>true</multivalue>
+<sem_type>region</sem_type>
+</parameter>
+<parameter id="Image">
+<sem_type>image</sem_type>
+<type_list>
+<item>byte</item>
+</type_list>
+</parameter>
+<parameter id="MedianRadius"/>
+<parameter id="Rect2Length1Max"/>
+<parameter id="Rect2Length1Min"/>
+<parameter id="ScaleAdd">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ZoomFactor">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

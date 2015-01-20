@@ -11,9 +11,7 @@ public partial class HDevelopExport
 
   // Procedures 
   public void GetBlobsByDynThreshold (HObject ho_Image, out HObject ho_FoundRegion, 
-      HTuple hv_MedianRadius, HTuple hv_MeanSpMaskWidth, HTuple hv_MeanSpMaskHeight, 
-      HTuple hv_MeanSpMinThreshold, HTuple hv_MeanSpMaxThreshold, HTuple hv_DynOffset, 
-      HTuple hv_DynLightDark)
+      HTuple hv_MeanMaskWidth, HTuple hv_MeanMaskHeight, HTuple hv_DynOffset, HTuple hv_DynLightDark)
   {
 
 
@@ -21,42 +19,24 @@ public partial class HDevelopExport
 
     // Local iconic variables 
 
-    HObject ho_ImageMedian=null, ho_ImageSPMean=null;
-    HObject ho_RegionDynThresh2=null, ho_ConnectedRegions;
+    HObject ho_ImageMean, ho_RegionDynThresh2;
+    HObject ho_ConnectedRegions;
     // Initialize local and output iconic variables 
     HOperatorSet.GenEmptyObj(out ho_FoundRegion);
-    HOperatorSet.GenEmptyObj(out ho_ImageMedian);
-    HOperatorSet.GenEmptyObj(out ho_ImageSPMean);
+    HOperatorSet.GenEmptyObj(out ho_ImageMean);
     HOperatorSet.GenEmptyObj(out ho_RegionDynThresh2);
     HOperatorSet.GenEmptyObj(out ho_ConnectedRegions);
-    if ((int)(new HTuple(hv_MedianRadius.TupleGreater(0))) != 0)
-    {
-      ho_ImageMedian.Dispose();
-      HOperatorSet.MedianImage(ho_Image, out ho_ImageMedian, "circle", hv_MedianRadius, 
-          "mirrored");
-      ho_ImageSPMean.Dispose();
-      HOperatorSet.MeanSp(ho_ImageMedian, out ho_ImageSPMean, hv_MeanSpMaskWidth, 
-          hv_MeanSpMaskHeight, hv_MeanSpMinThreshold, hv_MeanSpMaxThreshold);
-      ho_RegionDynThresh2.Dispose();
-      HOperatorSet.DynThreshold(ho_ImageMedian, ho_ImageSPMean, out ho_RegionDynThresh2, 
-          hv_DynOffset, hv_DynLightDark);
-    }
-    else
-    {
-      ho_ImageSPMean.Dispose();
-      HOperatorSet.MeanSp(ho_Image, out ho_ImageSPMean, hv_MeanSpMaskWidth, hv_MeanSpMaskHeight, 
-          hv_MeanSpMinThreshold, hv_MeanSpMaxThreshold);
-      ho_RegionDynThresh2.Dispose();
-      HOperatorSet.DynThreshold(ho_Image, ho_ImageSPMean, out ho_RegionDynThresh2, 
-          hv_DynOffset, hv_DynLightDark);
-    }
+    ho_ImageMean.Dispose();
+    HOperatorSet.MeanImage(ho_Image, out ho_ImageMean, hv_MeanMaskHeight, hv_MeanMaskWidth);
+    ho_RegionDynThresh2.Dispose();
+    HOperatorSet.DynThreshold(ho_Image, ho_ImageMean, out ho_RegionDynThresh2, hv_DynOffset, 
+        hv_DynLightDark);
 
     ho_ConnectedRegions.Dispose();
     HOperatorSet.Connection(ho_RegionDynThresh2, out ho_ConnectedRegions);
     ho_FoundRegion.Dispose();
     HOperatorSet.MoveRegion(ho_ConnectedRegions, out ho_FoundRegion, 0, 0);
-    ho_ImageMedian.Dispose();
-    ho_ImageSPMean.Dispose();
+    ho_ImageMean.Dispose();
     ho_RegionDynThresh2.Dispose();
     ho_ConnectedRegions.Dispose();
 

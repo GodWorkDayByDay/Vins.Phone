@@ -12,11 +12,8 @@ namespace Hdc.Mv.Inspection
 
             HDevelopExport.Singletone.GetBlobsByDynThreshold(image,
                 out foundRegionObject,
-                MedianRadius,
-                MeanSpMaskWidth, // Halcon 12, mean_sp has a bug that height and width are invert
-                MeanSpMaskHeight, // 
-                MeanSpMinThreshold,
-                MeanSpMaxThreshold,
+                MeanMaskWidth,
+                MeanMaskHeight,
                 DynOffset,
                 DynLightDark.ToHalconString());
 
@@ -24,11 +21,8 @@ namespace Hdc.Mv.Inspection
             return hRegion;
         }
 
-        public int MedianRadius { get; set; }
-        public int MeanSpMaskWidth { get; set; }
-        public int MeanSpMaskHeight { get; set; }
-        public int MeanSpMinThreshold { get; set; }
-        public int MeanSpMaxThreshold { get; set; }
+        public int MeanMaskWidth { get; set; }
+        public int MeanMaskHeight { get; set; }
         public double DynOffset { get; set; }
         public LightDark DynLightDark { get; set; }
     }

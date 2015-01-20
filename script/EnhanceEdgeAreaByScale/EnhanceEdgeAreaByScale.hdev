@@ -44,11 +44,11 @@
 <l>region_features(Domain,'width',Width)</l>
 <l>region_features(Domain,'height',Height)</l>
 <c></c>
-<l>scale_image_max (InputImage, ImageScaleMax3)</l>
-<l>mean_image(ImageScaleMax3, ImageMean, MeanMaskWidth, MeanMaskHeight)</l>
+<l>mean_image(InputImage, ImageMean, MeanMaskWidth, MeanMaskHeight)</l>
 <c></c>
 <l>binary_threshold (ImageMean, Region, 'max_separability', EdgeAreaLightDark, UsedThreshold)</l>
 <l>reduce_domain (ImageMean, Region, ImageReduced)</l>
+<c></c>
 <l>gray_features (Region, ImageReduced, 'mean', Value)</l>
 <c></c>
 <l>if (EdgeAreaLightDark='dark')</l>
@@ -58,6 +58,7 @@
 <l>endif</l>
 <c></c>
 <l>binary_threshold (ImageScaled, Region1, 'max_separability', EdgeAreaLightDark, UsedThreshold1)</l>
+<c></c>
 <l>opening_rectangle1 (Region1, RegionOpening, OpeningWidth, MeanMaskHeight)</l>
 <l>closing_rectangle1 (RegionOpening, EnhancedEdge, ClosingWidth, ClosingHeight)</l>
 <l>fill_up (EnhancedEdge, RegionFillUp)</l>

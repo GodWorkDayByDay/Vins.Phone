@@ -22,7 +22,7 @@ namespace Hdc.Controls
     /// </summary>
     public partial class RegionIndicatorSeries : IndicatorSeriesBase
     {
-        private List<RegionIndicator> _regionIndicators = new List<RegionIndicator>();
+        private List<RegionIndicator> _indicators = new List<RegionIndicator>();
 
         public RegionIndicatorSeries()
         {
@@ -135,14 +135,14 @@ namespace Hdc.Controls
             if (enumerable == null)
                 return;
 
-            for (int i = 0; i < _regionIndicators.Count; i++)
+            for (int i = 0; i < _indicators.Count; i++)
             {
-                var startPointRectangle = _regionIndicators[i];
+                var startPointRectangle = _indicators[i];
 
                 Canvas.Children.Remove(startPointRectangle);
             }
 
-            _regionIndicators.Clear();
+            _indicators.Clear();
 
             foreach (var element in enumerable)
             {
@@ -152,7 +152,6 @@ namespace Hdc.Controls
                 var endX = GetPropertyValue(element, EndPointXPath);
                 var endY = GetPropertyValue(element, EndPointYPath);
                 var regionWidth = GetPropertyValue(element, RegionWidthPath);
-
 
                 Brush stroke = StrokePath != null ? (Brush)GetPropertyValue(element, StrokePath) : Brushes.Red;
                 double strokeThickness = StrokeThicknessPath != null ? (double)GetPropertyValue(element, StrokeThicknessPath) : 2;
@@ -172,36 +171,29 @@ namespace Hdc.Controls
                          };
                 ri.DataContext = element;
 
-                BindingOperations.SetBinding(ri, RegionIndicator.XProperty,
+                BindingOperations.SetBinding(ri, IndicatorBase.XProperty,
                     new Binding("X")
                     {
                         Source = IndicatorViewer,
                         Mode = BindingMode.OneWay,
                         UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
                     });
-                BindingOperations.SetBinding(ri, RegionIndicator.YProperty,
+                BindingOperations.SetBinding(ri, IndicatorBase.YProperty,
                     new Binding("Y")
                     {
                         Source = IndicatorViewer,
                         Mode = BindingMode.OneWay,
                         UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
                     });
-                BindingOperations.SetBinding(ri, RegionIndicator.ScaleProperty,
+                BindingOperations.SetBinding(ri, IndicatorBase.ScaleProperty,
                     new Binding("Scale")
                     {
                         Source = IndicatorViewer,
                         Mode = BindingMode.OneWay,
                         UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
                     });
-//                BindingOperations.SetBinding(ri, RegionIndicator.IsShownProperty,
-//                    new Binding("Scale")
-//                    {
-//                        Source = IndicatorViewer,
-//                        Mode = BindingMode.OneWay,
-//                        UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-//                    });
 
-                _regionIndicators.Add(ri);
+                _indicators.Add(ri);
                 Canvas.Children.Add(ri);
             }
 
@@ -210,7 +202,7 @@ namespace Hdc.Controls
 
         private void UpdatePositions()
         {
-            foreach (var regionIndicator in _regionIndicators)
+            foreach (var regionIndicator in _indicators)
             {
                 regionIndicator.UpdatePositions();
             }

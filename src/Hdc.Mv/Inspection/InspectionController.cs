@@ -269,9 +269,11 @@ namespace Hdc.Mv.Inspection
 
             _inspectionResult.Edges = edgesResult.Edges;
             _inspectionResult.DistanceBetweenPointsResults = edgesResult.DistanceBetweenPointsResults;
+            _inspectionResult.DefectResults = edgesResult.DefectResults;
 
             // defects
-            if (_inspectionSchema.InspectorNameForDefects == "Mil")
+//            if (_inspectionSchema.InspectorNameForDefects == "Hal")
+            if (false)
             {
                 var halInspector = GetOrAddInspector("Hal");
                 var maskImageInfo = halInspector.FindRegions();

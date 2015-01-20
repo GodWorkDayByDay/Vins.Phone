@@ -136,6 +136,12 @@
       <DependentUpon>CircleIndicatorSeries.xaml</DependentUpon>
     </Compile>
     <Compile Include="Indicators\IndicatorBase.cs" />
+    <Compile Include="Indicators\RectangleIndicator.xaml.cs">
+      <DependentUpon>RectangleIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Indicators\RectangleIndicatorSeries.xaml.cs">
+      <DependentUpon>RectangleIndicatorSeries.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lamp.cs" />
     <Compile Include="ModelessWindow.xaml.cs">
       <DependentUpon>ModelessWindow.xaml</DependentUpon>
@@ -265,6 +271,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Indicators\CircleIndicatorSeries.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Indicators\RectangleIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Indicators\RectangleIndicatorSeries.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

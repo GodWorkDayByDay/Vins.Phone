@@ -21,9 +21,9 @@ public partial class HDevelopExport
 
     // Local iconic variables 
 
-    HObject ho_Domain, ho_ImageScaleMax3, ho_ImageMean;
-    HObject ho_Region, ho_ImageReduced, ho_ImageScaled=null;
-    HObject ho_Region1, ho_RegionOpening, ho_RegionFillUp;
+    HObject ho_Domain, ho_ImageMean, ho_Region;
+    HObject ho_ImageReduced, ho_ImageScaled=null, ho_Region1;
+    HObject ho_RegionOpening, ho_RegionFillUp;
 
     // Local control variables 
 
@@ -33,7 +33,6 @@ public partial class HDevelopExport
     HOperatorSet.GenEmptyObj(out ho_EnhancedImage);
     HOperatorSet.GenEmptyObj(out ho_EnhancedEdge);
     HOperatorSet.GenEmptyObj(out ho_Domain);
-    HOperatorSet.GenEmptyObj(out ho_ImageScaleMax3);
     HOperatorSet.GenEmptyObj(out ho_ImageMean);
     HOperatorSet.GenEmptyObj(out ho_Region);
     HOperatorSet.GenEmptyObj(out ho_ImageReduced);
@@ -46,17 +45,15 @@ public partial class HDevelopExport
     HOperatorSet.RegionFeatures(ho_Domain, "width", out hv_Width);
     HOperatorSet.RegionFeatures(ho_Domain, "height", out hv_Height);
 
-    ho_ImageScaleMax3.Dispose();
-    HOperatorSet.ScaleImageMax(ho_InputImage, out ho_ImageScaleMax3);
     ho_ImageMean.Dispose();
-    HOperatorSet.MeanImage(ho_ImageScaleMax3, out ho_ImageMean, hv_MeanMaskWidth, 
-        hv_MeanMaskHeight);
+    HOperatorSet.MeanImage(ho_InputImage, out ho_ImageMean, hv_MeanMaskWidth, hv_MeanMaskHeight);
 
     ho_Region.Dispose();
     HOperatorSet.BinaryThreshold(ho_ImageMean, out ho_Region, "max_separability", 
         hv_EdgeAreaLightDark, out hv_UsedThreshold);
     ho_ImageReduced.Dispose();
     HOperatorSet.ReduceDomain(ho_ImageMean, ho_Region, out ho_ImageReduced);
+
     HOperatorSet.GrayFeatures(ho_Region, ho_ImageReduced, "mean", out hv_Value);
 
     if ((int)(new HTuple(hv_EdgeAreaLightDark.TupleEqual("dark"))) != 0)
@@ -73,6 +70,7 @@ public partial class HDevelopExport
     ho_Region1.Dispose();
     HOperatorSet.BinaryThreshold(ho_ImageScaled, out ho_Region1, "max_separability", 
         hv_EdgeAreaLightDark, out hv_UsedThreshold1);
+
     ho_RegionOpening.Dispose();
     HOperatorSet.OpeningRectangle1(ho_Region1, out ho_RegionOpening, hv_OpeningWidth, 
         hv_MeanMaskHeight);
@@ -87,7 +85,6 @@ public partial class HDevelopExport
         hv_Height);
 
     ho_Domain.Dispose();
-    ho_ImageScaleMax3.Dispose();
     ho_ImageMean.Dispose();
     ho_Region.Dispose();
     ho_ImageReduced.Dispose();

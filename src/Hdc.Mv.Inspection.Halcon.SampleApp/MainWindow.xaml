@@ -17,6 +17,12 @@
                                        EndPointYPath="EndPointY"
                                        RegionWidthPath="RegionWidth">
             </hdc:RegionIndicatorSeries>
+            <hdc:RectangleIndicatorSeries ItemsSource="{Binding DefectIndicators}"
+                                          RectCenterXPath="CenterX"
+                                          RectCenterYPath="CenterY"
+                                          RectWidthPath="Width"
+                                          RectHeightPath="Height">
+            </hdc:RectangleIndicatorSeries>
             <hdc:LineIndicatorSeries ItemsSource="{Binding LineIndicators,Mode=TwoWay}"
                                      StartPointXPath="StartPointX"
                                      StartPointYPath="StartPointY"
@@ -60,13 +66,13 @@
                              Text="{Binding Y, ElementName=IndicatorViewer}"
                              x:Name="OffsetY"></TextBox>
                 </StackPanel>
-                <UniformGrid Rows="4" Columns="4">
+                <UniformGrid Rows="4"
+                             Columns="4">
                     <Button Width="80"
                             Height="40"
                             Margin="2"
                             x:Name="RefreshButton"
-                            Click="RefreshButton_OnClick"
-                            >Refresh</Button>
+                            Click="RefreshButton_OnClick">Refresh</Button>
                     <Button Width="80"
                             Height="40"
                             Margin="2"
@@ -80,9 +86,8 @@
                     <Button Width="80"
                             Height="40"
                             Margin="2"
-                            x:Name="xxx"
-                            ></Button>
-                    
+                            x:Name="xxx"></Button>
+
                     <Button Width="80"
                             Height="40"
                             Margin="2"
@@ -104,7 +109,7 @@
                             x:Name="ZoomHalfButton"
                             Click="ZoomHalfButton_OnClick">Zoom Half</Button>
                 </UniformGrid>
-          
+
 
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Text1Name"
@@ -130,7 +135,7 @@
 
             </StackPanel>
         </Grid>
-<!--        <Image x:Name="Image"-->
-<!--               Stretch="None"></Image>-->
+        <!--        <Image x:Name="Image"-->
+        <!--               Stretch="None"></Image>-->
     </Grid>
 </Window>

@@ -77,13 +77,15 @@ namespace Hdc.Mv.Inspection
             if (inspectionSchema.SurfaceDefinitions.Any())
             {
                 SurfaceResultCollection regionResults = null;
-                regionResults = SearchClosedRegions(inspectionSchema.SurfaceDefinitions);
+
+                using (new NotifyStopwatch("SearchSurfaces"))
+                regionResults = SearchSurfaces(inspectionSchema.SurfaceDefinitions);
 
                 DefectResultCollection defectResultCollection = null;
                 if (inspectionSchema.DefectDefinitions.Any())
                 {
                     defectResultCollection = SearchDefects2(inspectionSchema.DefectDefinitions, regionResults);
-
+                    inspectionResult.DefectResults = defectResultCollection;
                     //                inspectionResult.ClosedRegionResults = regionResults;
                 }
             }
@@ -160,19 +162,36 @@ namespace Hdc.Mv.Inspection
 
             foreach (var defectDefinition in defectDefinitions)
             {
-                var dr = new DefectResult();
                 foreach (var refer in defectDefinition.RegionReferences)
                 {
                     //var surface = surfaceResults.Single(x => x.Definition.Name == regionReference.SurfaceName);
                     //var region = surface.IncludeRegionResults.Single(x => x.RegionName == regionReference.RegionName);
 
                     var regionResult = surfaceResults.GetRegionResult(refer.SurfaceName, refer.RegionName);
+                    
                     var blob = defectDefinition.Extractor.GetDefectRegion(_hImage, regionResult.Region);
                     //var selectedBlob = defectDefinition.
                     var blobs = blob.ToList();
 
+                    int index = 0;
+                    foreach (var hRegion in blobs)
+                    {
+                        var dr = new DefectResult
+                                 {
+                                     Index = index,
+                                     X = hRegion.GetColumn(),
+                                     Y = hRegion.GetRow(),
+                                     Width = hRegion.GetWidth(),
+                                     Height = hRegion.GetHeight(),
+                                     Name = defectDefinition.Name,
+                                 };
+                        drs.Add(dr);
+                        index++;
+                    }
+
                     if (defectDefinition.SaveCacheImageEnabled)
                     {
+                        continue;
                         var fileName = "SurfaceDefinition_Defects_" + defectDefinition.Name;
                         _hDevelopExportHelper.HImage.SaveCacheImagesForRegion(blob.Boundary("inner"), blob, fileName);
                     }
@@ -182,7 +201,7 @@ namespace Hdc.Mv.Inspection
             return drs;
         }
 
-        private SurfaceResultCollection SearchClosedRegions(IList<SurfaceDefinition> surfaceDefinitions)
+        private SurfaceResultCollection SearchSurfaces(IList<SurfaceDefinition> surfaceDefinitions)
         {
             var cs = new SurfaceResultCollection();
 
@@ -205,7 +224,10 @@ namespace Hdc.Mv.Inspection
 
                 foreach (var excludeRegion in def.ExcludeRegions)
                 {
-                    var region = excludeRegion.Process(_hImage);
+                       
+                    HRegion region;
+                    using (new NotifyStopwatch("excludeRegion.Process: " + excludeRegion.Name))
+                    region = excludeRegion.Process(_hImage);
                     var domain = excludeRegion.GetRegion();
 
                     unionExcludeRegion = unionExcludeRegion.Union2(region);
@@ -236,7 +258,10 @@ namespace Hdc.Mv.Inspection
                     unionIncludeDomain = unionIncludeDomain.Union2(domain);
 
                     var remainDomain = domain.Difference(unionExcludeRegion);
-                    var region = includeRegion.Process(_hImage, remainDomain);
+
+                    HRegion region;
+                    using (new NotifyStopwatch("includeRegion.Process: " + includeRegion.Name))
+                    region = includeRegion.Process(_hImage, remainDomain);
                     var remainRegion = region.Difference(unionExcludeRegion);
                     unionIncludeRegion = unionIncludeRegion.Union2(remainRegion);
 

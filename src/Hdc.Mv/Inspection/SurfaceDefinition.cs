@@ -18,6 +18,8 @@ namespace Hdc.Mv.Inspection
 
         public bool SaveCacheImageEnabled { get; set; }
 
+        public bool SaveAllCacheImageEnabled { get; set; }
+
         public RegionExtractorCollection ExcludeRegions { get; set; }
 
         public RegionExtractorCollection IncludeRegions { get; set; }

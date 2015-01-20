@@ -10,11 +10,11 @@
 <l>threshold (Image2, Region2, 1, 255)</l>
 <l>erosion_circle (Region2, RegionErosion, 10)</l>
 <l>reduce_domain (Image2, RegionErosion, ImageReduced2)</l>
-<l>scale_image_max (ImageReduced2, ImageScaleMax)</l>
+<l>*scale_image_max (ImageReduced2, ImageScaleMax)</l>
 <c></c>
 <l>*median_image (ImageReduced2, ImageMedian, 'circle', 1, 'mirrored')</l>
 <c></c>
-<l>GetBlobsByDynThreshold (ImageScaleMax, FoundRegion, 15, 15, 10, 'not_equal')</l>
+<l>GetBlobsByDynThreshold (ImageReduced2, FoundRegion, 15, 15, 10, 'not_equal')</l>
 <c></c>
 <l>select_shape (FoundRegion, SelectedRegions, ['area','roundness'], 'and', [45.819,0.5606], [100,1])</l>
 <c></c>
