@@ -77,6 +77,7 @@
     <Compile Include="Inspection.Coordination\MockRelativeCoordinate.cs" />
     <Compile Include="Inspection.Defects\DefectExtractor.cs" />
     <Compile Include="Inspection.Defects\DynThresholdWithMeanDefectExtractor.cs" />
+    <Compile Include="Inspection.Defects\DynThresholdWithMeanExcludedDefectExtractor.cs" />
     <Compile Include="Inspection.Defects\Ex.cs" />
     <Compile Include="Inspection.Defects\DynThresholdDefectExtractor.cs" />
     <Compile Include="Inspection.Defects\Exports\GetBlobsByDynThreshold.cs" />
@@ -92,8 +93,8 @@
     <Compile Include="Inspection.Regions\BinaryThresholdRect2RegionExtractor.cs" />
     <Compile Include="Inspection.Regions\BinaryThresholdRectRegionExtractor.cs" />
     <Compile Include="Inspection.Regions\CircleRegionExtractor.cs" />
+    <Compile Include="Inspection.Defects\Exports\GetBlobsByDynThresholdWithMeanExcluded.cs" />
     <Compile Include="Inspection.Regions\Exports\GetRegionByBinaryThresholdWithMean.cs" />
-
     <Compile Include="Inspection.Regions\Exports\GetRegionByBinaryThresholdRect.cs" />
     <Compile Include="Inspection.Regions\Exports\GetRegionByBinaryThresholdRect2.cs" />
     <Compile Include="Inspection.Regions\Exports\GetRegionBySobelAmp2.cs" />

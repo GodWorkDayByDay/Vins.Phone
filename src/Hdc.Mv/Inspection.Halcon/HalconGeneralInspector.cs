@@ -79,7 +79,7 @@ namespace Hdc.Mv.Inspection
                 SurfaceResultCollection regionResults = null;
 
                 using (new NotifyStopwatch("SearchSurfaces"))
-                regionResults = SearchSurfaces(inspectionSchema.SurfaceDefinitions);
+                    regionResults = SearchSurfaces(inspectionSchema.SurfaceDefinitions);
 
                 DefectResultCollection defectResultCollection = null;
                 if (inspectionSchema.DefectDefinitions.Any())
@@ -90,7 +90,7 @@ namespace Hdc.Mv.Inspection
                 }
             }
 
-         
+
 
             var finalEdges = SearchEdges(inspectionSchema.EdgeSearchingDefinitions,
                 inspectionSchema.EdgeSearching_EnhanceEdgeArea_Enable);
@@ -99,10 +99,10 @@ namespace Hdc.Mv.Inspection
             if (inspectionSchema.EdgeSearching_EnhanceEdgeArea_Enable &&
                 inspectionSchema.EdgeSearching_EnhanceEdgeArea_SaveCacheImageEnable)
             {
-//                var ii = _hDevelopExportHelper.HImageCache.ToImageInfo();
-//                var bitmapSource = ii.ToBitmapSource();
-//                if (!Directory.Exists(@"Cache")) Directory.CreateDirectory("Cache");
-//                bitmapSource.SaveToTiff(@"Cache\EdgeSearchingCacheImage.tif");
+                //                var ii = _hDevelopExportHelper.HImageCache.ToImageInfo();
+                //                var bitmapSource = ii.ToBitmapSource();
+                //                if (!Directory.Exists(@"Cache")) Directory.CreateDirectory("Cache");
+                //                bitmapSource.SaveToTiff(@"Cache\EdgeSearchingCacheImage.tif");
             }
 
             int i = 0;
@@ -168,7 +168,13 @@ namespace Hdc.Mv.Inspection
                     //var region = surface.IncludeRegionResults.Single(x => x.RegionName == regionReference.RegionName);
 
                     var regionResult = surfaceResults.GetRegionResult(refer.SurfaceName, refer.RegionName);
-                    
+
+//                    _hImage
+//                        .ReduceDomain(regionResult.Region)
+//                        .CropDomain()
+//                        .ToBitmapSource()
+//                        .SaveToJpeg("_regionResult_" + refer.RegionName + "_ExtractedRegion.jpg");
+
                     var blob = defectDefinition.Extractor.GetDefectRegion(_hImage, regionResult.Region);
                     //var selectedBlob = defectDefinition.
                     var blobs = blob.ToList();
@@ -224,10 +230,10 @@ namespace Hdc.Mv.Inspection
 
                 foreach (var excludeRegion in def.ExcludeRegions)
                 {
-                       
+
                     HRegion region;
                     using (new NotifyStopwatch("excludeRegion.Process: " + excludeRegion.Name))
-                    region = excludeRegion.Process(_hImage);
+                        region = excludeRegion.Process(_hImage);
                     var domain = excludeRegion.GetRegion();
 
                     unionExcludeRegion = unionExcludeRegion.Union2(region);
@@ -239,9 +245,6 @@ namespace Hdc.Mv.Inspection
                         _hDevelopExportHelper.HImage.SaveCacheImagesForRegion(domain, region, fileName);
                     }
 
-                    region.Dispose();
-                    domain.Dispose();
-
                     surfaceResult.ExcludeRegionResults.Add(new RegionResult()
                                                            {
                                                                SurfaceGroupName = def.GroupName,
@@ -250,6 +253,9 @@ namespace Hdc.Mv.Inspection
                                                                Domain = domain,
                                                                Region = region,
                                                            });
+
+//                    region.Dispose();
+//                    domain.Dispose();
                 }
 
                 foreach (var includeRegion in def.IncludeRegions)
@@ -261,7 +267,7 @@ namespace Hdc.Mv.Inspection
 
                     HRegion region;
                     using (new NotifyStopwatch("includeRegion.Process: " + includeRegion.Name))
-                    region = includeRegion.Process(_hImage, remainDomain);
+                        region = includeRegion.Process(_hImage, remainDomain);
                     var remainRegion = region.Difference(unionExcludeRegion);
                     unionIncludeRegion = unionIncludeRegion.Union2(remainRegion);
 
@@ -279,7 +285,7 @@ namespace Hdc.Mv.Inspection
                                                                SurfaceName = def.Name,
                                                                RegionName = includeRegion.Name,
                                                                Domain = domain,
-                                                               Region = region,
+                                                               Region = remainRegion,
                                                            });
                 }
 
@@ -454,9 +460,9 @@ namespace Hdc.Mv.Inspection
                 int offsetX = 0;
                 int offsetY = 0;
 
-                
 
-//                HImage image;
+
+                //                HImage image;
                 HImage enhImage = null;
 
                 if (esr.Definition.ImageFilter_Enabled && enhanceEdgeAreaEnabled)
@@ -479,13 +485,13 @@ namespace Hdc.Mv.Inspection
                     HRegion domain = reducedImage.GetDomain();
                     offsetX = domain.GetColumn1();
                     offsetY = domain.GetRow1();
-                   var croppedImage = reducedImage.CropDomain();
-//                   croppedImage.WriteImage("tiff", 0, @"_croppedImage.tif");
+                    var croppedImage = reducedImage.CropDomain();
+                    //                   croppedImage.WriteImage("tiff", 0, @"_croppedImage.tif");
 
-                     enhImage = esr.Definition.ImageFilter.Process(croppedImage);
-//                    enhImage.WriteImage("tiff", 0, @"_enhance.tif");
+                    enhImage = esr.Definition.ImageFilter.Process(croppedImage);
+                    //                    enhImage.WriteImage("tiff", 0, @"_enhance.tif");
                     //image.OverpaintGray();
-                    
+
 
                     if (esd.ImageFilter_SaveCacheImageEnabled)
                         enhImage.CropDomain()
@@ -545,7 +551,7 @@ namespace Hdc.Mv.Inspection
                 }
                 else
                 {
-//                    image = _hDevelopExportHelper.HImage;
+                    //                    image = _hDevelopExportHelper.HImage;
                 }
                 //                var sw2 = new NotifyStopwatch("RakeEdgeLine");
                 //                sw2.Start();
