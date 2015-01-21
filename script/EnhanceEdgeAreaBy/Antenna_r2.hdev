@@ -6,7 +6,25 @@
 <l>dev_set_draw('margin')</l>
 <c></c>
 <c></c>
-<l>read_image(Image, 'D:/WORKSPACE/hdc/Temporary/2015-01-20/C-TopLeftAntenna-03.tif')</l>
+<l>read_image(Image, '2015-01-20_C-TopLeftAntenna-03')</l>
+<c></c>
+<l>get_domain (Image, Domain)</l>
+<l>min_max_gray (Domain, Image, 0.9, Min, Max, Range)</l>
+<l>Mult:=255/(Max-Min)</l>
+<l>Add:=-Mult*Min</l>
+<l>threshold (Image, Region3, 0, Min+15)</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<l>binary_threshold (ImageScaled, Region1, 'max_separability', 'dark', UsedThreshold)</l>
+<l>reduce_domain (ImageScaled, Region1, ImageReduced)</l>
+<l>binary_threshold (ImageReduced, Region2, 'max_separability', 'dark', UsedThreshold1)</l>
+<c></c>
+<c></c>
+<c></c>
+<l>threshold (Image, Region, 0, Min+10)</l>
 <c></c>
 <l>EnhanceEdgeAreaBy (Image, EnhancedImage, FoundRegion, 'dark', 2500, 99999, 2, 1, 'dark', 150, 800, 2, 20, 2, 10)</l>
 <c></c>

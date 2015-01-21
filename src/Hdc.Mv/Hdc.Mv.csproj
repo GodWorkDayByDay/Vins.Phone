@@ -98,8 +98,10 @@
     <Compile Include="Inspection.Regions\Exports\GetRegionByBinaryThresholdRect.cs" />
     <Compile Include="Inspection.Regions\Exports\GetRegionByBinaryThresholdRect2.cs" />
     <Compile Include="Inspection.Regions\Exports\GetRegionBySobelAmp2.cs" />
+    <Compile Include="Inspection.Regions\Exports\GetRegionOfRoiByBinaryThreshold.cs" />
     <Compile Include="Inspection.Regions\IRegionSelector.cs" />
     <Compile Include="Inspection.Regions\Rectanle2RegionExtractor.cs" />
+    <Compile Include="Inspection.Regions\RoiByBinaryThresholdRegionExtractor.cs" />
     <Compile Include="Inspection.Regions\SharpSelector.cs" />
     <Compile Include="Inspection.Regions\SharpSelectorEntry.cs" />
     <Compile Include="Inspection.Regions\SharpSelectorSeries.cs" />

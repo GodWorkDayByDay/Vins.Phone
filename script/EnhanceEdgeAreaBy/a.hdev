@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>dev_set_draw ('margin')</l>
+<c></c>
+<l>read_image (Image, 'D:/WORKSPACE/hdc/Temporary/2015-01-20/C-BottomLeftAntenna.tif')</l>
+<c></c>
+<c></c>
+<l>GetEdgeAreaByRectangle (Image, Region, 'dark', 7, 7, 18, 'Inner', 1, 1, 10, 10)</l>
+<c></c>
+<c></c>
+<l>region_features (Region, 'rect2_len1', Value)</l>
+<l>region_features (Region, 'rect2_len2', Value2)</l>
+<c></c>
+<l>distasnce:= Value*2</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="GetEdgeAreaByRectangle">
+<interface>
+<io>
+<par name="Image" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="Region" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="LightDark" base_type="ctrl" dimension="0"/>
+<par name="MaskHeight" base_type="ctrl" dimension="0"/>
+<par name="MaskWidth" base_type="ctrl" dimension="0"/>
+<par name="MinAmplitude" base_type="ctrl" dimension="0"/>
+<par name="InnerOuter" base_type="ctrl" dimension="0"/>
+<par name="ClosingWidth" base_type="ctrl" dimension="0"/>
+<par name="ClosingHeight" base_type="ctrl" dimension="0"/>
+<par name="OpeningWidth" base_type="ctrl" dimension="0"/>
+<par name="OpeningHeight" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>binary_threshold (Image, Region1, 'max_separability', LightDark, UsedThreshold)</l>
+<l>reduce_domain (Image, Region1, ImageReduced)</l>
+<l>gray_range_rect(ImageReduced, ImageResult, MaskHeight, MaskWidth)</l>
+<c></c>
+<l>gray_features (Region1, ImageResult, 'mean', Value)</l>
+<c></c>
+<l>threshold (ImageResult, Region2, Value, 255)</l>
+<c></c>
+<l>skeleton (Region2, Skeleton)</l>
+<l>close_edges (Skeleton, ImageResult, RegionResult, MinAmplitude)</l>
+<c></c>
+<l>fill_up (RegionResult, RegionFillUp)</l>
+<c></c>
+<l>if(InnerOuter = 'Inner')</l>
+<c>    </c>
+<l>    complement(RegionResult, RegionComplement)</l>
+<l>    intersection(RegionFillUp, RegionComplement, RegionFillUp)</l>
+<c>    </c>
+<l>endif</l>
+<c></c>
+<c></c>
+<l>closing_rectangle1(RegionFillUp, RegionClosing, ClosingWidth, ClosingHeight)</l>
+<l>opening_rectangle1 (RegionClosing, Region, OpeningWidth, OpeningHeight)</l>
+<c></c>
+<c></c>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="GetEdgeAreaByRectangle">
+<parameters>
+<parameter id="ClosingHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="ClosingWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="Image">
+<sem_type>image</sem_type>
+<type_list>
+<item>byte</item>
+</type_list>
+</parameter>
+<parameter id="InnerOuter">
+<default_type>string</default_type>
+<sem_type>string</sem_type>
+<type_list>
+<item>string</item>
+</type_list>
+<values>
+<item>'Inner'</item>
+<item>'Outer'</item>
+</values>
+</parameter>
+<parameter id="LightDark">
+<default_type>string</default_type>
+<sem_type>string</sem_type>
+<type_list>
+<item>string</item>
+</type_list>
+<values>
+<item>'light'</item>
+<item>'dark'</item>
+</values>
+</parameter>
+<parameter id="MaskHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="MaskWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="MinAmplitude">
+<default_type>integer</default_type>
+<sem_type>integer</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="OpeningHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="OpeningWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="Region">
+<multivalue>false</multivalue>
+<sem_type>region</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

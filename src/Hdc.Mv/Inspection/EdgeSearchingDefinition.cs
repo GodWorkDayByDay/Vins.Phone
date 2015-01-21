@@ -49,6 +49,7 @@ namespace Hdc.Mv.Inspection
 //
 //        public bool Hal_EnhanceEdgeArea_SaveCacheImageEnabled { get; set; }
 
+        public IRegionExtractor RegionExtractor { get; set; }
         public IImageFilter ImageFilter { get; set; }
         public bool ImageFilter_Enabled { get; set; }
         public bool ImageFilter_SaveCacheImageEnabled { get; set; }

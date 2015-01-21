@@ -478,11 +478,28 @@ namespace Hdc.Mv.Inspection
 
                     if (esd.ImageFilter_SaveCacheImageEnabled)
                         reducedImage.CropDomain()
-                            .ToImageInfo()
                             .ToBitmapSource()
                             .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Ori.jpg");
 
-                    HRegion domain = reducedImage.GetDomain();
+                    HRegion domain;
+                    if(esr.Definition.RegionExtractor!=null)
+                    {
+                        var oldDomain = reducedImage.GetDomain();
+                        domain = esr.Definition.RegionExtractor.Process(reducedImage, oldDomain);
+                        oldDomain.Dispose();
+
+                        if (esd.ImageFilter_SaveCacheImageEnabled)
+                            reducedImage
+                                .ReduceDomain(domain)
+                                .CropDomain()
+                                .ToBitmapSource()
+                                .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_ROIRegion.jpg");
+                    }
+                    else
+                    {
+                        domain = reducedImage.GetDomain();
+                    }
+
                     offsetX = domain.GetColumn1();
                     offsetY = domain.GetRow1();
                     var croppedImage = reducedImage.CropDomain();
@@ -495,7 +512,6 @@ namespace Hdc.Mv.Inspection
 
                     if (esd.ImageFilter_SaveCacheImageEnabled)
                         enhImage.CropDomain()
-                            .ToImageInfo()
                             .ToBitmapSource()
                             .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Mod.jpg");
 
