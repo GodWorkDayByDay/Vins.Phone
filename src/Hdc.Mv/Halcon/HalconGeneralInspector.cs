@@ -68,8 +68,9 @@ namespace Hdc.Mv.Inspection
 
             if (inspectionSchema.CircleSearchingDefinitions.Any())
             {
+                var sw = new NotifyStopwatch("SearchCircles()");
                 var circles = SearchCircles(inspectionSchema.CircleSearchingDefinitions);
-
+                sw.Dispose();
                 inspectionResult.Circles = circles;
             }
 
@@ -78,7 +79,7 @@ namespace Hdc.Mv.Inspection
             {
                 SurfaceResultCollection regionResults = null;
 
-                using (new NotifyStopwatch("SearchSurfaces"))
+                using (new NotifyStopwatch("SearchSurfaces()"))
                     regionResults = SearchSurfaces(inspectionSchema.SurfaceDefinitions);
 
                 DefectResultCollection defectResultCollection = null;
@@ -91,9 +92,7 @@ namespace Hdc.Mv.Inspection
             }
 
 
-
-            var finalEdges = SearchEdges(inspectionSchema.EdgeSearchingDefinitions,
-                inspectionSchema.EdgeSearching_EnhanceEdgeArea_Enable);
+            var finalEdges = SearchEdges(inspectionSchema.EdgeSearchingDefinitions);
             inspectionResult.Edges = finalEdges;
 
             if (inspectionSchema.EdgeSearching_EnhanceEdgeArea_Enable &&
@@ -169,11 +168,11 @@ namespace Hdc.Mv.Inspection
 
                     var regionResult = surfaceResults.GetRegionResult(refer.SurfaceName, refer.RegionName);
 
-//                    _hImage
-//                        .ReduceDomain(regionResult.Region)
-//                        .CropDomain()
-//                        .ToBitmapSource()
-//                        .SaveToJpeg("_regionResult_" + refer.RegionName + "_ExtractedRegion.jpg");
+                    //                    _hImage
+                    //                        .ReduceDomain(regionResult.Region)
+                    //                        .CropDomain()
+                    //                        .ToBitmapSource()
+                    //                        .SaveToJpeg("_regionResult_" + refer.RegionName + "_ExtractedRegion.jpg");
 
                     var blob = defectDefinition.Extractor.GetDefectRegion(_hImage, regionResult.Region);
                     //var selectedBlob = defectDefinition.
@@ -230,7 +229,6 @@ namespace Hdc.Mv.Inspection
 
                 foreach (var excludeRegion in def.ExcludeRegions)
                 {
-
                     HRegion region;
                     using (new NotifyStopwatch("excludeRegion.Process: " + excludeRegion.Name))
                         region = excludeRegion.Process(_hImage);
@@ -254,8 +252,8 @@ namespace Hdc.Mv.Inspection
                                                                Region = region,
                                                            });
 
-//                    region.Dispose();
-//                    domain.Dispose();
+                    //                    region.Dispose();
+                    //                    domain.Dispose();
                 }
 
                 foreach (var includeRegion in def.IncludeRegions)
@@ -311,15 +309,6 @@ namespace Hdc.Mv.Inspection
             return cs;
         }
 
-        public void Init(int width, int height)
-        {
-        }
-
-        public InspectionResult Inspect(HImage imageInfo, InspectionSchema inspectionSchema)
-        {
-            SetImageInfo(imageInfo);
-            return Inspect(inspectionSchema);
-        }
 
         public CircleSearchingResultCollection SearchCircles(
             IList<CircleSearchingDefinition> circleSearchingDefinitions)
@@ -336,85 +325,92 @@ namespace Hdc.Mv.Inspection
                                                 Name = circleDefinition.Name,
                                                 Index = index
                                             };
+                int offsetX = 0;
+                int offsetY = 0;
+                HImage enhImage = null;
 
-                Circle foundCircle;
-                double roundless;
+                if (circleDefinition.ImageFilter_Enabled == false)
+                    circleDefinition.ImageFilter = null;
+                if (circleDefinition.RegionExtractor_Enabled == false)
+                    circleDefinition.RegionExtractor = null;
 
-                if (circleDefinition.ProcessMethod != null)
-                {
-                    var hcd = circleDefinition.ProcessMethod as HoughCircleDetectProcessMethod;
-                    if (hcd == null) continue;
-
-                    double cX, cY;
-
-                    var isOK2 = _hDevelopExportHelper.FindCircleCenterUseHough(
-                        _hDevelopExportHelper.HImage,
-                        circleDefinition.CenterY,
-                        circleDefinition.CenterX,
-                        circleDefinition.InnerRadius,
-                        circleDefinition.OuterRadius,
-                        hcd.Sigma,
-                        hcd.MinGray,
-                        hcd.MaxGray,
-                        hcd.ExpectRadius,
-                        hcd.Percent,
-                        out cY,
-                        out cX
-                        );
-
-                    if (isOK2)
-                    {
-                        circleSearchingResult.Circle = new Circle(
-                            cX,
-                            cY,
-                            hcd.ExpectRadius);
-                    }
-                    else
-                    {
-                        circleSearchingResult.HasError = true;
-                        circleSearchingResult.IsNotFound = true;
-                    }
-
-                    result.Add(circleSearchingResult);
-
-                    index++;
-
-
-                    continue;
-                }
-
-
-                //                var isOK = _hDevelopExportHelper.ExtractCircle(circleDefinition.CenterX, circleDefinition.CenterY,
-                //                    circleDefinition.InnerRadius, circleDefinition.OuterRadius, out foundCircle, out roundless);
-                var isOK = _hDevelopExportHelper.ExtractCircle(
+                var reducedImage = _hDevelopExportHelper.HImage.ReduceDomainForRing(
                     circleDefinition.CenterX,
                     circleDefinition.CenterY,
                     circleDefinition.InnerRadius,
-                    circleDefinition.OuterRadius,
-                    out foundCircle, out roundless,
-                    circleDefinition.Hal_RegionsCount,
-                    //                    circleDefinition.Hal_RegionHeight,
-                    circleDefinition.Hal_RegionWidth,
-                    circleDefinition.Hal_Sigma,
-                    circleDefinition.Hal_Threshold,
-                    circleDefinition.Hal_SelectionMode,
-                    circleDefinition.Hal_Transition,
-                    circleDefinition.Hal_Direct
-                    );
+                    circleDefinition.OuterRadius);
 
-                if (isOK)
+                if (circleDefinition.Domain_SaveCacheImageEnabled)
+                    reducedImage.CropDomain()
+                        .ToBitmapSource()
+                        .SaveToJpeg("_EnhanceEdgeArea_" + circleDefinition.Name + "_Domain.jpg");
+
+                HRegion domain;
+                if (circleDefinition.RegionExtractor != null)
                 {
-                    circleSearchingResult.Circle = new Circle(
-                        foundCircle.CenterX,
-                        foundCircle.CenterY,
-                        foundCircle.Radius);
+                    var oldDomain = reducedImage.GetDomain();
+                    domain = circleDefinition.RegionExtractor.Process(reducedImage, oldDomain);
+                    oldDomain.Dispose();
 
-                    circleSearchingResult.Roundness = roundless;
+                    if (circleDefinition.ImageFilter_SaveCacheImageEnabled)
+                        reducedImage
+                            .ReduceDomain(domain)
+                            .CropDomain()
+                            .ToBitmapSource()
+                            .SaveToJpeg("_RegionExtractor_" + circleDefinition.Name + "_ROIRegion.jpg");
                 }
                 else
                 {
+                    domain = reducedImage.GetDomain();
+                }
+
+                offsetX = domain.GetColumn1();
+                offsetY = domain.GetRow1();
+
+                var croppedImage = reducedImage.CropDomain();
+
+                if (circleDefinition.ImageFilter != null)
+                {
+                    enhImage = circleDefinition.ImageFilter.Process(croppedImage);
+                }
+                else
+                {
+                    enhImage = croppedImage;
+                }
+
+                if (circleDefinition.ImageFilter_SaveCacheImageEnabled)
+                    enhImage.CropDomain()
+                        .ToBitmapSource()
+                        .SaveToJpeg("_ImageFilter_" + circleDefinition.Name + "_Mod.jpg");
+
+
+                if (circleDefinition.ImageFilter_SaveCacheImageEnabled)
+                {
+                    var savingImage = _hDevelopExportHelper.HImage.Clone();
+                    savingImage.OverpaintGray(enhImage);
+
+                    savingImage.ToImageInfo()
+                        .ToBitmapSource()
+                        .SaveToJpeg("_EnhanceEdgeArea_" + circleDefinition.Name + "_OverpaintGray.jpg");
+                }
+
+                var offsetCenterX = circleDefinition.CenterX - offsetX;
+                var offsetCenterY = circleDefinition.CenterY - offsetY;
+
+                var circle = circleDefinition.CircleExtractor.FindCircle(enhImage,
+                    offsetCenterX, offsetCenterY, circleDefinition.InnerRadius, circleDefinition.OuterRadius);
+
+
+                if (circle.IsEmpty)
+                {
                     circleSearchingResult.HasError = true;
                     circleSearchingResult.IsNotFound = true;
+//                    circleSearchingResult.Circle = new Circle(circleDefinition.CenterX, circleDefinition.CenterY);
+                }
+                else
+                {
+                    var newCircle = new Circle(circle.CenterX + offsetX, circle.CenterY + offsetY, circle.Radius);
+                    circleSearchingResult.Circle = newCircle;
                 }
 
                 result.Add(circleSearchingResult);
@@ -425,28 +421,12 @@ namespace Hdc.Mv.Inspection
             return result;
         }
 
-        public CircleSearchingResultCollection SearchCircles(HImage imageInfo,
-                                                             IList<CircleSearchingDefinition> circleSearchingDefinitions)
+        public EdgeSearchingResultCollection SearchEdges(EdgeSearchingDefinition edgeSearchingDefinition)
         {
-            _hDevelopExportHelper = new HDevelopExportHelper(imageInfo);
-
-            return SearchCircles(circleSearchingDefinitions);
+            return SearchEdges(new[] {edgeSearchingDefinition});
         }
 
-        public EdgeSearchingResultCollection SearchEdges(HImage imageInfo,
-                                                         IList<EdgeSearchingDefinition> edgeSearchingDefinitions)
-        {
-            throw new NotImplementedException();
-        }
-
-        public EdgeSearchingResultCollection SearchEdges(EdgeSearchingDefinition edgeSearchingDefinition,
-                                                         bool enhanceEdgeAreaEnabled)
-        {
-            return SearchEdges(new[] { edgeSearchingDefinition }, enhanceEdgeAreaEnabled);
-        }
-
-        public EdgeSearchingResultCollection SearchEdges(IList<EdgeSearchingDefinition> edgeSearchingDefinitions,
-                                                         bool enhanceEdgeAreaEnabled)
+        public EdgeSearchingResultCollection SearchEdges(IList<EdgeSearchingDefinition> edgeSearchingDefinitions)
         {
             var sr = new EdgeSearchingResultCollection();
 
@@ -459,137 +439,112 @@ namespace Hdc.Mv.Inspection
                 esr.Name = esd.Name;
                 int offsetX = 0;
                 int offsetY = 0;
-
-
-
-                //                HImage image;
                 HImage enhImage = null;
 
-                if (esr.Definition.ImageFilter_Enabled && enhanceEdgeAreaEnabled)
+                //                HImage image;
+
+                if (!esr.Definition.ImageFilter_Enabled)
+                    esr.Definition.ImageFilter = null;
+                if (esr.Definition.RegionExtractor_Enabled == false)
+                    esr.Definition.RegionExtractor = null;
+
+
+
+                var reducedImage = HDevelopExport.Singletone.ReduceDomainForRectangle(
+                    _hDevelopExportHelper.HImage,
+                    line: esd.Line,
+                    hv_RoiWidthLen: esd.ROIWidth/2.0,
+                    margin: 0.5);
+
+                if (esd.Domain_SaveCacheImageEnabled)
+                    reducedImage.CropDomain()
+                        .ToBitmapSource()
+                        .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Domain.jpg");
+
+                HRegion domain;
+                if (esr.Definition.RegionExtractor != null)
                 {
-                    var sw = new NotifyStopwatch("ImageFilter");
-                    sw.Start();
-
-                    var reducedImage = _hDevelopExportHelper.ReduceDomainForRectangle(
-                        _hDevelopExportHelper.HImage,
-                        line: esd.Line,
-                        hv_RoiWidthLen: esd.ROIWidth / 2.0,
-                        margin: 0.5);
+                    var oldDomain = reducedImage.GetDomain();
+                    domain = esr.Definition.RegionExtractor.Process(reducedImage, oldDomain);
+                    oldDomain.Dispose();
 
                     if (esd.ImageFilter_SaveCacheImageEnabled)
-                        reducedImage.CropDomain()
+                        reducedImage
+                            .ReduceDomain(domain)
+                            .CropDomain()
                             .ToBitmapSource()
-                            .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Ori.jpg");
-
-                    HRegion domain;
-                    if(esr.Definition.RegionExtractor!=null)
-                    {
-                        var oldDomain = reducedImage.GetDomain();
-                        domain = esr.Definition.RegionExtractor.Process(reducedImage, oldDomain);
-                        oldDomain.Dispose();
-
-                        if (esd.ImageFilter_SaveCacheImageEnabled)
-                            reducedImage
-                                .ReduceDomain(domain)
-                                .CropDomain()
-                                .ToBitmapSource()
-                                .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_ROIRegion.jpg");
-                    }
-                    else
-                    {
-                        domain = reducedImage.GetDomain();
-                    }
-
-                    offsetX = domain.GetColumn1();
-                    offsetY = domain.GetRow1();
-                    var croppedImage = reducedImage.CropDomain();
-                    //                   croppedImage.WriteImage("tiff", 0, @"_croppedImage.tif");
-
-                    enhImage = esr.Definition.ImageFilter.Process(croppedImage);
-                    //                    enhImage.WriteImage("tiff", 0, @"_enhance.tif");
-                    //image.OverpaintGray();
-
-
-                    if (esd.ImageFilter_SaveCacheImageEnabled)
-                        enhImage.CropDomain()
-                            .ToBitmapSource()
-                            .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Mod.jpg");
-
-                    //                    var enhImage = _hDevelopExportHelper.EnhanceEdgeArea3(
-                    //                        reducedImage,
-                    //                        hv_EmpMaskWidth: esd.Hal_EnhanceEdgeArea_EmpMaskWidth,
-                    //                        hv_EmpMaskHeight: esd.Hal_EnhanceEdgeArea_EmpMaskHeight,
-                    //                        hv_EmpMaskFactor: esd.Hal_EnhanceEdgeArea_EmpMaskFactor,
-                    //                        hv_MeanMaskWidth: esd.Hal_EnhanceEdgeArea_MeanMaskWidth,
-                    //                        hv_MeanMaskHeight: esd.Hal_EnhanceEdgeArea_MeanMaskHeight,
-                    //                        hv_IterationCount: esd.Hal_EnhanceEdgeArea_IterationCount,
-                    //                        hv_ScaleAdd: esd.Hal_EnhanceEdgeArea_ScaleAdd,
-                    //                        hv_ScaleMult: esd.Hal_EnhanceEdgeArea_ScaleMult
-                    //                        );
-
-                    enhImage = enhImage;
-
-                    sw.Stop();
-                    sw.Dispose();
-
-                    using (var sw3 = new NotifyStopwatch("ImageFilter_SaveCacheImageEnabled"))
-                    {
-                        if (esd.ImageFilter_SaveCacheImageEnabled)
-                        //                    if (true)
-                        {
-                            //                        _hDevelopExportHelper.HImage.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_ori.jpg");
-                            //                        var fullDomain = enhImage.FullDomain();
-                            var savingImage = _hDevelopExportHelper.HImage.Clone();
-                            savingImage.OverpaintGray(enhImage);
-
-                            //                            var i = savingImage.PaintRegion(foundRegion, 255.0, "margin");
-
-                            savingImage.ToImageInfo()
-                                .ToBitmapSource()
-                                .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + ".jpg");
-                            //                            reducedImage.CropDomain().ToImageInfo().ToBitmapSource().SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Ori.jpg");
-                            //                            enhImage.CropDomain().ToImageInfo().ToBitmapSource().SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Mod.jpg");
-                        }
-                    }
-
-                    //                    image = enhImage.Clone();
-                    //
-                    //                    if (mergedImage == null) mergedImage = image;
-                    //                    else
-                    //                    {
-                    //                        var merge = _hDevelopExportHelper.AddImagesWithFullDomain(mergedImage, image);
-                    //                        mergedImage.Dispose();
-                    //                        image.Dispose();
-                    //                        mergedImage = merge;
-                    //                    }
-                    //
-                    //                    enhImage.Dispose();
+                            .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_ROIRegion.jpg");
                 }
                 else
                 {
-                    //                    image = _hDevelopExportHelper.HImage;
+                    domain = reducedImage.GetDomain();
                 }
-                //                var sw2 = new NotifyStopwatch("RakeEdgeLine");
-                //                sw2.Start();
+
+                offsetX = domain.GetColumn1();
+                offsetY = domain.GetRow1();
+                var croppedImage = reducedImage.CropDomain();
+                //                   croppedImage.WriteImage("tiff", 0, @"_croppedImage.tif");
+
+                if (esr.Definition.ImageFilter != null)
+                {
+                    var sw = new NotifyStopwatch("ImageFilter");
+                    sw.Start();
+                    enhImage = esr.Definition.ImageFilter.Process(croppedImage);
+                    sw.Stop();
+                    sw.Dispose();
+                }
+                else
+                {
+                    enhImage = croppedImage;
+                }
+
+                //                    enhImage.WriteImage("tiff", 0, @"_enhance.tif");
+                //image.OverpaintGray();
+
+                if (esd.ImageFilter_SaveCacheImageEnabled)
+                    enhImage.CropDomain()
+                        .ToBitmapSource()
+                        .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Mod.jpg");
+
+
+                using (var sw3 = new NotifyStopwatch("ImageFilter_SaveCacheImageEnabled"))
+                {
+                    if (esd.ImageFilter_SaveCacheImageEnabled)
+                        //                    if (true)
+                    {
+                        //                        _hDevelopExportHelper.HImage.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_ori.jpg");
+                        //                        var fullDomain = enhImage.FullDomain();
+                        var savingImage = _hDevelopExportHelper.HImage.Clone();
+                        savingImage.OverpaintGray(enhImage);
+
+                        //                            var i = savingImage.PaintRegion(foundRegion, 255.0, "margin");
+
+                        savingImage.ToImageInfo()
+                            .ToBitmapSource()
+                            .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + ".jpg");
+                        //                            reducedImage.CropDomain().ToImageInfo().ToBitmapSource().SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Ori.jpg");
+                        //                            enhImage.CropDomain().ToImageInfo().ToBitmapSource().SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Mod.jpg");
+                    }
+                }
+
+                //                    image = enhImage.Clone();
+                //
+                //                    if (mergedImage == null) mergedImage = image;
+                //                    else
+                //                    {
+                //                        var merge = _hDevelopExportHelper.AddImagesWithFullDomain(mergedImage, image);
+                //                        mergedImage.Dispose();
+                //                        image.Dispose();
+                //                        mergedImage = merge;
+                //                    }
+                //
+                //                    enhImage.Dispose();
+
                 Line offsetLine = new Line(esd.Line.X1 - offsetX,
                     esd.Line.Y1 - offsetY, esd.Line.X2 - offsetX,
                     esd.Line.Y2 - offsetY);
 
-
-                var lines = _hDevelopExportHelper.RakeEdgeLine(enhImage,
-                    line: offsetLine,
-                    regionsCount: esd.Hal_RegionsCount,
-                    regionHeight: esd.Hal_RegionHeight,
-                    regionWidth: esd.Hal_RegionWidth,
-                    sigma: esd.Hal_Sigma,
-                    threshold: esd.Hal_Threshold,
-                    transition: esd.Hal_Transition,
-                    selectionMode: esd.Hal_SelectionMode);
-                //
-                //                sw2.Stop();
-                //                sw2.Dispose();
-
-                var line = lines[0];
+                var line = esd.LineExtractor.FindLine(enhImage, offsetLine);
 
                 var translatedLine = new Line(line.X1 + offsetX,
                     line.Y1 + offsetY, line.X2 + offsetX,
@@ -597,7 +552,8 @@ namespace Hdc.Mv.Inspection
 
                 esr.EdgeLine = translatedLine;
 
-                if (line.X1 == 0 || line.X2 == 0 || line.Y1 == 0 || line.Y2 == 0)
+                if (Math.Abs(line.X1) < 0.0000001 || Math.Abs(line.X2) < 0.0000001 ||
+                    Math.Abs(line.Y1) < 0.0000001 || Math.Abs(line.Y2) < 0.0000001)
                 {
                     esr.IsNotFound = true;
                     Debug.WriteLine("Edge not found: " + esr.Name);
@@ -609,15 +565,6 @@ namespace Hdc.Mv.Inspection
             _hDevelopExportHelper.HImageCache = mergedImage;
 
             return sr;
-        }
-
-        public EdgeSearchingResultCollection SearchEdges(ImageInfo imageInfo,
-                                                         IList<EdgeSearchingDefinition> edgeSearchingDefinitions,
-                                                         bool enhanceEdgeAreaEnabled)
-        {
-            _hDevelopExportHelper = new HDevelopExportHelper(imageInfo);
-
-            return SearchEdges(edgeSearchingDefinitions, enhanceEdgeAreaEnabled);
         }
 
         public DefectResultCollection SearchDefects(HImage imageInfo)
@@ -651,9 +598,5 @@ namespace Hdc.Mv.Inspection
         {
             throw new System.NotImplementedException();
         }
-
-        //        public InspectionResult SearchEdges(ImageInfo imageInfo, InspectionSchema inspectionSchema)
-        //        {
-        //        }
     }
 }

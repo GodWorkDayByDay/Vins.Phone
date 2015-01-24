@@ -23,6 +23,7 @@ namespace Hdc.Mv.Inspection
         public string InspectorNameForCircles { get; set; }
         public string InspectorNameForEdges { get; set; }
         public string InspectorNameForDefects { get; set; }
+        public string InspectorName { get; set; } // TODO
 
         public int ImagePixelWidth { get; set; }
         public int ImagePixelHeight { get; set; }
@@ -39,6 +40,7 @@ namespace Hdc.Mv.Inspection
         public bool CircleSearchingEnable { get; set; }
 
         public Collection<CircleSearchingDefinition> CoordinateCircles { get; set; }
+        public Collection<EdgeSearchingDefinition> CoordinateEdges { get; set; }
         public Collection<EdgeSearchingDefinition> EdgeSearchingDefinitions { get; set; }
         public Collection<CircleSearchingDefinition> CircleSearchingDefinitions { get; set; }
         public Collection<DistanceBetweenLinesDefinition> DistanceBetweenLinesDefinitions { get; set; }

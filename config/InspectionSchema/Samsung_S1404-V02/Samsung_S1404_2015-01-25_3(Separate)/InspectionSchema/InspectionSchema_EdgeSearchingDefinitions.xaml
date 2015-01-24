@@ -1,24 +1,18 @@
 ﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
-                  Disabled="true">
+                  Disabled="false">
   <InspectionSchema.EdgeSearchingDefinitions>
       <EdgeSearchingDefinition Name="L1"
-                             StartX="0"
-                             StartY="0"
-                             EndX="0"
-                             EndY="0"
-                             ROIWidth="40"
-                             
-                             Hal_RegionsCount="25"
-                             Hal_RegionHeight="40"
-                             Hal_RegionWidth="40"
-                             Hal_Sigma="1"
-                             Hal_Threshold="155"
-                             Hal_SelectionMode="First"
-                             Hal_Transition="Negative"
-                             
-                             ImageFilter_Enabled="True"
-                             ImageFilter_SaveCacheImageEnabled="False"
-                             >
+                               StartX="0"
+                               StartY="0"
+                               EndX="0"
+                               EndY="0"
+                               ROIWidth="40"
+                               Domain_SaveCacheImageEnabled="false"
+                               
+                               ImageFilter_Enabled="True"
+                               ImageFilter_SaveCacheImageEnabled="False"
+                               
+                               >
       <EdgeSearchingDefinition.RelativeLine>
         <Line X1="-2363"
               Y1="-4041"
@@ -38,6 +32,18 @@
                                   LastMaxGray="10">
           </EnhanceEdgeArea4Filter>
       </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="40"
+                             RegionWidth="40"
+                             Sigma="1"
+                             Threshold="155"
+                             SelectionMode="First"
+                             Transition="Negative"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
     </EdgeSearchingDefinition>
     
 
@@ -47,15 +53,6 @@
                              EndX="0"
                              EndY="0"
                              ROIWidth="40"
-                             
-                             Hal_RegionsCount="25"
-                             Hal_RegionHeight="40"
-                             Hal_RegionWidth="40"
-                             Hal_Sigma="1"
-                             Hal_Threshold="155"
-                             Hal_SelectionMode="First"
-                             Hal_Transition="Negative"
-                             
                              ImageFilter_Enabled="True"
                              ImageFilter_SaveCacheImageEnabled="False"
                              >
@@ -78,6 +75,18 @@
                                   LastMaxGray="10">
           </EnhanceEdgeArea4Filter>
       </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="40"
+                             RegionWidth="40"
+                             Sigma="1"
+                             Threshold="155"
+                             SelectionMode="First"
+                             Transition="Negative"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
     </EdgeSearchingDefinition>
 
     
@@ -87,15 +96,6 @@
                              EndX="0"
                              EndY="0"
                              ROIWidth="40"
-                             
-                             Hal_RegionsCount="15"
-                             Hal_RegionHeight="40"
-                             Hal_RegionWidth="30"
-                             Hal_Sigma="1"
-                             Hal_Threshold="155"
-                             Hal_SelectionMode="First"
-                             Hal_Transition="Negative"
-                             
                              ImageFilter_Enabled="True"
                              ImageFilter_SaveCacheImageEnabled="False"
                              >
@@ -118,6 +118,18 @@
                                   LastMaxGray="15">
           </EnhanceEdgeArea4Filter>
       </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="15"
+                             RegionHeight="40"
+                             RegionWidth="30"
+                             Sigma="1"
+                             Threshold="155"
+                             SelectionMode="First"
+                             Transition="Negative"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
     </EdgeSearchingDefinition>
     
     <EdgeSearchingDefinition Name="R1"
@@ -126,15 +138,6 @@
                              EndX="0"
                              EndY="0"
                              ROIWidth="40"
-                             
-                             Hal_RegionsCount="25"
-                             Hal_RegionHeight="40"
-                             Hal_RegionWidth="40"
-                             Hal_Sigma="1"
-                             Hal_Threshold="155"
-                             Hal_SelectionMode="First"
-                             Hal_Transition="Negative"
-                             
                              ImageFilter_Enabled="True"
                              ImageFilter_SaveCacheImageEnabled="False"
                              >
@@ -157,6 +160,18 @@
                                   LastMaxGray="10">
           </EnhanceEdgeArea4Filter>
       </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="40"
+                             RegionWidth="40"
+                             Sigma="1"
+                             Threshold="155"
+                             SelectionMode="First"
+                             Transition="Negative"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
     </EdgeSearchingDefinition>
 
     <EdgeSearchingDefinition Name="R2"
@@ -165,15 +180,6 @@
                              EndX="0"
                              EndY="0"
                              ROIWidth="40"
-                             
-                             Hal_RegionsCount="25"
-                             Hal_RegionHeight="40"
-                             Hal_RegionWidth="40"
-                             Hal_Sigma="1"
-                             Hal_Threshold="155"
-                             Hal_SelectionMode="First"
-                             Hal_Transition="Negative"
-                             
                              ImageFilter_Enabled="True"
                              ImageFilter_SaveCacheImageEnabled="False"
                              >
@@ -196,6 +202,18 @@
                                   LastMaxGray="10">
           </EnhanceEdgeArea4Filter>
       </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="40"
+                             RegionWidth="40"
+                             Sigma="1"
+                             Threshold="155"
+                             SelectionMode="First"
+                             Transition="Negative"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
     </EdgeSearchingDefinition>
 
     <EdgeSearchingDefinition Name="R3"
@@ -204,15 +222,6 @@
                              EndX="0"
                              EndY="0"
                              ROIWidth="40"
-                             
-                             Hal_RegionsCount="15"
-                             Hal_RegionHeight="40"
-                             Hal_RegionWidth="30"
-                             Hal_Sigma="1"
-                             Hal_Threshold="155"
-                             Hal_SelectionMode="First"
-                             Hal_Transition="Negative"
-                             
                              ImageFilter_Enabled="True"
                              ImageFilter_SaveCacheImageEnabled="False"
                              >
@@ -235,6 +244,18 @@
                                   LastMaxGray="15">
           </EnhanceEdgeArea4Filter>
       </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="15"
+                             RegionHeight="40"
+                             RegionWidth="30"
+                             Sigma="1"
+                             Threshold="155"
+                             SelectionMode="First"
+                             Transition="Negative"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
     </EdgeSearchingDefinition>
 <!-- -->
     <!--  

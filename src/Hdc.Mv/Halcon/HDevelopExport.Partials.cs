@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using HalconDotNet;
+using Hdc.Mv;
 using Hdc.Reflection;
 
 public partial class HDevelopExport
@@ -50,16 +52,15 @@ public partial class HDevelopExport
             out hv_EndRow, out hv_EndCol);
 
         ho_Line.Dispose();
-
     }
 
     private void pts_to_best_line(out HObject hoLine, HTuple hvBeginRow,
-                                         HTuple hvBeginCol,
-                                         int activeNum,
-                                         out HTuple hvResultBeginRow,
-                                         out HTuple hvResultBeginCol,
-                                         out HTuple hvResultEndRow,
-                                         out HTuple hvResultEndCol)
+                                  HTuple hvBeginCol,
+                                  int activeNum,
+                                  out HTuple hvResultBeginRow,
+                                  out HTuple hvResultBeginCol,
+                                  out HTuple hvResultEndRow,
+                                  out HTuple hvResultEndCol)
     {
         HDevProcedure ptsProc = new HDevProcedure("pts_to_best_line");
         HDevProcedureCall ptsProcCall;
@@ -82,9 +83,9 @@ public partial class HDevelopExport
     }
 
     private void rake(HObject hoImage, out HObject hoRegions, HTuple hvElements, HTuple hvDetectHeight,
-                             HTuple hvDetectWidth, HTuple hvSigma, HTuple hvThreshold, HTuple hvTransition,
-                             HTuple hvSelect, HTuple hvRow1, HTuple hvColumn1, HTuple hvRow2, HTuple hvColumn2,
-                             out HTuple hvBeginRow, out HTuple hvBeginCol)
+                      HTuple hvDetectWidth, HTuple hvSigma, HTuple hvThreshold, HTuple hvTransition,
+                      HTuple hvSelect, HTuple hvRow1, HTuple hvColumn1, HTuple hvRow2, HTuple hvColumn2,
+                      out HTuple hvBeginRow, out HTuple hvBeginCol)
     {
         HDevProcedure rakeProc = new HDevProcedure("rake");
         HDevProcedureCall rakeProcCall;
@@ -115,13 +116,13 @@ public partial class HDevelopExport
 
 
     public void SpokeCircle(HObject ho_Image, HTuple hv_ROICirCentre_Row, HTuple hv_ROICirCentre_Column,
-                                   HTuple hv_ROIBigCirRadius, HTuple hv_ROISmallCirRadius, 
-        HTuple hv_Elements ,
+                            HTuple hv_ROIBigCirRadius, HTuple hv_ROISmallCirRadius,
+                            HTuple hv_Elements,
 //        HTuple hv_DetectHeight , 
-        HTuple hv_DetectWidth,
-                                   HTuple hv_Sigma, HTuple hv_Threshold, HTuple hv_Transition, HTuple hv_Select,
-                                   HTuple hv_Direct, out HTuple hv_CirCentre_Row, out HTuple hv_CirCentre_Column,
-                                   out HTuple hv_CirRadius, out HTuple hv_CirRoundness)
+                            HTuple hv_DetectWidth,
+                            HTuple hv_Sigma, HTuple hv_Threshold, HTuple hv_Transition, HTuple hv_Select,
+                            HTuple hv_Direct, out HTuple hv_CirCentre_Row, out HTuple hv_CirCentre_Column,
+                            out HTuple hv_CirRadius, out HTuple hv_CirRoundness)
     {
         // Local iconic variables 
 
@@ -130,12 +131,12 @@ public partial class HDevelopExport
 
         // Local control variables 
 
-        HTuple 
-            hv_DetectHeight = null, 
+        HTuple
+            hv_DetectHeight = null,
             hv_ROIRadius = null;
-        HTuple 
+        HTuple
 //            hv_Elements = null, 
-            hv_ROIRows = null, 
+            hv_ROIRows = null,
             hv_ROICols = null;
         HTuple hv_ResultRow = null, hv_ResultColumn = null, hv_ArcType = null;
         HTuple hv_Distance = null, hv_Sigma1 = null, hv_Sides = null;
@@ -204,8 +205,8 @@ public partial class HDevelopExport
     }
 
     private void pts_to_best_circle(out HObject hoCircle, HTuple hvResultRow, HTuple hvResultColumn, int activeNum,
-                                           string arcType, out HTuple hvCirCentreRow, out HTuple hvCirCentreColumn,
-                                           out HTuple hvCirRadius)
+                                    string arcType, out HTuple hvCirCentreRow, out HTuple hvCirCentreColumn,
+                                    out HTuple hvCirRadius)
     {
         HDevProcedure ptsProc = new HDevProcedure("pts_to_best_circle");
         HDevProcedureCall ptsProcCall;
@@ -228,9 +229,9 @@ public partial class HDevelopExport
     }
 
     private void spoke(HObject hoImage, out HObject hoRegions, HTuple hvElements, HTuple hvDetectHeight,
-                              HTuple hvDetectWidth, HTuple hvSigma, HTuple hvThreshold, HTuple hvTransition,
-                              HTuple hvSelect, HTuple hvRoiRows, HTuple hvRoiCols, HTuple hvDirect,
-                              out HTuple hvResultRow, out HTuple hvResultColumn, out HTuple hvArcType)
+                       HTuple hvDetectWidth, HTuple hvSigma, HTuple hvThreshold, HTuple hvTransition,
+                       HTuple hvSelect, HTuple hvRoiRows, HTuple hvRoiCols, HTuple hvDirect,
+                       out HTuple hvResultRow, out HTuple hvResultColumn, out HTuple hvArcType)
     {
         HDevProcedure rakeProc = new HDevProcedure("spoke");
         HDevProcedureCall rakeProcCall;
@@ -257,5 +258,173 @@ public partial class HDevelopExport
 
         rakeProcCall.Dispose();
         rakeProc.Dispose();
+    }
+
+    public IList<Line> RakeEdgeLine(HImage hImage, Line line,
+                                    int regionsCount, int regionHeight, int regionWidth,
+                                    double sigma, double threshold, Transition transition,
+                                    SelectionMode selectionMode)
+    {
+        return RakeEdgeLine(hImage, line.X1, line.Y1, line.X2, line.Y2, regionsCount, regionHeight, regionWidth,
+            sigma, threshold, transition, selectionMode);
+    }
+
+    public IList<Line> RakeEdgeLine(HImage hImage, double startX, double startY, double endX, double endY,
+                                    int regionsCount, int regionHeight, int regionWidth,
+                                    double sigma, double threshold, Transition transition,
+                                    SelectionMode selectionMode)
+    {
+        // Local iconic variables 
+
+        HObject ho_Image, ho_Regions;
+
+        // Local control variables 
+
+        HTuple hv_Row1 = null, hv_Column1 = null, hv_Row2 = null;
+        HTuple hv_Column2 = null, hv_BeginRow = null, hv_BeginCol = null;
+        HTuple hv_EndRow = null, hv_EndCol = null;
+
+        // Initialize local and output iconic variables 
+
+        HOperatorSet.GenEmptyObj(out ho_Image);
+        HOperatorSet.GenEmptyObj(out ho_Regions);
+
+        try
+        {
+            //                ho_Image.Dispose();
+            //                HOperatorSet.ReadImage(out ho_Image, @"B:\ConsoleApplication1\Untitled2.tif");
+            ho_Regions.Dispose();
+
+            hv_Row1 = new HTuple(startY);
+            hv_Column1 = new HTuple(startX);
+            hv_Row2 = new HTuple(endY);
+            hv_Column2 = new HTuple(endX);
+
+            RakeEdgeLine(hImage, regionsCount, regionHeight, regionWidth,
+                sigma, threshold, transition.ToHalconString(), selectionMode.ToHalconString(),
+                hv_Row1, hv_Column1, hv_Row2, hv_Column2,
+                out hv_BeginRow, out hv_BeginCol, out hv_EndRow, out hv_EndCol);
+
+            double[] BeginRow = hv_BeginRow;
+            double[] BeginColumn = hv_BeginCol;
+            double[] EndRow = hv_EndRow;
+            double[] EndColumn = hv_EndCol;
+
+            IList<Line> lines = new List<Line>();
+
+            for (int i = 0; i < BeginRow.Length; i++)
+            {
+                lines.Add(new Line(BeginColumn[i], BeginRow[i], EndColumn[i], EndRow[i]));
+            }
+
+            return lines;
+        }
+        catch (HalconException HDevExpDefaultException)
+        {
+            ho_Image.Dispose();
+            ho_Regions.Dispose();
+
+            throw HDevExpDefaultException;
+        }
+        ho_Image.Dispose();
+        ho_Regions.Dispose();
+    }
+
+    public bool ExtractCircle(HImage hImage, double centerX, double centerY, double innerCircleRadius,
+                              double outerCircleRadius,
+                              out Circle foundCircle, out double roundness,
+                              int regionsCount,
+                              //                                  int regionHeight,
+                              int regionWidth,
+                              double sigma, double threshold, SelectionMode selectionMode, Transition transition,
+                              CircleDirect direct)
+    {
+        try
+        {
+            HTuple centerX2, centerY2, radius, roundness2;
+            SpokeCircle(hImage, centerY, centerX, outerCircleRadius, innerCircleRadius,
+                regionsCount, regionWidth,
+                sigma, threshold,
+                transition.ToHalconString(),
+                selectionMode.ToHalconString(),
+                direct.ToHalconString(),
+                out centerY2, out centerX2, out radius, out roundness2);
+
+            foundCircle = new Circle(centerX2, centerY2, radius);
+            //roundness = roundness2;
+            roundness = 0;
+            return true;
+        }
+        catch (HOperatorException e)
+        {
+            foundCircle = new Circle();
+            roundness = 0;
+            return false;
+        }
+    }
+
+    public bool FindCircleCenterUseHough(HImage ho_Image,
+                                         //                                             out HRegion hv_CenterRegion,
+                                         double hv_CenterRow, double hv_CenterColumn,
+                                         double hv_InnerRadius, double hv_OuterRadius, double hv_Sigma,
+                                         int hv_MinGray,
+                                         int hv_MaxGray, int hv_ExpectRadius, int hv_Percent,
+                                         out double hv_CenterRegionRow, out double hv_CenterRegionColumn)
+    {
+        HObject centerRegion;
+        HOperatorSet.GenEmptyObj(out centerRegion);
+        centerRegion.Dispose();
+
+        HTuple CenterRegionRow;
+        HTuple CenterRegionColumn;
+
+        FindCircleCenterUseHough(
+            ho_Image, out centerRegion, hv_CenterRow, hv_CenterColumn,
+            hv_InnerRadius, hv_OuterRadius, hv_Sigma, hv_MinGray,
+            hv_MaxGray, hv_ExpectRadius, hv_Percent,
+            out CenterRegionRow, out CenterRegionColumn
+            );
+
+        //            hv_CenterRegion = new HRegion(centerRegion);
+        hv_CenterRegionRow = CenterRegionRow;
+        hv_CenterRegionColumn = CenterRegionColumn;
+
+        if (Math.Abs(hv_CenterRegionRow) > 0.000001 && Math.Abs(hv_CenterRegionColumn) > 0.000001)
+            return true;
+        else
+        {
+            return false;
+        }
+    }
+
+
+    public HImage ReduceDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
+                                           double dilationWidth, double dilationHeight)
+    {
+        return ReduceDomainForRectangle(hImage, line.Y1, line.X1, line.Y2, line.X2, hv_RoiWidthLen,
+            dilationWidth, dilationHeight);
+    }
+
+    public HImage ReduceDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
+                                           double margin)
+    {
+        return ReduceDomainForRectangle(hImage, line, hv_RoiWidthLen, margin, margin);
+    }
+
+    public HImage ReduceDomainForRectangle(HObject ho_InputImage,
+                                           double hv_LineStartPoint_Row, double hv_LineStartPoint_Column,
+                                           double hv_LineEndPoint_Row,
+                                           double hv_LineEndPoint_Column, double hv_RoiWidthLen,
+                                           double hv_DilationWidth, double hv_DilationHeight)
+    {
+        HObject ho_EnhancedImage = null;
+        ReduceDomainForRectangle(
+            ho_InputImage, out ho_EnhancedImage,
+            hv_LineStartPoint_Row, hv_LineStartPoint_Column,
+            hv_LineEndPoint_Row,
+            hv_LineEndPoint_Column, hv_RoiWidthLen,
+            hv_DilationWidth, hv_DilationHeight
+            );
+        return new HImage(ho_EnhancedImage);
     }
 }

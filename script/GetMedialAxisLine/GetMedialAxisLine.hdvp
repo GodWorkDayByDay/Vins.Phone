@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="GetMedialAxisLine">
+<interface>
+<io>
+<par name="Region" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="RegionOfLine" base_type="iconic" dimension="0"/>
+</oo>
+<oc>
+<par name="BeginRow" base_type="ctrl" dimension="0"/>
+<par name="BeginCol" base_type="ctrl" dimension="0"/>
+<par name="EndRow" base_type="ctrl" dimension="0"/>
+<par name="EndCol" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<l>skeleton (Region, Skeleton1)</l>
+<l>*split_skeleton_lines (Skeleton1, 3, BeginRow1, BeginCol1, EndRow1, EndCol1)</l>
+<l>split_skeleton_region (Skeleton1, RegionLines, 3)</l>
+<l>region_features (RegionLines, 'contlength', ContLength)</l>
+<l>tuple_max (ContLength, MaxContLength)</l>
+<l>tuple_find (ContLength, MaxContLength, IndicesOfMaxContLength)</l>
+<l>select_obj (RegionLines, MaxRegionLine, IndicesOfMaxContLength+1)</l>
+<c></c>
+<c></c>
+<l>gen_contours_skeleton_xld (MaxRegionLine, Contours, 1, 'filter')</l>
+<c></c>
+<l>*gen_contour_region_xld (Region, Contours, 'border')</l>
+<l>*gen_polygons_xld (Contours, Polygons, 'ramer', 2)</l>
+<c></c>
+<l>fit_line_contour_xld (Contours, 'regression', -1, 0, 5, 2, RowBegin, ColBegin, RowEnd, ColEnd, Nr, Nc, Dist)</l>
+<l>tuple_max (Dist, MaxDist)</l>
+<c></c>
+<l>tuple_find (Dist, MaxDist, Indices)</l>
+<l>tuple_select (RowBegin, Indices, BeginRow)</l>
+<l>tuple_select (ColBegin, Indices, BeginCol)</l>
+<l>tuple_select (RowEnd, Indices, EndRow)</l>
+<l>tuple_select (ColEnd, Indices, EndCol)</l>
+<l>tuple_length (Dist, Length)</l>
+<c></c>
+<c></c>
+<c></c>
+<l>gen_region_line (RegionOfLine, BeginRow, BeginCol, EndRow, EndCol)</l>
+<l>*region_features (Lines, 'contlength', Value)</l>
+<l>*tuple_max (Value, MaxContLength)</l>
+<l>*select_shape (Lines, RegionOfLine, 'contlength', 'and', MaxContLength-1, MaxContLength+1)</l>
+<l>*region_features (RegionOfLine, 'row1', BeginRow)</l>
+<l>*region_features (RegionOfLine, 'column1', BeginCol)</l>
+<l>*region_features (RegionOfLine, 'row2', EndRow)</l>
+<l>*region_features (RegionOfLine, 'column2', EndCol)</l>
+<l>return ()</l>
+</body>
+<docu id="GetMedialAxisLine">
+<parameters>
+<parameter id="BeginCol">
+<default_type>real</default_type>
+<sem_type>line.begin.y</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="BeginRow">
+<default_type>real</default_type>
+<sem_type>line.begin.x</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="EndCol">
+<default_type>real</default_type>
+<sem_type>line.end.y</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="EndRow">
+<default_type>real</default_type>
+<sem_type>line.end.x</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="Region">
+<sem_type>region</sem_type>
+</parameter>
+<parameter id="RegionOfLine">
+<sem_type>region</sem_type>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

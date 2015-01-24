@@ -6,5 +6,7 @@
         Baseline,
         VectorsCenter,
         NearOrigin,
+        Boarder,
+        BoarderWithOrigin,
     }
 }

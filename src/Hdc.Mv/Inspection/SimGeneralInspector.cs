@@ -9,7 +9,6 @@ namespace Hdc.Mv.Inspection
 {
     public class SimGeneralInspector : IGeneralInspector
     {
-//        private ImageInfo _imageInfo;
         private HImage _image;
 
         public void Dispose()
@@ -25,26 +24,11 @@ namespace Hdc.Mv.Inspection
             _image = image;
         }
 
-        public void SetImageInfo(ImageInfo imageInfo)
-        {
-//            _imageInfo = imageInfo;
-        }
-
         public InspectionResult Inspect(InspectionSchema inspectionSchema)
         {
-            return Inspect(_image, inspectionSchema);
-        }
-
-//        public InspectionResult Inspect(HImage image, InspectionSchema inspectionSchema)
-//        {
-//            throw new NotImplementedException();
-//        }
-
-        public InspectionResult Inspect(HImage imageInfo, InspectionSchema inspectionSchema)
-        {
             var ir = new InspectionResult();
-            var circles = SearchCircles(imageInfo, inspectionSchema.CircleSearchingDefinitions);
-            var edges = SearchEdges(imageInfo, inspectionSchema.EdgeSearchingDefinitions);
+            var circles = SearchCircles(inspectionSchema.CircleSearchingDefinitions);
+            var edges = SearchEdges(inspectionSchema.EdgeSearchingDefinitions);
             ir.Circles = circles;
             ir.Edges = edges;
             return ir;
@@ -78,12 +62,12 @@ namespace Hdc.Mv.Inspection
             return searchingResult;
         }
 
-        public CircleSearchingResultCollection SearchCircles(HImage imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions)
-        {
-            return SearchCircles(circleSearchingDefinitions);
-        }
+//        public CircleSearchingResultCollection SearchCircles(HImage imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions)
+//        {
+//            return SearchCircles(circleSearchingDefinitions);
+//        }
 
-        public EdgeSearchingResultCollection SearchEdges(HImage imageInfo, IList<EdgeSearchingDefinition> edgeSearchingDefinitions)
+        public EdgeSearchingResultCollection SearchEdges(IList<EdgeSearchingDefinition> edgeSearchingDefinitions)
         {
             var sr = new EdgeSearchingResultCollection();
 

@@ -99,15 +99,15 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                 return sim;
                             }
                             break;
-                        case "Mil":
-                            {
-                                var mi = new MilGeneralInspector();
-                                mi.Init(schema.ImagePixelWidth, schema.ImagePixelHeight);
-                                inspector = mi;
-
-                                return mi;
-                            }
-                            break;
+//                        case "Mil":
+//                            {
+//                                var mi = new MilGeneralInspector();
+//                                mi.Init(schema.ImagePixelWidth, schema.ImagePixelHeight);
+//                                inspector = mi;
+//
+//                                return mi;
+//                            }
+//                            break;
                         case "Hal":
                             {
                                 var hi = new HalconGeneralInspector();

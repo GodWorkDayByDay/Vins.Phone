@@ -50,5 +50,12 @@ namespace Hdc.Mv
                 return hashCode;
             }
         }
+
+        private static readonly Line Empty = new Line();
+
+        public bool IsEmpty
+        {
+            get { return Equals(this, Empty); }
+        }
     }
 }

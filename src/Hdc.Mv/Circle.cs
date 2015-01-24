@@ -56,5 +56,12 @@ namespace Hdc.Mv
                 return hashCode;
             }
         }
+
+        private static readonly Circle Empty = new Circle();
+
+        public bool IsEmpty
+        {
+            get { return Equals(this, Empty); }
+        }
     }
 }

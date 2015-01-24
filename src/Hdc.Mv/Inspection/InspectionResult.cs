@@ -9,7 +9,11 @@ namespace Hdc.Mv.Inspection
 
         public InspectionResult()
         {
+            // Coordinate
             CoordinateCircles = new CircleSearchingResultCollection();
+            CoordinateEdges = new EdgeSearchingResultCollection();
+
+            //
             Circles = new CircleSearchingResultCollection();
             Edges = new EdgeSearchingResultCollection();
             DistanceBetweenLinesResults = new DistanceBetweenLinesResultCollection();
@@ -19,6 +23,7 @@ namespace Hdc.Mv.Inspection
         }
 
         public CircleSearchingResultCollection CoordinateCircles { get; set; }
+        public EdgeSearchingResultCollection CoordinateEdges { get; set; }
         public CircleSearchingResultCollection Circles { get; set; }
         public EdgeSearchingResultCollection Edges { get; set; }
         public DistanceBetweenLinesResultCollection DistanceBetweenLinesResults { get; set; }

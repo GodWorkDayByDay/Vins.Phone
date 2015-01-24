@@ -10,28 +10,20 @@ namespace Hdc.Mv.Inspection
     {
         void Init();
 
-//        void SetImageInfo(ImageInfo imageInfo);
-
         void SetImageInfo(HImage imageInfo);
 
         InspectionResult Inspect(InspectionSchema inspectionSchema);
 
-        InspectionResult Inspect(HImage image, InspectionSchema inspectionSchema);
-
-//        InspectionResult Inspect(ImageInfo imageInfo, InspectionSchema inspectionSchema);
-
         CircleSearchingResultCollection SearchCircles(IList<CircleSearchingDefinition> circleSearchingDefinitions);
 
-        CircleSearchingResultCollection SearchCircles(HImage imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions);
+        EdgeSearchingResultCollection SearchEdges(IList<EdgeSearchingDefinition> edgeSearchingDefinitions);
 
-        EdgeSearchingResultCollection SearchEdges(HImage imageInfo, IList<EdgeSearchingDefinition> edgeSearchingDefinitions);
+//        DefectResultCollection SearchDefects(HImage imageInfo);
+//
+//        DefectResultCollection SearchDefects(HImage imageInfo, HImage mask);
 
-        DefectResultCollection SearchDefects(HImage imageInfo);
-
-        DefectResultCollection SearchDefects(HImage imageInfo, HImage mask);
-
-        HImage FindRegions(HImage imageInfo);
-
-        HImage FindRegions();
+//        HImage FindRegions(HImage imageInfo);
+//
+//        HImage FindRegions();
     }
 }

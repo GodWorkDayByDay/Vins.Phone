@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>*dev_set_draw('margin')</l>
+<l>*read_image (Image, 'BlackBlack_188_2015-01-22_16.47.04_Cropped')</l>
+<l>*read_image (Image, 'BlackBlack_288_2015-01-22_16.43.07_Cropped')</l>
+<l>*read_image (Image, 'GoldBlack_090_2015-01-14_15.27.06_Cropped')</l>
+<l>*read_image (Image, 'GoldBlack_144_2015-01-14_15.25.59_Cropped')</l>
+<l>*read_image (Image, 'GoldBlack_188_2015-01-22_17.14.51_Cropped')</l>
+<l>*read_image (Image, 'GoldBlack_288_2015-01-22_17.11.58_Cropped')</l>
+<l>*read_image (Image, 'SilverBlack_188_2015-01-22_17.02.55_Cropped')</l>
+<l>*read_image (Image, 'SilverBlack_288_2015-01-22_17.01.36_Cropped')</l>
+<l>*read_image (Image, 'SilverBlack2_188_2015-01-22_17.04.06_Cropped_NoPiece')</l>
+<l>*read_image (Image, 'SilverBlack2_288_2015-01-22_17.05.28_Cropped_NoPiece')</l>
+<l>*read_image (Image, 'GoldBlack_188_2015-01-22_17.14.51_TopLeft_Cropped')</l>
+<l>*read_image (Image, 'SilverBlack2_188_2015-01-22_17.04.06_NoPiece_TopLeft_Cropped')</l>
+<l>*read_image (Image, 'SilverBlack_2015-01-22_17.02.34_TopLeft_Cropped')</l>
+<l>read_image (Image, 'BlackBlack_188_2015-01-22_16.47.04_TopLeft_Cropped')</l>
+<c></c>
+<l>GetRegionOfRoughWithBoundary (Image, FoundRegion, 0, 150, 5, 5, 5, 5, 5, 5, 5, 120, 120, 120, 120, 30000, 99999999)</l>
+<l>get_image_size (Image, Width1, Height1)</l>
+<c></c>
+<l>dev_set_draw ('margin')</l>
+<l>shape_trans (FoundRegion, RegionTrans1, 'rectangle2')</l>
+<c></c>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="GetRegionOfRoughWithBoundary">
+<interface>
+<io>
+<par name="Image" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="FoundRegion" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="ThresholdMinGray" base_type="ctrl" dimension="0"/>
+<par name="ThresholdMaxGray" base_type="ctrl" dimension="0"/>
+<par name="MinMaxGrayPercent" base_type="ctrl" dimension="0"/>
+<par name="GrayRangeWidth" base_type="ctrl" dimension="0"/>
+<par name="GrayRangeHeight" base_type="ctrl" dimension="0"/>
+<par name="GrayClosingWidth" base_type="ctrl" dimension="0"/>
+<par name="GrayClosingHeight" base_type="ctrl" dimension="0"/>
+<par name="GrayOpeningWidth" base_type="ctrl" dimension="0"/>
+<par name="GrayOpeningHeight" base_type="ctrl" dimension="0"/>
+<par name="RoughAreaOpeningWidth" base_type="ctrl" dimension="0"/>
+<par name="RoughAreaOpeningHeight" base_type="ctrl" dimension="0"/>
+<par name="RoughAreaClosingWidth" base_type="ctrl" dimension="0"/>
+<par name="RoughAreaClosingHeight" base_type="ctrl" dimension="0"/>
+<par name="SelectAreaMin" base_type="ctrl" dimension="0"/>
+<par name="SelectAreaMax" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>get_domain (Image, Domain)</l>
+<l>region_features (Domain, 'width', Width)</l>
+<l>region_features (Domain, 'height', Height)</l>
+<c></c>
+<l>threshold (Image, Region, ThresholdMinGray, ThresholdMaxGray)</l>
+<l>erosion_circle (Region, RegionDilation, 3.5)</l>
+<l>*reduce_domain (Image, Region, ImageReduced)</l>
+<l>reduce_domain (Image, RegionDilation, ImageReduced)</l>
+<l>*complement (Region, RegionComplement)</l>
+<l>*overpaint_region (Image, RegionComplement, 0, 'fill')</l>
+<c></c>
+<l>min_max_gray (Region, ImageReduced, MinMaxGrayPercent, Min, Max, Range)</l>
+<l>Mult:=255/(Max-Min)</l>
+<l>Add:=-Mult*Min</l>
+<l>scale_image (ImageReduced, ImageScaled, Mult, Add)</l>
+<c></c>
+<c>*</c>
+<l>gen_disc_se (SE, 'byte', 5, 5, 0)</l>
+<c></c>
+<l>gray_tophat (ImageScaled, SE, ImageTopHat)</l>
+<l>scale_image_max (ImageTopHat, ImageScaleMax)</l>
+<l>binary_threshold (ImageScaleMax, Region4, 'max_separability', 'light', UsedThreshold)</l>
+<l>closing_rectangle1 (Region4, RegionClosing4, 5, 5)</l>
+<l>connection (RegionClosing4, ConnectedRegions8)</l>
+<l>select_shape (ConnectedRegions8, SelectedRegions8, 'area', 'and', 10000, 9999999)</l>
+<l>fill_up (SelectedRegions8, RegionFillUp4)</l>
+<l>closing_rectangle1 (RegionFillUp4, RegionClosing41, 10, 10)</l>
+<l>fill_up (RegionClosing41, RegionFillUp42)</l>
+<l>opening_rectangle1 (RegionFillUp42, RegionOpening44, 100, 100)</l>
+<c></c>
+<c></c>
+<l>gray_bothat (ImageScaled, SE, ImageBotHat)</l>
+<l>scale_image_max (ImageBotHat, ImageScaleMax2)</l>
+<l>binary_threshold (ImageScaleMax2, Region5, 'max_separability', 'light', UsedThreshold)</l>
+<l>closing_circle (Region5, RegionClosing5, 3.5)</l>
+<l>opening_circle (RegionClosing5, RegionOpening51, 3.5)</l>
+<l>*closing_rectangle1 (Region5, RegionClosing5b, 5, 5)</l>
+<l>connection (RegionOpening51, ConnectedRegions5)</l>
+<l>select_shape (ConnectedRegions5, SelectedRegions5, 'area', 'and', 10000, 9999999)</l>
+<l>fill_up (SelectedRegions5, RegionFillUp5)</l>
+<l>closing_rectangle1 (RegionFillUp5, RegionClosing51, 10, 10)</l>
+<l>fill_up (RegionClosing51, RegionFillUp52)</l>
+<l>opening_rectangle1 (RegionFillUp52, RegionOpening52, 100, 100)</l>
+<c></c>
+<l>gray_range_rect (ImageScaled, ImageResult6, 5, 5)</l>
+<l>gray_closing_rect (ImageResult6, ImageClosing6, 5, 5)</l>
+<l>binary_threshold (ImageClosing6, Region6, 'max_separability', 'light', UsedThreshold1)</l>
+<l>closing_circle (Region5, RegionClosing6, 3)</l>
+<l>*closing_rectangle1 (Region5, RegionClosing6b, 5, 5)</l>
+<l>connection (RegionClosing6, ConnectedRegions6)</l>
+<l>select_shape (ConnectedRegions6, SelectedRegions6, 'area', 'and', 10000, 9999999)</l>
+<l>fill_up (SelectedRegions6, RegionFillUp6)</l>
+<c></c>
+<c></c>
+<l>union2 (RegionOpening44, RegionOpening52, RegionUnion5And6)</l>
+<l>intersection (RegionUnion5And6, RegionFillUp6, RegionIntersection2)</l>
+<l>closing_rectangle1 (RegionIntersection2, RegionClosing10, 10, 10)</l>
+<l>opening_rectangle1 (RegionClosing10, RegionOpening11, 20, 20)</l>
+<l>closing_rectangle1 (RegionOpening11, RegionClosing12, 50, 50)</l>
+<l>opening_rectangle1 (RegionClosing12, RegionOpening12, 100, 100)</l>
+<c></c>
+<c></c>
+<l>move_region (RegionOpening12, FoundRegion, 0, 0)</l>
+<c></c>
+<l>return ()</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+</body>
+<docu id="GetRegionOfRoughWithBoundary">
+<parameters>
+<parameter id="FoundRegion">
+<sem_type>region</sem_type>
+</parameter>
+<parameter id="GrayClosingHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="GrayClosingWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="GrayOpeningHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="GrayOpeningWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="GrayRangeHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="GrayRangeWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="Image">
+<sem_type>image</sem_type>
+<type_list>
+<item>byte</item>
+</type_list>
+</parameter>
+<parameter id="MinMaxGrayPercent">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="RoughAreaClosingHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="RoughAreaClosingWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="RoughAreaOpeningHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="RoughAreaOpeningWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="SelectAreaMax">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="SelectAreaMin">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ThresholdMaxGray">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="ThresholdMinGray">
+<default_type>real</default_type>
+<sem_type>number</sem_type>
+<type_list>
+<item>real</item>
+</type_list>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

@@ -22,8 +22,6 @@ namespace Hdc.Mv.Inspection
 
         IRelativeCoordinate Coordinate { get; }
 
-        //        ImageInfo ImageInfo { get; }
-
         HImage Image { get; }
 
         InspectionSchema InspectionSchema { get; }
@@ -174,8 +172,6 @@ namespace Hdc.Mv.Inspection
             var inspector = GetOrAddInspector(_inspectionSchema.InspectorNameForCircles);
             //            if(inspector.)
 
-            var searchCoordinateCircles = inspector.SearchCircles(_inspectionSchema.CoordinateCircles);
-            _inspectionResult.CoordinateCircles = searchCoordinateCircles;
 
             switch (_inspectionSchema.CoordinateType)
             {
@@ -188,10 +184,17 @@ namespace Hdc.Mv.Inspection
                         refCircle.Definition.BaselineAngle);
                     break;
                 case CoordinateType.VectorsCenter:
+                    var searchCoordinateCircles = inspector.SearchCircles(_inspectionSchema.CoordinateCircles);
+                    _inspectionResult.CoordinateCircles = searchCoordinateCircles;
                     _coordinate = RelativeCoordinateFactory.CreateCoordinate(_inspectionResult.CoordinateCircles);
                     break;
                 case CoordinateType.NearOrigin:
                     throw new NotSupportedException("CoordinateType does not implement!");
+                    break;
+                case CoordinateType.Boarder:
+                      var searchCoordinateEdges = inspector.SearchEdges(_inspectionSchema.CoordinateEdges);
+                      _inspectionResult.CoordinateEdges = searchCoordinateEdges;
+                      _coordinate = RelativeCoordinateFactory.CreateCoordinateUsingBorder(_inspectionResult.CoordinateEdges);
                     break;
                 default:
                     throw new NotSupportedException("CoordinateType does not support!");
@@ -209,33 +212,7 @@ namespace Hdc.Mv.Inspection
             _inspectionSchema.CircleSearchingDefinitions.UpdateObjectiveCircles(_coordinate);
             _inspectionSchema.CoordinateCircles.UpdateObjectiveCircles(_coordinate);
             _inspectionSchema.EdgeSearchingDefinitions.UpdateFromRelativeLines(_coordinate);
-
-            // print
-            /*            {
-                            List<Vector> actualVectors = _inspectionResult.CoordinateCircles.Select(x => x.Circle.GetCenterVector()).ToList();
-                            var relativeCs = actualVectors.Select(x => _coordinate.GetRelativePoint(x.ToPoint())).ToList();
-
-                            Debug.WriteLine("--------------------------------");
-                            for (int index = 1; index < relativeCs.Count; index++)
-                            {
-                                var distance = relativeCs[index];
-                                Debug.WriteLine("C.X = \t" + distance.X * 16);
-                                Debug.WriteLine("C.Y = \t" + distance.Y * 16);
-                            }
-                        }
-                     */
-            // 
-            /*            Debug.WriteLine("\n");
-                        foreach (var cir in _inspectionResult.CoordinateCircles)
-                        {
-                            Debug.WriteLine("EXP.X = \t" + cir.Definition.BaselineX);
-                            Debug.WriteLine("EXP.Y = \t" + cir.Definition.BaselineY);
-                            Debug.WriteLine("REL.X = \t" + cir.RelativeCircle.CenterX);
-                            Debug.WriteLine("REL.Y = \t" + cir.RelativeCircle.CenterY);
-                            Debug.WriteLine("ACT.X = \t" + cir.Circle.CenterX);
-                            Debug.WriteLine("ACT.Y = \t" + cir.Circle.CenterY);
-                            Debug.WriteLine("\n");
-                        }*/
+            //            _inspectionSchema.CoordinateEdges.UpdateObjectiveCircles(_coordinate);
 
             sw.Dispose();
 
@@ -244,44 +221,16 @@ namespace Hdc.Mv.Inspection
 
         public IInspectionController Inspect()
         {
-            // circles
-            var sw = new NotifyStopwatch("InspectionController.Inspect(): circlesInspector.Inspect");
+            var inspector = GetOrAddInspector(_inspectionSchema.InspectorNameForEdges);
 
-            var circlesInspector = GetOrAddInspector(_inspectionSchema.InspectorNameForCircles);
-            //            circlesInspector.SetImageInfo(_imageInfo);
-            var circlesResult = circlesInspector.SearchCircles(_inspectionSchema.CircleSearchingDefinitions);
-            sw.Dispose();
-
-            _inspectionResult.Circles = circlesResult;
-
-            //            var ori = new CircleSearchingResult()
-            //                      {
-            //                          RelativeCircle = new Circle(0,0,10),
-            //                          Circle = new Circle(_coordinate.GetOriginalVector(new Vector(0,0)).ToPoint(), 10),
-            //                      };
-
-            // edges
-            var sw2 = new NotifyStopwatch("InspectionController.Inspect(): edgesInspector.Inspect()");
-
-            var edgesInspector = GetOrAddInspector(_inspectionSchema.InspectorNameForEdges);
-            var edgesResult = edgesInspector.Inspect(_inspectionSchema);
+            var sw2 = new NotifyStopwatch("Inspector.Inspect()");
+            var inspectionResult = inspector.Inspect(_inspectionSchema);
             sw2.Dispose();
 
-            _inspectionResult.Edges = edgesResult.Edges;
-            _inspectionResult.DistanceBetweenPointsResults = edgesResult.DistanceBetweenPointsResults;
-            _inspectionResult.DefectResults = edgesResult.DefectResults;
-
-            // defects
-//            if (_inspectionSchema.InspectorNameForDefects == "Hal")
-            if (false)
-            {
-                var halInspector = GetOrAddInspector("Hal");
-                var maskImageInfo = halInspector.FindRegions();
-
-                var inspector = GetOrAddInspector(_inspectionSchema.InspectorNameForDefects);
-                var defects = inspector.SearchDefects(_imageInfo, maskImageInfo);
-                _inspectionResult.DefectResults = defects;
-            }
+            _inspectionResult.Circles = inspectionResult.Circles;
+            _inspectionResult.Edges = inspectionResult.Edges;
+            _inspectionResult.DistanceBetweenPointsResults = inspectionResult.DistanceBetweenPointsResults;
+            _inspectionResult.DefectResults = inspectionResult.DefectResults;
 
             return this;
         }
@@ -310,11 +259,6 @@ namespace Hdc.Mv.Inspection
         {
             get { return _imageInfo; }
         }
-
-        //        public ImageInfo ImageInfo
-        //        {
-        //            get { return _imageInfo; }
-        //        }
 
         public InspectionSchema InspectionSchema
         {

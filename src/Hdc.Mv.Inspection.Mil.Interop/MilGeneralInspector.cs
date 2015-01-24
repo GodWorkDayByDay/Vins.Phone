@@ -12,7 +12,7 @@ using Omu.ValueInjecter;
 
 namespace Hdc.Mv.Inspection.Mil
 {
-    public class MilGeneralInspector : IGeneralInspector
+    public class MilGeneralInspector// : IGeneralInspector
     {
         private ImageInfo _imageInfo;
 
@@ -26,10 +26,6 @@ namespace Hdc.Mv.Inspection.Mil
 
             InteropApi.CleanDefinitions();
 
-            AddCircleDefinitions(inspectionSchema);
-
-            // AddEdgeDefinitions(inspectionSchema);
-
             Debug.WriteLine("InteropApi.Calculate begin");
             errorCode = InteropApi.Calculate(_imageInfo);
             Debug.WriteLine("InteropApi.Calculate end");
@@ -39,10 +35,6 @@ namespace Hdc.Mv.Inspection.Mil
                 Debug.WriteLine("InteropApi.Calculate error");
                 throw new MilInteropException("Calculate", errorCode);
             }
-
-            inspectionResult.Circles.AddRange(GetCircleResults(inspectionSchema));
-
-            // inspectionResult.Edges.AddRange(GetEdgeResults(inspectionSchema));
 
             Debug.WriteLine("MilGeneralInspector.Inspect out");
 
@@ -54,47 +46,7 @@ namespace Hdc.Mv.Inspection.Mil
             SetImageInfo(imageInfo);
             return Inspect(inspectionSchema);
         }
-
-        public CircleSearchingResultCollection SearchCircles(IList<CircleSearchingDefinition> circleSearchingDefinitions)
-        {
-            var inspectionResult = new CircleSearchingResultCollection();
-
-            Debug.WriteLine("MilGeneralInspector.Inspect in");
-
-            int errorCode;
-
-            InteropApi.CleanDefinitions();
-
-            AddCirclesDefinitions(circleSearchingDefinitions);
-
-            Debug.WriteLine("InteropApi.Calculate begin");
-            errorCode = InteropApi.Calculate(_imageInfo);
-            Debug.WriteLine("InteropApi.Calculate end");
-
-            if (errorCode != 0)
-            {
-                Debug.WriteLine("InteropApi.Calculate error");
-                throw new MilInteropException("Calculate", errorCode);
-            }
-
-            inspectionResult.AddRange(GetCircleSearchingResults(circleSearchingDefinitions));
-
-            Debug.WriteLine("MilGeneralInspector.Inspect out");
-
-            return inspectionResult;
-        }
-
-        public CircleSearchingResultCollection SearchCircles(HImage imageInfo, IList<CircleSearchingDefinition> circleSearchingDefinitions)
-        {
-            SetImageInfo(imageInfo);
-            return SearchCircles(circleSearchingDefinitions);
-        }
-
-        public EdgeSearchingResultCollection SearchEdges(HImage imageInfo, IList<EdgeSearchingDefinition> edgeSearchingDefinitions)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public DefectResultCollection SearchDefects(HImage imageInfo)
         {
             var drs = new DefectResultCollection();
@@ -150,104 +102,6 @@ namespace Hdc.Mv.Inspection.Mil
             }
 
             return drs;
-        }
-
-        public HImage FindRegions(HImage imageInfo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HImage FindRegions()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static IList<CircleSearchingResult> GetCircleResults(InspectionSchema inspectionSchema)
-        {
-
-            if (!inspectionSchema.CircleSearchingEnable) return new List<CircleSearchingResult>();
-
-
-            IList<CircleSearchingDefinition> circleSearchingDefinitions = inspectionSchema.CircleSearchingDefinitions;
-
-            var circleSearchingResults = GetCircleSearchingResults(circleSearchingDefinitions);
-
-            return circleSearchingResults;
-        }
-
-        private static IList<CircleSearchingResult> GetCircleSearchingResults(IList<CircleSearchingDefinition> circleSearchingDefinitions)
-        {
-            int errorCode;
-
-            IList<CircleSearchingResult> circleSearchingResults = new List<CircleSearchingResult>();
-
-            for (int i = 0; i < circleSearchingDefinitions.Count; i++)
-            {
-                var cd = circleSearchingDefinitions[i];
-
-                Circle foundCircle;
-                int isNotFound;
-                errorCode = InteropApi.GetCircleResult(i, out foundCircle, out isNotFound);
-
-                Debug.WriteLine("GetCircleResult " + i + ", errorCode: " + errorCode);
-
-                if (errorCode == -1)
-                {
-                    var errorResult = new CircleSearchingResult(i, cd)
-                    {
-                        HasError = true,
-                        IsNotFound = isNotFound == 1
-                    };
-                    circleSearchingResults.Add(errorResult);
-                    continue;
-                }
-
-                if (errorCode != 0)
-                    throw new MilInteropException("InteropApi.GetCircleResult", errorCode);
-
-                var result = new CircleSearchingResult(index: i, definition: cd.DeepClone(), circle: foundCircle)
-                {
-                    IsNotFound = isNotFound != 0
-                };
-                circleSearchingResults.Add(result);
-            }
-            return circleSearchingResults;
-        }
-
-        private static void AddCircleDefinitions(InspectionSchema inspectionSchema)
-        {
-            Collection<CircleSearchingDefinition> circleSearchingDefinitions = inspectionSchema.CircleSearchingDefinitions;
-
-            if (!inspectionSchema.CircleSearchingEnable) return;
-
-            AddCirclesDefinitions(circleSearchingDefinitions);
-        }
-
-        private static void AddCirclesDefinitions(IList<CircleSearchingDefinition> circleSearchingDefinitions)
-        {
-            int index = 0;
-            int errorCode;
-
-            foreach (var circleDef in circleSearchingDefinitions)
-            {
-                int iFilter = (int)circleDef.Mil_CircleSearchingMethod;
-
-                errorCode = InteropApi.AddCircleDefinition(circleDef.CenterX, circleDef.CenterY,
-                    circleDef.InnerRadius,
-                    circleDef.OuterRadius, circleDef.Mil_LowThreshold, circleDef.Mil_HighThreshold,
-                    circleDef.Mil_CenterDiffer, circleDef.Mil_RadiusDiffer, circleDef.Mil_Ratio, iFilter);
-
-                Debug.WriteLine("AddCircleDefinition " + index);
-                Debug.WriteLine("AddCircleDefinition CenterX" + circleDef.CenterX);
-                Debug.WriteLine("AddCircleDefinition CenterY" + circleDef.CenterY);
-                index++;
-
-                if (errorCode != 0)
-                {
-                    Debug.WriteLine("InteropApi.AddCircleDefinition error");
-                    throw new MilInteropException("InteropApi.AddCircleDefinition", errorCode);
-                }
-            }
         }
 
         public void Dispose()

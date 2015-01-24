@@ -52,7 +52,7 @@ public partial class HDevelopExport
         hv_DilationHeight);
 
     ho_ImageResult.Dispose();
-    HOperatorSet.ReduceDomain(ho_InputImage, ho_RegionDilation, out ho_ImageResult
+    HOperatorSet.ChangeDomain(ho_InputImage, ho_RegionDilation, out ho_ImageResult
         );
 
     ho_Rectangle.Dispose();

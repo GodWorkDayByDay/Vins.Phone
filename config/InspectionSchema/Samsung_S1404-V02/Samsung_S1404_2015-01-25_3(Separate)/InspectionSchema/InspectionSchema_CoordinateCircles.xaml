@@ -1,0 +1,99 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  >
+  <InspectionSchema.CoordinateCircles>
+    <CircleSearchingDefinition CenterX="3633"
+                               CenterY="3173"
+                               InnerRadius="22"
+                               OuterRadius="38"
+                               Name="O"
+                               Domain_SaveCacheImageEnabled="false">
+        <CircleSearchingDefinition.CircleExtractor>
+            <SpokeCircleExtractor Name=""
+                                  SaveCacheImageEnabled="false"
+                                  RegionsCount="60"
+                                  RegionWidth="10"
+                                  Sigma="1"
+                                  Threshold="7"
+                                  SelectionMode="First"
+                                  Transition="Positive"
+                                  Direct="Inner"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+    </CircleSearchingDefinition>
+                               
+    <CircleSearchingDefinition CenterX="3668"
+                               CenterY="10250"
+                               InnerRadius="22"
+                               OuterRadius="38"
+                               Name="R1"
+                               
+                               BaselineAngle="90"
+                               BaselineX="0"
+                               BaselineY="113.28275"
+                               
+                               Domain_SaveCacheImageEnabled="false">
+        <CircleSearchingDefinition.CircleExtractor>
+            <SpokeCircleExtractor Name=""
+                                  SaveCacheImageEnabled="false"
+                                  RegionsCount="60"
+                                  RegionWidth="10"
+                                  Sigma="1"
+                                  Threshold="7"
+                                  SelectionMode="First"
+                                  Transition="Positive"
+                                  Direct="Inner"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+    </CircleSearchingDefinition>
+    
+    <CircleSearchingDefinition CenterX="4475"
+                               CenterY="7613"
+                               InnerRadius="120"
+                               OuterRadius="140"
+                               Name="R2"
+                               
+                               BaselineAngle="79.528422"
+                               BaselineX="13.13646"
+                               BaselineY="71.074762"
+                               
+                               Domain_SaveCacheImageEnabled="false">
+        <CircleSearchingDefinition.CircleExtractor>
+            <SpokeCircleExtractor Name=""
+                                  SaveCacheImageEnabled="false"
+                                  RegionsCount="100"
+                                  RegionWidth="20"
+                                  Sigma="1"
+                                  Threshold="25"
+                                  SelectionMode="First"
+                                  Transition="Positive"
+                                  Direct="Outer"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+    </CircleSearchingDefinition>
+                               
+    <CircleSearchingDefinition CenterX="4958"
+                               CenterY="7971"
+                               InnerRadius="120"
+                               OuterRadius="145"
+                               Name="R3"
+                               
+                               BaselineAngle="74.85129"
+                               BaselineX="20.81575"
+                               BaselineY="76.88667"
+                               
+                               Domain_SaveCacheImageEnabled="false">
+        <CircleSearchingDefinition.CircleExtractor>
+            <SpokeCircleExtractor Name=""
+                                  SaveCacheImageEnabled="false"
+                                  RegionsCount="100"
+                                  RegionWidth="20"
+                                  Sigma="1"
+                                  Threshold="25"
+                                  SelectionMode="First"
+                                  Transition="Positive"
+                                  Direct="Outer"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+    </CircleSearchingDefinition>
+  </InspectionSchema.CoordinateCircles>
+</InspectionSchema>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using Hdc.Mv.Inspection;
@@ -76,6 +77,24 @@ namespace Hdc.Mv
 //            coord.OriginOffset = origin;
 
             return coord;
+        }
+
+        public static IRelativeCoordinate CreateCoordinateUsingBorder(IList<EdgeSearchingResult> definitions)
+        {
+            throw new NotImplementedException();
+/*            List<Vector> actualVectors = circleDefinitions.Select(x => x.Circle.GetCenterVector()).ToList();
+
+            var expectVectors = new List<Vector>(
+                circleDefinitions.Select(x => new Vector(
+                x.Definition.BaselineX * 1000.0 / 16.0,
+                x.Definition.BaselineY * 1000.0 / 16.0))) { };
+
+            //            var expectVectors = expertVectors.Select(x => new Vector(
+            //                x.X*1000.0/16.0,
+            //                x.Y*1000.0/16.0)).ToList();
+
+            var coordinate = CreateCoordinate(actualVectors, expectVectors);
+            return coordinate;*/
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using HalconDotNet;
 using Hdc.Windows;
+using Hdc.Windows.Media.Imaging;
 
 namespace Hdc.Mv.Halcon
 {
@@ -25,6 +26,29 @@ namespace Hdc.Mv.Halcon
             int w, h;
             image.GetImageSize(out w, out h);
             return new Int32Size(w, h);
+        }
+
+        public static HImage ReduceDomainForRing(this HImage hImage, double centerX, double centerY, double innerRadius,
+                                          double outerRadius)
+        {
+            var innerCircle = new HRegion();
+            innerCircle.GenCircle(centerY, centerX, innerRadius);
+
+            var outerCircle = new HRegion();
+            outerCircle.GenCircle(centerY, centerX, outerRadius);
+
+            var ring = outerCircle.Difference(innerCircle);
+            var reducedImage = hImage.ChangeDomain(ring);
+
+            innerCircle.Dispose();
+            outerCircle.Dispose();
+            ring.Dispose();
+
+//            reducedImage.CropDomain()
+//                      .ToBitmapSource()
+//                      .SaveToJpeg("_EnhanceEdgeArea_Domain.jpg");
+
+            return reducedImage;
         }
     }
 }

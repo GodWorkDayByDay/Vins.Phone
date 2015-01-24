@@ -72,14 +72,14 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
                                 return sim;
                             }
                             break;
-                        case "Mil":
-                            {
-                                var mi = new MilGeneralInspector();
-                                mi.Init(8192, 12500);
-
-                                return mi;
-                            }
-                            break;
+//                        case "Mil":
+//                            {
+//                                var mi = new MilGeneralInspector();
+//                                mi.Init(8192, 12500);
+//
+//                                return mi;
+//                            }
+//                            break;
                         case "Hal":
                             {
                                 var hi = new HalconGeneralInspector();

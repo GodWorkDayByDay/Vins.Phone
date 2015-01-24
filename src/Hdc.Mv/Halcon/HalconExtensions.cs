@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
@@ -79,5 +80,8 @@ namespace Hdc.Mv.Halcon
 
             return bs;
         }
+
+
+  
     }
 }
