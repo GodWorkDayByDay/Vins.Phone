@@ -64,11 +64,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CircleIndicatorViewModel.cs" />
-    <Compile Include="_\IRunner.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RectangleIndicatorViewModel.cs" />
     <Compile Include="RegionIndicatorViewModel.cs" />
-    <Compile Include="_\Runner.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

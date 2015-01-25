@@ -83,10 +83,6 @@ namespace ODM.Inspectors.Halcon.SampleApp
             this.Closing += MainWindow_Closing;
 
 
-            // Tests
-            //            var schema = "InspectionSchema.xaml".LoadFromAssemblyDir();
-            var schema = InspectionController.GetInspectionSchema();
-
             var inspectorFactory = new Func<string, IGeneralInspector>(
                 name =>
                 {

@@ -1,0 +1,44 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.EdgeSearchingDefinitions>
+      <EdgeSearchingDefinition Name="L1"
+                               StartX="6044"
+                               StartY="9670"
+                               EndX="6044"
+                               EndY="8516"
+                               ROIWidth="300"
+                               Domain_SaveCacheImageEnabled="true"
+                               ImageFilter_SaveCacheImageEnabled="true"
+                               >
+      <EdgeSearchingDefinition.ImageFilter>
+          <EnhanceEdgeAreaH1403Filter AreaLightDark="Light"
+                                      WidthMin="0"
+                                      WidthMax="99999999"
+                                      HeightMin="600"
+                                      HeightMax="99999999"
+                                      SortMode="Character"
+                                      Order="Increase"
+                                      RowOrCol="Row"
+                                      SelectIndex="1"
+                                      MeanMaskWidth="2"
+                                      MeanMaskHeight="55"
+                                      />
+      </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="10"
+                             RegionHeight="300"
+                             RegionWidth="100"
+                             Sigma="1"
+                             Threshold="155"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+    </EdgeSearchingDefinition>
+    
+  </InspectionSchema.EdgeSearchingDefinitions>
+  
+  
+</InspectionSchema>
