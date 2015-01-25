@@ -414,6 +414,56 @@ namespace Hdc.Mv
             }
         }
 
+        public static string ToHalconString(this SortMode sortMode)
+        {
+            switch (sortMode)
+            {
+                case SortMode.Character:
+                    return "character";
+                case SortMode.FirstPoint:
+                    return "first_point";
+                case SortMode.LastPoint:
+                    return "last_point";
+                case SortMode.LowerLeft:
+                    return "lower_left";
+                case SortMode.LowerRight:
+                    return "lower_right";
+                case SortMode.UpperLeft:
+                    return "upper_left";
+                case SortMode.UpperRight:
+                    return "upper_right";
+                default:
+                    throw new InvalidOperationException("SortMode cannot convert to string");
+            }
+        }
+
+
+        public static string ToHalconString(this Order order)
+        {
+            switch (order)
+            {
+                case Order.Increase:
+                    return "true";
+                case Order.Decrease:
+                    return "false";
+                default:
+                    throw new InvalidOperationException("Order cannot convert to string");
+            }
+        }
+
+        public static string ToHalconString(this RowOrCol rowOrCol)
+        {
+            switch (rowOrCol)
+            {
+                case RowOrCol.Row:
+                    return "row";
+                case RowOrCol.Column:
+                    return "column";
+                default:
+                    throw new InvalidOperationException("RowOrCol cannot convert to string");
+            }
+        }
+
 
         public static string ToHalconString(this LogicOperation operation)
         {
@@ -425,6 +475,36 @@ namespace Hdc.Mv
                     return "or";
                 default:
                     throw new InvalidOperationException("LogicOperation cannot convert to string: " + operation);
+            }
+        }
+
+
+        public static string ToHalconString(this MedianMaskType maskType)
+        {
+            switch (maskType)
+            {
+                case MedianMaskType.Circle:
+                    return "circle";
+                case MedianMaskType.Square:
+                    return "square";
+                default:
+                    throw new InvalidOperationException("MedianMaskType cannot convert to string: " + maskType);
+            }
+        }
+
+
+        public static string ToHalconString(this MedianMargin margin)
+        {
+            switch (margin)
+            {
+                case MedianMargin.Mirrored:
+                    return "mirrored";
+                case MedianMargin.Cyclic:
+                    return "cyclic";
+                case MedianMargin.Continued:
+                    return "continued";
+                default:
+                    throw new InvalidOperationException("MedianMargin cannot convert to string: " + margin);
             }
         }
 

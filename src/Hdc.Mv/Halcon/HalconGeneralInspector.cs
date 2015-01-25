@@ -10,6 +10,7 @@ using HalconDotNet;
 using Hdc.Collections.Generic;
 using Hdc.Diagnostics;
 using Hdc.Mv.Halcon;
+using Hdc.Reflection;
 using Hdc.Windows.Media.Imaging;
 
 namespace Hdc.Mv.Inspection
@@ -19,6 +20,18 @@ namespace Hdc.Mv.Inspection
         private HDevelopExportHelper _hDevelopExportHelper;
         private SimGeneralInspector _simGeneralInspector = new SimGeneralInspector();
         private HImage _hImage;
+        private string _cacheImageDir;
+
+        public HalconGeneralInspector()
+        {
+            var dir = typeof(Mv.Ex).Assembly.GetAssemblyDirectoryPath();
+            _cacheImageDir = Path.Combine(dir, "CacheImages");
+
+            if (!Directory.Exists(_cacheImageDir))
+            {
+                Directory.CreateDirectory(_cacheImageDir);
+            }
+        }
 
         public void Dispose()
         {
@@ -329,21 +342,32 @@ namespace Hdc.Mv.Inspection
                 int offsetY = 0;
                 HImage enhImage = null;
 
-                if (circleDefinition.ImageFilter_Enabled == false)
+                if (circleDefinition.ImageFilter_Disabled)
                     circleDefinition.ImageFilter = null;
-                if (circleDefinition.RegionExtractor_Enabled == false)
+                if (circleDefinition.RegionExtractor_Disabled)
                     circleDefinition.RegionExtractor = null;
 
-                var reducedImage = _hDevelopExportHelper.HImage.ReduceDomainForRing(
-                    circleDefinition.CenterX,
-                    circleDefinition.CenterY,
-                    circleDefinition.InnerRadius,
-                    circleDefinition.OuterRadius);
+
+                var topLeftX = circleDefinition.CenterX - circleDefinition.OuterRadius;
+                var topLeftY = circleDefinition.CenterY - circleDefinition.OuterRadius;
+                var bottomRightX = circleDefinition.CenterX + circleDefinition.OuterRadius;
+                var bottomRightY = circleDefinition.CenterY + circleDefinition.OuterRadius;
+
+                var reg = new HRegion();
+                reg.GenRectangle1(topLeftY, topLeftX, bottomRightY, bottomRightX);
+                var reducedImage = _hDevelopExportHelper.HImage.ReduceDomain(reg);
+                reg.Dispose();
+
+                //                var reducedImage = _hDevelopExportHelper.HImage.ReduceDomainForRing(
+                //                    circleDefinition.CenterX,
+                //                    circleDefinition.CenterY,
+                //                    circleDefinition.InnerRadius,
+                //                    circleDefinition.OuterRadius);
 
                 if (circleDefinition.Domain_SaveCacheImageEnabled)
                     reducedImage.CropDomain()
                         .ToBitmapSource()
-                        .SaveToJpeg("_EnhanceEdgeArea_" + circleDefinition.Name + "_Domain.jpg");
+                        .SaveToJpeg(_cacheImageDir + "\\SearchCircles_" + circleDefinition.Name + "_1_Domain.jpg");
 
                 HRegion domain;
                 if (circleDefinition.RegionExtractor != null)
@@ -357,7 +381,7 @@ namespace Hdc.Mv.Inspection
                             .ReduceDomain(domain)
                             .CropDomain()
                             .ToBitmapSource()
-                            .SaveToJpeg("_RegionExtractor_" + circleDefinition.Name + "_ROIRegion.jpg");
+                            .SaveToJpeg(_cacheImageDir + "\\SearchCircles_" + circleDefinition.Name + "_2_ROI.jpg");
                 }
                 else
                 {
@@ -372,26 +396,26 @@ namespace Hdc.Mv.Inspection
                 if (circleDefinition.ImageFilter != null)
                 {
                     enhImage = circleDefinition.ImageFilter.Process(croppedImage);
+                    
+                    if (circleDefinition.ImageFilter_SaveCacheImageEnabled)
+                    {
+                        var cropDomain = enhImage.CropDomain();
+                        cropDomain
+                            .ToBitmapSource()
+                            .SaveToJpeg(_cacheImageDir + "\\SearchCircles_" + circleDefinition.Name + "_3_ImageFilter.jpg");
+                        cropDomain.Dispose();
+
+                        //
+                        var paintedImage = enhImage.PaintGrayOffset(_hDevelopExportHelper.HImage, offsetY, offsetX);
+                        paintedImage
+                            .ToBitmapSource()
+                            .SaveToJpeg(_cacheImageDir + "\\SearchCircles_" + circleDefinition.Name + "_3_ImageFilter_PaintGrayOffset.jpg");
+                        paintedImage.Dispose();
+                    }
                 }
                 else
                 {
                     enhImage = croppedImage;
-                }
-
-                if (circleDefinition.ImageFilter_SaveCacheImageEnabled)
-                    enhImage.CropDomain()
-                        .ToBitmapSource()
-                        .SaveToJpeg("_ImageFilter_" + circleDefinition.Name + "_Mod.jpg");
-
-
-                if (circleDefinition.ImageFilter_SaveCacheImageEnabled)
-                {
-                    var savingImage = _hDevelopExportHelper.HImage.Clone();
-                    savingImage.OverpaintGray(enhImage);
-
-                    savingImage.ToImageInfo()
-                        .ToBitmapSource()
-                        .SaveToJpeg("_EnhanceEdgeArea_" + circleDefinition.Name + "_OverpaintGray.jpg");
                 }
 
                 var offsetCenterX = circleDefinition.CenterX - offsetX;
@@ -430,8 +454,6 @@ namespace Hdc.Mv.Inspection
         {
             var sr = new EdgeSearchingResultCollection();
 
-            HImage mergedImage = null;
-
             foreach (var esd in edgeSearchingDefinitions)
             {
                 var esr = new EdgeSearchingResult();
@@ -441,13 +463,10 @@ namespace Hdc.Mv.Inspection
                 int offsetY = 0;
                 HImage enhImage = null;
 
-                //                HImage image;
-
-                if (!esr.Definition.ImageFilter_Enabled)
+                if (esr.Definition.ImageFilter_Disabled)
                     esr.Definition.ImageFilter = null;
-                if (esr.Definition.RegionExtractor_Enabled == false)
+                if (esr.Definition.RegionExtractor_Disabled)
                     esr.Definition.RegionExtractor = null;
-
 
 
                 var reducedImage = HDevelopExport.Singletone.ReduceDomainForRectangle(
@@ -459,7 +478,7 @@ namespace Hdc.Mv.Inspection
                 if (esd.Domain_SaveCacheImageEnabled)
                     reducedImage.CropDomain()
                         .ToBitmapSource()
-                        .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Domain.jpg");
+                        .SaveToJpeg(_cacheImageDir + "\\SearchEdges_" + esd.Name + "_1_Domain.jpg");
 
                 HRegion domain;
                 if (esr.Definition.RegionExtractor != null)
@@ -473,7 +492,7 @@ namespace Hdc.Mv.Inspection
                             .ReduceDomain(domain)
                             .CropDomain()
                             .ToBitmapSource()
-                            .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_ROIRegion.jpg");
+                            .SaveToJpeg(_cacheImageDir + "\\SearchEdges_" + esd.Name + "_2_ROI.jpg");
                 }
                 else
                 {
@@ -483,7 +502,6 @@ namespace Hdc.Mv.Inspection
                 offsetX = domain.GetColumn1();
                 offsetY = domain.GetRow1();
                 var croppedImage = reducedImage.CropDomain();
-                //                   croppedImage.WriteImage("tiff", 0, @"_croppedImage.tif");
 
                 if (esr.Definition.ImageFilter != null)
                 {
@@ -498,47 +516,19 @@ namespace Hdc.Mv.Inspection
                     enhImage = croppedImage;
                 }
 
-                //                    enhImage.WriteImage("tiff", 0, @"_enhance.tif");
-                //image.OverpaintGray();
-
                 if (esd.ImageFilter_SaveCacheImageEnabled)
+                {
                     enhImage.CropDomain()
                         .ToBitmapSource()
-                        .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Mod.jpg");
+                        .SaveToJpeg(_cacheImageDir + "\\SearchEdges_" + esd.Name + "_3_ImageFilter.jpg");
 
-
-                using (var sw3 = new NotifyStopwatch("ImageFilter_SaveCacheImageEnabled"))
-                {
-                    if (esd.ImageFilter_SaveCacheImageEnabled)
-                        //                    if (true)
-                    {
-                        //                        _hDevelopExportHelper.HImage.ToImageInfo().ToBitmapSource().SaveToJpeg("temp_ori.jpg");
-                        //                        var fullDomain = enhImage.FullDomain();
-                        var savingImage = _hDevelopExportHelper.HImage.Clone();
-                        savingImage.OverpaintGray(enhImage);
-
-                        //                            var i = savingImage.PaintRegion(foundRegion, 255.0, "margin");
-
-                        savingImage.ToImageInfo()
-                            .ToBitmapSource()
-                            .SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + ".jpg");
-                        //                            reducedImage.CropDomain().ToImageInfo().ToBitmapSource().SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Ori.jpg");
-                        //                            enhImage.CropDomain().ToImageInfo().ToBitmapSource().SaveToJpeg("_EnhanceEdgeArea_" + esd.Name + "_Mod.jpg");
-                    }
+                    var paintedImage = enhImage.PaintGrayOffset(_hDevelopExportHelper.HImage, offsetY, offsetX);
+                    paintedImage
+                        .ToBitmapSource()
+                        .SaveToJpeg(_cacheImageDir + "\\SearchEdges_" + esd.Name + "_3_ImageFilter_PaintGrayOffset.jpg");
+                    paintedImage.Dispose();
                 }
 
-                //                    image = enhImage.Clone();
-                //
-                //                    if (mergedImage == null) mergedImage = image;
-                //                    else
-                //                    {
-                //                        var merge = _hDevelopExportHelper.AddImagesWithFullDomain(mergedImage, image);
-                //                        mergedImage.Dispose();
-                //                        image.Dispose();
-                //                        mergedImage = merge;
-                //                    }
-                //
-                //                    enhImage.Dispose();
 
                 Line offsetLine = new Line(esd.Line.X1 - offsetX,
                     esd.Line.Y1 - offsetY, esd.Line.X2 - offsetX,
@@ -561,8 +551,6 @@ namespace Hdc.Mv.Inspection
 
                 sr.Add(esr);
             }
-
-            _hDevelopExportHelper.HImageCache = mergedImage;
 
             return sr;
         }

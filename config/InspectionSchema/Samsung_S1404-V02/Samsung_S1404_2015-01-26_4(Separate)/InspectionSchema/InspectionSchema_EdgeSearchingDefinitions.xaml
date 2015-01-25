@@ -1,0 +1,432 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.EdgeSearchingDefinitions>
+      <EdgeSearchingDefinition Name="L1"
+                               StartX="0"
+                               StartY="0"
+                               EndX="0"
+                               EndY="0"
+                               ROIWidth="40"
+                               Domain_SaveCacheImageEnabled="false"
+                               
+                               ImageFilter_Enabled="True"
+                               ImageFilter_SaveCacheImageEnabled="False"
+                               
+                               >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-2363"
+              Y1="-4041"
+              X2="-2363"
+              Y2="-3041" />
+      </EdgeSearchingDefinition.RelativeLine>
+      <EdgeSearchingDefinition.ImageFilter>
+          <EnhanceEdgeArea4Filter MeanMaskWidth="1"
+                                  MeanMaskHeight="33"
+                                  FirstMinGray="35"
+                                  FirstMaxGray="90"
+                                  Order="Increase"
+                                  EmpMaskWidth="5"
+                                  EmpMaskHeight="33"
+                                  EmpMaskFactor="20"
+                                  LastMinGray="0"
+                                  LastMaxGray="10">
+          </EnhanceEdgeArea4Filter>
+      </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="40"
+                             RegionWidth="40"
+                             Sigma="1"
+                             Threshold="155"
+                             SelectionMode="First"
+                             Transition="Negative"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+    </EdgeSearchingDefinition>
+    
+
+    <EdgeSearchingDefinition Name="L2"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="40"
+                             ImageFilter_Enabled="True"
+                             ImageFilter_SaveCacheImageEnabled="False"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-2360"
+              Y1="-500"
+              X2="-2360"
+              Y2="500" />
+      </EdgeSearchingDefinition.RelativeLine>
+      <EdgeSearchingDefinition.ImageFilter>
+          <EnhanceEdgeArea4Filter MeanMaskWidth="1"
+                                  MeanMaskHeight="33"
+                                  FirstMinGray="35"
+                                  FirstMaxGray="90"
+                                  Order="Increase"
+                                  EmpMaskWidth="5"
+                                  EmpMaskHeight="33"
+                                  EmpMaskFactor="20"
+                                  LastMinGray="0"
+                                  LastMaxGray="10">
+          </EnhanceEdgeArea4Filter>
+      </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="40"
+                             RegionWidth="40"
+                             Sigma="1"
+                             Threshold="155"
+                             SelectionMode="First"
+                             Transition="Negative"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+    </EdgeSearchingDefinition>
+
+    
+    <EdgeSearchingDefinition Name="L3"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="40"
+                             ImageFilter_Enabled="True"
+                             ImageFilter_SaveCacheImageEnabled="False"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-2352"
+              Y1="3341"
+              X2="-2352"
+              Y2="3741" />
+      </EdgeSearchingDefinition.RelativeLine>
+      <EdgeSearchingDefinition.ImageFilter>
+          <EnhanceEdgeArea4Filter MeanMaskWidth="1"
+                                  MeanMaskHeight="33"
+                                  FirstMinGray="35"
+                                  FirstMaxGray="90"
+                                  Order="Increase"
+                                  EmpMaskWidth="5"
+                                  EmpMaskHeight="33"
+                                  EmpMaskFactor="20"
+                                  LastMinGray="0"
+                                  LastMaxGray="15">
+          </EnhanceEdgeArea4Filter>
+      </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="15"
+                             RegionHeight="40"
+                             RegionWidth="30"
+                             Sigma="1"
+                             Threshold="155"
+                             SelectionMode="First"
+                             Transition="Negative"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+    </EdgeSearchingDefinition>
+    
+    <EdgeSearchingDefinition Name="R1"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="40"
+                             ImageFilter_Enabled="True"
+                             ImageFilter_SaveCacheImageEnabled="False"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="2410"
+              Y1="-3041"
+              X2="2410"
+              Y2="-4041" />
+      </EdgeSearchingDefinition.RelativeLine>
+      <EdgeSearchingDefinition.ImageFilter>
+          <EnhanceEdgeArea4Filter MeanMaskWidth="1"
+                                  MeanMaskHeight="33"
+                                  FirstMinGray="35"
+                                  FirstMaxGray="90"
+                                  Order="Decrease"
+                                  EmpMaskWidth="5"
+                                  EmpMaskHeight="33"
+                                  EmpMaskFactor="20"
+                                  LastMinGray="0"
+                                  LastMaxGray="10">
+          </EnhanceEdgeArea4Filter>
+      </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="40"
+                             RegionWidth="40"
+                             Sigma="1"
+                             Threshold="155"
+                             SelectionMode="First"
+                             Transition="Negative"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+    </EdgeSearchingDefinition>
+
+    <EdgeSearchingDefinition Name="R2"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="40"
+                             ImageFilter_Enabled="True"
+                             ImageFilter_SaveCacheImageEnabled="False"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="2410"
+              Y1="500"
+              X2="2410"
+              Y2="-500" />
+      </EdgeSearchingDefinition.RelativeLine>
+      <EdgeSearchingDefinition.ImageFilter>
+          <EnhanceEdgeArea4Filter MeanMaskWidth="1"
+                                  MeanMaskHeight="33"
+                                  FirstMinGray="35"
+                                  FirstMaxGray="90"
+                                  Order="Decrease"
+                                  EmpMaskWidth="5"
+                                  EmpMaskHeight="33"
+                                  EmpMaskFactor="20"
+                                  LastMinGray="0"
+                                  LastMaxGray="10">
+          </EnhanceEdgeArea4Filter>
+      </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="40"
+                             RegionWidth="40"
+                             Sigma="1"
+                             Threshold="155"
+                             SelectionMode="First"
+                             Transition="Negative"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+    </EdgeSearchingDefinition>
+
+    <EdgeSearchingDefinition Name="R3"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="40"
+                             ImageFilter_Enabled="True"
+                             ImageFilter_SaveCacheImageEnabled="False"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="2416"
+              Y1="3741"
+              X2="2416"
+              Y2="3341" />
+      </EdgeSearchingDefinition.RelativeLine>
+      <EdgeSearchingDefinition.ImageFilter>
+          <EnhanceEdgeArea4Filter MeanMaskWidth="1"
+                                  MeanMaskHeight="33"
+                                  FirstMinGray="35"
+                                  FirstMaxGray="90"
+                                  Order="Decrease"
+                                  EmpMaskWidth="5"
+                                  EmpMaskHeight="33"
+                                  EmpMaskFactor="20"
+                                  LastMinGray="0"
+                                  LastMaxGray="15">
+          </EnhanceEdgeArea4Filter>
+      </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="15"
+                             RegionHeight="40"
+                             RegionWidth="30"
+                             Sigma="1"
+                             Threshold="155"
+                             SelectionMode="First"
+                             Transition="Negative"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+    </EdgeSearchingDefinition>
+<!-- -->
+    <!--  
+    <EdgeSearchingDefinition Name="T1"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="50"
+                             
+                             Hal_RegionsCount="30"
+                             Hal_RegionHeight="50"
+                             Hal_RegionWidth="30"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             ImageFilter_Enabled="True"
+                             ImageFilter_SaveCacheImageEnabled="False"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-950"
+              Y1="-5178"
+              X2="-1550"
+              Y2="-5178" />
+      </EdgeSearchingDefinition.RelativeLine>
+      <EdgeSearchingDefinition.ImageFilter>
+          <EnhanceEdgeArea4Filter MeanMaskWidth="33"
+                                  MeanMaskHeight="1"
+                                  FirstMinGray="10"
+                                  FirstMaxGray="90"
+                                  Order="Increase"
+                                  EmpMaskWidth="33"
+                                  EmpMaskHeight="5"
+                                  EmpMaskFactor="20"
+                                  LastMinGray="0"
+                                  LastMaxGray="10">
+          </EnhanceEdgeArea4Filter>
+      </EdgeSearchingDefinition.ImageFilter>
+    </EdgeSearchingDefinition>
+    <EdgeSearchingDefinition Name="T2"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="50"
+                             
+                             Hal_RegionsCount="30"
+                             Hal_RegionHeight="50"
+                             Hal_RegionWidth="30"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             ImageFilter_Enabled="True"
+                             ImageFilter_SaveCacheImageEnabled="False"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="1550"
+              Y1="-5182"
+              X2="950"
+              Y2="-5182" />
+      </EdgeSearchingDefinition.RelativeLine>
+      <EdgeSearchingDefinition.ImageFilter>
+          <EnhanceEdgeArea4Filter MeanMaskWidth="33"
+                                  MeanMaskHeight="1"
+                                  FirstMinGray="10"
+                                  FirstMaxGray="90"
+                                  Order="Increase"
+                                  EmpMaskWidth="33"
+                                  EmpMaskHeight="5"
+                                  EmpMaskFactor="20"
+                                  LastMinGray="0"
+                                  LastMaxGray="10">
+          </EnhanceEdgeArea4Filter>
+      </EdgeSearchingDefinition.ImageFilter>
+    </EdgeSearchingDefinition>
+    
+    <EdgeSearchingDefinition Name="B1"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="50"
+                             
+                             Hal_RegionsCount="30"
+                             Hal_RegionHeight="50"
+                             Hal_RegionWidth="50"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             ImageFilter_Enabled="True"
+                             ImageFilter_SaveCacheImageEnabled="False"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-1750"
+              Y1="4224"
+              X2="-750"
+              Y2="4224" />
+      </EdgeSearchingDefinition.RelativeLine>
+      <EdgeSearchingDefinition.ImageFilter>
+          <EnhanceEdgeArea4Filter MeanMaskWidth="33"
+                                  MeanMaskHeight="1"
+                                  FirstMinGray="10"
+                                  FirstMaxGray="90"
+                                  Order="Decrease"
+                                  EmpMaskWidth="33"
+                                  EmpMaskHeight="5"
+                                  EmpMaskFactor="20"
+                                  LastMinGray="0"
+                                  LastMaxGray="15">
+          </EnhanceEdgeArea4Filter>
+      </EdgeSearchingDefinition.ImageFilter>
+    </EdgeSearchingDefinition>
+
+    <EdgeSearchingDefinition Name="B2"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="50"
+                             
+                             Hal_RegionsCount="30"
+                             Hal_RegionHeight="50"
+                             Hal_RegionWidth="50"
+                             Hal_Sigma="1"
+                             Hal_Threshold="155"
+                             Hal_SelectionMode="First"
+                             Hal_Transition="Negative"
+                             
+                             ImageFilter_Enabled="True"
+                             ImageFilter_SaveCacheImageEnabled="False"
+                             >
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="750"
+              Y1="4224"
+              X2="1750"
+              Y2="4224" />
+      </EdgeSearchingDefinition.RelativeLine>
+      <EdgeSearchingDefinition.ImageFilter>
+          <EnhanceEdgeArea4Filter MeanMaskWidth="33"
+                                  MeanMaskHeight="1"
+                                  FirstMinGray="10"
+                                  FirstMaxGray="90"
+                                  Order="Decrease"
+                                  EmpMaskWidth="33"
+                                  EmpMaskHeight="5"
+                                  EmpMaskFactor="20"
+                                  LastMinGray="0"
+                                  LastMaxGray="15">
+          </EnhanceEdgeArea4Filter>
+      </EdgeSearchingDefinition.ImageFilter>
+    </EdgeSearchingDefinition>
+  -->
+  </InspectionSchema.EdgeSearchingDefinitions>
+  
+  <InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+      <DistanceBetweenLinesDefinition Name="L1R1" Line1Name="L1" Line2Name="R1"/>
+      <DistanceBetweenLinesDefinition Name="L2R2" Line1Name="L2" Line2Name="R2"/>
+      <DistanceBetweenLinesDefinition Name="L3R3" Line1Name="L3" Line2Name="R3"/> 
+      <!--   
+      <DistanceBetweenLinesDefinition Name="T1B1" Line1Name="T1" Line2Name="B1"/>
+      <DistanceBetweenLinesDefinition Name="T2B2" Line1Name="T2" Line2Name="B2"/> -->
+      <!--
+      <DistanceBetweenLinesDefinition Name="Thick" Line1Name="ThickTop" Line2Name="ThickBottom"/>
+      <DistanceBetweenLinesDefinition Name="LeftButtonWidth1" Line1Name="LeftButtonL1" Line2Name="LeftButtonR1"/>
+         -->
+  </InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+  
+</InspectionSchema>

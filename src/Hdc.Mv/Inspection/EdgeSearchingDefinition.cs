@@ -19,11 +19,11 @@ namespace Hdc.Mv.Inspection
         public bool Domain_SaveCacheImageEnabled { get; set; }
 
         public IRegionExtractor RegionExtractor { get; set; }
-        public bool RegionExtractor_Enabled { get; set; }
+        public bool RegionExtractor_Disabled { get; set; }
         public bool RegionExtractor_SaveCacheImageEnabled { get; set; }
 
         public IImageFilter ImageFilter { get; set; }
-        public bool ImageFilter_Enabled { get; set; }
+        public bool ImageFilter_Disabled { get; set; }
         public bool ImageFilter_SaveCacheImageEnabled { get; set; }
 
         public ILineExtractor LineExtractor { get; set; }

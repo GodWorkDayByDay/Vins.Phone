@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image (Image, 'B:/2014-12-27_16.09.18_O_Cropped2.tif')</l>
+<l>get_image_size (Image, Width, Height)</l>
+<l>get_domain (Image, Domain)</l>
+<l>copy_image (Image, DupImage)</l>
+<c></c>
+<c></c>
+<l>gen_circle (Circle, 60, 65, 40)</l>
+<l>region_features (Circle, 'row1', OffsetRow)</l>
+<l>region_features (Circle, 'column1', OffsetColumn)</l>
+<l>reduce_domain(Image,Circle,Mask)</l>
+<c></c>
+<l>emphasize (Mask, ImageEmphasize, Width, Height, 3)</l>
+<l>crop_domain (ImageEmphasize, ImagePart)</l>
+<c></c>
+<l>PaintGrayOffset (ImagePart, Image, MixedImage1, OffsetRow, OffsetColumn)</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

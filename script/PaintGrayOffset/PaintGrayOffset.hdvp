@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="PaintGrayOffset">
+<interface>
+<io>
+<par name="ImageSource" base_type="iconic" dimension="0"/>
+<par name="ImageDestination" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="MixedImage" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="OffsetRow" base_type="ctrl" dimension="0"/>
+<par name="OffsetColumn" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>get_image_size (ImageSource, SourceWidth, SourceHeight)</l>
+<l>get_image_size (ImageDestination, DestinationWidth, DestinationHeight)</l>
+<c></c>
+<l>concat_obj (ImageDestination, ImageSource, Images)</l>
+<c></c>
+<l>OffsetRow:= [0, OffsetRow]</l>
+<l>OffsetCol:= [0, OffsetColumn]</l>
+<l>Row1:= [0, 0]</l>
+<l>Col1:= [0, 0]</l>
+<l>Row2:= [DestinationHeight, SourceHeight]</l>
+<l>Col2:= [DestinationWidth, SourceWidth]</l>
+<c></c>
+<l>tile_images_offset (Images, MixedImage, OffsetRow, OffsetCol, Row1, Col1, Row2, Col2, DestinationWidth, DestinationHeight)</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="PaintGrayOffset">
+<parameters>
+<parameter id="ImageDestination"/>
+<parameter id="ImageSource"/>
+<parameter id="MixedImage"/>
+<parameter id="OffsetColumn"/>
+<parameter id="OffsetRow"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

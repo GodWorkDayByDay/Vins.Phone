@@ -5,5 +5,7 @@ namespace Hdc.Mv.Inspection
     public interface IImageFilter
     {
         HImage Process(HImage image);
+
+//        string Name { get; set; }
     }
 }

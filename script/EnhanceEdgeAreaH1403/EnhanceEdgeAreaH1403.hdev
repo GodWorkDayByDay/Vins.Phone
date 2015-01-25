@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>dev_set_draw('margin')</l>
+<c></c>
+<l>read_image (Image, 'H1403-RTLineX-01')</l>
+<c></c>
+<l>EnhanceEdgeAreaH1403 (Image, EnhancedImage, EnhancedEdge, 'light', 0, 99999, 600, 99999, 'character', 'true', 'row', 1, 2, 55)</l>
+<c></c>
+<l>read_image (Image2, 'H1403-BLineX-01')</l>
+<c></c>
+<l>EnhanceEdgeAreaH1403 (Image2, EnhancedImage2, EnhancedEdge2, 'light', 600, 99999, 0, 99999, 'character', 'false', 'row', 1, 55, 2)</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="EnhanceEdgeAreaH1403">
+<interface>
+<io>
+<par name="Image" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="EnhancedImage" base_type="iconic" dimension="0"/>
+<par name="EnhancedEdge" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="AreaLightDark" base_type="ctrl" dimension="0"/>
+<par name="WidthMin" base_type="ctrl" dimension="0"/>
+<par name="WidthMax" base_type="ctrl" dimension="0"/>
+<par name="HeightMin" base_type="ctrl" dimension="0"/>
+<par name="HeightMax" base_type="ctrl" dimension="0"/>
+<par name="SortMode" base_type="ctrl" dimension="0"/>
+<par name="Order" base_type="ctrl" dimension="0"/>
+<par name="RowOrCol" base_type="ctrl" dimension="0"/>
+<par name="SelectIndex" base_type="ctrl" dimension="0"/>
+<par name="MeanMaskWidth" base_type="ctrl" dimension="0"/>
+<par name="MeanMaskHeight" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>get_image_size (Image, Width, Height)</l>
+<c></c>
+<l>binary_threshold (Image, Region, 'max_separability', AreaLightDark, UsedThreshold)</l>
+<l>connection (Region, ConnectedRegions)</l>
+<c></c>
+<l>if (WidthMin != 0 and HeightMin !=0)</l>
+<c>    </c>
+<l>    select_shape (ConnectedRegions, SelectedRegions, 'width', 'and', WidthMin, WidthMax)</l>
+<l>    select_shape (SelectedRegions, SelectedRegions1, 'height', 'and', HeightMin, HeightMax)</l>
+<c>    </c>
+<l>elseif(WidthMin = 0 and HeightMin !=0)</l>
+<c>    </c>
+<l>    select_shape (ConnectedRegions, SelectedRegions1, 'height', 'and', HeightMin, HeightMax)</l>
+<c>    </c>
+<l>elseif(WidthMin != 0 and HeightMin =0)</l>
+<c>    </c>
+<l>    select_shape (ConnectedRegions, SelectedRegions1, 'width', 'and', WidthMin, WidthMax)</l>
+<c></c>
+<l>endif</l>
+<c></c>
+<l>sort_region (SelectedRegions1, SortedRegions, SortMode, Order, RowOrCol)</l>
+<l>select_obj (SortedRegions, ObjectSelected, SelectIndex)</l>
+<c></c>
+<l>reduce_domain (Image, ObjectSelected, ImageReduced)</l>
+<l>mean_image (ImageReduced, ImageMean, MeanMaskWidth, MeanMaskHeight)</l>
+<l>gray_features (ObjectSelected, ImageMean, 'mean', Value)</l>
+<c></c>
+<l>if(AreaLightDark = 'light')</l>
+<c>    </c>
+<l>    scale_image (ImageMean, ImageScaled, 1, 255-Value)</l>
+<c>    </c>
+<l>else</l>
+<c>    </c>
+<l>    scale_image (ImageMean, ImageScaled, 1, -Value)</l>
+<c>    </c>
+<l>endif</l>
+<c></c>
+<l>scale_image_max (ImageScaled, ImageScaleMax)</l>
+<l>binary_threshold (ImageScaleMax, EnhancedEdge, 'max_separability', AreaLightDark, UsedThreshold1)</l>
+<c></c>
+<l>region_to_bin (EnhancedEdge, EnhancedImage, 255, 0, Width, Height)</l>
+<c></c>
+<l>return ()</l>
+</body>
+<docu id="EnhanceEdgeAreaH1403">
+<parameters>
+<parameter id="AreaLightDark">
+<default_type>string</default_type>
+<sem_type>string</sem_type>
+<type_list>
+<item>string</item>
+</type_list>
+<values>
+<item>'light'</item>
+<item>'dark'</item>
+</values>
+</parameter>
+<parameter id="EnhancedEdge">
+<multivalue>false</multivalue>
+<sem_type>region</sem_type>
+</parameter>
+<parameter id="EnhancedImage">
+<sem_type>image</sem_type>
+<type_list>
+<item>byte</item>
+</type_list>
+</parameter>
+<parameter id="HeightMax">
+<default_type>real</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>integer</item>
+<item>real</item>
+<item>string</item>
+</type_list>
+</parameter>
+<parameter id="HeightMin">
+<default_type>integer</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>integer</item>
+<item>real</item>
+<item>string</item>
+</type_list>
+</parameter>
+<parameter id="Image">
+<sem_type>image</sem_type>
+<type_list>
+<item>byte</item>
+</type_list>
+</parameter>
+<parameter id="MeanMaskHeight">
+<default_type>integer</default_type>
+<sem_type>extent.y</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="MeanMaskWidth">
+<default_type>integer</default_type>
+<sem_type>extent.x</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="Order">
+<default_type>string</default_type>
+<sem_type>string</sem_type>
+<type_list>
+<item>string</item>
+</type_list>
+<values>
+<item>'false'</item>
+<item>'true'</item>
+</values>
+</parameter>
+<parameter id="RowOrCol">
+<default_type>string</default_type>
+<sem_type>string</sem_type>
+<type_list>
+<item>string</item>
+</type_list>
+<values>
+<item>'column'</item>
+<item>'row'</item>
+</values>
+</parameter>
+<parameter id="SelectIndex">
+<default_type>integer</default_type>
+<sem_type>integer</sem_type>
+<type_list>
+<item>integer</item>
+</type_list>
+</parameter>
+<parameter id="SortMode">
+<default_type>string</default_type>
+<sem_type>string</sem_type>
+<type_list>
+<item>string</item>
+</type_list>
+<values>
+<item>'character'</item>
+<item>'first_point'</item>
+<item>'last_point'</item>
+<item>'lower_left'</item>
+<item>'lower_right'</item>
+<item>'upper_left'</item>
+<item>'upper_right'</item>
+</values>
+</parameter>
+<parameter id="WidthMax">
+<default_type>integer</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>integer</item>
+<item>real</item>
+<item>string</item>
+</type_list>
+</parameter>
+<parameter id="WidthMin">
+<default_type>integer</default_type>
+<sem_type>real</sem_type>
+<type_list>
+<item>integer</item>
+<item>real</item>
+<item>string</item>
+</type_list>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

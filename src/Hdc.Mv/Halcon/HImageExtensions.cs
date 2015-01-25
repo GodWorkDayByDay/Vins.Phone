@@ -50,5 +50,13 @@ namespace Hdc.Mv.Halcon
 
             return reducedImage;
         }
+
+        public static HImage PaintGrayOffset(this HImage imageSource, HImage imageDestination,
+                                    int offsetRow, int offsetColumn)
+        {
+            HObject image;
+            HDevelopExport.Singletone.PaintGrayOffset(imageSource, imageDestination, out image, offsetRow, offsetColumn);
+            return new HImage(image);
+        }
     }
 }

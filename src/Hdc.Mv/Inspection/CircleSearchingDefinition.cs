@@ -21,11 +21,11 @@ namespace Hdc.Mv.Inspection
         public double BaselineY { get; set; }
 
         public IRegionExtractor RegionExtractor { get; set; }
-        public bool RegionExtractor_Enabled { get; set; }
+        public bool RegionExtractor_Disabled { get; set; }
         public bool RegionExtractor_SaveCacheImageEnabled { get; set; }
 
         public IImageFilter ImageFilter { get; set; }
-        public bool ImageFilter_Enabled { get; set; }
+        public bool ImageFilter_Disabled { get; set; }
         public bool ImageFilter_SaveCacheImageEnabled { get; set; }
 
         public ICircleExtractor CircleExtractor { get; set; }

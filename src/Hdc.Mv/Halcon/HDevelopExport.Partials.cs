@@ -363,6 +363,7 @@ public partial class HDevelopExport
         }
     }
 
+/*
     public bool FindCircleCenterUseHough(HImage ho_Image,
                                          //                                             out HRegion hv_CenterRegion,
                                          double hv_CenterRow, double hv_CenterColumn,
@@ -396,6 +397,7 @@ public partial class HDevelopExport
             return false;
         }
     }
+*/
 
 
     public HImage ReduceDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
