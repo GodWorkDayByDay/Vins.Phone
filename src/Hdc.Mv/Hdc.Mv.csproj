@@ -74,6 +74,7 @@
     <Compile Include="Circle.cs" />
     <Compile Include="CircleDirect.cs" />
     <Compile Include="Halcon\Exports\PaintGrayOffset.cs" />
+    <Compile Include="Halcon\HDevelopExportExtensions.cs" />
     <Compile Include="Halcon\MedianMargin.cs" />
     <Compile Include="Halcon\MedianMaskType.cs" />
     <Compile Include="Halcon\RowOrCol.cs" />

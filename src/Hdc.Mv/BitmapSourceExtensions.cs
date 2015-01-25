@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using HalconDotNet;
 
 namespace Hdc.Mv
 {

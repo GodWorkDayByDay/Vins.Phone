@@ -9,6 +9,7 @@ using System.Windows;
 using HalconDotNet;
 using Hdc.Collections.Generic;
 using Hdc.Diagnostics;
+using Hdc.Linq;
 using Hdc.Mv.Halcon;
 using Hdc.Reflection;
 using Hdc.Windows.Media.Imaging;
@@ -17,7 +18,6 @@ namespace Hdc.Mv.Inspection
 {
     public class HalconGeneralInspector : IGeneralInspector
     {
-        private HDevelopExportHelper _hDevelopExportHelper;
         private SimGeneralInspector _simGeneralInspector = new SimGeneralInspector();
         private HImage _hImage;
         private string _cacheImageDir;
@@ -41,36 +41,12 @@ namespace Hdc.Mv.Inspection
         {
         }
 
-        //        private object locker = new object();
-        //
-        //        public void SetImageInfo(ImageInfo imageInfo)
-        //        {
-        //            if (_hDevelopExportHelper != null)
-        //                _hDevelopExportHelper.Dispose();
-        //            if (_hImage != null)
-        //                _hImage.Dispose();
-        //
-        //            _hImage = imageInfo.To8BppHImage();
-        //
-        //            lock (locker)
-        //            {
-        //                _hDevelopExportHelper = new HDevelopExportHelper(_hImage);
-        //            }
-        //        }
-
         public void SetImageInfo(HImage image)
         {
-            if (_hDevelopExportHelper != null)
-                _hDevelopExportHelper.Dispose();
             if (_hImage != null)
                 _hImage.Dispose();
 
             _hImage = image;
-
-            //            lock (locker)
-            //            {
-            _hDevelopExportHelper = new HDevelopExportHelper(_hImage);
-            //            }
         }
 
         public InspectionResult Inspect(InspectionSchema inspectionSchema)
@@ -104,18 +80,20 @@ namespace Hdc.Mv.Inspection
                 }
             }
 
+            if (inspectionSchema.EdgeSearching_SaveCacheImage_Disabled)
+            {
+                foreach (var def in inspectionSchema.EdgeSearchingDefinitions)
+                {
+                    def.Domain_SaveCacheImageEnabled = false;
+                    def.RegionExtractor_Disabled = false;
+                    def.ImageFilter_SaveCacheImageEnabled = false;
+                }
+            }
 
             var finalEdges = SearchEdges(inspectionSchema.EdgeSearchingDefinitions);
             inspectionResult.Edges = finalEdges;
 
-            if (inspectionSchema.EdgeSearching_EnhanceEdgeArea_Enable &&
-                inspectionSchema.EdgeSearching_EnhanceEdgeArea_SaveCacheImageEnable)
-            {
-                //                var ii = _hDevelopExportHelper.HImageCache.ToImageInfo();
-                //                var bitmapSource = ii.ToBitmapSource();
-                //                if (!Directory.Exists(@"Cache")) Directory.CreateDirectory("Cache");
-                //                bitmapSource.SaveToTiff(@"Cache\EdgeSearchingCacheImage.tif");
-            }
+          
 
             int i = 0;
             foreach (var def in inspectionSchema.DistanceBetweenIntersectionPointsDefinitions)
@@ -211,7 +189,7 @@ namespace Hdc.Mv.Inspection
                     {
                         continue;
                         var fileName = "SurfaceDefinition_Defects_" + defectDefinition.Name;
-                        _hDevelopExportHelper.HImage.SaveCacheImagesForRegion(blob.Boundary("inner"), blob, fileName);
+                        _hImage.SaveCacheImagesForRegion(blob.Boundary("inner"), blob, fileName);
                     }
                 }
             }
@@ -253,7 +231,7 @@ namespace Hdc.Mv.Inspection
                     if (excludeRegion.SaveCacheImageEnabled)
                     {
                         var fileName = "SurfaceDefinition_" + def.Name + "_Exclude_" + excludeRegion.Name;
-                        _hDevelopExportHelper.HImage.SaveCacheImagesForRegion(domain, region, fileName);
+                        _hImage.SaveCacheImagesForRegion(domain, region, fileName);
                     }
 
                     surfaceResult.ExcludeRegionResults.Add(new RegionResult()
@@ -286,7 +264,7 @@ namespace Hdc.Mv.Inspection
                     {
                         var fileName = "SurfaceDefinition_" + def.Name + "_Include_" + includeRegion.Name;
                         //                        _hDevelopExportHelper.HImage.SaveCacheImagesForRegion(domain, remainRegion, fileName);
-                        _hDevelopExportHelper.HImage.SaveCacheImagesForRegion(domain, remainRegion, unionExcludeRegion,
+                        _hImage.SaveCacheImagesForRegion(domain, remainRegion, unionExcludeRegion,
                             fileName);
                     }
 
@@ -303,14 +281,14 @@ namespace Hdc.Mv.Inspection
                 if (def.SaveCacheImageEnabled && def.IncludeRegions.Any())
                 {
                     var fileName = "SurfaceDefinition_" + def.Name + "_Include";
-                    _hDevelopExportHelper.HImage.SaveCacheImagesForRegion(unionIncludeDomain, unionIncludeRegion,
+                    _hImage.SaveCacheImagesForRegion(unionIncludeDomain, unionIncludeRegion,
                         unionExcludeRegion, fileName);
                 }
 
                 if (def.SaveCacheImageEnabled && def.ExcludeRegions.Any())
                 {
                     var fileName = "SurfaceDefinition_" + def.Name + "_Exclude";
-                    _hDevelopExportHelper.HImage.SaveCacheImagesForRegion(unionExcludeDomain, unionExcludeRegion,
+                    _hImage.SaveCacheImagesForRegion(unionExcludeDomain, unionExcludeRegion,
                         fileName);
                 }
 
@@ -355,7 +333,7 @@ namespace Hdc.Mv.Inspection
 
                 var reg = new HRegion();
                 reg.GenRectangle1(topLeftY, topLeftX, bottomRightY, bottomRightX);
-                var reducedImage = _hDevelopExportHelper.HImage.ReduceDomain(reg);
+                var reducedImage = _hImage.ReduceDomain(reg);
                 reg.Dispose();
 
                 //                var reducedImage = _hDevelopExportHelper.HImage.ReduceDomainForRing(
@@ -406,7 +384,7 @@ namespace Hdc.Mv.Inspection
                         cropDomain.Dispose();
 
                         //
-                        var paintedImage = enhImage.PaintGrayOffset(_hDevelopExportHelper.HImage, offsetY, offsetX);
+                        var paintedImage = enhImage.PaintGrayOffset(_hImage, offsetY, offsetX);
                         paintedImage
                             .ToBitmapSource()
                             .SaveToJpeg(_cacheImageDir + "\\SearchCircles_" + circleDefinition.Name + "_3_ImageFilter_PaintGrayOffset.jpg");
@@ -470,7 +448,7 @@ namespace Hdc.Mv.Inspection
 
 
                 var reducedImage = HDevelopExport.Singletone.ReduceDomainForRectangle(
-                    _hDevelopExportHelper.HImage,
+                    _hImage,
                     line: esd.Line,
                     hv_RoiWidthLen: esd.ROIWidth/2.0,
                     margin: 0.5);
@@ -522,7 +500,7 @@ namespace Hdc.Mv.Inspection
                         .ToBitmapSource()
                         .SaveToJpeg(_cacheImageDir + "\\SearchEdges_" + esd.Name + "_3_ImageFilter.jpg");
 
-                    var paintedImage = enhImage.PaintGrayOffset(_hDevelopExportHelper.HImage, offsetY, offsetX);
+                    var paintedImage = enhImage.PaintGrayOffset(_hImage, offsetY, offsetX);
                     paintedImage
                         .ToBitmapSource()
                         .SaveToJpeg(_cacheImageDir + "\\SearchEdges_" + esd.Name + "_3_ImageFilter_PaintGrayOffset.jpg");
@@ -555,36 +533,24 @@ namespace Hdc.Mv.Inspection
             return sr;
         }
 
-        public DefectResultCollection SearchDefects(HImage imageInfo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DefectResultCollection SearchDefects(HImage imageInfo, HImage mask)
-        {
-            throw new NotImplementedException();
-        }
-
-        public HImage FindRegions(HImage imageInfo)
-        {
-            var ii = _hDevelopExportHelper.FindS1404SurfaceA();
-            return ii;
-        }
-
-        public HImage FindRegions()
-        {
-            var ii = _hDevelopExportHelper.FindS1404SurfaceA();
-            return ii;
-        }
-
-        public DistanceBetweenLinesResult GetDistanceBetweenLines(Line line1, Line line2)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public DistanceBetweenPointsResult GetDistanceBetweenPoints(Point point1, Point point2)
-        {
-            throw new System.NotImplementedException();
-        }
+//        public DefectResultCollection SearchDefects(HImage imageInfo)
+//        {
+//            throw new NotImplementedException();
+//        }
+//
+//        public DefectResultCollection SearchDefects(HImage imageInfo, HImage mask)
+//        {
+//            throw new NotImplementedException();
+//        }
+//
+//        public DistanceBetweenLinesResult GetDistanceBetweenLines(Line line1, Line line2)
+//        {
+//            throw new System.NotImplementedException();
+//        }
+//
+//        public DistanceBetweenPointsResult GetDistanceBetweenPoints(Point point1, Point point2)
+//        {
+//            throw new System.NotImplementedException();
+//        }
     }
 }

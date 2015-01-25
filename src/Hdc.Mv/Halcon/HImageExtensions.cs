@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using HalconDotNet;
 using Hdc.Windows;
 using Hdc.Windows.Media.Imaging;
@@ -57,6 +60,29 @@ namespace Hdc.Mv.Halcon
             HObject image;
             HDevelopExport.Singletone.PaintGrayOffset(imageSource, imageDestination, out image, offsetRow, offsetColumn);
             return new HImage(image);
+        }
+
+        public static HImage ToHImage(this BitmapSource bitmapSource)
+        {
+            var stride = bitmapSource.PixelWidth;
+
+            int bufferSize = stride * bitmapSource.PixelHeight;
+            IntPtr bufferPtr = Marshal.AllocHGlobal(bufferSize);
+
+            bitmapSource.CopyPixels(Int32Rect.Empty, bufferPtr, bufferSize, bitmapSource.PixelWidth);
+
+
+            var hImage = new HImage("byte", bitmapSource.PixelWidth, bitmapSource.PixelHeight, bufferPtr);
+
+            return hImage;
+        }
+
+        [Obsolete]
+        public static HImage AddImagesWithFullDomain(this HImage image1, HImage image2)
+        {
+            var imageFull1 = image1.FullDomain();
+            var imageFull2 = image2.FullDomain();
+            return imageFull1.AddImage(imageFull2, new HTuple(1), new HTuple(0));
         }
     }
 }

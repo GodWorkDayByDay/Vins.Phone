@@ -1,17 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+/*using System;
 using System.Windows.Media;
 using Hdc.Diagnostics;
 using Hdc.Mv.Halcon;
-using Hdc.Mv.Inspection.Halcon.BatchInspector;
+using ODM.Inspectors.Halcon.SampleApp;
 
 namespace Hdc.Mv.Inspection.Halcon.SampleApp
 {
-    public class AllRunner : Runner
+    public class Runner : IRunner
     {
-        public override void Run(ImageInfo imageInfo, InspectionSchema schema)
+        protected MainWindow MainWindow;
+
+        protected Func<string,IGeneralInspector> InspectorFactory;
+
+        protected IInspectionController InspectionController;
+
+        public IRunner Init(Func<string, IGeneralInspector> inspectorFactory, MainWindow mainWindow)
+        {
+            MainWindow = mainWindow;
+            InspectionController = new InspectionController();
+            InspectionController.SetInspectorFactory(inspectorFactory);
+            return this;
+        }
+
+        public void Run(ImageInfo imageInfo, InspectionSchema schema)
         {
             using (var sw = new NotifyStopwatch("AllRunner.InspectionController.Inspect()"))
             {
@@ -37,5 +48,10 @@ namespace Hdc.Mv.Inspection.Halcon.SampleApp
             MainWindow.Show_DistanceBetweenPointsResults(InspectionController.InspectionResult.DistanceBetweenPointsResults);
             MainWindow.Show_DefectResults(InspectionController.InspectionResult.DefectResults);
         }
+
+        public void Dispose()
+        {
+            InspectionController.Dispose();
+        }
     }
-}
+}*/

@@ -33,7 +33,7 @@ namespace Hdc.Mv.Calibration
             var cameraPoseFileName = "camera_pose.dat";
 
             HImage hImage;
-            hImage = HDevelopExportHelper.Calibrate(originalImageInfo, cameraParamsFileName, cameraPoseFileName);
+            hImage = originalImageInfo.Calibrate(cameraParamsFileName, cameraPoseFileName);
             var mirroredImage = hImage.MirrorImage("row");
             mirroredImage = mirroredImage.MirrorImage("column");
             var bsi = mirroredImage.ToImageInfo();

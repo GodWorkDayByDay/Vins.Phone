@@ -81,7 +81,12 @@ namespace Hdc.Mv.Halcon
             return bs;
         }
 
+        public static void HobjectToHimage(this HObject hobject, ref HImage image)
+        {
+            HTuple pointer, type, width, height;
 
-  
+            HOperatorSet.GetImagePointer1(hobject, out pointer, out type, out width, out height);
+            image.GenImage1(type, width, height, pointer);
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using ODM.Inspectors.Halcon.SampleApp;
 
 namespace Hdc.Mv.Inspection.Halcon.SampleApp
@@ -9,4 +9,4 @@ namespace Hdc.Mv.Inspection.Halcon.SampleApp
 
         void Run(ImageInfo imageInfo, InspectionSchema schema);
     }
-}
+}*/

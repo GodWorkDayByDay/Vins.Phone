@@ -19,25 +19,22 @@ namespace Hdc.Mv.Inspection
             DefectDefinitions = new Collection<DefectDefinition>();
         }
 
-        public string InspectorNameForCoordinate { get; set; }
-        public string InspectorNameForCircles { get; set; }
-        public string InspectorNameForEdges { get; set; }
-        public string InspectorNameForDefects { get; set; }
-        public string InspectorName { get; set; } // TODO
-
         public int ImagePixelWidth { get; set; }
         public int ImagePixelHeight { get; set; }
         public string TestImageFilePath { get; set; }
         public string TestImagesDirectory { get; set; }
 
-        public Int32Rect CropRect { get; set; }
-        public bool CropRectEnable { get; set; }
+        public string EdgeSearching_InspectorName { get; set; }
+        public bool EdgeSearching_Disabled { get; set; }
+        public bool EdgeSearching_SaveCacheImage_Disabled { get; set; }
 
-        public bool EdgeSearchingEnable { get; set; }
-        public bool EdgeSearching_EnhanceEdgeArea_Enable { get; set; }
-        public bool EdgeSearching_EnhanceEdgeArea_SaveCacheImageEnable { get; set; }
-        public bool EdgeSearching_EnhanceEdgeArea_SaveAllCacheImageEnable { get; set; }
-        public bool CircleSearchingEnable { get; set; }
+        public string CircleSearching_InspectorName { get; set; }
+        public bool CircleSearching_Disabled { get; set; }
+        public bool CircleSearching_SaveCacheImage_Disabled { get; set; }
+
+        public string Defects_InspectorName { get; set; }
+        public bool Defects_Disabled { get; set; }
+        public bool Defects_SaveCacheImage_Disabled { get; set; }
 
         public Collection<CircleSearchingDefinition> CoordinateCircles { get; set; }
         public Collection<EdgeSearchingDefinition> CoordinateEdges { get; set; }

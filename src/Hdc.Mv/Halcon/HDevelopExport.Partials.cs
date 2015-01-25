@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Windows;
 using HalconDotNet;
 using Hdc.Mv;
+using Hdc.Mv.Halcon;
 using Hdc.Reflection;
 
 public partial class HDevelopExport
@@ -429,4 +431,92 @@ public partial class HDevelopExport
             );
         return new HImage(ho_EnhancedImage);
     }
+
+    public void DistanceOfLineToLine(Line line1, Line line2, out Line distanceLine, out Point root, out double angle)
+    {
+        HTuple distance, distanceBeginX, distanceBeginY, distanceEndX, distanceEndY, rootX, rootY, hAngle;
+
+        HDevelopExport.Singletone.DistanceOfLineToLine(
+            line1.Y1, line1.X1, line1.Y2, line1.X2,
+            line2.Y1, line2.X1, line2.Y2, line2.X2,
+            out distance, out distanceBeginY, out distanceBeginX, out distanceEndY, out distanceEndX, out rootY,
+            out rootX, out hAngle);
+
+        distanceLine = new Line(distanceBeginX, distanceBeginY, distanceEndX, distanceEndY);
+        root = new Point(rootX, rootY);
+        angle = hAngle.ToDArr()[0];
+    }
+
+
+
+
+    public static bool GetCalibrationParameters(string descriptionFileName, string dirName, double focus, double sx,
+                                                double sy,
+                                                double width, double height, string cameraType,
+                                                out HTuple interCamera, out HTuple PoseNewOrigin,
+                                                out double distance)
+    {
+        try
+        {
+            HTuple hv_interCamera, hv_PoseNewOrigin, hv_distance;
+            HDevelopExport.Singletone.GetCalibrationParameters(descriptionFileName, dirName, focus, sx, sy,
+                width, height, cameraType, out hv_interCamera, out hv_PoseNewOrigin, out hv_distance);
+
+            interCamera = hv_interCamera;
+            PoseNewOrigin = hv_PoseNewOrigin;
+            distance = hv_distance;
+
+            return true;
+        }
+        catch (HOperatorException e)
+        {
+            interCamera = null;
+            PoseNewOrigin = null;
+            distance = 0;
+            return false;
+        }
+    }
+
+    public static bool GetCalibrationParameters(ImageInfo image, HTuple interCamera, HTuple PoseNewOrigin,
+                                                double distance, out HImage calibImage)
+    {
+        try
+        {
+            var orignalImage = image.To8BppHImage();
+            //                ImageInfo calibImage;
+
+            HObject hCalibImage;
+            HDevelopExport.Singletone.GetCalibratedImage(orignalImage, out hCalibImage, interCamera, PoseNewOrigin, distance);
+
+            var hi = new HImage();
+            hCalibImage.HobjectToHimage(ref hi);
+            calibImage = hi;
+            return true;
+        }
+        catch (HOperatorException e)
+        {
+            calibImage = null;
+            return false;
+        }
+    }
+
+    public HRegion GetRegionByGrayAndArea(HImage image,
+                                           int medianRadius,
+                                           int empWidth, int empHeight, double empFactor,
+                                           int thresholdMinGray, int thresholdMaxGray,
+                                           int areaMin, int areaMax,
+                                           double closingRadius, double dilationRadius)
+    {
+        HObject foundRegionObject;
+
+        HDevelopExport.Singletone.GetRegionByGrayAndArea(image, out foundRegionObject, medianRadius,
+            empWidth, empHeight, empFactor, thresholdMinGray, thresholdMaxGray, areaMin,
+            areaMax,
+            closingRadius, dilationRadius);
+
+        return new HRegion(foundRegionObject);
+    }
+
+
+
 }

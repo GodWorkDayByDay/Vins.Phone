@@ -1,0 +1,121 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.SurfaceDefinitions>
+      <SurfaceDefinition Name="B-Top"
+                         SaveCacheImageEnabled="false">
+          <SurfaceDefinition.ExcludeRegions>
+              <GrayAndAreaRegionExtractor Name="Hole-01"
+                                          SaveCacheImageEnabled="false"
+                                          
+                                          X="4832"
+                                          Y="1054"
+                                          Angle="0"
+                                          HalfWidth="100"
+                                          HalfHeight="100"
+                                          
+                                          MedianRadius="7"
+                                          EmpWidth="100"
+                                          EmpHeight="100"
+                                          EmpFactor="3"
+                                          ThresholdMinGray="0"
+                                          ThresholdMaxGray="180"
+                                          AreaMin="10000"
+                                          AreaMax="99999999"
+                                          ClosingRadius="5"
+                                          DilationRadius="2"
+                                          />
+              <GrayAndAreaRegionExtractor Name="Hole-02"
+                                          SaveCacheImageEnabled="false"
+                                          
+                                          X="2925"
+                                          Y="1078"
+                                          Angle="0"
+                                          HalfWidth="50"
+                                          HalfHeight="50"
+                                          
+                                          MedianRadius="7"
+                                          EmpWidth="100"
+                                          EmpHeight="100"
+                                          EmpFactor="3"
+                                          ThresholdMinGray="0"
+                                          ThresholdMaxGray="180"
+                                          AreaMin="1000"
+                                          AreaMax="99999999"
+                                          ClosingRadius="5"
+                                          DilationRadius="1"
+                                          />
+              <GrayAndAreaRegionExtractor Name="Hole-03"
+                                          SaveCacheImageEnabled="false"
+                                          
+                                          X="2490"
+                                          Y="1210"
+                                          Angle="0"
+                                          HalfWidth="150"
+                                          HalfHeight="150"
+                                          
+                                          MedianRadius="7"
+                                          EmpWidth="100"
+                                          EmpHeight="100"
+                                          EmpFactor="3"
+                                          ThresholdMinGray="0"
+                                          ThresholdMaxGray="180"
+                                          AreaMin="10000"
+                                          AreaMax="99999999"
+                                          ClosingRadius="5"
+                                          DilationRadius="1"
+                                          />
+          </SurfaceDefinition.ExcludeRegions>
+          <SurfaceDefinition.IncludeRegions>
+              <GrowingRegionExtractor Name="Area-01"
+                                SaveCacheImageEnabled="false"
+                                
+                                X="2615"
+                                Y="1147"
+                                Angle="0"
+                                HalfWidth="810"
+                                HalfHeight="217"
+                                
+                                MedianRadius="5"
+                                GrowingRow="2"
+                                GrowingColumn="2"
+                                GrowingTolerance="3"
+                                GrowingMinSize="1000"
+                                ClosingCircleRadius="5"
+                                ClosingRectangleWidth="20"
+                                ClosingRectangleHeight="20"
+                                AreaMin="200000"
+                                AreaMax="9999999"
+                                RowMin="0"
+                                RowMax="9999999"
+                                ColumnMin="0"
+                                ColumnMax="9999999"
+                                />
+              <GrowingRegionExtractor Name="Area-02"
+                                SaveCacheImageEnabled="false"
+                                
+                                X="4132"
+                                Y="1071"
+                                Angle="0"
+                                HalfWidth="1029"
+                                HalfHeight="155"
+                                
+                                MedianRadius="5"
+                                GrowingRow="1"
+                                GrowingColumn="1"
+                                GrowingTolerance="1"
+                                GrowingMinSize="1000"
+                                ClosingCircleRadius="5"
+                                ClosingRectangleWidth="1"
+                                ClosingRectangleHeight="1"
+                                AreaMin="200000"
+                                AreaMax="9999999"
+                                RowMin="0"
+                                RowMax="9999999"
+                                ColumnMin="0"
+                                ColumnMax="9999999"
+                                />
+          </SurfaceDefinition.IncludeRegions>
+      </SurfaceDefinition>
+  </InspectionSchema.SurfaceDefinitions>
+  
+</InspectionSchema>

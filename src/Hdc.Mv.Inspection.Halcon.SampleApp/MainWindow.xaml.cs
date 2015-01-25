@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Hdc.Collections.Generic;
+using Hdc.Diagnostics;
 using Hdc.Mv;
 using Hdc.Mv.Halcon;
 using Hdc.Mv.Inspection;
@@ -40,7 +41,6 @@ namespace ODM.Inspectors.Halcon.SampleApp
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private HDevelopExportHelper _hDevelopExportHelper;
         private BitmapSource _bitmapSource;
 
         private bool isInitilized;
@@ -63,7 +63,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
         private string _text1Content;
         private string _text2Name;
         private string _text2Content;
-        private IRunner _runner;
+//        private IRunner _runner;
 
         public ObservableCollection<RegionIndicatorViewModel> RegionIndicators { get; set; }
         public ObservableCollection<RectangleIndicatorViewModel> DefectIndicators { get; set; }
@@ -86,7 +86,6 @@ namespace ODM.Inspectors.Halcon.SampleApp
             // Tests
             //            var schema = "InspectionSchema.xaml".LoadFromAssemblyDir();
             var schema = InspectionController.GetInspectionSchema();
-
 
             var inspectorFactory = new Func<string, IGeneralInspector>(
                 name =>
@@ -120,23 +119,19 @@ namespace ODM.Inspectors.Halcon.SampleApp
                 });
 
 
-            //            new CoordinateRunner().Init(inspectorFactory, this).Run(imageInfo, schema);
-            //            new EdgesRunner().Init(inspectorFactory, this).Run(imageInfo, schema);
-            //            new CirclesRunner().Init(inspectorFactory, this).Run(imageInfo, schema);
-
-            _runner = new AllRunner();
-            //            _runner = new CoordinateRunner();
-            _runner.Init(inspectorFactory, this);
+            InspectionController = new InspectionController();
+            InspectionController.SetInspectorFactory(inspectorFactory);
 
             //
             Refresh();
         }
 
+        private InspectionController InspectionController;
+
         void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            _runner.Dispose();
+            InspectionController.Dispose();
         }
-
 
         private void Inspect(InspectionSchema schema)
         {
@@ -160,8 +155,6 @@ namespace ODM.Inspectors.Halcon.SampleApp
             bsi.DpiX = 96;
             bsi.DpiY = 96;
             _bitmapSource = bsi.GetBitmapSource();
-            if (schema.CropRectEnable)
-                _bitmapSource = _bitmapSource.Crop(schema.CropRect);
             IndicatorViewer.BitmapSource = _bitmapSource;
 
             //IndicatorViewer.Loaded += (sender, args) => IndicatorViewer.ZoomFit();
@@ -172,7 +165,29 @@ namespace ODM.Inspectors.Halcon.SampleApp
             _bitmapSource = imageInfo.ToBitmapSource();
             IndicatorViewer.BitmapSource = _bitmapSource;
 
-            _runner.Run(imageInfo, schema);
+            using (var sw = new NotifyStopwatch("AllRunner.InspectionController.Inspect()"))
+            {
+                InspectionController
+                    .StartInspect()
+                    .SetInspectionSchema()
+                    .SetImageInfo(bi.ToHImage())
+                    .CreateCoordinate()
+                    .Inspect()
+                    ;
+            }
+
+            Show_CircleSearchingDefinitions(
+                InspectionController.InspectionResult.GetCoordinateCircleSearchingDefinitions());
+            Show_CircleSearchingResults(InspectionController.InspectionResult.CoordinateCircles);
+
+            Show_CircleSearchingDefinitions(
+                InspectionController.InspectionResult.GetCircleSearchingDefinitions(), Brushes.DodgerBlue);
+            Show_CircleSearchingResults(InspectionController.InspectionResult.Circles, Brushes.DodgerBlue);
+
+            Show_EdgeSearchingDefinitions(InspectionController.InspectionResult.GetEdgeSearchingDefinitions());
+            Show_EdgeSearchingResults(InspectionController.InspectionResult.Edges);
+            Show_DistanceBetweenPointsResults(InspectionController.InspectionResult.DistanceBetweenPointsResults);
+            Show_DefectResults(InspectionController.InspectionResult.DefectResults);
         }
 
         public void Show_DistanceBetweenLinesResults(

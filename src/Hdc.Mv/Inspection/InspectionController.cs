@@ -147,20 +147,9 @@ namespace Hdc.Mv.Inspection
             _inspectionSchema = inspectionSchema;
 
 
-            GetOrAddInspector(_inspectionSchema.InspectorNameForCoordinate);
-            GetOrAddInspector(_inspectionSchema.InspectorNameForCircles);
-            GetOrAddInspector(_inspectionSchema.InspectorNameForEdges);
-            GetOrAddInspector(_inspectionSchema.InspectorNameForDefects);
-
-            if (_inspectionSchema.EdgeSearching_EnhanceEdgeArea_SaveAllCacheImageEnable &&
-                _inspectionSchema.EdgeSearching_EnhanceEdgeArea_Enable)
-            {
-                foreach (var esd in _inspectionSchema.EdgeSearchingDefinitions)
-                {
-                    esd.ImageFilter_SaveCacheImageEnabled = true;
-                }
-            }
-
+            GetOrAddInspector(_inspectionSchema.CircleSearching_InspectorName);
+            GetOrAddInspector(_inspectionSchema.EdgeSearching_InspectorName);
+            GetOrAddInspector(_inspectionSchema.Defects_InspectorName);
 
             return this;
         }
@@ -169,9 +158,8 @@ namespace Hdc.Mv.Inspection
         {
             var sw = new NotifyStopwatch("InspectionController.CreateCoordinate.Inspect()");
 
-            var inspector = GetOrAddInspector(_inspectionSchema.InspectorNameForCircles);
+            var inspector = GetOrAddInspector(_inspectionSchema.CircleSearching_InspectorName);
             //            if(inspector.)
-
 
             switch (_inspectionSchema.CoordinateType)
             {
@@ -221,7 +209,7 @@ namespace Hdc.Mv.Inspection
 
         public IInspectionController Inspect()
         {
-            var inspector = GetOrAddInspector(_inspectionSchema.InspectorNameForEdges);
+            var inspector = GetOrAddInspector(_inspectionSchema.EdgeSearching_InspectorName);
 
             var sw2 = new NotifyStopwatch("Inspector.Inspect()");
             var inspectionResult = inspector.Inspect(_inspectionSchema);
