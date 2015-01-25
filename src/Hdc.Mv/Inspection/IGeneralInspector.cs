@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows;
@@ -14,9 +14,9 @@ namespace Hdc.Mv.Inspection
 
         InspectionResult Inspect(InspectionSchema inspectionSchema);
 
-        CircleSearchingResultCollection SearchCircles(IList<CircleSearchingDefinition> circleSearchingDefinitions);
+        IList<CircleSearchingResult> SearchCircles(IList<CircleSearchingDefinition> circleSearchingDefinitions);
 
-        EdgeSearchingResultCollection SearchEdges(IList<EdgeSearchingDefinition> edgeSearchingDefinitions);
+        IList<EdgeSearchingResult> SearchEdges(IList<EdgeSearchingDefinition> edgeSearchingDefinitions);
 
 //        DefectResultCollection SearchDefects(HImage imageInfo);
 //
@@ -26,4 +26,4 @@ namespace Hdc.Mv.Inspection
 //
 //        HImage FindRegions();
     }
-}
+}*/

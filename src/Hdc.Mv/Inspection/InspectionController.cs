@@ -13,7 +13,7 @@ using Hdc.Serialization;
 
 namespace Hdc.Mv.Inspection
 {
-    public interface IInspectionController : ISetInspectorFactory,
+    public interface IInspectionController :
         IStartInspect,
         ISetImageInfo,
         IDisposable
@@ -25,11 +25,6 @@ namespace Hdc.Mv.Inspection
         HImage Image { get; }
 
         InspectionSchema InspectionSchema { get; }
-    }
-
-    public interface ISetInspectorFactory
-    {
-        InspectionController SetInspectorFactory(Func<string, IGeneralInspector> inspectorFactory);
     }
 
     public interface IStartInspect
@@ -60,44 +55,31 @@ namespace Hdc.Mv.Inspection
 
     public class InspectionController :
         IInspectionController,
-        ISetInspectorFactory,
         IStartInspect,
         ISetInspectionSchema,
         ISetImageInfo,
         ICreateCoordinate,
         IInspect
     {
-        private readonly ConcurrentDictionary<string, IGeneralInspector> _inspectors =
-            new ConcurrentDictionary<string, IGeneralInspector>();
-
-        private Func<string, IGeneralInspector> _inspectorFactory;
-
         private IRelativeCoordinate _coordinate;
         private IObservable<InspectionResult> _coordinateCreatedEvent = new Subject<InspectionResult>();
-        private HImage _imageInfo;
+        private HImage _image;
         private InspectionSchema _inspectionSchema;
         private InspectionResult _inspectionResult;
 
-        public InspectionController()
-        {
-        }
+        private HalconGeneralInspector _inspector;
 
         public ICreateCoordinate SetImageInfo(HImage imageInfo)
         {
             _inspectionResult = new InspectionResult();
-            _imageInfo = imageInfo;
-
-            foreach (var inspector in _inspectors)
-            {
-                inspector.Value.SetImageInfo(_imageInfo);
-            }
+            _image = imageInfo;
 
             return this;
         }
 
         public static InspectionSchema GetInspectionSchema()
         {
-            var dir = typeof(InspectionController).Assembly.GetAssemblyDirectoryPath();
+            var dir = typeof (InspectionController).Assembly.GetAssemblyDirectoryPath();
 
             var inspectionSchemaDirPath = dir + "\\InspectionSchema";
             var inspectionSchemaFilePath = dir + "\\InspectionSchema\\InspectionSchema.xaml";
@@ -137,7 +119,7 @@ namespace Hdc.Mv.Inspection
                 ? GetInspectionSchema()
                 : fileName.DeserializeFromXamlFile<InspectionSchema>();
 
-            ((ISetInspectionSchema)this).SetInspectionSchema(inspectionSchema);
+            ((ISetInspectionSchema) this).SetInspectionSchema(inspectionSchema);
 
             return this;
         }
@@ -146,10 +128,10 @@ namespace Hdc.Mv.Inspection
         {
             _inspectionSchema = inspectionSchema;
 
-
-            GetOrAddInspector(_inspectionSchema.CircleSearching_InspectorName);
-            GetOrAddInspector(_inspectionSchema.EdgeSearching_InspectorName);
-            GetOrAddInspector(_inspectionSchema.Defects_InspectorName);
+            if (_inspector == null)
+            {
+                _inspector = new HalconGeneralInspector();
+            }
 
             return this;
         }
@@ -157,9 +139,6 @@ namespace Hdc.Mv.Inspection
         public InspectionController CreateCoordinate()
         {
             var sw = new NotifyStopwatch("InspectionController.CreateCoordinate.Inspect()");
-
-            var inspector = GetOrAddInspector(_inspectionSchema.CircleSearching_InspectorName);
-            //            if(inspector.)
 
             switch (_inspectionSchema.CoordinateType)
             {
@@ -172,17 +151,21 @@ namespace Hdc.Mv.Inspection
                         refCircle.Definition.BaselineAngle);
                     break;
                 case CoordinateType.VectorsCenter:
-                    var searchCoordinateCircles = inspector.SearchCircles(_inspectionSchema.CoordinateCircles);
-                    _inspectionResult.CoordinateCircles = searchCoordinateCircles;
+                    var inspector =
+                        InspectorFactory.CreateCircleInspector(_inspectionSchema.CircleSearching_InspectorName);
+                    var searchCoordinateCircles = inspector.SearchCircles(_image, _inspectionSchema.CoordinateCircles);
+                    _inspectionResult.CoordinateCircles = new CircleSearchingResultCollection(searchCoordinateCircles);
                     _coordinate = RelativeCoordinateFactory.CreateCoordinate(_inspectionResult.CoordinateCircles);
                     break;
                 case CoordinateType.NearOrigin:
                     throw new NotSupportedException("CoordinateType does not implement!");
                     break;
                 case CoordinateType.Boarder:
-                      var searchCoordinateEdges = inspector.SearchEdges(_inspectionSchema.CoordinateEdges);
-                      _inspectionResult.CoordinateEdges = searchCoordinateEdges;
-                      _coordinate = RelativeCoordinateFactory.CreateCoordinateUsingBorder(_inspectionResult.CoordinateEdges);
+                    var inspector2 = InspectorFactory.CreateEdgeInspector(_inspectionSchema.EdgeSearching_InspectorName);
+                    var searchCoordinateEdges = inspector2.SearchEdges(_image, _inspectionSchema.CoordinateEdges);
+                    _inspectionResult.CoordinateEdges = new EdgeSearchingResultCollection(searchCoordinateEdges);
+                    _coordinate =
+                        RelativeCoordinateFactory.CreateCoordinateUsingBorder(_inspectionResult.CoordinateEdges);
                     break;
                 default:
                     throw new NotSupportedException("CoordinateType does not support!");
@@ -197,10 +180,10 @@ namespace Hdc.Mv.Inspection
             _inspectionResult.CoordinateCircles.UpdateRelativeCircles(_coordinate);
 
             // 
-            _inspectionSchema.CircleSearchingDefinitions.UpdateObjectiveCircles(_coordinate);
             _inspectionSchema.CoordinateCircles.UpdateObjectiveCircles(_coordinate);
+            _inspectionSchema.CoordinateEdges.UpdateFromRelativeLines(_coordinate);
+            _inspectionSchema.CircleSearchingDefinitions.UpdateObjectiveCircles(_coordinate);
             _inspectionSchema.EdgeSearchingDefinitions.UpdateFromRelativeLines(_coordinate);
-            //            _inspectionSchema.CoordinateEdges.UpdateObjectiveCircles(_coordinate);
 
             sw.Dispose();
 
@@ -209,10 +192,8 @@ namespace Hdc.Mv.Inspection
 
         public IInspectionController Inspect()
         {
-            var inspector = GetOrAddInspector(_inspectionSchema.EdgeSearching_InspectorName);
-
             var sw2 = new NotifyStopwatch("Inspector.Inspect()");
-            var inspectionResult = inspector.Inspect(_inspectionSchema);
+            var inspectionResult = _inspector.Inspect(_inspectionSchema);
             sw2.Dispose();
 
             _inspectionResult.Circles = inspectionResult.Circles;
@@ -223,21 +204,6 @@ namespace Hdc.Mv.Inspection
             return this;
         }
 
-        public IGeneralInspector GetOrAddInspector(string inspectorName)
-        {
-            if (!_inspectors.ContainsKey(inspectorName))
-            {
-                Debug.WriteLine("_inspectorFactory create: " + inspectorName);
-                var newInspector = _inspectorFactory(inspectorName);
-                var isAdded = _inspectors.TryAdd(inspectorName, newInspector);
-                if (!isAdded)
-                    throw new Exception("inspectors.ContainsKey, TryAdd failed");
-            }
-
-            var inspector = _inspectors[inspectorName];
-            return inspector;
-        }
-
         public IRelativeCoordinate Coordinate
         {
             get { return _coordinate; }
@@ -245,7 +211,7 @@ namespace Hdc.Mv.Inspection
 
         public HImage Image
         {
-            get { return _imageInfo; }
+            get { return _image; }
         }
 
         public InspectionSchema InspectionSchema
@@ -266,22 +232,12 @@ namespace Hdc.Mv.Inspection
 
         public void Dispose()
         {
-            foreach (var inspector in _inspectors)
-            {
-                inspector.Value.Dispose();
-            }
-        }
-
-        public InspectionController SetInspectorFactory(Func<string, IGeneralInspector> inspectorFactory)
-        {
-            _inspectorFactory = inspectorFactory;
-
-            return this;
+            _inspector.Dispose();
         }
 
         public ISetInspectionSchema StartInspect()
         {
-            var dir = typeof(Ex).Assembly.GetAssemblyDirectoryPath();
+            var dir = typeof (Ex).Assembly.GetAssemblyDirectoryPath();
             var cacheDir = Path.Combine(dir, "CacheImages");
             if (Directory.Exists(cacheDir))
             {

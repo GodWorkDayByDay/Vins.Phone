@@ -395,6 +395,7 @@
     <Compile Include="Windows\ComponentResourceKeyExtensions.cs" />
     <Compile Include="Windows\Extensions.cs" />
     <Compile Include="Windows\Int32Size.cs" />
+    <Compile Include="Windows\VectorExtensions.cs" />
     <Compile Include="_\DependencyPropertyObjectWrapper.cs" />
     <Compile Include="Hdc\IBindable.cs" />
     <Compile Include="Hdc\ICloneable.cs" />

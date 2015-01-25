@@ -34,7 +34,9 @@ namespace Hdc.Mv.Inspection
         public static void Merge(this InspectionSchema masterInspectionSchema, InspectionSchema slaveInspectionSchema)
         {
             masterInspectionSchema.CoordinateCircles.AddRange(slaveInspectionSchema.CoordinateCircles);
+            masterInspectionSchema.CoordinateEdges.AddRange(slaveInspectionSchema.CoordinateEdges);
             masterInspectionSchema.EdgeSearchingDefinitions.AddRange(slaveInspectionSchema.EdgeSearchingDefinitions);
+            masterInspectionSchema.ObjectSearchingDefinitions.AddRange(slaveInspectionSchema.ObjectSearchingDefinitions);
             masterInspectionSchema.CircleSearchingDefinitions.AddRange(slaveInspectionSchema.CircleSearchingDefinitions);
             masterInspectionSchema.DistanceBetweenLinesDefinitions.AddRange(slaveInspectionSchema.DistanceBetweenLinesDefinitions);
             masterInspectionSchema.DistanceBetweenIntersectionPointsDefinitions.AddRange(slaveInspectionSchema.DistanceBetweenIntersectionPointsDefinitions);

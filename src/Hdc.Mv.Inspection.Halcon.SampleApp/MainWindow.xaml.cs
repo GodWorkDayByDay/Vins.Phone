@@ -41,34 +41,13 @@ namespace ODM.Inspectors.Halcon.SampleApp
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private BitmapSource _bitmapSource;
-
-        private bool isInitilized;
-        private IGeneralInspector inspector;
-        private double _circle1CenterX;
-        private double _circle1CenterY;
-        private double _circle2CenterX;
-        private double _circle2CenterY;
-        private double _distanceBetweenC1C2;
-        private double _circle3CenterX;
-        private double _circle3CenterY;
-        private double _distanceBetweenC1C3;
-        private double _xDistanceC1C3;
-        private double _yDistanceC1C3;
-        private double _circle3CenterXRelative;
-        private double _circle3CenterYRelative;
-        private double _circle2CenterXRelative;
-        private double _circle2CenterYRelative;
-        private string _text1Name;
-        private string _text1Content;
-        private string _text2Name;
-        private string _text2Content;
-//        private IRunner _runner;
-
         public ObservableCollection<RegionIndicatorViewModel> RegionIndicators { get; set; }
         public ObservableCollection<RectangleIndicatorViewModel> DefectIndicators { get; set; }
+        public ObservableCollection<RectangleIndicatorViewModel> ObjectIndicators { get; set; }
         public ObservableCollection<LineIndicatorViewModel> LineIndicators { get; set; }
         public ObservableCollection<CircleIndicatorViewModel> CircleIndicators { get; set; }
+
+        private InspectionController InspectionController;
 
         public MainWindow()
         {
@@ -76,101 +55,69 @@ namespace ODM.Inspectors.Halcon.SampleApp
 
             RegionIndicators = new ObservableCollection<RegionIndicatorViewModel>();
             DefectIndicators = new ObservableCollection<RectangleIndicatorViewModel>();
+            ObjectIndicators = new ObservableCollection<RectangleIndicatorViewModel>();
             LineIndicators = new ObservableCollection<LineIndicatorViewModel>();
             CircleIndicators = new ObservableCollection<CircleIndicatorViewModel>();
 
             this.DataContext = this;
             this.Closing += MainWindow_Closing;
 
-
-            var inspectorFactory = new Func<string, IGeneralInspector>(
-                name =>
-                {
-                    switch (name)
-                    {
-                        case "Sim":
-                            {
-                                var sim = new SimGeneralInspector();
-                                return sim;
-                            }
-                            break;
-//                        case "Mil":
-//                            {
-//                                var mi = new MilGeneralInspector();
-//                                mi.Init(schema.ImagePixelWidth, schema.ImagePixelHeight);
-//                                inspector = mi;
-//
-//                                return mi;
-//                            }
-//                            break;
-                        case "Hal":
-                            {
-                                var hi = new HalconGeneralInspector();
-                                return hi;
-                            }
-                            break;
-                        default:
-                            throw new NotSupportedException("InspectionSchema.InspectorName not be set!");
-                    }
-                });
-
-
             InspectionController = new InspectionController();
-            InspectionController.SetInspectorFactory(inspectorFactory);
 
-            //
             Refresh();
         }
 
-        private InspectionController InspectionController;
-
-        void MainWindow_Closing(object sender, CancelEventArgs e)
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             InspectionController.Dispose();
         }
 
         private void Inspect(InspectionSchema schema)
         {
+            //IndicatorViewer.Loaded += (sender, args) => IndicatorViewer.ZoomFit();
+            //                        IndicatorViewer.Loaded += (sender, args) => IndicatorViewer.ZoomOut();
+
             RegionIndicators.Clear();
             LineIndicators.Clear();
             CircleIndicators.Clear();
             DefectIndicators.Clear();
+            ObjectIndicators.Clear();
 
-            BitmapImage bi;
+            BitmapSource bs;
 
             try
             {
-                bi = new BitmapImage(new Uri(schema.TestImageFilePath, UriKind.RelativeOrAbsolute));
+                bs = new BitmapImage(new Uri(schema.TestImageFilePath, UriKind.RelativeOrAbsolute));
             }
             catch (FileNotFoundException e)
             {
                 throw new HalconInspectorException("Image file not exist", e);
             }
 
-            BitmapSourceInfo bsi = bi.ToGray8BppBitmapSourceInfo();
-            bsi.DpiX = 96;
-            bsi.DpiY = 96;
-            _bitmapSource = bsi.GetBitmapSource();
-            IndicatorViewer.BitmapSource = _bitmapSource;
-
-            //IndicatorViewer.Loaded += (sender, args) => IndicatorViewer.ZoomFit();
-            //                        IndicatorViewer.Loaded += (sender, args) => IndicatorViewer.ZoomOut();
-
-            var imageInfo = _bitmapSource.ToImageInfoWith8Bpp();
-
-            _bitmapSource = imageInfo.ToBitmapSource();
-            IndicatorViewer.BitmapSource = _bitmapSource;
-
-            using (var sw = new NotifyStopwatch("AllRunner.InspectionController.Inspect()"))
+            if (Math.Abs(bs.DpiX - 96) > 0.00001 || Math.Abs(bs.DpiY - 96) > 0.00001)
             {
-                InspectionController
-                    .StartInspect()
-                    .SetInspectionSchema()
-                    .SetImageInfo(bi.ToHImage())
-                    .CreateCoordinate()
-                    .Inspect()
-                    ;
+                var sw1 = new NotifyStopwatch("BitmapSource convert to Dpi96");
+                BitmapSourceInfo bsi = bs.ToGray8BppBitmapSourceInfo();
+                bsi.DpiX = 96;
+                bsi.DpiY = 96;
+                var bitmapSourceDpi96 = bsi.GetBitmapSource();
+                bs = bitmapSourceDpi96; 
+                sw1.Stop();
+                sw1.Dispose();
             }
+
+            IndicatorViewer.BitmapSource = bs;
+
+            var sw = new NotifyStopwatch("InspectionController.Inspect()");
+            InspectionController
+                .StartInspect()
+                .SetInspectionSchema()
+                .SetImageInfo(bs.ToHImage())
+                .CreateCoordinate()
+                .Inspect()
+                ;
+            sw.Stop();
+            sw.Dispose();
 
             Show_CircleSearchingDefinitions(
                 InspectionController.InspectionResult.GetCoordinateCircleSearchingDefinitions());
@@ -180,8 +127,13 @@ namespace ODM.Inspectors.Halcon.SampleApp
                 InspectionController.InspectionResult.GetCircleSearchingDefinitions(), Brushes.DodgerBlue);
             Show_CircleSearchingResults(InspectionController.InspectionResult.Circles, Brushes.DodgerBlue);
 
+
+            Show_EdgeSearchingDefinitions(InspectionController.InspectionResult.GetCoordinateEdges());
+            Show_EdgeSearchingResults(InspectionController.InspectionResult.CoordinateEdges);
+
             Show_EdgeSearchingDefinitions(InspectionController.InspectionResult.GetEdgeSearchingDefinitions());
             Show_EdgeSearchingResults(InspectionController.InspectionResult.Edges);
+
             Show_DistanceBetweenPointsResults(InspectionController.InspectionResult.DistanceBetweenPointsResults);
             Show_DefectResults(InspectionController.InspectionResult.DefectResults);
         }
@@ -199,11 +151,12 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                                 EndPointY = result.FootPoint2.Y,
                                                 Stroke = Brushes.Lime,
                                                 StrokeThickness = 2,
-                                                StrokeDashArray = new DoubleCollection() { 2, 2 },
+                                                StrokeDashArray = new DoubleCollection() {2, 2},
                                             };
                 LineIndicators.Add(distanceLineIndicator);
             }
         }
+
         public void Show_DistanceBetweenPointsResults(
             DistanceBetweenPointsResultCollection pointsResultCollection)
         {
@@ -217,7 +170,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                                 EndPointY = result.Point2.Y,
                                                 Stroke = Brushes.Lime,
                                                 StrokeThickness = 2,
-                                                StrokeDashArray = new DoubleCollection() { 2, 2 },
+                                                StrokeDashArray = new DoubleCollection() {2, 2},
                                             };
                 LineIndicators.Add(distanceLineIndicator);
             }
@@ -272,7 +225,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                                     EndPointY = Circle2CenterY,
                                                     Stroke = brush,
                                                     StrokeThickness = 2,
-                                                    StrokeDashArray = new DoubleCollection() { 4, 4 },
+                                                    StrokeDashArray = new DoubleCollection() {4, 4},
                                                 };
                     LineIndicators.Add(distanceLineIndicator);
                 }
@@ -294,7 +247,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                       Radius = circleSearchingDefinition.InnerRadius,
                                       Stroke = brush,
                                       StrokeThickness = 1,
-                                      StrokeDashArray = new DoubleCollection() { 4, 4 },
+                                      StrokeDashArray = new DoubleCollection() {4, 4},
                                   };
                 CircleIndicators.Add(innerCircle);
                 var outerCircle = new CircleIndicatorViewModel()
@@ -304,7 +257,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                       Radius = circleSearchingDefinition.OuterRadius,
                                       Stroke = brush,
                                       StrokeThickness = 1,
-                                      StrokeDashArray = new DoubleCollection() { 4, 4 },
+                                      StrokeDashArray = new DoubleCollection() {4, 4},
                                   };
                 CircleIndicators.Add(outerCircle);
             }
@@ -351,13 +304,13 @@ namespace ODM.Inspectors.Halcon.SampleApp
             foreach (var dr in defectResults)
             {
                 var regionIndicator = new RectangleIndicatorViewModel
-                {
-                    CenterX = dr.X,
-                    CenterY = dr.Y,
-                    Width = dr.Width,
-                    Height = dr.Height,
-                    IsShown = true,
-                };
+                                      {
+                                          CenterX = dr.X,
+                                          CenterY = dr.Y,
+                                          Width = dr.Width,
+                                          Height = dr.Height,
+                                          IsShown = true,
+                                      };
                 DefectIndicators.Add(regionIndicator);
 
 
@@ -371,7 +324,6 @@ namespace ODM.Inspectors.Halcon.SampleApp
 //                };
 //                RegionIndicators.Add(regionIndicator2);
             }
-
         }
 
         private void SaveImageButton_OnClick(object sender, RoutedEventArgs e)
@@ -389,7 +341,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                 //                {
                 //                    dialog.FileName += ".tif";
                 //                }
-                _bitmapSource.SaveToTiff(dialog.FileName);
+                IndicatorViewer.BitmapSource.SaveToTiff(dialog.FileName);
             }
         }
 

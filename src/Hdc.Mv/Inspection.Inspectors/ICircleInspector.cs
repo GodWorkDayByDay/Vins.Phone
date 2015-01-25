@@ -1,0 +1,11 @@
+﻿using System.Collections.Generic;
+using HalconDotNet;
+
+namespace Hdc.Mv.Inspection
+{
+    public interface ICircleInspector
+    {
+        IList<CircleSearchingResult> SearchCircles(HImage image,
+                                                   IList<CircleSearchingDefinition> circleSearchingDefinitions);
+    }
+}

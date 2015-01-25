@@ -1,0 +1,13 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  TestImageFilePath="D:\WORKSPACE\hdc\视觉\手机外壳-保护壳\2015-01-22, BYD Photos\H1403\silver-black-2, 10000, 188us\2015-01-22_17.04.06.jpg"
+                  CircleSearching_InspectorName="Hal"
+                  EdgeSearching_InspectorName="Hal"
+                  Defects_InspectorName="Sim"
+                  ImagePixelWidth="8192"
+                  ImagePixelHeight="12500"
+                  CoordinateType="VectorsCenter"
+                  CoordinateOriginOffsetEnable="False"
+                  CoordinateOriginOffsetX="-533.516"
+                  CoordinateOriginOffsetY="-539.359"
+                  >
+</InspectionSchema>

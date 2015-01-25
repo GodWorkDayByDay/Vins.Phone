@@ -103,6 +103,12 @@ namespace Hdc.Mv.Inspection
             return inspectionResult.Edges.Select(x => x.Definition);
         }
 
+
+        public static IEnumerable<EdgeSearchingDefinition> GetCoordinateEdges(this InspectionResult inspectionResult)
+        {
+            return inspectionResult.CoordinateEdges.Select(x => x.Definition);
+        }
+
         public static IEnumerable<CircleSearchingDefinition> GetCircleSearchingDefinitions(this InspectionResult inspectionResult)
         {
             return inspectionResult.Circles.Select(x => x.Definition);

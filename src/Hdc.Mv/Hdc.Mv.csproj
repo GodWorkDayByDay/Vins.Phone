@@ -73,8 +73,12 @@
     <Compile Include="BitmapSourceExtensions.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="CircleDirect.cs" />
+    <Compile Include="Inspection.Inspectors\CircleInspector.cs" />
+    <Compile Include="Inspection.Inspectors\EdgeInspector.cs" />
     <Compile Include="Halcon\Exports\PaintGrayOffset.cs" />
     <Compile Include="Halcon\HDevelopExportExtensions.cs" />
+    <Compile Include="Inspection.Inspectors\ICircleInspector.cs" />
+    <Compile Include="Inspection.Inspectors\IEdgeInspector.cs" />
     <Compile Include="Halcon\MedianMargin.cs" />
     <Compile Include="Halcon\MedianMaskType.cs" />
     <Compile Include="Halcon\RowOrCol.cs" />
@@ -105,6 +109,10 @@
     <Compile Include="Inspection.Filters\MeanFilter.cs" />
     <Compile Include="Inspection.Filters\MedianFilter.cs" />
     <Compile Include="Inspection.Filters\MinMaxGrayScaleFilter.cs" />
+    <Compile Include="Inspection.Inspectors\InspectorFactory.cs" />
+    <Compile Include="Inspection.Inspectors\ISurfaceInspector.cs" />
+    <Compile Include="Inspection.Inspectors\SimCircleInspector.cs" />
+    <Compile Include="Inspection.Inspectors\SurfaceInspector.cs" />
     <Compile Include="Inspection.Measurement\Exports\FindCircleCenterUseHough.cs" />
     <Compile Include="Inspection.Regions\BinaryThresholdRect2RegionExtractor.cs" />
     <Compile Include="Inspection.Regions\BinaryThresholdRectRegionExtractor.cs" />
@@ -129,6 +137,8 @@
     <Compile Include="Inspection\DefectDefinition.cs" />
     <Compile Include="Inspection\DefectDefinitionCollection.cs" />
     <Compile Include="Inspection.Regions\ILineExtractor.cs" />
+    <Compile Include="Inspection\ObjectSearchingDefinition.cs" />
+    <Compile Include="Inspection\ObjectSearchingDefinitionCollection.cs" />
     <Compile Include="Inspection\RegionReference.cs" />
     <Compile Include="Inspection\RegionResult.cs" />
     <Compile Include="LightDark.cs" />
@@ -163,7 +173,7 @@
     <Compile Include="Inspection.Filters\EnhanceEdgeArea4Filter.cs" />
     <Compile Include="Inspection.Filters\EnhanceRegion4FilterParams.cs" />
     <Compile Include="Halcon\HalconExtensions.cs" />
-    <Compile Include="Halcon\HalconGeneralInspector.cs" />
+    <Compile Include="Inspection.Inspectors\HalconGeneralInspector.cs" />
     <Compile Include="Calibration\HalconImageCalibrator.cs" />
     <Compile Include="Halcon\HalconInspectorException.cs" />
     <Compile Include="Halcon\HDevelopExport.Partials.cs" />

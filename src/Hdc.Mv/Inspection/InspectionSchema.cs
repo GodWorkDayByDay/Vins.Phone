@@ -11,14 +11,17 @@ namespace Hdc.Mv.Inspection
         public InspectionSchema()
         {
             CoordinateCircles = new Collection<CircleSearchingDefinition>();
+            CoordinateEdges = new Collection<EdgeSearchingDefinition>();
             CircleSearchingDefinitions = new Collection<CircleSearchingDefinition>();
             EdgeSearchingDefinitions = new Collection<EdgeSearchingDefinition>();
+            ObjectSearchingDefinitions = new Collection<ObjectSearchingDefinition>();
             DistanceBetweenLinesDefinitions = new Collection<DistanceBetweenLinesDefinition>();
             DistanceBetweenIntersectionPointsDefinitions = new Collection<DistanceBetweenLinesDefinition>();
             SurfaceDefinitions = new Collection<SurfaceDefinition>();
             DefectDefinitions = new Collection<DefectDefinition>();
         }
 
+//        public string InspectorName { get; set; }
         public int ImagePixelWidth { get; set; }
         public int ImagePixelHeight { get; set; }
         public string TestImageFilePath { get; set; }
@@ -39,6 +42,7 @@ namespace Hdc.Mv.Inspection
         public Collection<CircleSearchingDefinition> CoordinateCircles { get; set; }
         public Collection<EdgeSearchingDefinition> CoordinateEdges { get; set; }
         public Collection<EdgeSearchingDefinition> EdgeSearchingDefinitions { get; set; }
+        public Collection<ObjectSearchingDefinition> ObjectSearchingDefinitions { get; set; }
         public Collection<CircleSearchingDefinition> CircleSearchingDefinitions { get; set; }
         public Collection<DistanceBetweenLinesDefinition> DistanceBetweenLinesDefinitions { get; set; }
         public Collection<DistanceBetweenLinesDefinition> DistanceBetweenIntersectionPointsDefinitions { get; set; }

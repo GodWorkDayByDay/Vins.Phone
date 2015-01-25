@@ -542,5 +542,63 @@ namespace Hdc.Mv
                     throw new InvalidOperationException("SharpFeature cannot convert to string: " + feature);
             }
         }
+
+        public static Line GetMiddleLineUsingAngle(this Line line1, Line line2)
+        {
+            var vectorAxisX = new Vector(10000, 0);
+
+            var vector1A = new Vector(line1.X1, line1.Y1);
+            var vector1B = new Vector(line1.X2, line1.Y2);
+            var vector2A = new Vector(line2.X1, line2.Y1);
+            var vector2B = new Vector(line2.X2, line2.Y2);
+
+            var vector1BToA = vector1B - vector1A;
+            var angle1 = Vector.AngleBetween(vector1BToA, vectorAxisX);
+            var vector2BToA = vector2B - vector2A;
+            var angle2 = Vector.AngleBetween(vector2BToA, vectorAxisX);
+
+            var angleAvg = (angle1 + angle2) / 2.0;
+
+            var matrix1 = new Matrix();
+            matrix1.Rotate(angle1 - angleAvg + 90);
+            var vertical1BToA = matrix1.Transform(vector1BToA);
+
+
+            var matrix2 = new Matrix();
+            matrix2.Rotate(angle2 - angleAvg + 90);
+            var vertical2BToA = matrix2.Transform(vector2BToA);
+
+            var v1C = vertical1BToA + vector1A;
+            var v2C = vertical2BToA + vector2A;
+            var v2CB = vertical2BToA + vector2B;
+
+
+            HTuple row, column, isOverlapping;
+            HOperatorSet.IntersectionLines(vector1A.Y, vector1A.X, vector1B.Y, vector1B.X,
+                vector2A.Y, vector2A.X, v2C.Y, v2C.X, out row, out column, out isOverlapping);
+
+            HTuple rowB, columnB, isOverlappingB;
+            HOperatorSet.IntersectionLines(vector1A.Y, vector1A.X, vector1B.Y, vector1B.X,
+                vector2B.Y, vector2B.X, v2CB.Y, v2CB.X, out rowB, out columnB, out isOverlappingB);
+
+            HTuple row2, column2, isOverlapping2;
+            HOperatorSet.IntersectionLines(vector2A.Y, vector2A.X, vector2B.Y, vector2B.X,
+                vector1A.Y, vector1A.X, v1C.Y, v1C.X, out row2, out column2, out isOverlapping2);
+
+
+            var middle1X = (vector2B.X + columnB) / 2.0;
+            var middle1Y = (vector2B.Y + rowB) / 2.0;
+
+            var middle2X = (vector1A.X + column2) / 2.0;
+            var middle2Y = (vector1A.Y + row2) / 2.0;
+
+            return new Line(middle2X, middle2Y, middle1X, middle1Y);
+        }
+
+        public static Line Reverse(this Line line)
+        {
+            return new Line(line.X2, line.Y2, line.X1, line.Y1);
+        }
+
     }
 }

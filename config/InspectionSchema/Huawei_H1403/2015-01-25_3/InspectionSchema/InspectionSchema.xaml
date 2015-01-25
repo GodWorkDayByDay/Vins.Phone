@@ -1,0 +1,10 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  TestImageFilePath="B:\2015-01-22_17.04.06.jpg"
+                  CircleSearching_InspectorName="Hal"
+                  EdgeSearching_InspectorName="Hal"
+                  Defects_InspectorName="Sim"
+                  ImagePixelWidth="8192"
+                  ImagePixelHeight="12500"
+                  CoordinateType="Boarder"
+                  >
+</InspectionSchema>

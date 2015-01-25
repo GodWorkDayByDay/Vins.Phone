@@ -36,7 +36,6 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
     {
         private string configFileName = "BatchInspector.Config.xaml";
         private IInspectionController _inspectionController;
-        private Func<string, IGeneralInspector> _inspectorFactory;
 
         public MainWindow()
         {
@@ -60,42 +59,7 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
 
             Load();
 
-
-            _inspectorFactory = new Func<string, IGeneralInspector>(
-                name =>
-                {
-                    switch (name)
-                    {
-                        case "Sim":
-                            {
-                                var sim = new SimGeneralInspector();
-                                return sim;
-                            }
-                            break;
-//                        case "Mil":
-//                            {
-//                                var mi = new MilGeneralInspector();
-//                                mi.Init(8192, 12500);
-//
-//                                return mi;
-//                            }
-//                            break;
-                        case "Hal":
-                            {
-                                var hi = new HalconGeneralInspector();
-                                return hi;
-                            }
-                            break;
-                        default:
-                            throw new NotSupportedException("InspectionSchema.InspectorName not be set!");
-                    }
-                });
-
-
             _inspectionController = new InspectionController();
-            _inspectionController
-                .SetInspectorFactory(_inspectorFactory);
-            //                .SetInspectionSchema();
         }
 
         void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -276,9 +240,6 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
 
                         using (var inspectionController = new InspectionController())
                         {
-                            inspectionController
-                               .SetInspectorFactory(_inspectorFactory);
-
                             inspectionController
                                 .StartInspect()
                                 .SetInspectionSchema(schema.DeepClone())
