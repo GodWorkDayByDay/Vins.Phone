@@ -291,9 +291,9 @@
                                 <!--                                <DataGridTextColumn Header="面"-->
                                 <!--                                                    Binding="{Binding SurfaceTypeDisplayName}"-->
                                 <!--                                                    Width="75" />-->
-                                <DataGridTextColumn Header="序号"
+                                <DataGridTextColumn Header="NO"
                                                     Binding="{Binding IndexDisplayValue}"
-                                                    Width="40"/>
+                                                    Width="60"/>
                                 <!--                                <DataGridTextColumn Header="序号"-->
                                 <!--                                                    Binding="{Binding DisplayIndex}"-->
                                 <!--                                                    Width="80" />-->
@@ -371,27 +371,27 @@
                                 <!--                                <DataGridTextColumn Header="序号"-->
                                 <!--                                                    Binding="{Binding DisplayIndex}"-->
                                 <!--                                                    Width="80" />-->
-                                <DataGridTextColumn Header="序号"
+                                <DataGridTextColumn Header="NO"
                                                     Binding="{Binding IndexDisplayValue}"
-                                                    Width="120" />
-                                <DataGridTextColumn Header="缺陷类型"
+                                                    Width="60" />
+                                <DataGridTextColumn Header="类型"
                                                     Binding="{Binding TypeDescription}"
                                                     Width="120" />
-                                <DataGridTextColumn Header="X坐标"
-                                                    Binding="{Binding XDisplayValue}"
-                                                    Width="80" />
-                                <DataGridTextColumn Header="Y坐标"
-                                                    Binding="{Binding YDisplayValue}"
-                                                    Width="80" />
-                                <DataGridTextColumn Header="宽度"
-                                                    Binding="{Binding WidthDisplayValue}"
-                                                    Width="80" />
-                                <DataGridTextColumn Header="高度"
-                                                    Binding="{Binding HeightDisplayValue}"
-                                                    Width="80" />
                                 <DataGridTextColumn Header="面积"
                                                     Binding="{Binding SizeDisplayValue}"
-                                                    Width="80" />
+                                                    Width="100" />
+                                <DataGridTextColumn Header="宽度"
+                                                    Binding="{Binding WidthDisplayValue}"
+                                                    Width="70" />
+                                <DataGridTextColumn Header="高度"
+                                                    Binding="{Binding HeightDisplayValue}"
+                                                    Width="70" />
+                                <DataGridTextColumn Header="X坐标"
+                                                    Binding="{Binding XDisplayValue}"
+                                                    Width="70" />
+                                <DataGridTextColumn Header="Y坐标"
+                                                    Binding="{Binding YDisplayValue}"
+                                                    Width="70" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>

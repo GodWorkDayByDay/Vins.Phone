@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using HalconDotNet;
 
 namespace Hdc.Mv.Halcon
@@ -25,6 +26,27 @@ namespace Hdc.Mv.Halcon
             var value = region.RegionFeatures("row1");
             var int32Value = Convert.ToInt32(value);
             return int32Value;
+        }
+
+        public static Point GetPoint1(this HRegion region)
+        {
+            var x = region.GetColumn1();
+            var y = region.GetRow1();
+            return new Point(x, y);
+        }
+
+        public static Point GetPoint2(this HRegion region)
+        {
+            var x = region.GetColumn2();
+            var y = region.GetRow2();
+            return new Point(x, y);
+        }
+
+        public static Point GetCenterPoint(this HRegion region)
+        {
+            var x = region.GetColumn();
+            var y = region.GetRow();
+            return new Point(x, y);
         }
 
         public static int GetColumn1(this HRegion region)
@@ -77,7 +99,7 @@ namespace Hdc.Mv.Halcon
 
             for (int i = 0; i < count; i++)
             {
-                list.Add(region[i+1]);
+                list.Add(region[i + 1]);
             }
 
             return list;

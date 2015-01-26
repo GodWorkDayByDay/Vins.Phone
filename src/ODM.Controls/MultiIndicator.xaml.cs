@@ -188,7 +188,7 @@ namespace Hdc.Controls
                 var h = GetPropertyValue(element, DefectHeightPath);
 
                 //
-                var defectRect = new Rect((int)x, (int)y, (int)w, (int)h);
+                var defectRect = new Rect((double)x, (double)y, (double)w, (double)h);
                 _defectRects.Add(defectRect);
 
                 //

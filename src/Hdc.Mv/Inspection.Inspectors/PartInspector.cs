@@ -57,6 +57,7 @@ namespace Hdc.Mv.Inspection
                     var line = rect2.GetRoiLineFromRectangle2Phi();
                     result.PartLine = line;
                     result.PartHalfWidth = rect2.Length2;
+                    result.PartRegion = movedRegion;
                 }
                 results.Add(result);
             }

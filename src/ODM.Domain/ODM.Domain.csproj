@@ -129,8 +129,6 @@
       <Link>FileNames.cs</Link>
     </Compile>
     <Compile Include="Inspection.Events\GrabReadyPlcEvent.cs" />
-    <Compile Include="Inspection\AdaptedInspector2.cs" />
-    <Compile Include="Inspection\IInspector.cs" />
     <Compile Include="Inspection\IInspectorProvider.cs" />
     <Compile Include="Inspection\IInspectService.cs" />
     <Compile Include="Inspection\ImageInfo.cs" />
@@ -138,7 +136,6 @@
     <Compile Include="Inspection\InspectInfo.cs" />
     <Compile Include="Inspection\InspectService.cs" />
     <Compile Include="Inspection\MeasurementInfo.cs" />
-    <Compile Include="Inspection\SimInspector.cs" />
     <Compile Include="Inspection\SurfaceInspectInfo.cs" />
     <Compile Include="Reporting\IReportExporter.cs" />
     <Compile Include="Reporting\ReportExportFailedEvent.cs" />

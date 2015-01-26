@@ -31,11 +31,13 @@ namespace ODM.Domain.Inspection
         private readonly ISubject<SurfaceInspectInfo> _inspectionCompletedEvent = new Subject<SurfaceInspectInfo>();
         private readonly ISubject<int> _calibrationStartedEvent = new Subject<int>();
         private readonly ISubject<ImageInfo> _calibrationCompletedEvent = new Subject<ImageInfo>();
+        private InspectionController _inspectionController;// = new InspectionController();
 
-        private int _currentIndex;
+        private int _grabReadyPlcEventCounter;
 
         private ICamera _camera;
-        private IInspector _inspector;
+        private int _inspectCounter = 0;
+//        private IInspector _inspector;
 
         [Dependency]
         public IMachineProvider MachineProvider { get; set; }
@@ -61,7 +63,7 @@ namespace ODM.Domain.Inspection
                                  {
                                      if (!x) return;
 
-                                     _currentIndex++;
+                                     _grabReadyPlcEventCounter++;
                                      Machine.Inspection_SurfaceFront_GrabReadyPlcEventDevice.WriteFalse();
                                      await AcquisitionAndInspectAsync(0);
                                  });
@@ -71,7 +73,7 @@ namespace ODM.Domain.Inspection
                                  {
                                      if (!x) return;
 
-                                     _currentIndex++;
+                                     _grabReadyPlcEventCounter++;
                                      Machine.Inspection_SurfaceBack_GrabReadyPlcEventDevice.WriteFalse();
                                      await AcquisitionAndInspectAsync(1);
                                  });
@@ -95,22 +97,16 @@ namespace ODM.Domain.Inspection
             if (MachineConfigProvider.MachineConfig.MV_SimulationAcquisitionEnabled)
             {
                 _camera = new SimCamera(MachineConfigProvider.MachineConfig.MV_SimulationImageFileNames);
-                //                _camera = new SimMatroxCamera();
             }
             else
+            {
                 _camera = new E2VMatroxCamera();
-
-            if (MachineConfigProvider.MachineConfig.MV_SimulationInspectorEnabled)
-            {
-                _inspector = new SimInspector();
             }
-            else
+
+            if (!MachineConfigProvider.MachineConfig.MV_SimulationInspectorEnabled)
             {
-                var adaptedInspector = new AdaptedInspector2
-                                       {
-                                           MachineConfig = MachineConfigProvider.MachineConfig
-                                       };
-                _inspector = adaptedInspector;
+                _inspectionController = new InspectionController();
+                _inspectionController.SetInspectionSchema();
             }
 
             bool isSuccessful;
@@ -121,7 +117,6 @@ namespace ODM.Domain.Inspection
                 throw new Exception("Camera cannot init");
         }
 
-        private int _inspectCounter = 0;
 
         public async Task<int> AcquisitionAndInspectAsync(int surfaceTypeIndex)
         {
@@ -154,76 +149,47 @@ namespace ODM.Domain.Inspection
 
             Task.Run(() => _inspectionStartedEvent.OnNext(surfaceTypeIndex));
 
-            Task.Run(() =>
-                     {
-                         var sw3 = new NotifyStopwatch("_inspector.Inspect()");
-                         var inspectionInfo = _inspector.Inspect(calibImage);
-                         sw3.Dispose();
+            Task.Run(
+                () =>
+                {
+                    InspectionInfo inspectionInfo;
+                    if (MachineConfigProvider.MachineConfig.MV_SimulationInspectorEnabled)
+                    {
+                        inspectionInfo = new InspectionInfo();
+                    }
+                    else
+                    {
+                        var sw3 = new NotifyStopwatch("inspector.Inspect()");
+                        inspectionInfo = _inspectionController
+//                            .SetInspectionSchema()
+                            .SetImage(calibImage)
+                            .CreateCoordinate()
+                            .Inspect()
+                            .GetInspectionInfo()
+                            ;
+                        sw3.Dispose();
+                    }
 
-                         var surfaceInspectInfo = new SurfaceInspectInfo()
-                         {
-                             SurfaceTypeIndex = surfaceTypeIndex,
-                             ImageInfo = imageInfo.ToEntity(),
-                             InspectInfo = inspectionInfo.ToEntity(),
-                         };
+                    var surfaceInspectInfo = new SurfaceInspectInfo()
+                                             {
+                                                 SurfaceTypeIndex = surfaceTypeIndex,
+                                                 ImageInfo = imageInfo.ToEntity(),
+                                                 InspectInfo = inspectionInfo.ToEntity(),
+                                                 WorkpieceIndex =
+                                                     _inspectCounter/
+                                                     MachineConfigProvider.MachineConfig
+                                                     .MV_AcquisitionCountPerWorkpiece
+                                             };
 
-                         HandleInspect(surfaceInspectInfo);
-                     });
+                    Task.Run(() => _inspectionCompletedEvent.OnNext(surfaceInspectInfo));
+                    HandleInspect(surfaceInspectInfo);
+                });
 
             return imageInfo.Index;
         }
 
-/*        private void HandleInspect(int surfaceTypeIndex, InspectionInfo inspectionInfo, Hdc.Mv.ImageInfo imageInfo)
-        {
-            var surfaceInspectInfo = new SurfaceInspectInfo()
-            {
-//                WorkpieceIndex =
-//                    _inspectCounter /
-//                    MachineConfigProvider.MachineConfig.MV_AcquisitionCountPerWorkpiece,
-                SurfaceTypeIndex = surfaceTypeIndex,
-                ImageInfo = imageInfo.ToEntity(),
-                InspectInfo = inspectionInfo.ToEntity(),
-            };
-
-            HandleInspect(surfaceInspectInfo);
-        }
-
-        private void HandleInspect(int surfaceTypeIndex, InspectionInfo inspectionInfo, BitmapSource bitmapSource)
-        {
-            var surfaceInspectInfo = new SurfaceInspectInfo()
-            {
-                //                WorkpieceIndex =
-                //                    _inspectCounter /
-                //                    MachineConfigProvider.MachineConfig.MV_AcquisitionCountPerWorkpiece,
-                SurfaceTypeIndex = surfaceTypeIndex,
-                BitmapSource = bitmapSource,
-                InspectInfo = inspectionInfo.ToEntity(),
-            }; 
-            
-            HandleInspect( surfaceInspectInfo);
-        }*/
-
         private void HandleInspect(SurfaceInspectInfo surfaceInspectInfo)
         {
-//            InspectInfo inspectInfoEntity = inspectionInfo.ToEntity();
-//            ImageInfo imageInfoEntity = imageInfo.ToEntity();
-//
-//            var surfaceInspectInfo = new SurfaceInspectInfo()
-//                                     {
-//                                         WorkpieceIndex =
-//                                             _inspectCounter/
-//                                             MachineConfigProvider.MachineConfig.MV_AcquisitionCountPerWorkpiece,
-//                                         SurfaceTypeIndex = surfaceTypeIndex,
-//                                         ImageInfo = imageInfoEntity,
-//                                         InspectInfo = inspectInfoEntity,
-//                                     };
-
-            surfaceInspectInfo.WorkpieceIndex =
-                _inspectCounter/
-                MachineConfigProvider.MachineConfig.MV_AcquisitionCountPerWorkpiece;
-
-            Task.Run(() => _inspectionCompletedEvent.OnNext(surfaceInspectInfo));
-
             Debug.WriteLine("Inspect Finished. SurfaceTypeIndex: " + surfaceInspectInfo.SurfaceTypeIndex);
 
             if (surfaceInspectInfo.InspectInfo.DefectInfos.Count <= 0)
@@ -309,7 +275,7 @@ namespace ODM.Domain.Inspection
 
         public void Start()
         {
-            _currentIndex = 0;
+            _grabReadyPlcEventCounter = 0;
 
             MachineProvider.Machine.Production_StartCommandDevice.WriteTrue();
         }
@@ -326,19 +292,6 @@ namespace ODM.Domain.Inspection
 
         public async void InspectImageFile(int surfaceTypeIndex, string fileName)
         {
-            // 
-//            Task.Run(() => _acquisitionStartedEvent.OnNext(surfaceTypeIndex));
-//            _acquisitionStartedEvent.OnNext(surfaceTypeIndex);
-//            Thread.Sleep(500);
-
-            //            Task.Run(() => _acquisitionCompletedEvent.OnNext(imageInfoEntity));
-            //            _acquisitionCompletedEvent.OnNext(imageInfoEntity);
-            //            Thread.Sleep(500);
-
-
-            //            _calibrationStartedEvent.OnNext(surfaceTypeIndex);
-            //            Thread.Sleep(500);
-
             Task.Run(() => _calibrationStartedEvent.OnNext(surfaceTypeIndex));
 
             var sw = new NotifyStopwatch("InspectImageFile: new BitmapImage(fileName)");
@@ -354,30 +307,50 @@ namespace ODM.Domain.Inspection
             ImageInfo imageInfoEntity = imageInfo.ToEntity();
 
             await Task.Run(() => _calibrationCompletedEvent.OnNext(imageInfoEntity));
-            //            _calibrationCompletedEvent.OnNext(imageInfoEntity);
-            //            Thread.Sleep(500);
-            //
+
             Task.Run(() => _inspectionStartedEvent.OnNext(surfaceTypeIndex));
 
-            await Task.Run(() =>
-                           {
-                               var sw4 = new NotifyStopwatch("imageInfo.To8BppHImage()");
-                               var to8BppHImage = imageInfo.To8BppHImage();
-                               sw4.Dispose();
+            await Task.Run(
+                () =>
+                {
+                    var sw4 = new NotifyStopwatch("imageInfo.To8BppHImage()");
+                    var to8BppHImage = imageInfo.To8BppHImage();
+                    sw4.Dispose();
 
-                               var sw3 = new NotifyStopwatch("inspector.Inspect()");
-                               var inspectionInfo = _inspector.Inspect(to8BppHImage);
-                               sw3.Dispose();
+                    InspectionInfo inspectionInfo;
 
-                               var surfaceInspectInfo = new SurfaceInspectInfo()
-                               {
-                                   SurfaceTypeIndex = surfaceTypeIndex,
-                                   BitmapSource = bi,
-                                   InspectInfo = inspectionInfo.ToEntity(),
-                               };
+                    if (MachineConfigProvider.MachineConfig.MV_SimulationInspectorEnabled)
+                    {
+                        inspectionInfo = new InspectionInfo();
+                    }
+                    else
+                    {
+                        var sw3 = new NotifyStopwatch("inspector.Inspect()");
+                        inspectionInfo = _inspectionController
+                            .SetInspectionSchema()
+                            .SetImage(to8BppHImage)
+                            .CreateCoordinate()
+                            .Inspect()
+                            .GetInspectionInfo()
+                            ;
+                        sw3.Dispose();
+                    }
 
-                               HandleInspect(surfaceInspectInfo);
-                           });
+                    var surfaceInspectInfo = new SurfaceInspectInfo()
+                                             {
+                                                 SurfaceTypeIndex = surfaceTypeIndex,
+                                                 BitmapSource = bi,
+                                                 InspectInfo = inspectionInfo.ToEntity(),
+                                                 WorkpieceIndex =
+                                                     _inspectCounter/
+                                                     MachineConfigProvider.MachineConfig
+                                                     .MV_AcquisitionCountPerWorkpiece
+                                             };
+
+                    Task.Run(() => _inspectionCompletedEvent.OnNext(surfaceInspectInfo));
+
+                    HandleInspect(surfaceInspectInfo);
+                });
         }
     }
 }

@@ -1,0 +1,142 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="True">
+  <InspectionSchema.SurfaceDefinitions>
+      <SurfaceDefinition Name="B-Right"
+                         SaveCacheImageEnabled="false">
+          <SurfaceDefinition.ExcludeRegions>
+          <!--
+              <GrayAndAreaRegionExtractor Name="Ex.Hole"
+                                          SaveCacheImageEnabled="True"
+                                          
+                                          X="4832"
+                                          Y="1054"
+                                          Angle="0"
+                                          HalfWidth="100"
+                                          HalfHeight="100"
+                                          
+                                          MedianRadius="7"
+                                          EmpWidth="100"
+                                          EmpHeight="100"
+                                          EmpFactor="3"
+                                          ThresholdMinGray="0"
+                                          ThresholdMaxGray="180"
+                                          AreaMin="10000"
+                                          AreaMax="99999999"
+                                          ClosingRadius="5"
+                                          DilationRadius="2"
+                                          >
+              </GrayAndAreaRegionExtractor>
+              -->
+          </SurfaceDefinition.ExcludeRegions>
+          <SurfaceDefinition.IncludeRegions>
+            <!--   <GrayInvertExtractor Name="Ex.Hole"
+                                   SaveCacheImageEnabled="True"
+                                   
+                                   X="6442"
+                                   Y="2847"
+                                   Angle="0"
+                                   HalfWidth="206"
+                                   HalfHeight="917"
+                                   
+                                   MedianRadius="3"
+                                   MeanMaskWidth="55"
+                                   MeanMaskHeight="100"
+                                   EmpMaskWidth="100"
+                                   EmpMaskHeight="50"
+                                   EmpFactor1="1"
+                                   EmpFactor2="1"
+                                   ThresholdMinGray="0"
+                                   ThresholdMaxGray="250"
+                                   AreaMin="18000"
+                                   AreaMax="99999999"
+                                   >
+              </GrayInvertExtractor>   -->
+              <SobelAmpRegionExtractor Name="Area-01"
+                                 SaveCacheImageEnabled="True"
+                                 
+                                 X="6442"
+                                 Y="2847"
+                                 Angle="0"
+                                 HalfWidth="206"
+                                 HalfHeight="917"
+                                 
+                                 MeanMaskWidth="1"
+                                 MeanMaskHeight="50"
+                                 EmpMaskWidth="20"
+                                 EmpMaskHeight="5"
+                                 EmpFactor="2"
+                                 SobelAmpSize="5"
+                                 ScaleMult="2"
+                                 ScaleAdd="0"
+                                 ThresholdMinGray="0"
+                                 ThresholdMaxGray="100"
+                                 ErosionRadius="3"
+                                 ClosingCircleRadius="5"
+                                 ClosingRectWidth="1"
+                                 ClosingRectHeight="5"
+                                 DilationRadius="5"
+                                 AreaMin="400000"
+                                 AreaMax="99999999"
+                                 >
+              </SobelAmpRegionExtractor>
+              <SobelAmpRegionExtractor Name="Area-02"
+                                 SaveCacheImageEnabled="True"
+                                 
+                                 X="6442"
+                                 Y="5434"
+                                 Angle="0"
+                                 HalfWidth="206"
+                                 HalfHeight="1921"
+                                 
+                                 MeanMaskWidth="1"
+                                 MeanMaskHeight="50"
+                                 EmpMaskWidth="20"
+                                 EmpMaskHeight="5"
+                                 EmpFactor="2"
+                                 SobelAmpSize="5"
+                                 ScaleMult="2"
+                                 ScaleAdd="0"
+                                 ThresholdMinGray="0"
+                                 ThresholdMaxGray="100"
+                                 ErosionRadius="3"
+                                 ClosingCircleRadius="5"
+                                 ClosingRectWidth="1"
+                                 ClosingRectHeight="5"
+                                 DilationRadius="5"
+                                 AreaMin="800000"
+                                 AreaMax="99999999"
+                                 >
+              </SobelAmpRegionExtractor>
+              <SobelAmpRegionExtractor Name="Area-03"
+                                 SaveCacheImageEnabled="True"
+                                 
+                                 X="6442"
+                                 Y="8843"
+                                 Angle="0"
+                                 HalfWidth="206"
+                                 HalfHeight="1626"
+                                 
+                                 MeanMaskWidth="1"
+                                 MeanMaskHeight="50"
+                                 EmpMaskWidth="20"
+                                 EmpMaskHeight="5"
+                                 EmpFactor="2"
+                                 SobelAmpSize="5"
+                                 ScaleMult="2"
+                                 ScaleAdd="0"
+                                 ThresholdMinGray="0"
+                                 ThresholdMaxGray="100"
+                                 ErosionRadius="3"
+                                 ClosingCircleRadius="5"
+                                 ClosingRectWidth="1"
+                                 ClosingRectHeight="5"
+                                 DilationRadius="5"
+                                 AreaMin="400000"
+                                 AreaMax="99999999"
+                                 >
+              </SobelAmpRegionExtractor>
+          </SurfaceDefinition.IncludeRegions>
+      </SurfaceDefinition>
+  </InspectionSchema.SurfaceDefinitions>
+  
+</InspectionSchema>

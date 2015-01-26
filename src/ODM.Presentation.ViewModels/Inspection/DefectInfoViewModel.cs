@@ -53,9 +53,9 @@ namespace ODM.Presentation.ViewModels
             }
         }
 
-        private int _x;
+        private double _x;
 
-        public int X
+        public double X
         {
             get { return _x; }
             set
@@ -66,10 +66,9 @@ namespace ODM.Presentation.ViewModels
             }
         }
 
+        private double _y;
 
-        private int _y;
-
-        public int Y
+        public double Y
         {
             get { return _y; }
             set
@@ -80,9 +79,9 @@ namespace ODM.Presentation.ViewModels
             }
         }
 
-        private int _width;
+        private double _width;
 
-        public int Width
+        public double Width
         {
             get { return _width; }
             set
@@ -93,9 +92,9 @@ namespace ODM.Presentation.ViewModels
             }
         }
 
-        private int _height;
+        private double _height;
 
-        public int Height
+        public double Height
         {
             get { return _height; }
             set
@@ -150,8 +149,6 @@ namespace ODM.Presentation.ViewModels
         {
             get
             {
-                return Type.ToString().Replace(
-                    "DefectType","DT-");
                 switch (Type)
                 {
                     case DefectType.Undefined:
@@ -173,44 +170,20 @@ namespace ODM.Presentation.ViewModels
                     case DefectType.VerticalNonuniform:
                         return "纵向不匀";
 
-                    case DefectType.DefectType00:
-                        return "亮边";
-                    case DefectType.DefectType01:
-                        return "亮点";
-                    case DefectType.DefectType06:
-                        return "亮块6";
-                    case DefectType.DefectType07:
-                        return "亮块7";
-                    case DefectType.DefectType10:
-                        return "亮块10";
-                    case DefectType.DefectType12:
-                        return "亮块12";
-                    case DefectType.DefectType15:
-                        return "亮块15";
-
-                    case DefectType.DefectType08:
-                        return "黑块8";
-                    case DefectType.DefectType09:
-                        return "黑块9";
-                    case DefectType.DefectType11:
-                        return "黑块11";
-                    case DefectType.DefectType13:
-                        return "黑块13";
-                    case DefectType.DefectType16:
-                        return "黑块16";
-
-                    case DefectType.DefectType14:
-                        return "蓝坑";
+                    case DefectType.PartExist:
+                        return "部件缺失";
 
                     default:
-                        return "未定义";
+                        return "未定义-" + Type.ToString();
                 }
+//                return Type.ToString().Replace(
+//                    "DefectType", "DT-");
             }
         }
 
-        private int _size;
+        private double _size;
 
-        public int Size
+        public double Size
         {
             get { return _size; }
             set
@@ -242,11 +215,11 @@ namespace ODM.Presentation.ViewModels
                 switch (SurfaceTypeIndex)
                 {
                     case 0:
-                        return "正面";
+                        return "A";
                     case 1:
-                        return "背面";
+                        return "B";
                     default:
-                        return "默认";
+                        return "N";
                 }
             }
         }
@@ -327,16 +300,10 @@ namespace ODM.Presentation.ViewModels
             }
         }
 
-//        public string WidthDisplayValue { get { return (Width / 100.0).ToString("F2"); } }
-//        public string HeightDisplayValue { get { return (Height / 125.0).ToString("F2"); } }
-//        public string XDisplayValue { get { return (X / 100.0).ToString("F2"); } }
-//        public string YDisplayValue { get { return (Y / 125.0).ToString("F2"); } }
-
-
-        public string WidthDisplayValue { get { return WidthActualValue.ToString("000.000"); } }
-        public string HeightDisplayValue { get { return HeightActualValue.ToString("000.000"); } }
-        public string XDisplayValue { get { return XActualValue.ToString("000.000"); } }
-        public string YDisplayValue { get { return YActualValue.ToString("000.000"); } }
-        public string SizeDisplayValue { get { return SizeActualValue.ToString("000.000"); } }
+        public string WidthDisplayValue { get { return WidthActualValue.ToString("0.0"); } }
+        public string HeightDisplayValue { get { return HeightActualValue.ToString("0.0"); } }
+        public string XDisplayValue { get { return XActualValue.ToString("0.0"); } }
+        public string YDisplayValue { get { return YActualValue.ToString("0.0"); } }
+        public string SizeDisplayValue { get { return SizeActualValue.ToString("0.0"); } }
     }
 }
