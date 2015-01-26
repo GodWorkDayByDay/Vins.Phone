@@ -241,15 +241,11 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
                         using (var inspectionController = new InspectionController())
                         {
                             inspectionController
-                                .StartInspect()
                                 .SetInspectionSchema(schema.DeepClone())
-                                .SetImageInfo(imageInfo3)
+                                .SetImage(imageInfo3)
                                 .CreateCoordinate()
                                 .Inspect()
                                 ;
-
-//                            Debug.WriteLine("ACT.X " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterX);
-//                            Debug.WriteLine("ACT.Y " + inspectionController.InspectionResult.CoordinateCircles[0].Circle.CenterY);
 
                             inspectionController.InspectionResult.Comment = "";
 

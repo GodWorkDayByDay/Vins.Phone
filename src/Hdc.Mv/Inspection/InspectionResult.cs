@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Hdc.Mv.Inspection
 {
@@ -20,6 +22,7 @@ namespace Hdc.Mv.Inspection
             DistanceBetweenPointsResults = new DistanceBetweenPointsResultCollection();
             DefectResults = new DefectResultCollection();
             ClosedRegionResults = new ClosedRegionResultCollection();
+            Parts = new List<PartSearchingResult>();
         }
 
         public CircleSearchingResultCollection CoordinateCircles { get; set; }
@@ -30,5 +33,6 @@ namespace Hdc.Mv.Inspection
         public DistanceBetweenPointsResultCollection DistanceBetweenPointsResults { get; set; }
         public DefectResultCollection DefectResults { get; set; }
         public ClosedRegionResultCollection ClosedRegionResults { get; set; }
+        public IList<PartSearchingResult> Parts { get; set; }
     }
 }

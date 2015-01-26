@@ -14,17 +14,6 @@ namespace Hdc.Mv.Inspection
     {
         private string _cacheImageDir = typeof(Mv.Ex).Assembly.GetAssemblyDirectoryPath() + "\\CacheImages";
 
-//        public EdgeInspector()
-//        {
-//            var dir = typeof(Mv.Ex).Assembly.GetAssemblyDirectoryPath();
-//            _cacheImageDir = Path.Combine(dir, "CacheImages");
-//
-//            if (!Directory.Exists(_cacheImageDir))
-//            {
-//                Directory.CreateDirectory(_cacheImageDir);
-//            }
-//        }
-
         public IList<EdgeSearchingResult> SearchEdges(HImage image, IList<EdgeSearchingDefinition> edgeSearchingDefinitions)
         {
             var sr = new EdgeSearchingResultCollection();
@@ -37,6 +26,7 @@ namespace Hdc.Mv.Inspection
                 int offsetX = 0;
                 int offsetY = 0;
                 HImage enhImage = null;
+                HRegion domain;
 
                 if (esr.Definition.ImageFilter_Disabled)
                     esr.Definition.ImageFilter = null;
@@ -44,7 +34,7 @@ namespace Hdc.Mv.Inspection
                     esr.Definition.RegionExtractor = null;
 
 
-                var reducedImage = HDevelopExport.Singletone.ReduceDomainForRectangle(
+                var reducedImage = HDevelopExport.Singletone.ChangeDomainForRectangle(
                     image,
                     line: esd.Line,
                     hv_RoiWidthLen: esd.ROIWidth / 2.0,
@@ -55,7 +45,6 @@ namespace Hdc.Mv.Inspection
                         .ToBitmapSource()
                         .SaveToJpeg(_cacheImageDir + "\\SearchEdges_" + esd.Name + "_1_Domain.jpg");
 
-                HRegion domain;
                 if (esr.Definition.RegionExtractor != null)
                 {
                     var oldDomain = reducedImage.GetDomain();

@@ -62,6 +62,13 @@ namespace Hdc.Mv.Halcon
             return int32Value;
         }
 
+        public static double GetArea(this HRegion region)
+        {
+            var value = region.RegionFeatures("area");
+            var int32Value = Convert.ToDouble(value);
+            return int32Value;
+        }
+
         public static IList<HRegion> ToList(this HRegion region)
         {
             IList<HRegion> list = new List<HRegion>();
@@ -74,6 +81,25 @@ namespace Hdc.Mv.Halcon
             }
 
             return list;
+        }
+
+        public static HRectangle2 GetSmallestHRectangle2(this HRegion region)
+        {
+            double row;
+            double column;
+            double phi;
+            double length1;
+            double length2;
+            region.SmallestRectangle2(out row, out column, out phi, out length1, out length2);
+            var smallestRect = new HRectangle2()
+                               {
+                                   Row = row,
+                                   Column = column,
+                                   Phi = phi,
+                                   Length1 = length1,
+                                   Length2 = length2,
+                               };
+            return smallestRect;
         }
     }
 }

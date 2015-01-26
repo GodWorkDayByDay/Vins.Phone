@@ -402,27 +402,27 @@ public partial class HDevelopExport
 */
 
 
-    public HImage ReduceDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
+    public HImage ChangeDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
                                            double dilationWidth, double dilationHeight)
     {
-        return ReduceDomainForRectangle(hImage, line.Y1, line.X1, line.Y2, line.X2, hv_RoiWidthLen,
+        return ChangeDomainForRectangle(hImage, line.Y1, line.X1, line.Y2, line.X2, hv_RoiWidthLen,
             dilationWidth, dilationHeight);
     }
 
-    public HImage ReduceDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
+    public HImage ChangeDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
                                            double margin)
     {
-        return ReduceDomainForRectangle(hImage, line, hv_RoiWidthLen, margin, margin);
+        return ChangeDomainForRectangle(hImage, line, hv_RoiWidthLen, margin, margin);
     }
 
-    public HImage ReduceDomainForRectangle(HObject ho_InputImage,
+    public HImage ChangeDomainForRectangle(HObject ho_InputImage,
                                            double hv_LineStartPoint_Row, double hv_LineStartPoint_Column,
                                            double hv_LineEndPoint_Row,
                                            double hv_LineEndPoint_Column, double hv_RoiWidthLen,
                                            double hv_DilationWidth, double hv_DilationHeight)
     {
         HObject ho_EnhancedImage = null;
-        ReduceDomainForRectangle(
+        ChangeDomainForRectangle(
             ho_InputImage, out ho_EnhancedImage,
             hv_LineStartPoint_Row, hv_LineStartPoint_Column,
             hv_LineEndPoint_Row,

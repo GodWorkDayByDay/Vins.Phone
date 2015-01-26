@@ -16,14 +16,16 @@ namespace Hdc.Mv.Inspection
         public double HalfWidth { get; set; }
         public double HalfHeight { get; set; }
 
-        public HRegion Process(HImage image, HRegion domain)
+        public virtual HRegion Process(HImage image, HRegion domain)
         {
             //            var row1 = Convert.ToInt32(domain.RegionFeatures("row1"));
             //            var column1 = Convert.ToInt32(domain.RegionFeatures("column1"));
             var row1 = domain.GetRow1();
             var column1 = domain.GetColumn1();
+            var row2 = domain.GetRow2();
+            var column2 = domain.GetColumn2();
 
-            var reducedImage = image.ReduceDomain(domain);
+            var reducedImage = image.ChangeDomain(domain);
             var croppedImage = reducedImage.CropDomain();
 
             var foundRegion = GetRegion(croppedImage);

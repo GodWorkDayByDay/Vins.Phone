@@ -89,7 +89,39 @@ namespace Hdc.Mv.Inspection
             def.EndY = actualP2.Y;
         }
 
+        public static void UpdateFromRelativeLine(this PartSearchingDefinition def,
+                                                IRelativeCoordinate relativeCoordinate)
+        {
+            var p1 = def.RoiRelativeLine.GetPoint1();
+            var p2 = def.RoiRelativeLine.GetPoint2();
+
+            var actualP1 = relativeCoordinate.GetOriginalPoint(p1);
+            var actualP2 = relativeCoordinate.GetOriginalPoint(p2);
+
+            var roiLine = new Line {X1 = actualP1.X, Y1 = actualP1.Y, X2 = actualP2.X, Y2 = actualP2.Y};
+            def.RoiLine = roiLine;
+
+            //
+            var p1a = def.AreaRelativeLine.GetPoint1();
+            var p2b = def.AreaRelativeLine.GetPoint2();
+
+            var actualP1a = relativeCoordinate.GetOriginalPoint(p1a);
+            var actualP2b = relativeCoordinate.GetOriginalPoint(p2b);
+
+            var areaLine = new Line {X1 = actualP1a.X, Y1 = actualP1a.Y, X2 = actualP2b.X, Y2 = actualP2b.Y};
+            def.AreaLine = areaLine;
+        }
+
         public static void UpdateFromRelativeLines(this IEnumerable<EdgeSearchingDefinition> definitions,
+                                                  IRelativeCoordinate relativeCoordinate)
+        {
+            foreach (var esd in definitions)
+            {
+                esd.UpdateFromRelativeLine(relativeCoordinate);
+            }
+        }
+
+        public static void UpdateFromRelativeLines(this IEnumerable<PartSearchingDefinition> definitions,
                                                   IRelativeCoordinate relativeCoordinate)
         {
             foreach (var esd in definitions)
@@ -103,6 +135,10 @@ namespace Hdc.Mv.Inspection
             return inspectionResult.Edges.Select(x => x.Definition);
         }
 
+        public static IEnumerable<PartSearchingDefinition> GetPartSearchingDefinitions(this InspectionResult inspectionResult)
+        {
+            return inspectionResult.Parts.Select(x => x.Definition);
+        }
 
         public static IEnumerable<EdgeSearchingDefinition> GetCoordinateEdges(this InspectionResult inspectionResult)
         {

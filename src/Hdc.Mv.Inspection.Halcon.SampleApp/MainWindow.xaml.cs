@@ -33,6 +33,7 @@ using MeasurementTestApp;
 using Microsoft.Win32;
 using Line = Hdc.Mv.Line;
 using Path = System.IO.Path;
+// ReSharper disable InconsistentNaming
 
 namespace ODM.Inspectors.Halcon.SampleApp
 {
@@ -108,34 +109,56 @@ namespace ODM.Inspectors.Halcon.SampleApp
 
             IndicatorViewer.BitmapSource = bs;
 
-            var sw = new NotifyStopwatch("InspectionController.Inspect()");
-            InspectionController
-                .StartInspect()
-                .SetInspectionSchema()
-                .SetImageInfo(bs.ToHImage())
-                .CreateCoordinate()
-                .Inspect()
-                ;
-            sw.Stop();
-            sw.Dispose();
+            var sw2 = new NotifyStopwatch("BitmapSource.ToHImage()");
+            var hImage = bs.ToHImage();
+            sw2.Stop();
+            sw2.Dispose();
 
-            Show_CircleSearchingDefinitions(
-                InspectionController.InspectionResult.GetCoordinateCircleSearchingDefinitions());
-            Show_CircleSearchingResults(InspectionController.InspectionResult.CoordinateCircles);
+        
 
-            Show_CircleSearchingDefinitions(
-                InspectionController.InspectionResult.GetCircleSearchingDefinitions(), Brushes.DodgerBlue);
-            Show_CircleSearchingResults(InspectionController.InspectionResult.Circles, Brushes.DodgerBlue);
+            try
+            {
+                var sw = new NotifyStopwatch("InspectionController.Inspect()");
+                InspectionController
+                 .SetInspectionSchema()
+                 .SetImage(hImage)
+                 .CreateCoordinate()
+                 .Inspect()
+                 ;
+                sw.Stop();
+                sw.Dispose();
 
 
-            Show_EdgeSearchingDefinitions(InspectionController.InspectionResult.GetCoordinateEdges());
-            Show_EdgeSearchingResults(InspectionController.InspectionResult.CoordinateEdges);
+                Show_CircleSearchingDefinitions(
+                    InspectionController.InspectionResult.GetCoordinateCircleSearchingDefinitions());
+                Show_CircleSearchingResults(InspectionController.InspectionResult.CoordinateCircles);
 
-            Show_EdgeSearchingDefinitions(InspectionController.InspectionResult.GetEdgeSearchingDefinitions());
-            Show_EdgeSearchingResults(InspectionController.InspectionResult.Edges);
+                Show_CircleSearchingDefinitions(
+                    InspectionController.InspectionResult.GetCircleSearchingDefinitions(), Brushes.DodgerBlue);
+                Show_CircleSearchingResults(InspectionController.InspectionResult.Circles, Brushes.DodgerBlue);
 
-            Show_DistanceBetweenPointsResults(InspectionController.InspectionResult.DistanceBetweenPointsResults);
-            Show_DefectResults(InspectionController.InspectionResult.DefectResults);
+                Show_EdgeSearchingDefinitions(InspectionController.InspectionResult.GetCoordinateEdges());
+                Show_EdgeSearchingResults(InspectionController.InspectionResult.CoordinateEdges);
+
+                Show_EdgeSearchingDefinitions(InspectionController.InspectionResult.GetEdgeSearchingDefinitions());
+                Show_EdgeSearchingResults(InspectionController.InspectionResult.Edges);
+
+                Show_DistanceBetweenPointsResults(InspectionController.InspectionResult.DistanceBetweenPointsResults);
+                Show_DefectResults(InspectionController.InspectionResult.DefectResults);
+                Show_PartSearchingDefinitions(InspectionController.InspectionResult.GetPartSearchingDefinitions());
+                Show_PartSearchingResults(InspectionController.InspectionResult.Parts);
+            }
+            catch (CreateCoordinateFailedException e)
+            {
+                Show_CircleSearchingDefinitions(
+                 InspectionController.InspectionResult.GetCoordinateCircleSearchingDefinitions());
+                Show_CircleSearchingResults(InspectionController.InspectionResult.CoordinateCircles);
+
+                Show_EdgeSearchingDefinitions(InspectionController.InspectionResult.GetCoordinateEdges());
+                Show_EdgeSearchingResults(InspectionController.InspectionResult.CoordinateEdges);
+
+                MessageBox.Show(e.Message);
+            }
         }
 
         public void Show_DistanceBetweenLinesResults(
@@ -279,6 +302,32 @@ namespace ODM.Inspectors.Halcon.SampleApp
             }
         }
 
+        public void Show_PartSearchingDefinitions(IEnumerable<PartSearchingDefinition> partSearchingDefinitions)
+        {
+            foreach (var ed in partSearchingDefinitions)
+            {
+                var regionIndicator = new RegionIndicatorViewModel
+                                      {
+                                          StartPointX = ed.RoiLine.X1,
+                                          StartPointY = ed.RoiLine.Y1,
+                                          EndPointX = ed.RoiLine.X2,
+                                          EndPointY = ed.RoiLine.Y2,
+                                          RegionWidth = ed.RoiHalfWidth * 2,
+                                      };
+                RegionIndicators.Add(regionIndicator);
+
+                var regionIndicator2 = new RegionIndicatorViewModel
+                                      {
+                                          StartPointX = ed.AreaLine.X1,
+                                          StartPointY = ed.AreaLine.Y1,
+                                          EndPointX = ed.AreaLine.X2,
+                                          EndPointY = ed.AreaLine.Y2,
+                                          RegionWidth = ed.AreaHalfWidth * 2,
+                                      };
+                RegionIndicators.Add(regionIndicator2);
+            }
+        }
+
         public void Show_EdgeSearchingResults(IEnumerable<EdgeSearchingResult> edgeSearchingResults)
         {
             foreach (var edgeSearchingResult in edgeSearchingResults)
@@ -295,6 +344,24 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                         StrokeThickness = 4,
                                     };
                 LineIndicators.Add(lineIndicator);
+            }
+        }
+
+        public void Show_PartSearchingResults(IEnumerable<PartSearchingResult> partSearchingResults)
+        {
+            foreach (var edgeSearchingResult in partSearchingResults)
+            {
+                if (edgeSearchingResult.HasError) continue;
+
+                var regionIndicator2 = new RegionIndicatorViewModel
+                {
+                    StartPointX = edgeSearchingResult.PartLine.X1,
+                    StartPointY = edgeSearchingResult.PartLine.Y1,
+                    EndPointX = edgeSearchingResult.PartLine.X2,
+                    EndPointY = edgeSearchingResult.PartLine.Y2,
+                    RegionWidth = edgeSearchingResult.PartHalfWidth* 2,
+                };
+                RegionIndicators.Add(regionIndicator2);
             }
         }
 
@@ -403,3 +470,4 @@ namespace ODM.Inspectors.Halcon.SampleApp
         }
     }
 }
+    // ReSharper restore InconsistentNaming

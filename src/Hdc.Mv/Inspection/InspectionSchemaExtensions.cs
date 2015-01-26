@@ -36,7 +36,7 @@ namespace Hdc.Mv.Inspection
             masterInspectionSchema.CoordinateCircles.AddRange(slaveInspectionSchema.CoordinateCircles);
             masterInspectionSchema.CoordinateEdges.AddRange(slaveInspectionSchema.CoordinateEdges);
             masterInspectionSchema.EdgeSearchingDefinitions.AddRange(slaveInspectionSchema.EdgeSearchingDefinitions);
-            masterInspectionSchema.ObjectSearchingDefinitions.AddRange(slaveInspectionSchema.ObjectSearchingDefinitions);
+            masterInspectionSchema.PartSearchingDefinitions.AddRange(slaveInspectionSchema.PartSearchingDefinitions);
             masterInspectionSchema.CircleSearchingDefinitions.AddRange(slaveInspectionSchema.CircleSearchingDefinitions);
             masterInspectionSchema.DistanceBetweenLinesDefinitions.AddRange(slaveInspectionSchema.DistanceBetweenLinesDefinitions);
             masterInspectionSchema.DistanceBetweenIntersectionPointsDefinitions.AddRange(slaveInspectionSchema.DistanceBetweenIntersectionPointsDefinitions);

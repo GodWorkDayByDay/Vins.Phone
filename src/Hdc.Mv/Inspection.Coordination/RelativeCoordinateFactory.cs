@@ -83,6 +83,14 @@ namespace Hdc.Mv
 
         public static IRelativeCoordinate CreateCoordinateUsingBorder(IList<EdgeSearchingResult> results)
         {
+//            foreach (var edgeSearchingResult in results)
+//            {
+//                if (edgeSearchingResult.EdgeLine.GetLength() <= 1)
+//                {
+//                    throw new CreateCoordinateFailedException("CreateCoordinateUsingBorder failed. Edge: " + edgeSearchingResult.Name);
+//                }
+//            }
+
             List<EdgeSearchingResult> topEdges = new List<EdgeSearchingResult>();
             List<EdgeSearchingResult> bottomEdges = new List<EdgeSearchingResult>();
             List<EdgeSearchingResult> leftEdges = new List<EdgeSearchingResult>();
@@ -109,6 +117,35 @@ namespace Hdc.Mv
             bottomEdges = bottomEdges.OrderBy(x => x.Name).ToList();
             leftEdges = leftEdges.OrderBy(x => x.Name).ToList();
             rightEdges = rightEdges.OrderBy(x => x.Name).ToList();
+
+            for (int index = 0; index < topEdges.Count; index++)
+            {
+                var topEdge = topEdges[index];
+                var bottomEdge = bottomEdges[index];
+
+                if (topEdge.EdgeLine.GetLength() < 1 || bottomEdge.EdgeLine.GetLength() < 1)
+                {
+                    topEdges.RemoveAt(index);
+                    bottomEdges.RemoveAt(index);
+                }
+            }
+
+            for (int index = 0; index < leftEdges.Count; index++)
+            {
+                var leftEdge = leftEdges[index];
+                var rightEdge = rightEdges[index];
+
+                if (leftEdge.EdgeLine.GetLength() < 1 || rightEdge.EdgeLine.GetLength() < 1)
+                {
+                    leftEdges.RemoveAt(index);
+                    rightEdges.RemoveAt(index);
+                }
+            }
+
+            if (!topEdges.Any() || !bottomEdges.Any() || !leftEdges.Any() || !rightEdges.Any())
+            {
+                throw new CreateCoordinateFailedException("CreateCoordinateUsingBorder failed.");
+            }
 
             for (int i = 0; i < topEdges.Count; i++)
             {

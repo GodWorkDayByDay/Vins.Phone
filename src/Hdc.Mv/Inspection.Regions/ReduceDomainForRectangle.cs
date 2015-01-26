@@ -10,7 +10,7 @@ public partial class HDevelopExport
 #endif
 
   // Procedures 
-  public void ReduceDomainForRectangle (HObject ho_InputImage, out HObject ho_ImageResult, 
+    public void ChangeDomainForRectangle(HObject ho_InputImage, out HObject ho_ImageResult, 
       HTuple hv_LineStartPoint_Row, HTuple hv_LineStartPoint_Column, HTuple hv_LineEndPoint_Row, 
       HTuple hv_LineEndPoint_Column, HTuple hv_RoiWidthLen, HTuple hv_DilationWidth, 
       HTuple hv_DilationHeight)

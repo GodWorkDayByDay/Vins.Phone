@@ -14,7 +14,7 @@ namespace Hdc.Mv.Inspection
             CoordinateEdges = new Collection<EdgeSearchingDefinition>();
             CircleSearchingDefinitions = new Collection<CircleSearchingDefinition>();
             EdgeSearchingDefinitions = new Collection<EdgeSearchingDefinition>();
-            ObjectSearchingDefinitions = new Collection<ObjectSearchingDefinition>();
+            PartSearchingDefinitions = new Collection<PartSearchingDefinition>();
             DistanceBetweenLinesDefinitions = new Collection<DistanceBetweenLinesDefinition>();
             DistanceBetweenIntersectionPointsDefinitions = new Collection<DistanceBetweenLinesDefinition>();
             SurfaceDefinitions = new Collection<SurfaceDefinition>();
@@ -39,10 +39,15 @@ namespace Hdc.Mv.Inspection
         public bool Defects_Disabled { get; set; }
         public bool Defects_SaveCacheImage_Disabled { get; set; }
 
+        public string Surfaces_InspectorName { get; set; }
+
+        public bool PartSearching_Disabled { get; set; }
+        public bool PartSearching_SaveCacheImage_Disabled { get; set; }
+
         public Collection<CircleSearchingDefinition> CoordinateCircles { get; set; }
         public Collection<EdgeSearchingDefinition> CoordinateEdges { get; set; }
         public Collection<EdgeSearchingDefinition> EdgeSearchingDefinitions { get; set; }
-        public Collection<ObjectSearchingDefinition> ObjectSearchingDefinitions { get; set; }
+        public Collection<PartSearchingDefinition> PartSearchingDefinitions { get; set; }
         public Collection<CircleSearchingDefinition> CircleSearchingDefinitions { get; set; }
         public Collection<DistanceBetweenLinesDefinition> DistanceBetweenLinesDefinitions { get; set; }
         public Collection<DistanceBetweenLinesDefinition> DistanceBetweenIntersectionPointsDefinitions { get; set; }

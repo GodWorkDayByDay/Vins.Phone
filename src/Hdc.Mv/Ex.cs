@@ -599,6 +599,5 @@ namespace Hdc.Mv
         {
             return new Line(line.X2, line.Y2, line.X1, line.Y1);
         }
-
     }
 }

@@ -74,6 +74,8 @@ namespace Hdc.Mv.Halcon
 
             var hImage = new HImage("byte", bitmapSource.PixelWidth, bitmapSource.PixelHeight, bufferPtr);
 
+            Marshal.FreeHGlobal(bufferPtr);
+
             return hImage;
         }
 
@@ -83,6 +85,30 @@ namespace Hdc.Mv.Halcon
             var imageFull1 = image1.FullDomain();
             var imageFull2 = image2.FullDomain();
             return imageFull1.AddImage(imageFull2, new HTuple(1), new HTuple(0));
+        }
+
+        public static void SaveTiffWithPaintRegion(this HObject imageHObject, HObject regionHObject, double foreground,
+                                                   double background, string fileName)
+        {
+            SaveTiffWithPaintRegion(new HImage(imageHObject), new HRegion(regionHObject), foreground, background, fileName);
+        }
+
+        public static void SaveTiffWithPaintRegion(this HImage image, HRegion region, double foreground, double background, string fileName)
+        {
+            var imagePainted = image.PaintRegion(region, foreground, "fill");
+            imagePainted.WriteImage("tiff", background, fileName);
+            imagePainted.Dispose();
+        }
+
+        public static void SaveTiff(this HObject imageHObject, double background, string fileName)
+        {
+            var image = new HImage(imageHObject);
+            image.WriteImage("tiff", background, fileName);
+        }
+
+        public static void SaveTiff(this HImage image, double background, string fileName)
+        {
+            image.WriteImage("tiff", background, fileName);
         }
     }
 }

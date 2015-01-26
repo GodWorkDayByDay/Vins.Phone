@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Windows;
+// ReSharper disable InconsistentNaming
 
 namespace Hdc.Mv.Inspection
 {
-    // ReSharper disable InconsistentNaming
     [Serializable]
-    public class ObjectSearchingDefinition
+    public class PartSearchingDefinition
     {
         public string Name { get; set; }
         public bool Domain_SaveCacheImageEnabled { get; set; }
 
+        public Line RoiLine { get; set; }
         public Line RoiRelativeLine { get; set; }
-        public double RoiRelativeLineWidth { get; set; }
+        public double RoiHalfWidth { get; set; }
 
+        public Line AreaLine { get; set; }
         public Line AreaRelativeLine { get; set; }
-        public double AreaRelativeLineWidth { get; set; }
+        public double AreaHalfWidth { get; set; }
 
         public IRegionExtractor RegionExtractor { get; set; }
         public bool RegionExtractor_Disabled { get; set; }
@@ -25,7 +27,7 @@ namespace Hdc.Mv.Inspection
         public bool ImageFilter_SaveCacheImageEnabled { get; set; }
 
         public IRegionExtractor AreaExtractor { get; set; }
-        public IRegionExtractor ObjectExtractor { get; set; }
+        public IRegionExtractor PartExtractor { get; set; }
     }
 }
 
