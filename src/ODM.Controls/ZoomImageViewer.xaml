@@ -13,7 +13,7 @@
             <Canvas Margin="0"
                     x:Name="Canvas"
                     Background="Transparent">
-                <Image Source="{Binding BitmapSource, ElementName=Root}"
+                <Image Source="{Binding BitmapSource, ElementName=Root, IsAsync=True}"
                        Stretch="None"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"

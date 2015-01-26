@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using HalconDotNet;
 using Hdc.Collections.Generic;
 using Hdc.Mv;
 using Hdc.Mv.Inspection;
@@ -16,11 +15,8 @@ using Omu.ValueInjecter;
 
 namespace ODM.Domain.Inspection
 {
-
     public class AdaptedInspector2 : IInspector
     {
-        //public IGeneralInspector _Inspector;
-
         public MachineConfig MachineConfig { get; set; }
 
         public void Dispose()
@@ -28,67 +24,21 @@ namespace ODM.Domain.Inspection
             _inspectionController.Dispose();
         }
 
-        private readonly IInspectionController _inspectionController = new InspectionController();
+        private readonly InspectionController _inspectionController = new InspectionController();
 
-        public bool Init()
-        {
-            //var schema = InspectionController.GetInspectionSchema();
-
-            var inspectorFactory = new Func<string, IGeneralInspector>(
-                name =>
-                {
-                    switch (name)
-                    {
-                        case "Sim":
-                            {
-                                var sim = new SimGeneralInspector();
-                                return sim;
-                            }
-                            break;
-                        case "Mil":
-                            {
-                                var mi = new MilGeneralInspector();
-                                int imageWidth = MachineConfig.MV_LineScanFrameWidth;
-                                int imageHeight = MachineConfig.MV_LineScanFrameHeight * MachineConfig.MV_LineScanMosaicCount;
-
-                                mi.Init(imageWidth, imageHeight);
-
-                                return mi;
-                            }
-                            break;
-                        case "Hal":
-                            {
-                                var hi = new HalconGeneralInspector();
-                                return hi;
-                            }
-                            break;
-                        default:
-                            throw new NotSupportedException("InspectionSchema.InspectorName not be set!");
-                    }
-                });
-
-            _inspectionController.SetInspectorFactory(inspectorFactory);
-
-            return true;
-        }
-
-        public bool LoadParameters()
-        {
-            return true;
-        }
-
-        public InspectionInfo Inspect(Hdc.Mv.ImageInfo imageInfo)
+        public InspectionInfo Inspect(HImage imageInfo)
         {
             _inspectionController
-                .StartInspect()
                 .SetInspectionSchema()
-                .SetImageInfo(imageInfo)
+                .SetImage(imageInfo)
                 .CreateCoordinate()
                 .Inspect()
                 ;
 
+            var result = _inspectionController.InspectionResult;
+
             var inspectionInfo = new InspectionInfo();
-            var originAResult = _inspectionController.InspectionResult.CoordinateCircles[0];
+//            var originAResult = _inspectionController.InspectionResult.CoordinateCircles[0];
 
             var coord = _inspectionController.Coordinate;
 

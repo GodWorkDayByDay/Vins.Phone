@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Hdc.Windows.Media.Imaging;
 using Microsoft.Practices.ServiceLocation;
@@ -109,8 +110,7 @@ namespace ODM.Domain.Inspection
                          + "SI" + surfaceInspectInfo.SurfaceTypeIndex + "."
                          + "_";
             var sii = ImageSaveLoadService.StoreImage(
-                fileName => surfaceInspectInfo.ImageInfo
-                    .ToBitmapSource()
+                fileName => surfaceInspectInfo.BitmapSource
                     .SaveToTiffAsync(fileName), prefix, ".tif");
             sii.SurfaceTypeIndex = surfaceInspectInfo.SurfaceTypeIndex;
             return sii;
@@ -125,6 +125,12 @@ namespace ODM.Domain.Inspection
                 return _imageSaveLoadService ??
                        (_imageSaveLoadService = ServiceLocator.Current.GetInstance<IImageSaveLoadService>());
             }
+        }
+
+        public static Task InspectImageFileAsync(this IInspectService inspectService, int surfaceTypeIndex, string fileName)
+        {
+            var task= Task.Run(() => inspectService.InspectImageFile(surfaceTypeIndex, fileName));
+            return task;
         }
     }
 }

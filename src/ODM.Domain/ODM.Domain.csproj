@@ -42,6 +42,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\sln\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="halcondotnet, Version=12.0.0.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\HalconDotNet\halcondotnet.dll</HintPath>
+    </Reference>
     <Reference Include="INIFileParser, Version=1.7.1.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\ini-parser\INIFileParser.dll</HintPath>
@@ -126,6 +130,7 @@
     </Compile>
     <Compile Include="Inspection.Events\GrabReadyPlcEvent.cs" />
     <Compile Include="Inspection\AdaptedInspector2.cs" />
+    <Compile Include="Inspection\IInspector.cs" />
     <Compile Include="Inspection\IInspectorProvider.cs" />
     <Compile Include="Inspection\IInspectService.cs" />
     <Compile Include="Inspection\ImageInfo.cs" />
@@ -133,6 +138,7 @@
     <Compile Include="Inspection\InspectInfo.cs" />
     <Compile Include="Inspection\InspectService.cs" />
     <Compile Include="Inspection\MeasurementInfo.cs" />
+    <Compile Include="Inspection\SimInspector.cs" />
     <Compile Include="Inspection\SurfaceInspectInfo.cs" />
     <Compile Include="Reporting\IReportExporter.cs" />
     <Compile Include="Reporting\ReportExportFailedEvent.cs" />
@@ -186,10 +192,6 @@
     <ProjectReference Include="..\Hdc.Mercury\Hdc.Mercury.csproj">
       <Project>{D72F14A9-4848-4405-AA6E-99EBF8213609}</Project>
       <Name>Hdc.Mercury</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Hdc.Mv.Inspection.Halcon\Hdc.Mv.Inspection.Halcon.csproj">
-      <Project>{11AB1F7D-7638-47B3-8D93-9EE07CDFB746}</Project>
-      <Name>Hdc.Mv.Inspection.Halcon</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hdc.Mv.Inspection.Mil.Interop\Hdc.Mv.Inspection.Mil.Interop.csproj">
       <Project>{FAECBE0C-329A-4510-9B73-371515E411CC}</Project>

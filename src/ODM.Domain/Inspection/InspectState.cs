@@ -6,6 +6,8 @@
         Ready,
         Grabbing,
         Grabbed,
+        Calibrating,
+        Calibrated,
         Inspecting,
 //        Inspected,
         InspectedWithAccepted,

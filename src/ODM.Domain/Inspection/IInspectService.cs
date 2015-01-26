@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reactive;
+using System.Windows.Media.Imaging;
+using HalconDotNet;
 
 namespace ODM.Domain.Inspection
 {
@@ -8,6 +10,10 @@ namespace ODM.Domain.Inspection
         IObservable<int> AcquisitionStartedEvent { get; }
 
         IObservable<ImageInfo> AcquisitionCompletedEvent { get; }
+
+        IObservable<int> CalibrationStartedEvent { get; }
+
+        IObservable<ImageInfo> CalibrationCompletedEvent { get; }
 
         IObservable<int> InspectionStartedEvent { get; }
 

@@ -80,14 +80,14 @@ namespace ODM.Presentation.ViewModels.Inspection
             for (int i = 0; i < surfaceCount; i++)
             {
                 var sm = new SurfaceMonitorViewModel
-                {
-                    Index = i,
-                    SurfaceTypeIndex = i,
-                    DisplayDefectInfo = true,
-                    DisplayAllDefectInfos = false,
-                    DisplayMeasurementInfo = true,
-                    DisplayAllMeasurementInfos = false,
-                };
+                         {
+                             Index = i,
+                             SurfaceTypeIndex = i,
+                             DisplayDefectInfo = true,
+                             DisplayAllDefectInfos = false,
+                             DisplayMeasurementInfo = true,
+                             DisplayAllMeasurementInfos = false,
+                         };
                 SurfaceMonitors.Add(sm);
             }
 
@@ -112,7 +112,7 @@ namespace ODM.Presentation.ViewModels.Inspection
                     DefectInfosCollectionView.Filter =
                         x =>
                         {
-                            var di = (DefectInfoViewModel)x;
+                            var di = (DefectInfoViewModel) x;
                             return di.SurfaceTypeIndex == SelectedSurfaceMonitor.SurfaceTypeIndex;
                         };
                     DefectInfosCollectionView.Refresh();
@@ -127,7 +127,7 @@ namespace ODM.Presentation.ViewModels.Inspection
                     MeasurementInfosCollectionView.Filter =
                         x =>
                         {
-                            var di = (MeasurementInfoViewModel)x;
+                            var di = (MeasurementInfoViewModel) x;
                             return di.SurfaceTypeIndex == SelectedSurfaceMonitor.SurfaceTypeIndex;
                         };
                     MeasurementInfosCollectionView.Refresh();
@@ -148,17 +148,19 @@ namespace ODM.Presentation.ViewModels.Inspection
             ShowGroupMeasurementsCommand = new DelegateCommand(
                 OnShowGroupMeasurementsCommand);
 
-            InspectImageFileCommand = new DelegateCommand(
-                () =>
+            InspectImageFileCommand = new DelegateCommand(async () =>
                 {
                     int surfaceTypeIndex = SelectedSurfaceMonitor.SurfaceTypeIndex;
 
                     var dialog = new OpenFileDialog()
-                    {
-                        Title = "Load image to surface " + surfaceTypeIndex,
-                        Filter = "BMP files (*.bmp)|*.bmp|" +
-                                 "All files (*.*)|*.*",
-                    };
+                                 {
+                                     Title = "Load image to surface " + surfaceTypeIndex,
+                                     Filter =
+//                                     "BMP files (*.bmp)|*.bmp|" +
+//                                              "TIFF files (*.tif)|*.tif|" +
+//                                              "JPG files (*.jpg)|*.jpg|" +
+                                         "All files (*.*)|*.*",
+                                 };
                     var result = dialog.ShowDialog();
 
                     if (!result.HasValue || !result.Value) return;
@@ -168,7 +170,7 @@ namespace ODM.Presentation.ViewModels.Inspection
                     MeasurementInfos.Clear();
 
                     var fileName = dialog.FileName;
-                    InspectService.InspectImageFile(surfaceTypeIndex, fileName);
+                    await InspectService.InspectImageFileAsync(surfaceTypeIndex, fileName);
                 }, () => SelectedSurfaceMonitor != null);
 
             StartCommand = new DelegateCommand(
@@ -254,11 +256,12 @@ namespace ODM.Presentation.ViewModels.Inspection
 
             InspectService.AcquisitionStartedEvent
                 .ObserveOnDispatcher()
-                .Subscribe(x =>
+                .Subscribe(surfaceIndex =>
                            {
-                               var surfaceMonitor = SurfaceMonitors[x];
+                               var surfaceMonitor = SurfaceMonitors[surfaceIndex];
                                surfaceMonitor.BitmapSource = null;
                                surfaceMonitor.InspectState = InspectState.Grabbing;
+                               Debug.WriteLine("InspectState.Grabbing");
                                //                               surfaceMonitor.MeasurementInfos.Clear();
                                //                               surfaceMonitor.DefectInfos.Clear();
 
@@ -267,34 +270,58 @@ namespace ODM.Presentation.ViewModels.Inspection
 
             InspectService.AcquisitionCompletedEvent
                 .ObserveOnDispatcher()
+                .Subscribe(imageInfo =>
+                           {
+                               var surfaceMonitor = SurfaceMonitors[imageInfo.SurfaceTypeIndex];
+                               surfaceMonitor.BitmapSource = null;
+                               surfaceMonitor.InspectState = InspectState.Grabbed;
+                               Debug.WriteLine("InspectState.Grabbed");
+
+                               UpdateCommandStates();
+                           });
+
+            InspectService.CalibrationStartedEvent
+                .ObserveOnDispatcher()
+                .Subscribe(async surfaceIndex =>
+                                 {
+                                     var surfaceMonitor = SurfaceMonitors[surfaceIndex];
+                                     surfaceMonitor.BitmapSource = null;
+                                     surfaceMonitor.InspectState = InspectState.Calibrating;
+                                     Debug.WriteLine("InspectState.Calibrating");
+
+                                     UpdateCommandStates();
+                                 });
+
+            InspectService.CalibrationCompletedEvent
+                .ObserveOnDispatcher()
                 .Subscribe(async imageInfo =>
-                {
-                    var surfaceMonitor = SurfaceMonitors[imageInfo.SurfaceTypeIndex];
-                    surfaceMonitor.InspectState = InspectState.Grabbed;
-                    Debug.WriteLine("InspectState.Grabbed");
+                                 {
+                                     var surfaceMonitor = SurfaceMonitors[imageInfo.SurfaceTypeIndex];
+                                     surfaceMonitor.InspectState = InspectState.Calibrated;
+                                     Debug.WriteLine("InspectState.Calibrated");
 
-                    var bs = await imageInfo.ToBitmapSourceAsync();
-                    surfaceMonitor.BitmapSource = bs;
+                                     var bs = await imageInfo.ToBitmapSourceAsync();
+                                     surfaceMonitor.BitmapSource = bs;
 
-                    UpdateCommandStates();
-                });
+                                     UpdateCommandStates();
+                                 });
 
             InspectService.InspectionStartedEvent
                 .ObserveOnDispatcher()
                 .Subscribe(x =>
-                {
-                    var surfaceMonitor = SurfaceMonitors[x];
-                    surfaceMonitor.InspectState = InspectState.Inspecting;
-                    Debug.WriteLine("InspectState.Inspecting");
+                           {
+                               var surfaceMonitor = SurfaceMonitors[x];
+                               surfaceMonitor.InspectState = InspectState.Inspecting;
+                               Debug.WriteLine("InspectState.Inspecting");
 
-                    UpdateCommandStates();
-                });
+                               UpdateCommandStates();
+                           });
 
             InspectService.InspectionCompletedEvent
                 .ObserveOnDispatcher()
                 .Subscribe(inspectInfo =>
                            {
-                               if (_inspectionCounter % 1 == 0)
+                               if (_inspectionCounter%1 == 0)
                                {
                                    DefectInfos.Clear();
 //                                   MeasurementInfos.Clear();
@@ -418,7 +445,7 @@ namespace ODM.Presentation.ViewModels.Inspection
 
             Predicate<object> filter = x =>
                                        {
-                                           var mi = ((MeasurementInfoViewModel)x);
+                                           var mi = ((MeasurementInfoViewModel) x);
                                            return mi.SurfaceTypeIndex == surfaceTypeIndex && mi.GroupIndex == groupIndex;
                                        };
 

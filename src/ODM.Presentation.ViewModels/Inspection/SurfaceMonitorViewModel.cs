@@ -337,6 +337,10 @@ namespace ODM.Presentation.ViewModels.Inspection
                     return "采集中";
                 case InspectState.Grabbed:
                     return "采集完成";
+                case InspectState.Calibrating:
+                    return "校准中";
+                case InspectState.Calibrated:
+                    return "校准完成";
                 case InspectState.Inspecting:
                     return "检测中";
                 case InspectState.InspectedWithAccepted:

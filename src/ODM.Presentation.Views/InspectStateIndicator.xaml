@@ -44,11 +44,29 @@
                         </ei:ChangePropertyAction>
                     </ei:DataTrigger>
                     <ei:DataTrigger Binding="{Binding InspectState, ElementName=Root}"
+                                    Value="Calibrating">
+                        <ei:ChangePropertyAction TargetName="InspectStateRectangle"
+                                                 PropertyName="Fill">
+                            <ei:ChangePropertyAction.Value>
+                                <SolidColorBrush Color="White" />
+                            </ei:ChangePropertyAction.Value>
+                        </ei:ChangePropertyAction>
+                    </ei:DataTrigger>
+                    <ei:DataTrigger Binding="{Binding InspectState, ElementName=Root}"
+                                    Value="Calibrated">
+                        <ei:ChangePropertyAction TargetName="InspectStateRectangle"
+                                                 PropertyName="Fill">
+                            <ei:ChangePropertyAction.Value>
+                                <SolidColorBrush Color="Yellow" />
+                            </ei:ChangePropertyAction.Value>
+                        </ei:ChangePropertyAction>
+                    </ei:DataTrigger>
+                    <ei:DataTrigger Binding="{Binding InspectState, ElementName=Root}"
                                     Value="Inspecting">
                         <ei:ChangePropertyAction TargetName="InspectStateRectangle"
                                                  PropertyName="Fill">
                             <ei:ChangePropertyAction.Value>
-                                <SolidColorBrush Color="Gold" />
+                                <SolidColorBrush Color="White" />
                             </ei:ChangePropertyAction.Value>
                         </ei:ChangePropertyAction>
                     </ei:DataTrigger>

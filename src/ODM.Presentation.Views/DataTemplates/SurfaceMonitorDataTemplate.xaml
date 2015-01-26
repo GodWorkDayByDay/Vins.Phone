@@ -60,7 +60,7 @@
                                     Scale="1"
                                     X="0"
                                     Y="0"
-                                    BitmapSource="{Binding BitmapSource}"
+                                    BitmapSource="{Binding BitmapSource, IsAsync=True}"
                                     ClickCommand="{Binding DataContext.SelectSurfaceMonitorCommand, ElementName=SurfaceMonitorsGrid}"
                                     ClickCommandParameter="{Binding }"
                                     DisplayAreaElement="{Binding ElementName=SurfaceMonitorsGrid}"
