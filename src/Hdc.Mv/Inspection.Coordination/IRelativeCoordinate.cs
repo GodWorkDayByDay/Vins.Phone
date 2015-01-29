@@ -9,5 +9,7 @@ namespace Hdc.Mv
         Vector GetOriginalVector(Vector relativeVector);
 
         Vector OriginOffset { get; set; }
+
+        double GetCoordinateAngle();
     }
 }

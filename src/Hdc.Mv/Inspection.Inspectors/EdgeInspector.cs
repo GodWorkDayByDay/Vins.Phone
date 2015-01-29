@@ -10,113 +10,162 @@ using Hdc.Windows.Media.Imaging;
 
 namespace Hdc.Mv.Inspection
 {
-    class EdgeInspector : IEdgeInspector
+    internal class EdgeInspector : IEdgeInspector
     {
-        private string _cacheImageDir = typeof(Mv.Ex).Assembly.GetAssemblyDirectoryPath() + "\\CacheImages";
+        private string _cacheImageDir = typeof (Mv.Ex).Assembly.GetAssemblyDirectoryPath() + "\\CacheImages";
 
-        public IList<EdgeSearchingResult> SearchEdges(HImage image, IList<EdgeSearchingDefinition> edgeSearchingDefinitions)
+        public EdgeSearchingResult SearchEdge(HImage image, EdgeSearchingDefinition definition)
         {
-            var sr = new EdgeSearchingResultCollection();
+            var esr = new EdgeSearchingResult
+                      {
+                          Definition = definition.DeepClone(),
+                          Name = definition.Name
+                      };
 
-            foreach (var esd in edgeSearchingDefinitions)
+            if (esr.Definition.ImageFilter_Disabled)
+                esr.Definition.ImageFilter = null;
+
+            if (esr.Definition.RegionExtractor_Disabled)
+                esr.Definition.RegionExtractor = null;
+
+            var rectImage = HDevelopExport.Singletone.ChangeDomainForRectangle(
+                image,
+                definition.Line,
+                definition.ROIWidth/2.0);
+
+            if (definition.Domain_SaveCacheImageEnabled)
             {
-                var esr = new EdgeSearchingResult();
-                esr.Definition = esd.DeepClone();
-                esr.Name = esd.Name;
-                int offsetX = 0;
-                int offsetY = 0;
-                HImage enhImage = null;
-                HRegion domain;
-
-                if (esr.Definition.ImageFilter_Disabled)
-                    esr.Definition.ImageFilter = null;
-                if (esr.Definition.RegionExtractor_Disabled)
-                    esr.Definition.RegionExtractor = null;
-
-
-                var reducedImage = HDevelopExport.Singletone.ChangeDomainForRectangle(
-                    image,
-                    line: esd.Line,
-                    hv_RoiWidthLen: esd.ROIWidth / 2.0,
-                    margin: 0.5);
-
-                if (esd.Domain_SaveCacheImageEnabled)
-                    reducedImage.CropDomain()
-                        .ToBitmapSource()
-                        .SaveToJpeg(_cacheImageDir + "\\SearchEdges_" + esd.Name + "_1_Domain.jpg");
-
-                if (esr.Definition.RegionExtractor != null)
-                {
-                    var oldDomain = reducedImage.GetDomain();
-                    domain = esr.Definition.RegionExtractor.Process(reducedImage, oldDomain);
-                    oldDomain.Dispose();
-
-                    if (esd.ImageFilter_SaveCacheImageEnabled)
-                        reducedImage
-                            .ReduceDomain(domain)
-                            .CropDomain()
-                            .ToBitmapSource()
-                            .SaveToJpeg(_cacheImageDir + "\\SearchEdges_" + esd.Name + "_2_ROI.jpg");
-                }
-                else
-                {
-                    domain = reducedImage.GetDomain();
-                }
-
-                offsetX = domain.GetColumn1();
-                offsetY = domain.GetRow1();
-                var croppedImage = reducedImage.CropDomain();
-
-                if (esr.Definition.ImageFilter != null)
-                {
-                    var sw = new NotifyStopwatch("ImageFilter");
-                    sw.Start();
-                    enhImage = esr.Definition.ImageFilter.Process(croppedImage);
-                    sw.Stop();
-                    sw.Dispose();
-                }
-                else
-                {
-                    enhImage = croppedImage;
-                }
-
-                if (esd.ImageFilter_SaveCacheImageEnabled)
-                {
-                    enhImage.CropDomain()
-                        .ToBitmapSource()
-                        .SaveToJpeg(_cacheImageDir + "\\SearchEdges_" + esd.Name + "_3_ImageFilter.jpg");
-
-                    var paintedImage = enhImage.PaintGrayOffset(image, offsetY, offsetX);
-                    paintedImage
-                        .ToBitmapSource()
-                        .SaveToJpeg(_cacheImageDir + "\\SearchEdges_" + esd.Name + "_3_ImageFilter_PaintGrayOffset.jpg");
-                    paintedImage.Dispose();
-                }
-
-
-                Line offsetLine = new Line(esd.Line.X1 - offsetX,
-                    esd.Line.Y1 - offsetY, esd.Line.X2 - offsetX,
-                    esd.Line.Y2 - offsetY);
-
-                var line = esd.LineExtractor.FindLine(enhImage, offsetLine);
-
-                var translatedLine = new Line(line.X1 + offsetX,
-                    line.Y1 + offsetY, line.X2 + offsetX,
-                    line.Y2 + offsetY);
-
-                esr.EdgeLine = translatedLine;
-
-                if (Math.Abs(line.X1) < 0.0000001 || Math.Abs(line.X2) < 0.0000001 ||
-                    Math.Abs(line.Y1) < 0.0000001 || Math.Abs(line.Y2) < 0.0000001)
-                {
-                    esr.IsNotFound = true;
-                    Debug.WriteLine("Edge not found: " + esr.Name);
-                }
-
-                sr.Add(esr);
+                rectImage.WriteImageOfTiffLzwOfCropDomain(
+                    _cacheImageDir + "\\SearchEdges_" + definition.Name + "_1_Domain_Cropped.tif");
             }
 
-            return sr;
+            // RegionExtractor
+            HImage roiImage = null;
+
+            if (esr.Definition.RegionExtractor != null)
+            {
+                var rectDomain = rectImage.GetDomain();
+                HRegion roiDomain;
+                if (!esr.Definition.RegionExtractor_CropDomainEnabled)
+                {
+                    roiDomain = esr.Definition.RegionExtractor.Extract(rectImage);
+
+                    if (definition.RegionExtractor_SaveCacheImageEnabled)
+                    {
+                        rectImage.WriteImageOfTiffLzwOfCropDomain(roiDomain,
+                            _cacheImageDir + "\\SearchEdges_" + definition.Name + "_2_ROI.tif");
+                    }
+                    roiImage = rectImage.ReduceDomain(roiDomain);
+                    rectImage.Dispose();
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                    var domainOffsetRow1 = rectDomain.GetRow1();
+                    var domainOffsetColumn1 = rectDomain.GetColumn1();
+
+                    var croppedRectImage = rectImage.CropDomain();
+                    var croppedRoiDomain = esr.Definition.RegionExtractor.Extract(croppedRectImage);
+                    roiDomain = croppedRoiDomain.MoveRegion(domainOffsetRow1, domainOffsetColumn1);
+
+                    throw new NotImplementedException();
+                }
+            }
+            else
+            {
+                roiImage = rectImage;
+            }
+
+            // ImageFilter
+            HImage filterImage = null;
+
+            if (esr.Definition.ImageFilter != null)
+            {
+                if (!esr.Definition.ImageFilter_CropDomainEnabled)
+                {
+                    var sw = new NotifyStopwatch("ImageFilter");
+                    filterImage = esr.Definition.ImageFilter.Process(roiImage);
+                    sw.Dispose();
+
+                    roiImage.Dispose();
+
+                    if (definition.ImageFilter_SaveCacheImageEnabled)
+                    {
+                        var cropDomain = filterImage.CropDomain();
+                        cropDomain.WriteImageOfTiffLzw(_cacheImageDir + "\\SearchEdges_" + definition.Name +
+                                                       "_3_ImageFilter_Cropped.tif");
+                        cropDomain.Dispose();
+
+                        var paintedImage = cropDomain.PaintGrayOffset(image, 0, 0);
+                        paintedImage.WriteImageOfJpeg(_cacheImageDir + "\\SearchEdges_" + definition.Name +
+                                                      "_3_ImageFilter_PaintGrayOffset.jpg");
+                        paintedImage.Dispose();
+                    }
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                    var roiDomain = roiImage.GetDomain();
+                    int offsetX = 0;
+                    int offsetY = 0;
+                    offsetX = roiDomain.GetColumn1();
+                    offsetY = roiDomain.GetRow1();
+                    var croppedImage = roiImage.CropDomain();
+
+                    var sw = new NotifyStopwatch("ImageFilter");
+                    filterImage = esr.Definition.ImageFilter.Process(croppedImage);
+                    sw.Dispose();
+
+                    if (definition.ImageFilter_SaveCacheImageEnabled)
+                    {
+                        var cropDomain = filterImage.CropDomain();
+                        cropDomain.WriteImageOfTiffLzw(_cacheImageDir + "\\SearchEdges_" + definition.Name +
+                                                       "_3_ImageFilter_Cropped.tif");
+                        cropDomain.Dispose();
+
+                        var paintedImage = filterImage.PaintGrayOffset(image, offsetY, offsetX);
+                        paintedImage.WriteImageOfJpeg(_cacheImageDir + "\\SearchEdges_" + definition.Name +
+                                                      "_3_ImageFilter_PaintGrayOffset.jpg");
+                        paintedImage.Dispose();
+                    }
+
+
+                    /*                        Line offsetLine = new Line(esd.Line.X1 - offsetX,
+                                                esd.Line.Y1 - offsetY, esd.Line.X2 - offsetX,
+                                                esd.Line.Y2 - offsetY);
+
+                                            var line = esd.LineExtractor.FindLine(filterImage, offsetLine);
+
+                                            var translatedLine = new Line(line.X1 + offsetX,
+                                                line.Y1 + offsetY, line.X2 + offsetX,
+                                                line.Y2 + offsetY);
+
+                                            esr.EdgeLine = translatedLine;
+
+                                            if (line.IsEmpty)
+                                            {
+                                                esr.IsNotFound = true;
+                                                Debug.WriteLine("Edge not found: " + esr.Name);
+                                            }*/
+
+                    throw new NotImplementedException();
+                }
+            }
+            else
+            {
+                filterImage = roiImage;
+            }
+
+            var line = definition.LineExtractor.FindLine(filterImage, definition.Line);
+
+            if (line.IsEmpty)
+            {
+                esr.IsNotFound = true;
+                Debug.WriteLine("Edge not found: " + esr.Name);
+            }
+
+            esr.EdgeLine = line;
+            return esr;
         }
     }
 }

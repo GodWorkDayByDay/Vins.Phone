@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using HalconDotNet;
@@ -11,139 +12,102 @@ namespace Hdc.Mv.Inspection
     {
         private string _cacheImageDir = typeof(Mv.Ex).Assembly.GetAssemblyDirectoryPath() + "\\CacheImages";
 
-//        public CircleInspector()
-//        {
-//            var dir = typeof (Mv.Ex).Assembly.GetAssemblyDirectoryPath();
-//            _cacheImageDir = Path.Combine(dir, "CacheImages");
-//
-//            if (!Directory.Exists(_cacheImageDir))
-//            {
-//                Directory.CreateDirectory(_cacheImageDir);
-//            }
-//        }
-
-        public IList<CircleSearchingResult> SearchCircles(HImage image,
-                                                          IList<CircleSearchingDefinition> circleSearchingDefinitions)
+        public CircleSearchingResult SearchCircle(HImage image, CircleSearchingDefinition definition)
         {
-            var result = new CircleSearchingResultCollection();
-
-            // ExtractCircle
-            int index = 0;
-            foreach (var circleDefinition in circleSearchingDefinitions)
+            var circleSearchingResult = new CircleSearchingResult
             {
-                var circleSearchingResult = new CircleSearchingResult
-                                            {
-                                                Definition = circleDefinition.DeepClone(),
-                                                Name = circleDefinition.Name,
-                                                Index = index
-                                            };
-                int offsetX = 0;
-                int offsetY = 0;
-                HImage enhImage = null;
+                Definition = definition.DeepClone(),
+                Name = definition.Name,
+//                Index = index
+            };
 
-                if (circleDefinition.ImageFilter_Disabled)
-                    circleDefinition.ImageFilter = null;
-                if (circleDefinition.RegionExtractor_Disabled)
-                    circleDefinition.RegionExtractor = null;
+            if (definition.ImageFilter_Disabled)
+                definition.ImageFilter = null;
 
+            //                if (circleDefinition.RegionExtractor_Disabled)
+            //                    circleDefinition.RegionExtractor = null;
 
-                var topLeftX = circleDefinition.CenterX - circleDefinition.OuterRadius;
-                var topLeftY = circleDefinition.CenterY - circleDefinition.OuterRadius;
-                var bottomRightX = circleDefinition.CenterX + circleDefinition.OuterRadius;
-                var bottomRightY = circleDefinition.CenterY + circleDefinition.OuterRadius;
+            var topLeftX = definition.CenterX - definition.OuterRadius;
+            var topLeftY = definition.CenterY - definition.OuterRadius;
+            var bottomRightX = definition.CenterX + definition.OuterRadius;
+            var bottomRightY = definition.CenterY + definition.OuterRadius;
 
-                var reg = new HRegion();
-                reg.GenRectangle1(topLeftY, topLeftX, bottomRightY, bottomRightX);
-                var reducedImage = image.ReduceDomain(reg);
-                reg.Dispose();
+            var reg = new HRegion();
+            reg.GenRectangle1(topLeftY, topLeftX, bottomRightY, bottomRightX);
+            var reducedImage = image.ReduceDomain(reg);
+            reg.Dispose();
 
-                //                var reducedImage = _hDevelopExportHelper.HImage.ReduceDomainForRing(
-                //                    circleDefinition.CenterX,
-                //                    circleDefinition.CenterY,
-                //                    circleDefinition.InnerRadius,
-                //                    circleDefinition.OuterRadius);
+            if (definition.Domain_SaveCacheImageEnabled)
+                reducedImage.WriteImageOfTiffLzwOfCropDomain(
+                    _cacheImageDir + "\\SearchCircles_" + definition.Name + "_1_Domain.tif");
 
-                if (circleDefinition.Domain_SaveCacheImageEnabled)
-                    reducedImage.CropDomain()
-                        .ToBitmapSource()
-                        .SaveToJpeg(_cacheImageDir + "\\SearchCircles_" + circleDefinition.Name + "_1_Domain.jpg");
+            /*                HRegion domain;
+                            if (circleDefinition.RegionExtractor != null)
+                            {
+                                throw new NotImplementedException();
+                                var oldDomain = reducedImage.GetDomain();
+                                domain = circleDefinition.RegionExtractor.Process(reducedImage);
+                                oldDomain.Dispose();
 
-                HRegion domain;
-                if (circleDefinition.RegionExtractor != null)
+                                if (circleDefinition.ImageFilter_SaveCacheImageEnabled)
+                                    reducedImage
+                                        .ReduceDomain(domain)
+                                        .CropDomain()
+                                        .ToBitmapSource()
+                                        .SaveToTiff(_cacheImageDir + "\\SearchCircles_" + circleDefinition.Name + "_2_ROI.tif");
+                            }
+                            else
+                            {
+                                domain = reducedImage.GetDomain();
+                            }*/
+
+            HRegion domain = reducedImage.GetDomain();
+            int offsetX = domain.GetColumn1();
+            int offsetY = domain.GetRow1();
+
+            var roiImage = reducedImage.CropDomain();
+
+            HImage filterImage = null;
+            if (definition.ImageFilter != null)
+            {
+                filterImage = definition.ImageFilter.Process(roiImage);
+
+                if (definition.ImageFilter_SaveCacheImageEnabled)
                 {
-                    var oldDomain = reducedImage.GetDomain();
-                    domain = circleDefinition.RegionExtractor.Process(reducedImage, oldDomain);
-                    oldDomain.Dispose();
+                    filterImage.WriteImageOfTiffLzwOfCropDomain(
+                        _cacheImageDir + "\\SearchCircles_" + definition.Name + "_3_ImageFilter.tif");
 
-                    if (circleDefinition.ImageFilter_SaveCacheImageEnabled)
-                        reducedImage
-                            .ReduceDomain(domain)
-                            .CropDomain()
-                            .ToBitmapSource()
-                            .SaveToJpeg(_cacheImageDir + "\\SearchCircles_" + circleDefinition.Name + "_2_ROI.jpg");
+                    //
+                    var paintedImage = filterImage.PaintGrayOffset(image, offsetY, offsetX);
+                    paintedImage.WriteImageOfJpeg(_cacheImageDir + "\\SearchCircles_" + definition.Name +
+                                    "_3_ImageFilter_PaintGrayOffset.jpg");
+                    paintedImage.Dispose();
                 }
-                else
-                {
-                    domain = reducedImage.GetDomain();
-                }
-
-                offsetX = domain.GetColumn1();
-                offsetY = domain.GetRow1();
-
-                var croppedImage = reducedImage.CropDomain();
-
-                if (circleDefinition.ImageFilter != null)
-                {
-                    enhImage = circleDefinition.ImageFilter.Process(croppedImage);
-
-                    if (circleDefinition.ImageFilter_SaveCacheImageEnabled)
-                    {
-                        var cropDomain = enhImage.CropDomain();
-                        cropDomain
-                            .ToBitmapSource()
-                            .SaveToJpeg(_cacheImageDir + "\\SearchCircles_" + circleDefinition.Name +
-                                        "_3_ImageFilter.jpg");
-                        cropDomain.Dispose();
-
-                        //
-                        var paintedImage = enhImage.PaintGrayOffset(image, offsetY, offsetX);
-                        paintedImage
-                            .ToBitmapSource()
-                            .SaveToJpeg(_cacheImageDir + "\\SearchCircles_" + circleDefinition.Name +
-                                        "_3_ImageFilter_PaintGrayOffset.jpg");
-                        paintedImage.Dispose();
-                    }
-                }
-                else
-                {
-                    enhImage = croppedImage;
-                }
-
-                var offsetCenterX = circleDefinition.CenterX - offsetX;
-                var offsetCenterY = circleDefinition.CenterY - offsetY;
-
-                var circle = circleDefinition.CircleExtractor.FindCircle(enhImage,
-                    offsetCenterX, offsetCenterY, circleDefinition.InnerRadius, circleDefinition.OuterRadius);
-
-
-                if (circle.IsEmpty)
-                {
-                    circleSearchingResult.HasError = true;
-                    circleSearchingResult.IsNotFound = true;
-                    //                    circleSearchingResult.Circle = new Circle(circleDefinition.CenterX, circleDefinition.CenterY);
-                }
-                else
-                {
-                    var newCircle = new Circle(circle.CenterX + offsetX, circle.CenterY + offsetY, circle.Radius);
-                    circleSearchingResult.Circle = newCircle;
-                }
-
-                result.Add(circleSearchingResult);
-
-                index++;
+            }
+            else
+            {
+                filterImage = roiImage;
             }
 
-            return result;
+            var offsetCenterX = definition.CenterX - offsetX;
+            var offsetCenterY = definition.CenterY - offsetY;
+
+            var circle = definition.CircleExtractor.FindCircle(filterImage,
+                offsetCenterX, offsetCenterY, definition.InnerRadius, definition.OuterRadius);
+
+            if (circle.IsEmpty)
+            {
+                circleSearchingResult.HasError = true;
+                circleSearchingResult.IsNotFound = true;
+                //                    circleSearchingResult.Circle = new Circle(circleDefinition.CenterX, circleDefinition.CenterY);
+            }
+            else
+            {
+                var newCircle = new Circle(circle.CenterX + offsetX, circle.CenterY + offsetY, circle.Radius);
+                circleSearchingResult.Circle = newCircle;
+            }
+
+            return circleSearchingResult;
         }
     }
 }

@@ -265,7 +265,7 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
                         //
                         //                var targetResult = inspector.Search(imageInfo, targetTask);
                         //
-                        //                targetResult.CircleSearchingResults.UpdateRelativeCircles(coord);
+                        //                targetResult.CircleSearchingResults.UpdateRelativeCoordinate(coord);
 
                     }, imageInfo);
                 tasks.Add(task);

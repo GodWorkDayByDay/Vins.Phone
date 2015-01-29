@@ -599,5 +599,13 @@ namespace Hdc.Mv
         {
             return new Line(line.X2, line.Y2, line.X1, line.Y1);
         }
+
+        public static Line GetLine(IRoiRectangle roiRectangle)
+        {
+            return new Line(roiRectangle.StartX,
+                roiRectangle.StartY,
+                roiRectangle.EndX,
+                roiRectangle.EndY);
+        }
     }
 }

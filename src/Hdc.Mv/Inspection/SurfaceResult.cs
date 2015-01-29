@@ -7,6 +7,8 @@ namespace Hdc.Mv.Inspection
     [Serializable]
     public class SurfaceResult
     {
+        public int Index { get; set; }
+
         public SurfaceDefinition Definition { get; set; }
 
         public HRegion IncludeRegion { get; set; }

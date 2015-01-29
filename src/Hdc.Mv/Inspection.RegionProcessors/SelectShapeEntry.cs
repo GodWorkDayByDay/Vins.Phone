@@ -3,13 +3,13 @@ using System;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class SharpSelectorEntry
+    public class SelectShapeEntry
     {
-        public SharpSelectorEntry()
+        public SelectShapeEntry()
         {
         }
 
-        public SharpSelectorEntry(SharpFeature feature, double min, double max)
+        public SelectShapeEntry(SharpFeature feature, double min, double max)
         {
             Feature = feature;
             Min = min;

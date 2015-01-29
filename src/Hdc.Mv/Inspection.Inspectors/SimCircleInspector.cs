@@ -33,5 +33,23 @@ namespace Hdc.Mv.Inspection
 
             return searchingResult;
         }
+
+        public CircleSearchingResult SearchCircle(HImage image, CircleSearchingDefinition definition)
+        {
+            Random random = new Random();
+            int randomFactor = 0;
+            var csr = new CircleSearchingResult()
+            {
+//                Index = i,
+                Name = definition.Name,
+                Circle =
+                    new Circle(definition.CenterX + random.NextDouble() * randomFactor,
+                    definition.CenterY + random.NextDouble() * randomFactor,
+                    (definition.InnerRadius + definition.OuterRadius) / 2.0 + random.NextDouble() * randomFactor),
+                Definition = definition.DeepClone(),
+            };
+
+            return csr;
+        }
     }
 }

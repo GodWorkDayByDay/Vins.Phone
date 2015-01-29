@@ -1,4 +1,6 @@
-﻿namespace MeasurementTestApp
+﻿using System.Windows.Media;
+
+namespace MeasurementTestApp
 {
     public class RegionIndicatorViewModel
     {
@@ -7,5 +9,8 @@
         public double EndPointX { get; set; }
         public double EndPointY { get; set; }
         public double RegionWidth { get; set; }
+        public Brush Stroke { get; set; }
+        public DoubleCollection StrokeDashArray { get; set; }
+        public double StrokeThickness { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace Hdc.Mv.Inspection
             return new Vector(v.X*1000/16.0, v.Y*1000/16.0);
         }
 
-        public static void UpdateRelativeCircle(this CircleSearchingResult circleResult,
+        public static void UpdateRelativeCoordinate(this CircleSearchingResult circleResult,
                                                 IRelativeCoordinate relativeCoordinate)
         {
             var actualCenterPoint = circleResult.Circle.GetCenterPoint();
@@ -40,26 +40,26 @@ namespace Hdc.Mv.Inspection
             circleResult.RelativeCircle = new Circle(relativePoint, circleResult.Circle.Radius);
         }
 
-        public static void UpdateRelativeCircles(this IEnumerable<CircleSearchingResult> circleResults,
-                                                IRelativeCoordinate relativeCoordinate)
+        public static void UpdateRelativeCoordinate(this IEnumerable<CircleSearchingResult> circleResults,
+                                                 IRelativeCoordinate relativeCoordinate)
         {
             foreach (var circleResult in circleResults)
             {
-                circleResult.UpdateRelativeCircle(relativeCoordinate);
+                circleResult.UpdateRelativeCoordinate(relativeCoordinate);
             }
         }
 
         public static void UpdateObjectiveCircle(this CircleSearchingDefinition csd,
-                                                IRelativeCoordinate coordinate)
+                                                 IRelativeCoordinate coordinate)
         {
-            var relativeVector = new Vector(csd.BaselineX * 1000.0 / 16.0, csd.BaselineY * 1000.0 / 16.0);
+            var relativeVector = new Vector(csd.BaselineX*1000.0/16.0, csd.BaselineY*1000.0/16.0);
             var originalVector = coordinate.GetOriginalVector(relativeVector);
             csd.CenterX = originalVector.X;
             csd.CenterY = originalVector.Y;
         }
 
-        public static void UpdateObjectiveCircles(this IEnumerable<CircleSearchingDefinition> circleResults,
-                                                IRelativeCoordinate relativeCoordinate)
+        public static void UpdateRelativeCoordinate(this IEnumerable<CircleSearchingDefinition> circleResults,
+                                                    IRelativeCoordinate relativeCoordinate)
         {
             foreach (var circleResult in circleResults)
             {
@@ -67,14 +67,17 @@ namespace Hdc.Mv.Inspection
             }
         }
 
-        public static void UpdateFromRelativeLine(this EdgeSearchingDefinition def,
-                                                IRelativeCoordinate relativeCoordinate)
+        public static void UpdateRelativeCoordinate(this EdgeSearchingDefinition def,
+                                                  IRelativeCoordinate relativeCoordinate)
         {
-            if (Math.Abs(def.RelativeLine.X1) < 0.000001 ||
-                  Math.Abs(def.RelativeLine.Y1) < 0.000001 ||
-                  Math.Abs(def.RelativeLine.X2) < 0.000001 ||
-                  Math.Abs(def.RelativeLine.Y2) < 0.000001) 
-            { return; }
+            if (def.RelativeLine.IsEmpty)
+                return;
+
+            //            if (Math.Abs(def.RelativeLine.X1) < 0.000001 ||
+            //                  Math.Abs(def.RelativeLine.Y1) < 0.000001 ||
+            //                  Math.Abs(def.RelativeLine.X2) < 0.000001 ||
+            //                  Math.Abs(def.RelativeLine.Y2) < 0.000001)
+            //            { return; }
 
             var p1 = def.RelativeLine.GetPoint1();
             var p2 = def.RelativeLine.GetPoint2();
@@ -89,8 +92,8 @@ namespace Hdc.Mv.Inspection
             def.EndY = actualP2.Y;
         }
 
-        public static void UpdateFromRelativeLine(this PartSearchingDefinition def,
-                                                IRelativeCoordinate relativeCoordinate)
+        public static void UpdateRelativeCoordinate(this PartSearchingDefinition def,
+                                                  IRelativeCoordinate relativeCoordinate)
         {
             var p1 = def.RoiRelativeLine.GetPoint1();
             var p2 = def.RoiRelativeLine.GetPoint2();
@@ -112,32 +115,111 @@ namespace Hdc.Mv.Inspection
             def.AreaLine = areaLine;
         }
 
-        public static void UpdateFromRelativeLines(this IEnumerable<EdgeSearchingDefinition> definitions,
-                                                  IRelativeCoordinate relativeCoordinate)
+        public static void UpdateRelativeCoordinate(this IEnumerable<RegionTargetDefinition> definitions,
+                                                    IRelativeCoordinate relativeCoordinate)
         {
             foreach (var esd in definitions)
             {
-                esd.UpdateFromRelativeLine(relativeCoordinate);
+                esd.UpdateRelativeCoordinate(relativeCoordinate);
             }
         }
 
-        public static void UpdateFromRelativeLines(this IEnumerable<PartSearchingDefinition> definitions,
-                                                  IRelativeCoordinate relativeCoordinate)
+        public static void UpdateRelativeCoordinate(this IEnumerable<EdgeSearchingDefinition> definitions,
+                                                    IRelativeCoordinate relativeCoordinate)
         {
             foreach (var esd in definitions)
             {
-                esd.UpdateFromRelativeLine(relativeCoordinate);
+                esd.UpdateRelativeCoordinate(relativeCoordinate);
             }
         }
 
-        public static IEnumerable<EdgeSearchingDefinition> GetEdgeSearchingDefinitions(this InspectionResult inspectionResult)
+        public static void UpdateRelativeCoordinate(this IEnumerable<PartSearchingDefinition> definitions,
+                                                    IRelativeCoordinate relativeCoordinate)
+        {
+            foreach (var esd in definitions)
+            {
+                esd.UpdateRelativeCoordinate(relativeCoordinate);
+            }
+        }
+
+        public static void UpdateRelativeCoordinate(this IRectangle2RegionExtractor regionExtractor,
+                                                    IRelativeCoordinate relativeCoordinate)
+        {
+            if (regionExtractor.RelativeRect == null)
+                return;
+
+            var relativeCenterVector = new Vector(regionExtractor.RelativeRect.X, regionExtractor.RelativeRect.Y);
+            var actualCenterVector = relativeCoordinate.GetOriginalVector(relativeCenterVector);
+            regionExtractor.X = actualCenterVector.X;
+            regionExtractor.Y = actualCenterVector.Y;
+            regionExtractor.Angle = relativeCoordinate.GetCoordinateAngle() + regionExtractor.RelativeRect.Angle;
+            regionExtractor.HalfWidth = regionExtractor.RelativeRect.HalfWidth;
+            regionExtractor.HalfHeight = regionExtractor.RelativeRect.HalfHeight;
+        }
+
+        public static void UpdateRelativeCoordinate(this RegionTargetDefinition definition,
+                                                    IRelativeCoordinate relativeCoordinate)
+        {
+            if (definition.RoiRelativeLine.IsEmpty)
+                return;
+
+            var actualLine = definition.RoiRelativeLine.UpdateRelativeCoordinate(relativeCoordinate);
+            definition.RoiActualLine = actualLine;
+        }
+
+        public static Line UpdateRelativeCoordinate(this Line relativeLine,
+                                                    IRelativeCoordinate relativeCoordinate)
+        {
+            var p1 = relativeLine.GetPoint1();
+            var p2 = relativeLine.GetPoint2();
+
+            var actualP1 = relativeCoordinate.GetOriginalPoint(p1);
+            var actualP2 = relativeCoordinate.GetOriginalPoint(p2);
+
+            var actualLine = new Line {X1 = actualP1.X, Y1 = actualP1.Y, X2 = actualP2.X, Y2 = actualP2.Y};
+
+            return actualLine;
+        }
+
+        public static void UpdateRelativeCoordinate(this SurfaceDefinition def,
+                                                    IRelativeCoordinate relativeCoordinate)
+        {
+            foreach (var includeRegion in def.IncludeRegions)
+            {
+                includeRegion.UpdateRelativeCoordinate(relativeCoordinate);
+            }
+
+            foreach (var excludeRegion in def.ExcludeRegions)
+            {
+                excludeRegion.UpdateRelativeCoordinate(relativeCoordinate);
+            }
+        }
+
+        public static void UpdateRelativeCoordinate(this IEnumerable<SurfaceDefinition> definitions,
+                                                    IRelativeCoordinate relativeCoordinate)
+        {
+            foreach (var esd in definitions)
+            {
+                esd.UpdateRelativeCoordinate(relativeCoordinate);
+            }
+        }
+
+        public static IEnumerable<EdgeSearchingDefinition> GetEdgeSearchingDefinitions(
+            this InspectionResult inspectionResult)
         {
             return inspectionResult.Edges.Select(x => x.Definition);
         }
 
-        public static IEnumerable<PartSearchingDefinition> GetPartSearchingDefinitions(this InspectionResult inspectionResult)
+        public static IEnumerable<PartSearchingDefinition> GetPartSearchingDefinitions(
+            this InspectionResult inspectionResult)
         {
             return inspectionResult.Parts.Select(x => x.Definition);
+        }
+
+        public static IEnumerable<RegionTargetDefinition> GetRegionTargetDefinitions(
+            this InspectionResult inspectionResult)
+        {
+            return inspectionResult.RegionTargets.Select(x => x.Definition);
         }
 
         public static IEnumerable<EdgeSearchingDefinition> GetCoordinateEdges(this InspectionResult inspectionResult)
@@ -145,12 +227,14 @@ namespace Hdc.Mv.Inspection
             return inspectionResult.CoordinateEdges.Select(x => x.Definition);
         }
 
-        public static IEnumerable<CircleSearchingDefinition> GetCircleSearchingDefinitions(this InspectionResult inspectionResult)
+        public static IEnumerable<CircleSearchingDefinition> GetCircleSearchingDefinitions(
+            this InspectionResult inspectionResult)
         {
             return inspectionResult.Circles.Select(x => x.Definition);
         }
 
-        public static IEnumerable<CircleSearchingDefinition> GetCoordinateCircleSearchingDefinitions(this InspectionResult inspectionResult)
+        public static IEnumerable<CircleSearchingDefinition> GetCoordinateCircleSearchingDefinitions(
+            this InspectionResult inspectionResult)
         {
             return inspectionResult.CoordinateCircles.Select(x => x.Definition);
         }
@@ -161,11 +245,34 @@ namespace Hdc.Mv.Inspection
             return region;
         }
 
-        public static RegionResult GetRegionResult(this IEnumerable<SurfaceResult> surfaceResults, string surfaceName, string regionName)
+        public static RegionResult GetRegionResult(this IEnumerable<SurfaceResult> surfaceResults, string surfaceName,
+                                                   string regionName)
         {
             var surface = surfaceResults.SingleOrDefault(x => x.Definition.Name == surfaceName);
             if (surface == null) return null;
             return surface.GetRegionResult(regionName);
+        }
+
+        public static bool IsHorizontalOrVertical(this IRoiRectangle roiRectangle)
+        {
+            if (Math.Abs(roiRectangle.StartX - roiRectangle.EndX) < 0.000001 ||
+                Math.Abs(roiRectangle.StartY - roiRectangle.EndY) < 0.000001)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool IsHorizontalOrVertical(this Line line)
+        {
+            if (Math.Abs(line.X1 - line.X2) < 0.000001 ||
+                Math.Abs(line.Y1 - line.Y2) < 0.000001)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

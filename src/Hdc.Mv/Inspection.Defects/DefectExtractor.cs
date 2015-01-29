@@ -11,7 +11,7 @@ namespace Hdc.Mv.Inspection
             var blobs = GetBlobsInner(image, domain);
             if (Selector != null)
             {
-                var selectedRegion = Selector.SelectRegion(blobs);
+                var selectedRegion = Selector.Process(blobs);
                 return selectedRegion;
             }
 
@@ -24,6 +24,6 @@ namespace Hdc.Mv.Inspection
 
         public bool SaveCacheImageEnabled { get; set; }
 
-        public IRegionSelector Selector { get; set; }
+        public IRegionProcessor Selector { get; set; }
     }
 }

@@ -23,6 +23,6 @@ namespace Hdc.Mv.Inspection
 
         public IDefectExtractor Extractor { get; set; }
 
-//        public IRegionSelector Selector { get; set; }
+//        public IShapeSelector Selector { get; set; }
     }
 }

@@ -15,5 +15,10 @@ namespace Hdc.Mv
         }
 
         public Vector OriginOffset { get; set; }
+
+        public double GetCoordinateAngle()
+        {
+           return 0.0;
+        }
     }
 }

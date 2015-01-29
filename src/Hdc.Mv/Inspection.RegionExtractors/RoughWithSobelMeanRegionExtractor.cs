@@ -4,7 +4,7 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class RoughWithSobelMeanRegionExtractor : IRegionExtractor
+    public class RoughWithSobelMeanRegionExtractor : IRectangle2RegionExtractor
     {
         public double ThresholdMinGray { get; set; }
         public double ThresholdMaxGray { get; set; }
@@ -27,7 +27,7 @@ namespace Hdc.Mv.Inspection
         public double HalfHeight { get; set; }
 
 
-        public HRegion Process(HImage image)
+        public HRegion Extract(HImage image)
         {
             HObject regionHObject;
 
@@ -49,12 +49,13 @@ namespace Hdc.Mv.Inspection
             return new HRegion(regionHObject);
         }
 
-        public HRegion Process(HImage image, HRegion domain)
+        public HRegion Extract(HImage image, HRegion domain)
         {
             throw new NotImplementedException();
         }
 
         public string Name { get; set; }
         public bool SaveCacheImageEnabled { get; set; }
+        public IRectangle2Def RelativeRect { get; set; }
     }
 }

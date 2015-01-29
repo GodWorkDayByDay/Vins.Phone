@@ -1,0 +1,21 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.RegionTargetDefinitions>
+    <RegionTargetDefinition Name="Bottom"
+                            Domain_SaveCacheImageEnabled="true"
+                            AroundRegionProcessor_SaveCacheImageEnabled="true"
+                            TargetRegionProcessor_SaveCacheImageEnabled="true"
+                            RoiHalfWidth="150">
+      <RegionTargetDefinition.RoiRelativeLine>
+        <Line X1="1012"
+              Y1="3500"
+              X2="1012"
+              Y2="3900" />
+      </RegionTargetDefinition.RoiRelativeLine>
+      <RegionTargetDefinition.TargetRegionExtractor>
+        <BinaryThresholdGeneralRegionExtractor LightDark="Dark"
+                                               />
+      </RegionTargetDefinition.TargetRegionExtractor>
+    </RegionTargetDefinition>
+  </InspectionSchema.RegionTargetDefinitions>
+</InspectionSchema>

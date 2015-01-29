@@ -402,20 +402,25 @@ public partial class HDevelopExport
 */
 
 
-    public HImage ChangeDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
+    public HImage ChangeDomainForRectangle(HImage image, Line line, double halfWidth,
                                            double dilationWidth, double dilationHeight)
     {
-        return ChangeDomainForRectangle(hImage, line.Y1, line.X1, line.Y2, line.X2, hv_RoiWidthLen,
+        return ChangeDomainForRectangle(image, line.Y1, line.X1, line.Y2, line.X2, halfWidth,
             dilationWidth, dilationHeight);
     }
 
-    public HImage ChangeDomainForRectangle(HImage hImage, Line line, double hv_RoiWidthLen,
-                                           double margin)
+    public HImage ChangeDomainForRectangle(HImage image, Line line, double halfWidth)
     {
-        return ChangeDomainForRectangle(hImage, line, hv_RoiWidthLen, margin, margin);
+        return ChangeDomainForRectangle(image, line.Y1, line.X1, line.Y2, line.X2, halfWidth);
     }
 
-    public HImage ChangeDomainForRectangle(HObject ho_InputImage,
+    public HImage ChangeDomainForRectangle(HImage image, Line line, double halfWidth,
+                                           double margin)
+    {
+        return ChangeDomainForRectangle(image, line, halfWidth, margin, margin);
+    }
+
+    public HImage ChangeDomainForRectangle(HImage ho_InputImage,
                                            double hv_LineStartPoint_Row, double hv_LineStartPoint_Column,
                                            double hv_LineEndPoint_Row,
                                            double hv_LineEndPoint_Column, double hv_RoiWidthLen,
@@ -428,6 +433,21 @@ public partial class HDevelopExport
             hv_LineEndPoint_Row,
             hv_LineEndPoint_Column, hv_RoiWidthLen,
             hv_DilationWidth, hv_DilationHeight
+            );
+        return new HImage(ho_EnhancedImage);
+    }
+
+    public HImage ChangeDomainForRectangle(HImage ho_InputImage,
+                                           double hv_LineStartPoint_Row, double hv_LineStartPoint_Column,
+                                           double hv_LineEndPoint_Row,
+                                           double hv_LineEndPoint_Column, double hv_RoiWidthLen)
+    {
+        HObject ho_EnhancedImage = null;
+        ChangeDomainForRectangle(
+            ho_InputImage, out ho_EnhancedImage,
+            hv_LineStartPoint_Row, hv_LineStartPoint_Column,
+            hv_LineEndPoint_Row,
+            hv_LineEndPoint_Column, hv_RoiWidthLen
             );
         return new HImage(ho_EnhancedImage);
     }

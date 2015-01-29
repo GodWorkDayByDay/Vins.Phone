@@ -15,13 +15,19 @@
                                        StartPointYPath="StartPointY"
                                        EndPointXPath="EndPointX"
                                        EndPointYPath="EndPointY"
-                                       RegionWidthPath="RegionWidth">
+                                       RegionWidthPath="RegionWidth"
+                                       StrokePath="Stroke"
+                                       StrokeThicknessPath="StrokeThickness"
+                                       StrokeDashArrayPath="StrokeDashArray">
             </hdc:RegionIndicatorSeries>
             <hdc:RectangleIndicatorSeries ItemsSource="{Binding DefectIndicators}"
                                           RectCenterXPath="CenterX"
                                           RectCenterYPath="CenterY"
                                           RectWidthPath="Width"
-                                          RectHeightPath="Height">
+                                          RectHeightPath="Height"
+                                          StrokePath="Stroke"
+                                          StrokeThicknessPath="StrokeThickness"
+                                          StrokeDashArrayPath="StrokeDashArray">
             </hdc:RectangleIndicatorSeries>
             <hdc:LineIndicatorSeries ItemsSource="{Binding LineIndicators,Mode=TwoWay}"
                                      StartPointXPath="StartPointX"
@@ -108,6 +114,21 @@
                             Margin="2"
                             x:Name="ZoomHalfButton"
                             Click="ZoomHalfButton_OnClick">Zoom Half</Button>
+                    <Button Width="80"
+                            Height="40"
+                            Margin="2"
+                            x:Name="ZoomInButton"
+                            Click="ZoomInButton_OnClick">Zoom +</Button>
+                    <Button Width="80"
+                            Height="40"
+                            Margin="2"
+                            x:Name="ZoomOutButton"
+                            Click="ZoomOutButton_OnClick">Zoom -</Button>
+                    <Button Width="80"
+                            Height="40"
+                            Margin="2"
+                            x:Name="ZoomActualToCenterButton"
+                            Click="ZoomActualToCenterButton_OnClick">Zoom Actual Center</Button>
                 </UniformGrid>
 
 

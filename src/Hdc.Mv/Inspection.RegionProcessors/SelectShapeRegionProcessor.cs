@@ -9,9 +9,9 @@ namespace Hdc.Mv.Inspection
 {
     [Serializable]
 //    [ContentProperty("Items")]
-    public class SharpSelector : Collection<SharpSelectorEntry>, IRegionSelector
+    public class SelectShapeRegionProcessor : Collection<SelectShapeEntry>, IRegionProcessor
     {
-        public HRegion SelectRegion(HRegion region)
+        public HRegion Process(HRegion region)
         {
             HTuple features = new HTuple();
             HTuple min = new HTuple();

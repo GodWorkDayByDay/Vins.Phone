@@ -13,12 +13,11 @@ namespace Hdc.Mv.Inspection
         {
             var processImage = image;
 
-            int index = 0;
             foreach (var imageFilter in Items)
             {
-                processImage = imageFilter.Process(processImage);
-//                processImage.WriteImage("tiff", 0, @"B:\Test_Composite_" + index);
-                index++;
+                var hImage = imageFilter.Process(processImage);
+//                processImage.Dispose();
+                processImage = hImage;
             }
 
             return processImage;

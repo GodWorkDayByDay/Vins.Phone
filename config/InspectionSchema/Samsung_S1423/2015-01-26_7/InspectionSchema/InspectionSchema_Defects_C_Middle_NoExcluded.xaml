@@ -1,0 +1,52 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.DefectDefinitions>
+      <DefectDefinition Name="C_General_Light"
+                        SaveCacheImageEnabled="false">
+          <DefectDefinition.RegionReferences>
+              <RegionReference SurfaceName="C_General" RegionName="C-Middle-1"/>
+              <RegionReference SurfaceName="C_General" RegionName="C-Middle-2b"/>
+              <RegionReference SurfaceName="C_General" RegionName="C-Middle-4"/>
+              <RegionReference SurfaceName="C_General" RegionName="C-Middle-5a"/>
+              <RegionReference SurfaceName="C_General" RegionName="C-Middle-5c"/>
+          </DefectDefinition.RegionReferences>
+          <DynThresholdWithMeanDefectExtractor SaveCacheImageEnabled="false"
+                                       ZoomFactor="0.5"
+                                       MedianRadius="3"
+                                       DynMeanMaskWidth="200"
+                                       DynMeanMaskHeight="200"
+                                       DynOffset="18"
+                                       DynLightDark="Dark"
+                                       ClosingRadius="15"
+                                       AreaMin="100"
+                                       AreaMax="99999999"
+                                       Rect2Length1Min="10"
+                                       Rect2Length1Max="99999999"
+                                       />
+      </DefectDefinition>
+      <DefectDefinition Name="C_General_Dark"
+                        SaveCacheImageEnabled="false">
+          <DefectDefinition.RegionReferences>
+              <RegionReference SurfaceName="C_General" RegionName="C-Middle-1"/>
+              <RegionReference SurfaceName="C_General" RegionName="C-Middle-2b"/>
+              <RegionReference SurfaceName="C_General" RegionName="C-Middle-4"/>
+              <RegionReference SurfaceName="C_General" RegionName="C-Middle-5a"/>
+              <RegionReference SurfaceName="C_General" RegionName="C-Middle-5c"/>
+          </DefectDefinition.RegionReferences>
+          <DynThresholdWithMeanDefectExtractor SaveCacheImageEnabled="false"
+                                       ZoomFactor="0.5"
+                                       MedianRadius="1"
+                                       DynMeanMaskWidth="200"
+                                       DynMeanMaskHeight="200"
+                                       DynOffset="25"
+                                       DynLightDark="Dark"
+                                       ClosingRadius="5"
+                                       AreaMin="80"
+                                       AreaMax="99999999"
+                                       Rect2Length1Min="10"
+                                       Rect2Length1Max="99999999"
+                                       />
+      </DefectDefinition>
+  </InspectionSchema.DefectDefinitions>
+  
+</InspectionSchema>

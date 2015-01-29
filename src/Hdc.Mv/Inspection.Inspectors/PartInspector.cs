@@ -28,13 +28,13 @@ namespace Hdc.Mv.Inspection
                 var reducedImage = HDevelopExport.Singletone.ChangeDomainForRectangle(
                     image,
                     line: def.RoiLine,
-                    hv_RoiWidthLen: def.RoiHalfWidth,
+                    halfWidth: def.RoiHalfWidth,
                     margin: 0.5);
 
                 if (def.Domain_SaveCacheImageEnabled)
                     reducedImage.CropDomain()
                         .ToBitmapSource()
-                        .SaveToJpeg(_cacheImageDir + "\\PartInspector_" + def.Name + "_1_Domain.jpg");
+                        .SaveToTiff(_cacheImageDir + "\\PartInspector_" + def.Name + "_1_Domain.tif");
 
                 domain = reducedImage.GetDomain();
 
@@ -43,7 +43,7 @@ namespace Hdc.Mv.Inspection
                 var croppedImage = reducedImage.CropDomain();
 
 
-                var region = def.PartExtractor.Process(croppedImage);
+                var region = def.PartExtractor.Extract(croppedImage);
 
                 var countObj = region.CountObj();
                 if (countObj == 0)

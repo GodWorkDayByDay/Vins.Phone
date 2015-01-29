@@ -100,15 +100,75 @@ namespace Hdc.Mv.Halcon
             imagePainted.Dispose();
         }
 
-        public static void SaveTiff(this HObject imageHObject, double background, string fileName)
+        public static HImage ToHImage(this HObject hObject)
         {
-            var image = new HImage(imageHObject);
-            image.WriteImage("tiff", background, fileName);
+            return new HImage(hObject);
         }
 
-        public static void SaveTiff(this HImage image, double background, string fileName)
+        public static void WriteImageOfTiff(this HImage image, string fileName, double background = 0)
         {
-            image.WriteImage("tiff", background, fileName);
+            string finalFileName = fileName;
+            if (!fileName.EndsWith(".tif"))
+                finalFileName += ".tif";
+
+            image.WriteImage("tiff", background, finalFileName);
+        }
+
+        public static void WriteImageOfTiffOfCropDomain(this HImage image, string fileName, double background = 0)
+        {
+            var cropDomainImage = image.CropDomain();
+            cropDomainImage.WriteImageOfTiff(fileName);
+            cropDomainImage.Dispose();
+        }
+
+        public static void WriteImageOfTiffLzw(this HImage image, string fileName, double background = 0)
+        {
+            string finalFileName = fileName;
+            if (!fileName.EndsWith(".tif"))
+                finalFileName += ".tif";
+
+            image.WriteImage("tiff lzw", background, finalFileName);
+        }
+
+        public static void WriteImageOfTiffLzwOfCropDomain(this HImage image, string fileName, double background = 0)
+        {
+            var cropDomain = image.CropDomain();
+            cropDomain.WriteImageOfTiffLzw(fileName);
+            cropDomain.Dispose();
+        }
+
+        public static void WriteImageOfTiffLzwOfCropDomain(this HImage image, HRegion domain, string fileName, double background = 0)
+        {
+            var changeDomain = image.ChangeDomain(domain);
+            changeDomain.WriteImageOfTiffLzwOfCropDomain(fileName);
+            changeDomain.Dispose();
+        }
+
+        public static void WriteImageOfJpeg(this HImage image, string fileName, double background = 0)
+        {
+            string finalFileName = fileName;
+            if (!fileName.EndsWith(".jpg"))
+                finalFileName += ".jpg";
+
+            image.WriteImage("jpeg", background, finalFileName);
+        }
+
+        public static void WriteImageOfBmp(this HImage image, string fileName, double background = 0)
+        {
+            string finalFileName = fileName;
+            if (!fileName.EndsWith(".bmp"))
+                finalFileName += ".bmp";
+
+            image.WriteImage("bmp", background, finalFileName);
+        }
+
+        public static void WriteImageOfPng(this HImage image, string fileName, double background = 0)
+        {
+            string finalFileName = fileName;
+            if (!fileName.EndsWith(".png"))
+                finalFileName += ".png";
+
+            image.WriteImage("png", background, finalFileName);
         }
     }
 }

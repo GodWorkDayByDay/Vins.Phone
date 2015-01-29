@@ -20,9 +20,9 @@ namespace Hdc.Mv.Inspection
         public double BaselineX { get; set; }
         public double BaselineY { get; set; }
 
-        public IRegionExtractor RegionExtractor { get; set; }
-        public bool RegionExtractor_Disabled { get; set; }
-        public bool RegionExtractor_SaveCacheImageEnabled { get; set; }
+//        public IRegionExtractor RegionExtractor { get; set; }
+//        public bool RegionExtractor_Disabled { get; set; }
+//        public bool RegionExtractor_SaveCacheImageEnabled { get; set; }
 
         public IImageFilter ImageFilter { get; set; }
         public bool ImageFilter_Disabled { get; set; }

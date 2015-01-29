@@ -1,0 +1,339 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.SurfaceDefinitions>
+      <SurfaceDefinition Name="C_General"
+                         SaveCacheImageEnabled="false"
+                         SaveAllCacheImageEnabled="false">
+                         
+          <SurfaceDefinition.ExcludeRegions>
+          
+          	 <Rectanle2RegionExtractor Name="C-Hole-01"
+                                          SaveCacheImageEnabled="false"
+                                          
+                                          X="2749"
+                                          Y="2867"
+                                          Angle="0"
+                                          HalfWidth="238"
+                                          HalfHeight="238"
+                                          
+                                          />
+          
+             <BinaryThresholdRegionExtractor Name="C-Hole-02"
+                                          SaveCacheImageEnabled="false"
+                                          
+                                          X="3685"
+                                          Y="2870"
+                                          Angle="0"
+                                          HalfWidth="477"
+                                          HalfHeight="480"
+                                          
+                                          MedianRadius="7"
+                                          EmpWidth="954"
+                                          EmpHeight="960"
+                                          EmpFactor="1"
+                                          LightDark="dark"
+                                          AreaMin="1000"
+                                          AreaMax="99999999"
+                                          ClosingRadius="0"
+                                          DilationRadius="30"
+                                          />
+             
+             <Rectanle2RegionExtractor Name="C-Hole-03"
+                                          SaveCacheImageEnabled="false"
+                                          
+                                          X="4625"
+                                          Y="2869"
+                                          Angle="0"
+                                          HalfWidth="237"
+                                          HalfHeight="238"
+                                          
+                                          />
+          
+             <BinaryThresholdRegionExtractor Name="C-Word-01"
+                                          SaveCacheImageEnabled="false"
+                                          
+                                          X="3680"
+                                          Y="4542"
+                                          Angle="0"
+                                          HalfWidth="858"
+                                          HalfHeight="183"
+                                          
+                                          MedianRadius="7"
+                                          EmpWidth="1716"
+                                          EmpHeight="366"
+                                          EmpFactor="1"
+                                          LightDark="dark"
+                                          AreaMin="10000"
+                                          AreaMax="99999999"
+                                          ClosingRadius="0"
+                                          DilationRadius="10"
+                                          />
+                                          
+           <BinaryThresholdRegionExtractor Name="C-Word-02"
+                                          SaveCacheImageEnabled="false"
+                                          
+                                          X="3695"
+                                          Y="8634"
+                                          Angle="0"
+                                          HalfWidth="409"
+                                          HalfHeight="471"
+                                          
+                                          MedianRadius="7"
+                                          EmpWidth="818"
+                                          EmpHeight="942"
+                                          EmpFactor="1"
+                                          LightDark="dark"
+                                          AreaMin="1000"
+                                          AreaMax="99999999"
+                                          ClosingRadius="0"
+                                          DilationRadius="8"
+                                          />
+             <!--  
+             <Rectanle2RegionExtractor Name="C-Hole-02"
+                                          SaveCacheImageEnabled="true"
+                                          
+                                          X="3695"
+                                          Y="8634"
+                                          Angle="0"
+                                          HalfWidth="409"
+                                          HalfHeight="471"
+                                          
+                                          />-->
+                                          
+             <BinaryThresholdRegionExtractor Name="C-Word-03"
+                                          SaveCacheImageEnabled="false"
+                                          
+                                          X="3693"
+                                          Y="9623"
+                                          Angle="0"
+                                          HalfWidth="477"
+                                          HalfHeight="225"
+                                          
+                                          MedianRadius="7"
+                                          EmpWidth="818"
+                                          EmpHeight="450"
+                                          EmpFactor="1"
+                                          LightDark="dark"
+                                          AreaMin="1000"
+                                          AreaMax="99999999"
+                                          ClosingRadius="0"
+                                          DilationRadius="10"
+                                          />
+                                          
+             <Rectanle2RegionExtractor Name="C-Word-04"
+                                          SaveCacheImageEnabled="false"
+                                          
+                                          X="3678"
+                                          Y="9968"
+                                          Angle="0"
+                                          HalfWidth="740"
+                                          HalfHeight="111"
+                                          
+                                          />
+          
+          </SurfaceDefinition.ExcludeRegions>
+                         
+          <SurfaceDefinition.IncludeRegions>
+                                         
+              <Rectanle2RegionExtractor Name="C-Middle-1"
+                                         SaveCacheImageEnabled="false"
+                                         
+                                         X="3675"
+                                         Y="2084"
+                                         Angle="0"
+                                         HalfWidth="2100"
+                                         HalfHeight="280"
+                                        
+                                         />
+                                         
+              <Rectanle2RegionExtractor Name="C-Middle-2"
+                                         SaveCacheImageEnabled="false"
+                                         
+                                         X="3675"
+                                         Y="2823"
+                                         Angle="0"
+                                         HalfWidth="2100"
+                                         HalfHeight="800"
+                                        
+                                         />
+                                         
+              <Rectanle2RegionExtractor Name="C-Middle-2b"
+                                         SaveCacheImageEnabled="false"
+                                         
+                                         X="3675"
+                                         Y="3900"
+                                         Angle="0"
+                                         HalfWidth="2100"
+                                         HalfHeight="400"
+                                        
+                                         />
+                                         
+               <Rectanle2RegionExtractor Name="C-Middle-3"
+                                         SaveCacheImageEnabled="false"
+                                         
+                                         X="3675"
+                                         Y="4506"
+                                         Angle="0"
+                                         HalfWidth="2100"
+                                         HalfHeight="400"
+                                        
+                                         />
+              
+               <Rectanle2RegionExtractor Name="C-Middle-4"
+                                         SaveCacheImageEnabled="false"
+                                         
+                                         X="3675"
+                                         Y="6496"
+                                         Angle="0"
+                                         HalfWidth="2100"
+                                         HalfHeight="1613"
+                                        
+                                         />
+              
+               <Rectanle2RegionExtractor Name="C-Middle-5a"
+                                         SaveCacheImageEnabled="false"
+                                         
+                                         X="2271"
+                                         Y="9348"
+                                         Angle="0"
+                                         HalfWidth="692"
+                                         HalfHeight="1323"
+                                        
+                                         />
+              
+              <Rectanle2RegionExtractor Name="C-Middle-5b"
+                                         SaveCacheImageEnabled="false"
+                                         
+                                         X="3693"
+                                         Y="9348"
+                                         Angle="0"
+                                         HalfWidth="767"
+                                         HalfHeight="1323"
+                                        
+                                         /> 
+                                         
+              <Rectanle2RegionExtractor Name="C-Middle-5c"
+                                         SaveCacheImageEnabled="false"
+                                         
+                                         X="5105"
+                                         Y="9348"
+                                         Angle="0"
+                                         HalfWidth="692"
+                                         HalfHeight="1323"
+                                         /> 
+
+              <SobelAmp2RegionExtractor Name="C-Bottom"
+                                        SaveCacheImageEnabled="false"
+                                                  
+                                        X="3675"
+                                        Y="10802"
+                                        Angle="0"
+                                        HalfWidth="1900"
+                                        HalfHeight="138"
+                                
+                                        MedianRadius="1"
+                                        MeanMaskWidth="55"
+                                        MeanMaskHeight="1"
+                                        ScaleMult="20"
+                                        ScaleAdd="0"
+                                        SobelAmpSize="3"
+                                        AreaMin="100000"
+                                        AreaMax="99999999"
+                                        OpeningWidth="11"
+                                        OpeningHeight="11"
+                                        ClosingWidth="5"
+                                        ClosingHeight="33"
+                                        ErosionWidth="5"
+                                        ErosionHeight="5"
+                                        DilationWidth="0"
+                                        DilationHeight="0"
+                                        />
+
+              <SobelAmp2RegionExtractor Name="C-Top"
+                                        SaveCacheImageEnabled="false"
+                                                  
+                                        X="3675"
+                                        Y="1646"
+                                        Angle="0"
+                                        HalfWidth="1900"
+                                        HalfHeight="170"
+                                
+                                        MedianRadius="1"
+                                        MeanMaskWidth="55"
+                                        MeanMaskHeight="1"
+                                        ScaleMult="20"
+                                        ScaleAdd="0"
+                                        SobelAmpSize="3"
+                                        AreaMin="100000"
+                                        AreaMax="99999999"
+                                        OpeningWidth="11"
+                                        OpeningHeight="11"
+                                        ClosingWidth="5"
+                                        ClosingHeight="33"
+                                        ErosionWidth="5"
+                                        ErosionHeight="5"
+                                        DilationWidth="0"
+                                        DilationHeight="0"
+                                        />
+                                
+              <SobelAmp2RegionExtractor Name="C-Left"
+                                        SaveCacheImageEnabled="false"
+                                        
+                                        X="1424"
+                                        Y="6224"
+                                        Angle="0"
+                                        HalfWidth="160"
+                                        HalfHeight="4170"
+                                        
+                                        MedianRadius="1"
+                                        MeanMaskWidth="1"
+                                        MeanMaskHeight="55"
+                                        ScaleMult="20"
+                                        ScaleAdd="0"
+                                        SobelAmpSize="3"
+                                        AreaMin="400000"
+                                        AreaMax="99999999"
+                                        OpeningWidth="11"
+                                        OpeningHeight="11"
+                                        ClosingWidth="33"
+                                        ClosingHeight="5"
+                                        ErosionWidth="5"
+                                        ErosionHeight="5"
+                                        DilationWidth="0"
+                                        DilationHeight="0"
+                                        />
+                                
+              <SobelAmp2RegionExtractor Name="C-Right"
+                                        SaveCacheImageEnabled="false"
+                                        
+                                        X="5930"
+                                        Y="6224"
+                                        Angle="0"
+                                        HalfWidth="160"
+                                        HalfHeight="4170"
+                                        
+                                        MedianRadius="1"
+                                        MeanMaskWidth="1"
+                                        MeanMaskHeight="55"
+                                        ScaleMult="20"
+                                        ScaleAdd="0"
+                                        SobelAmpSize="3"
+                                        AreaMin="400000"
+                                        AreaMax="99999999"
+                                        OpeningWidth="11"
+                                        OpeningHeight="11"
+                                        ClosingWidth="33"
+                                        ClosingHeight="5"
+                                        ErosionWidth="5"
+                                        ErosionHeight="5"
+                                        DilationWidth="0"
+                                        DilationHeight="0"
+                                        />
+                                
+                        
+          </SurfaceDefinition.IncludeRegions>
+          
+      </SurfaceDefinition>
+  </InspectionSchema.SurfaceDefinitions>
+  
+</InspectionSchema>

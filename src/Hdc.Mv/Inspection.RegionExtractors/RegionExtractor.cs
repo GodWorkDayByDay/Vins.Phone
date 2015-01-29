@@ -5,10 +5,11 @@ using Hdc.Mv.Halcon;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public abstract class RegionExtractor : IRegionExtractor
+    public abstract class RegionExtractor : IRectangle2RegionExtractor
     {
         public string Name { get; set; }
         public bool SaveCacheImageEnabled { get; set; }
+        public IRectangle2Def RelativeRect { get; set; }
 
         public double X { get; set; }
         public double Y { get; set; }
@@ -16,7 +17,7 @@ namespace Hdc.Mv.Inspection
         public double HalfWidth { get; set; }
         public double HalfHeight { get; set; }
 
-        public virtual HRegion Process(HImage image, HRegion domain)
+        public virtual HRegion Extract(HImage image, HRegion domain)
         {
             //            var row1 = Convert.ToInt32(domain.RegionFeatures("row1"));
             //            var column1 = Convert.ToInt32(domain.RegionFeatures("column1"));
@@ -38,12 +39,12 @@ namespace Hdc.Mv.Inspection
             return offsetFoundRegion;
         }
 
-        public HRegion Process(HImage image)
+        public HRegion Extract(HImage image)
         {
             var processRegion = new HRegion();
             processRegion.GenRectangle2(Y, X, Angle, HalfWidth, HalfHeight);
 
-            return Process(image, processRegion);
+            return Extract(image, processRegion);
         }
 
         protected abstract HRegion GetRegion(HImage image);

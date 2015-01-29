@@ -33,6 +33,7 @@ using MeasurementTestApp;
 using Microsoft.Win32;
 using Line = Hdc.Mv.Line;
 using Path = System.IO.Path;
+
 // ReSharper disable InconsistentNaming
 
 namespace ODM.Inspectors.Halcon.SampleApp
@@ -102,7 +103,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                 bsi.DpiX = 96;
                 bsi.DpiY = 96;
                 var bitmapSourceDpi96 = bsi.GetBitmapSource();
-                bs = bitmapSourceDpi96; 
+                bs = bitmapSourceDpi96;
                 sw1.Stop();
                 sw1.Dispose();
             }
@@ -114,44 +115,55 @@ namespace ODM.Inspectors.Halcon.SampleApp
             sw2.Stop();
             sw2.Dispose();
 
-        
 
             try
             {
                 var sw = new NotifyStopwatch("InspectionController.Inspect()");
                 InspectionController
-                 .SetInspectionSchema()
-                 .SetImage(hImage)
-                 .CreateCoordinate()
-                 .Inspect()
-                 ;
+                    .SetInspectionSchema()
+                    .SetImage(hImage)
+                    .CreateCoordinate()
+                    .Inspect()
+                    ;
                 sw.Stop();
                 sw.Dispose();
 
-
+                // CoordinateCircles
                 Show_CircleSearchingDefinitions(
                     InspectionController.InspectionResult.GetCoordinateCircleSearchingDefinitions());
                 Show_CircleSearchingResults(InspectionController.InspectionResult.CoordinateCircles);
 
+                // Circles
                 Show_CircleSearchingDefinitions(
-                    InspectionController.InspectionResult.GetCircleSearchingDefinitions(), Brushes.DodgerBlue);
+                    InspectionController.InspectionResult.GetCircleSearchingDefinitions(), Brushes.Orange);
                 Show_CircleSearchingResults(InspectionController.InspectionResult.Circles, Brushes.DodgerBlue);
 
+                // CoordinateEdges
                 Show_EdgeSearchingDefinitions(InspectionController.InspectionResult.GetCoordinateEdges());
                 Show_EdgeSearchingResults(InspectionController.InspectionResult.CoordinateEdges);
 
+                // Edges
                 Show_EdgeSearchingDefinitions(InspectionController.InspectionResult.GetEdgeSearchingDefinitions());
                 Show_EdgeSearchingResults(InspectionController.InspectionResult.Edges);
 
+                // DistanceBetweenPoints
                 Show_DistanceBetweenPointsResults(InspectionController.InspectionResult.DistanceBetweenPointsResults);
+
+                // Defects
                 Show_DefectResults(InspectionController.InspectionResult.DefectResults);
+
+                // Parts
                 Show_PartSearchingDefinitions(InspectionController.InspectionResult.GetPartSearchingDefinitions());
                 Show_PartSearchingResults(InspectionController.InspectionResult.Parts);
+
+                // RegionTargets
+                Show_RegionTargetDefinitions(InspectionController.InspectionResult.GetRegionTargetDefinitions());
+                Show_RegionTargetResults(InspectionController.InspectionResult.RegionTargets);
             }
             catch (CreateCoordinateFailedException e)
             {
                 Show_CircleSearchingDefinitions(
-                 InspectionController.InspectionResult.GetCoordinateCircleSearchingDefinitions());
+                    InspectionController.InspectionResult.GetCoordinateCircleSearchingDefinitions());
                 Show_CircleSearchingResults(InspectionController.InspectionResult.CoordinateCircles);
 
                 Show_EdgeSearchingDefinitions(InspectionController.InspectionResult.GetCoordinateEdges());
@@ -296,7 +308,9 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                           StartPointY = ed.StartY,
                                           EndPointX = ed.EndX,
                                           EndPointY = ed.EndY,
-                                          RegionWidth = ed.ROIWidth,
+                                          RegionWidth = ed.ROIWidth / 2,
+                                          Stroke = Brushes.Orange,
+                                          StrokeThickness = 2,
                                       };
                 RegionIndicators.Add(regionIndicator);
             }
@@ -312,18 +326,22 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                           StartPointY = ed.RoiLine.Y1,
                                           EndPointX = ed.RoiLine.X2,
                                           EndPointY = ed.RoiLine.Y2,
-                                          RegionWidth = ed.RoiHalfWidth * 2,
+                                          RegionWidth = ed.RoiHalfWidth,
+                                          Stroke = Brushes.Orange,
+                                          StrokeThickness = 2,
                                       };
                 RegionIndicators.Add(regionIndicator);
 
                 var regionIndicator2 = new RegionIndicatorViewModel
-                                      {
-                                          StartPointX = ed.AreaLine.X1,
-                                          StartPointY = ed.AreaLine.Y1,
-                                          EndPointX = ed.AreaLine.X2,
-                                          EndPointY = ed.AreaLine.Y2,
-                                          RegionWidth = ed.AreaHalfWidth * 2,
-                                      };
+                                       {
+                                           StartPointX = ed.AreaLine.X1,
+                                           StartPointY = ed.AreaLine.Y1,
+                                           EndPointX = ed.AreaLine.X2,
+                                           EndPointY = ed.AreaLine.Y2,
+                                           RegionWidth = ed.AreaHalfWidth,
+                                           Stroke = Brushes.Orange,
+                                           StrokeThickness = 2,
+                                       };
                 RegionIndicators.Add(regionIndicator2);
             }
         }
@@ -341,7 +359,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                         EndPointX = edgeSearchingResult.EdgeLine.X2,
                                         EndPointY = edgeSearchingResult.EdgeLine.Y2,
                                         Stroke = Brushes.Lime,
-                                        StrokeThickness = 4,
+                                        StrokeThickness = 2,
                                     };
                 LineIndicators.Add(lineIndicator);
             }
@@ -354,13 +372,55 @@ namespace ODM.Inspectors.Halcon.SampleApp
                 if (edgeSearchingResult.HasError) continue;
 
                 var regionIndicator2 = new RegionIndicatorViewModel
+                                       {
+                                           StartPointX = edgeSearchingResult.PartLine.X1,
+                                           StartPointY = edgeSearchingResult.PartLine.Y1,
+                                           EndPointX = edgeSearchingResult.PartLine.X2,
+                                           EndPointY = edgeSearchingResult.PartLine.Y2,
+                                           RegionWidth = edgeSearchingResult.PartHalfWidth,
+                                           Stroke = Brushes.Lime,
+                                           StrokeThickness = 2,
+                                       };
+                RegionIndicators.Add(regionIndicator2);
+            }
+        }
+
+        public void Show_RegionTargetDefinitions(IEnumerable<RegionTargetDefinition> definitions)
+        {
+            foreach (var ed in definitions)
+            {
+                var regionIndicator = new RegionIndicatorViewModel
                 {
-                    StartPointX = edgeSearchingResult.PartLine.X1,
-                    StartPointY = edgeSearchingResult.PartLine.Y1,
-                    EndPointX = edgeSearchingResult.PartLine.X2,
-                    EndPointY = edgeSearchingResult.PartLine.Y2,
-                    RegionWidth = edgeSearchingResult.PartHalfWidth* 2,
+                    StartPointX = ed.RoiActualLine.X1,
+                    StartPointY = ed.RoiActualLine.Y1,
+                    EndPointX = ed.RoiActualLine.X2,
+                    EndPointY = ed.RoiActualLine.Y2,
+                    RegionWidth = ed.RoiHalfWidth,
+                    Stroke = Brushes.Orange,
+                    StrokeThickness = 2,
                 };
+                RegionIndicators.Add(regionIndicator);
+            }
+        }
+
+        public void Show_RegionTargetResults(IEnumerable<RegionTargetResult> results)
+        {
+            foreach (var edgeSearchingResult in results)
+            {
+                if (edgeSearchingResult.HasError) continue;
+
+                var roiRect = edgeSearchingResult.TargetRegion.GetRoiRectangleFromSmallestRectangle2();
+
+                var regionIndicator2 = new RegionIndicatorViewModel
+                                       {
+                                           StartPointX = roiRect.StartX,
+                                           StartPointY = roiRect.StartY,
+                                           EndPointX = roiRect.EndX,
+                                           EndPointY = roiRect.EndY,
+                                           RegionWidth = roiRect.ROIWidth,
+                                           Stroke = Brushes.Lime,
+                                           StrokeThickness = 2,
+                                       };
                 RegionIndicators.Add(regionIndicator2);
             }
         }
@@ -379,17 +439,6 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                           IsShown = true,
                                       };
                 DefectIndicators.Add(regionIndicator);
-
-
-//                var regionIndicator2 = new RegionIndicatorViewModel
-//                {
-//                    StartPointX = dr.X - dr.Width/2,
-//                    StartPointY = dr.Y,
-//                    EndPointX = dr.X + dr.Width / 2,
-//                    EndPointY = dr.Y,
-//                    RegionWidth = dr.Height / 2.0,
-//                };
-//                RegionIndicators.Add(regionIndicator2);
             }
         }
 
@@ -468,6 +517,28 @@ namespace ODM.Inspectors.Halcon.SampleApp
 
             var fileName = dialog.FileName;
         }
+
+        private void ZoomInButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            IndicatorViewer.ZoomIn();
+        }
+
+        private void ZoomOutButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            IndicatorViewer.ZoomOut();
+        }
+
+        private void ZoomActualToCenterButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            IndicatorViewer.ZoomActual();
+            IndicatorViewer.X = - IndicatorViewer.BitmapSource.PixelWidth/2.0 + IndicatorViewer.ActualWidth/2.0;
+            IndicatorViewer.Y = - IndicatorViewer.BitmapSource.PixelHeight/2.0 + IndicatorViewer.ActualHeight/2.0;
+            IndicatorViewer.ZoomOut();
+            IndicatorViewer.ZoomOut();
+//            IndicatorViewer.Zoom(new Point(IndicatorViewer.BitmapSource.PixelWidth/2.0,IndicatorViewer.BitmapSource.PixelHeight/2.0 ),
+//                0.5);
+        }
     }
 }
-    // ReSharper restore InconsistentNaming
+
+// ReSharper restore InconsistentNaming

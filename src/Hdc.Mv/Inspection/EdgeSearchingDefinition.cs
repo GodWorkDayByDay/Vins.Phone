@@ -5,7 +5,7 @@ using System.Windows;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class EdgeSearchingDefinition
+    public class EdgeSearchingDefinition : IRoiRectangle
     {
         public string Name { get; set; }
 
@@ -18,16 +18,20 @@ namespace Hdc.Mv.Inspection
         public double ExpectAngle { get; set; }
         public bool Domain_SaveCacheImageEnabled { get; set; }
 
-        public IRegionExtractor RegionExtractor { get; set; }
+        [Obsolete]
+        public IRectangle2RegionExtractor RegionExtractor { get; set; }
         public bool RegionExtractor_Disabled { get; set; }
         public bool RegionExtractor_SaveCacheImageEnabled { get; set; }
+        public bool RegionExtractor_CropDomainEnabled { get; set; }
 
         public IImageFilter ImageFilter { get; set; }
         public bool ImageFilter_Disabled { get; set; }
         public bool ImageFilter_SaveCacheImageEnabled { get; set; }
+        public bool ImageFilter_CropDomainEnabled { get; set; }
 
         public ILineExtractor LineExtractor { get; set; }
-
+        public bool LineExtractor_SaveCacheImageEnabled { get; set; }
+        public bool LineExtractor_CropDomainEnabled { get; set; }
 
         public EdgeSearchingDefinition()
         {
@@ -57,7 +61,6 @@ namespace Hdc.Mv.Inspection
             get { return new Line(StartX, StartY, EndX, EndY); }
         }
 
-        //
         public Line RelativeLine { get; set; }
     }
 }

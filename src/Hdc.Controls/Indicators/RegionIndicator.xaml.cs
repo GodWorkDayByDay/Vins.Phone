@@ -84,45 +84,6 @@ namespace Hdc.Controls
 
         #endregion
 
-//        #region Scale
-//
-//        public double Scale
-//        {
-//            get { return (double)GetValue(ScaleProperty); }
-//            set { SetValue(ScaleProperty, value); }
-//        }
-//
-//        public static readonly DependencyProperty ScaleProperty = DependencyProperty.Register(
-//            "Scale", typeof(double), typeof(RegionIndicator));
-//
-//        #endregion
-
-//        #region X
-//
-//        public int X
-//        {
-//            get { return (int)GetValue(XProperty); }
-//            set { SetValue(XProperty, value); }
-//        }
-//
-//        public static readonly DependencyProperty XProperty = DependencyProperty.Register(
-//            "X", typeof(int), typeof(RegionIndicator));
-//
-//        #endregion
-//
-//        #region Y
-//
-//        public int Y
-//        {
-//            get { return (int)GetValue(YProperty); }
-//            set { SetValue(YProperty, value); }
-//        }
-//
-//        public static readonly DependencyProperty YProperty = DependencyProperty.Register(
-//            "Y", typeof(int), typeof(RegionIndicator));
-//
-//        #endregion
-
         #region RegionWidth
 
         public double RegionWidth
@@ -166,13 +127,13 @@ namespace Hdc.Controls
 
             RegionIndicatorMarker.SetValue(Canvas.LeftProperty, centerX);
             RegionIndicatorMarker.SetValue(Canvas.TopProperty, centerY);
-            RegionIndicatorMarker.Width = displayRegionWidth;
+            RegionIndicatorMarker.Width = displayRegionWidth * 2;
             RegionIndicatorMarker.Height = length;
 
 
             var renderTransform = new TransformGroup();
 //            renderTransform.Children.Add(new TranslateTransform(0 - (int)displayRegionWidth / 2, 0));
-            renderTransform.Children.Add(new TranslateTransform(0 - (int)(displayRegionWidth / 2), 0 - (int)(length / 2)));
+            renderTransform.Children.Add(new TranslateTransform(0 - (int)(displayRegionWidth), 0 - (int)(length / 2)));
             renderTransform.Children.Add(new RotateTransform(angle)
                                          {
                                              //                                                         CenterX = 0 - (int)displayRegionWidth / 2

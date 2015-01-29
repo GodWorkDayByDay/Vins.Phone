@@ -123,5 +123,6 @@ namespace Hdc.Mv.Halcon
                                };
             return smallestRect;
         }
+
     }
 }

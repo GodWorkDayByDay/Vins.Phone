@@ -23,6 +23,7 @@ namespace Hdc.Mv.Inspection
             DefectResults = new DefectResultCollection();
             ClosedRegionResults = new ClosedRegionResultCollection();
             Parts = new List<PartSearchingResult>();
+            RegionTargets = new List<RegionTargetResult>();
         }
 
         public CircleSearchingResultCollection CoordinateCircles { get; set; }
@@ -34,5 +35,6 @@ namespace Hdc.Mv.Inspection
         public DefectResultCollection DefectResults { get; set; }
         public ClosedRegionResultCollection ClosedRegionResults { get; set; }
         public IList<PartSearchingResult> Parts { get; set; }
+        public IList<RegionTargetResult> RegionTargets { get; set; }
     }
 }

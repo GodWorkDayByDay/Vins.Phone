@@ -19,6 +19,7 @@ namespace Hdc.Mv.Inspection
             DistanceBetweenIntersectionPointsDefinitions = new Collection<DistanceBetweenLinesDefinition>();
             SurfaceDefinitions = new Collection<SurfaceDefinition>();
             DefectDefinitions = new Collection<DefectDefinition>();
+            RegionTargetDefinitions = new Collection<RegionTargetDefinition>();
         }
 
 //        public string InspectorName { get; set; }
@@ -53,6 +54,7 @@ namespace Hdc.Mv.Inspection
         public Collection<DistanceBetweenLinesDefinition> DistanceBetweenIntersectionPointsDefinitions { get; set; }
         public Collection<SurfaceDefinition> SurfaceDefinitions { get; set; }
         public Collection<DefectDefinition> DefectDefinitions { get; set; }
+        public Collection<RegionTargetDefinition> RegionTargetDefinitions { get; set; }
 
         public CoordinateType CoordinateType { get; set; }
 

@@ -33,6 +33,11 @@ namespace Hdc.Mv
 
         public Vector OriginOffset { get; set; }
 
+        public double GetCoordinateAngle()
+        {
+            return _coordinateVectorAngle;
+        }
+
         public RelativeCoordinate(Vector originVector, double coordinateAngle)
         {
             _originVector = originVector;

@@ -97,6 +97,23 @@ namespace Hdc.Mv.Halcon
                 rectangle2.Phi,
                 rectangle2.Length1);
         }
+
+        public static RoiRectangle GetRoiRectangleFromSmallestRectangle2(this HRegion region)
+        {
+            var smallest = region.GetSmallestHRectangle2();
+            var roiLine = smallest.GetRoiLineFromRectangle2Phi();
+            var roiRect = new RoiRectangle
+                          {
+                              StartX = roiLine.X1,
+                              StartY = roiLine.Y1,
+                              EndX = roiLine.X2,
+                              EndY = roiLine.Y2,
+                              ROIWidth = smallest.Length2
+                          };
+
+            return roiRect;
+        }
+
         public static Line GetRoiLineFromRectangle2Phi(double row, double column, double phi, double length1)
         {
             var angle = -phi / 3.141592654 * 180;

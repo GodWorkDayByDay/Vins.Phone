@@ -190,14 +190,16 @@ namespace Hdc.Mv.Inspection
                     _inspectionSchema.CoordinateOriginOffsetY);
             }
 
-            _inspectionResult.CoordinateCircles.UpdateRelativeCircles(_coordinate);
+            _inspectionResult.CoordinateCircles.UpdateRelativeCoordinate(_coordinate);
 
             // 
-            _inspectionSchema.CoordinateCircles.UpdateObjectiveCircles(_coordinate);
-            _inspectionSchema.CoordinateEdges.UpdateFromRelativeLines(_coordinate);
-            _inspectionSchema.CircleSearchingDefinitions.UpdateObjectiveCircles(_coordinate);
-            _inspectionSchema.EdgeSearchingDefinitions.UpdateFromRelativeLines(_coordinate);
-            _inspectionSchema.PartSearchingDefinitions.UpdateFromRelativeLines(_coordinate);
+            _inspectionSchema.CoordinateCircles.UpdateRelativeCoordinate(_coordinate);
+            _inspectionSchema.CoordinateEdges.UpdateRelativeCoordinate(_coordinate);
+            _inspectionSchema.CircleSearchingDefinitions.UpdateRelativeCoordinate(_coordinate);
+            _inspectionSchema.EdgeSearchingDefinitions.UpdateRelativeCoordinate(_coordinate);
+            _inspectionSchema.PartSearchingDefinitions.UpdateRelativeCoordinate(_coordinate);
+            _inspectionSchema.SurfaceDefinitions.UpdateRelativeCoordinate(_coordinate);
+            _inspectionSchema.RegionTargetDefinitions.UpdateRelativeCoordinate(_coordinate);
 
             sw.Dispose();
 
@@ -209,6 +211,13 @@ namespace Hdc.Mv.Inspection
             var sw2 = new NotifyStopwatch("IInspectionController.Inspect()");
 
             var inspectionSchema = _inspectionSchema;
+
+            if (inspectionSchema.RegionTargetDefinitions.Any())
+            {
+                var inspector = new RegionTargetInspector();
+                var results = inspector.SearchRegionTargets(_image, inspectionSchema.RegionTargetDefinitions);
+                _inspectionResult.RegionTargets = results;
+            }
 
             if (inspectionSchema.PartSearchingDefinitions.Any())
             {

@@ -5,14 +5,14 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class SharpSelectorSeries : Collection<SharpSelector>, IRegionSelector
+    public class SelectShapeSeriesRegionProcessor : Collection<SelectShapeRegionProcessor>, IRegionProcessor
     {
-        public HRegion SelectRegion(HRegion region)
+        public HRegion Process(HRegion region)
         {
             HRegion selectedRegion = region;
             foreach (var item in Items)
             {
-                selectedRegion = item.SelectRegion(selectedRegion);
+                selectedRegion = item.Process(selectedRegion);
             }
             return selectedRegion;
         }
