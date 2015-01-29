@@ -31,7 +31,7 @@ namespace Hdc.Mv.Inspection
             var rectImage = HDevelopExport.Singletone.ChangeDomainForRectangle(
                 image,
                 definition.Line,
-                definition.ROIWidth/2.0);
+                definition.ROIWidth);
 
             if (definition.Domain_SaveCacheImageEnabled)
             {
@@ -91,14 +91,18 @@ namespace Hdc.Mv.Inspection
 
                     if (definition.ImageFilter_SaveCacheImageEnabled)
                     {
+                        var filterImageDomain = filterImage.GetDomain();
+                        var offsetRow = filterImageDomain.GetRow1();
+                        var offsetColumn = filterImageDomain.GetColumn1();
                         var cropDomain = filterImage.CropDomain();
                         cropDomain.WriteImageOfTiffLzw(_cacheImageDir + "\\SearchEdges_" + definition.Name +
                                                        "_3_ImageFilter_Cropped.tif");
-                        cropDomain.Dispose();
 
-                        var paintedImage = cropDomain.PaintGrayOffset(image, 0, 0);
+                        var paintedImage = cropDomain.PaintGrayOffset(image, offsetRow, offsetColumn);
                         paintedImage.WriteImageOfJpeg(_cacheImageDir + "\\SearchEdges_" + definition.Name +
                                                       "_3_ImageFilter_PaintGrayOffset.jpg");
+
+                        cropDomain.Dispose();
                         paintedImage.Dispose();
                     }
                 }

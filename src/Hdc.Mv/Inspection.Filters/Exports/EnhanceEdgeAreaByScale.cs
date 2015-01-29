@@ -23,7 +23,8 @@ public partial class HDevelopExport
 
     HObject ho_Domain, ho_ImageMean, ho_Region;
     HObject ho_ImageReduced, ho_ImageScaled=null, ho_Region1;
-    HObject ho_RegionOpening, ho_RegionFillUp;
+    HObject ho_RegionOpening, ho_RegionFillUp, ho_ImageNew;
+    HObject ho_RegionComplement;
 
     // Local control variables 
 
@@ -40,6 +41,8 @@ public partial class HDevelopExport
     HOperatorSet.GenEmptyObj(out ho_Region1);
     HOperatorSet.GenEmptyObj(out ho_RegionOpening);
     HOperatorSet.GenEmptyObj(out ho_RegionFillUp);
+    HOperatorSet.GenEmptyObj(out ho_ImageNew);
+    HOperatorSet.GenEmptyObj(out ho_RegionComplement);
     ho_Domain.Dispose();
     HOperatorSet.GetDomain(ho_InputImage, out ho_Domain);
     HOperatorSet.RegionFeatures(ho_Domain, "width", out hv_Width);
@@ -80,9 +83,14 @@ public partial class HDevelopExport
     ho_RegionFillUp.Dispose();
     HOperatorSet.FillUp(ho_EnhancedEdge, out ho_RegionFillUp);
 
+    ho_ImageNew.Dispose();
+    HOperatorSet.ChangeDomain(ho_InputImage, ho_Domain, out ho_ImageNew);
+    ho_RegionComplement.Dispose();
+    HOperatorSet.Complement(ho_RegionFillUp, out ho_RegionComplement);
     ho_EnhancedImage.Dispose();
-    HOperatorSet.RegionToBin(ho_RegionFillUp, out ho_EnhancedImage, 0, 255, hv_Width, 
-        hv_Height);
+    HOperatorSet.PaintRegion(ho_RegionFillUp, ho_ImageNew, out ho_EnhancedImage, 
+        255, "fill");
+    HOperatorSet.OverpaintRegion(ho_EnhancedImage, ho_RegionComplement, 0, "fill");
 
     ho_Domain.Dispose();
     ho_ImageMean.Dispose();
@@ -92,6 +100,8 @@ public partial class HDevelopExport
     ho_Region1.Dispose();
     ho_RegionOpening.Dispose();
     ho_RegionFillUp.Dispose();
+    ho_ImageNew.Dispose();
+    ho_RegionComplement.Dispose();
 
     return;
   }

@@ -19,7 +19,7 @@ namespace Hdc.Mv.Inspection
         public bool Domain_SaveCacheImageEnabled { get; set; }
 
         [Obsolete]
-        public IRectangle2RegionExtractor RegionExtractor { get; set; }
+        public IRegionExtractor RegionExtractor { get; set; }
         public bool RegionExtractor_Disabled { get; set; }
         public bool RegionExtractor_SaveCacheImageEnabled { get; set; }
         public bool RegionExtractor_CropDomainEnabled { get; set; }

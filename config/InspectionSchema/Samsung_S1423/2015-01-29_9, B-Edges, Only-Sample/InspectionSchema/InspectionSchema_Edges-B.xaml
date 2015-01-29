@@ -1,0 +1,64 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.EdgeSearchingDefinitions>
+      <EdgeSearchingDefinition Name="L1"
+                               StartX="1081"
+                               StartY="4140"
+                               EndX="1081"
+                               EndY="4684"
+                               ROIWidth="100"
+                               Domain_SaveCacheImageEnabled="true"
+                               RegionExtractor_SaveCacheImageEnabled="true"
+                               ImageFilter_Disabled="false"
+                               ImageFilter_SaveCacheImageEnabled="true"
+                               >
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="0"
+                                    WidthMax="99999999"
+                                    HeightMin="0"
+                                    HeightMax="99999999"
+                                    DilationWidth="22"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      <EdgeSearchingDefinition.ImageFilter>
+          <EnhanceEdgeAreaByScaleFilter
+            MeanMaskWidth="2"
+            MeanMaskHeight="55"
+            EdgeAreaLightDark="dark"
+            ScaleAdd="0"
+            OpeningWidth="2"
+            OpeningHeight="55"
+            ClosingWidth="2"
+            ClosingHeight="55">
+          </EnhanceEdgeAreaByScaleFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="176"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+    </EdgeSearchingDefinition>
+    
+
+  </InspectionSchema.EdgeSearchingDefinitions>
+  
+  <InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+      <!--   
+      <DistanceBetweenLinesDefinition Name="T1B1" Line1Name="T1" Line2Name="B1"/>
+      <DistanceBetweenLinesDefinition Name="T2B2" Line1Name="T2" Line2Name="B2"/> -->
+      <!--
+      <DistanceBetweenLinesDefinition Name="Thick" Line1Name="ThickTop" Line2Name="ThickBottom"/>
+      <DistanceBetweenLinesDefinition Name="LeftButtonWidth1" Line1Name="LeftButtonL1" Line2Name="LeftButtonR1"/>
+         -->
+  </InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+  
+</InspectionSchema>

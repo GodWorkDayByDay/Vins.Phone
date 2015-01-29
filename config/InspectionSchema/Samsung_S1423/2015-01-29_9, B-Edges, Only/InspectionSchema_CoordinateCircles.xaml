@@ -1,0 +1,267 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  >
+  <InspectionSchema.CoordinateCircles>
+  
+  <!---->
+    <CircleSearchingDefinition CenterX="3646"
+                               CenterY="2284"
+                               InnerRadius="0"
+                               OuterRadius="100"
+                               Name="O"
+                               
+                               Domain_SaveCacheImageEnabled="false"
+                               ImageFilter_Disabled="false"
+                               ImageFilter_SaveCacheImageEnabled="false">
+        
+        <CircleSearchingDefinition.ImageFilter>
+            <LaplaceOfGaussFilter Sigma="2">
+            </LaplaceOfGaussFilter>
+        </CircleSearchingDefinition.ImageFilter>
+        
+        <CircleSearchingDefinition.CircleExtractor>
+            <HoughCircleExtractor Name=""
+                                  SaveCacheImageEnabled="false"
+                                  Sigma="1"
+                                  MinGray="1"
+                                  MaxGray="127"
+                                  ExpectRadius="31"
+                                  Percent="60"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+        
+    </CircleSearchingDefinition>
+    
+    
+    <CircleSearchingDefinition CenterX="3699"
+                               CenterY="10652"
+                               InnerRadius="0"
+                               OuterRadius="100"
+                               Name="R1"
+                               
+                               BaselineAngle="90"
+                               BaselineX="0"
+                               BaselineY="133.882"
+                               
+                               Domain_SaveCacheImageEnabled="false"
+                               ImageFilter_Disabled="false"
+                               ImageFilter_SaveCacheImageEnabled="false">
+        
+        <CircleSearchingDefinition.ImageFilter>
+            <LaplaceOfGaussFilter Sigma="2">
+            </LaplaceOfGaussFilter>
+        </CircleSearchingDefinition.ImageFilter>
+        
+        <CircleSearchingDefinition.CircleExtractor>
+            <HoughCircleExtractor Name=""
+                                  SaveCacheImageEnabled="false"
+                                  Sigma="2"
+                                  MinGray="1"
+                                  MaxGray="127"
+                                  ExpectRadius="31"
+                                  Percent="60"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+        
+    </CircleSearchingDefinition>
+    
+    
+    <CircleSearchingDefinition CenterX="1831"
+                               CenterY="2335"
+                               InnerRadius="0"
+                               OuterRadius="350"
+                               Name="R2"
+                               
+                               BaselineAngle="178.69"
+                               BaselineX="-29.005"
+                               BaselineY="0.663"
+                               
+                               Domain_SaveCacheImageEnabled="false"
+                               ImageFilter_Disabled="false"
+                               ImageFilter_SaveCacheImageEnabled="false">
+        
+        <CircleSearchingDefinition.ImageFilter>
+            <LaplaceOfGaussFilter Sigma="2">
+            </LaplaceOfGaussFilter>
+        </CircleSearchingDefinition.ImageFilter>
+        
+        <CircleSearchingDefinition.CircleExtractor>
+            <HoughCircleExtractor Name=""
+                                  SaveCacheImageEnabled="false"
+                                  Sigma="2"
+                                  MinGray="1"
+                                  MaxGray="127"
+                                  ExpectRadius="126"
+                                  Percent="60"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+        
+    </CircleSearchingDefinition>
+    
+    
+    <CircleSearchingDefinition CenterX="4830"
+                               CenterY="2104"
+                               InnerRadius="0"
+                               OuterRadius="350"
+                               Name="R3"
+                               
+                               BaselineAngle="-8.17985"
+                               BaselineX="18.98"
+                               BaselineY="-2.728"
+                               
+                               Domain_SaveCacheImageEnabled="false"
+                               ImageFilter_Disabled="false"
+                               ImageFilter_SaveCacheImageEnabled="false">
+        
+        <CircleSearchingDefinition.ImageFilter>
+            <LaplaceOfGaussFilter Sigma="2">
+            </LaplaceOfGaussFilter>
+        </CircleSearchingDefinition.ImageFilter>
+        
+        <CircleSearchingDefinition.CircleExtractor>
+            <HoughCircleExtractor Name=""
+                                  SaveCacheImageEnabled="false"
+                                  Sigma="1"
+                                  MinGray="1"
+                                  MaxGray="127"
+                                  ExpectRadius="126"
+                                  Percent="60"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+        
+    </CircleSearchingDefinition>
+    
+    
+    <CircleSearchingDefinition CenterX="2509"
+                               CenterY="2219"
+                               InnerRadius="0"
+                               OuterRadius="350"
+                               Name="R4"
+                               
+                               BaselineAngle="183.5577"
+                               BaselineX="-18.221"
+                               BaselineY="-1.133"
+                               
+                               Domain_SaveCacheImageEnabled="false"
+                               ImageFilter_Disabled="false"
+                               ImageFilter_SaveCacheImageEnabled="false">
+        
+        <CircleSearchingDefinition.ImageFilter>
+            <LaplaceOfGaussFilter Sigma="2">
+            </LaplaceOfGaussFilter>
+        </CircleSearchingDefinition.ImageFilter>
+        
+        <CircleSearchingDefinition.CircleExtractor>
+            <HoughCircleExtractor Name=""
+                                  SaveCacheImageEnabled="true"
+                                  Sigma="1"
+                                  MinGray="1"
+                                  MaxGray="127"
+                                  ExpectRadius="125"
+                                  Percent="60"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+        
+    </CircleSearchingDefinition>
+    
+    
+    <CircleSearchingDefinition CenterX="5435"
+                               CenterY="1988"
+                               InnerRadius="0"
+                               OuterRadius="200"
+                               Name="R5"
+                               
+                               BaselineAngle="-8.965"
+                               BaselineX="28.675"
+                               BaselineY="-4.524"
+                               
+                               Domain_SaveCacheImageEnabled="false"
+                               ImageFilter_Disabled="false"
+                               ImageFilter_SaveCacheImageEnabled="false">
+        
+        <CircleSearchingDefinition.ImageFilter>
+            <LaplaceOfGaussFilter Sigma="2">
+            </LaplaceOfGaussFilter>
+        </CircleSearchingDefinition.ImageFilter>
+        
+        <CircleSearchingDefinition.CircleExtractor>
+            <HoughCircleExtractor Name=""
+                                  SaveCacheImageEnabled="false"
+                                  Sigma="1"
+                                  MinGray="1"
+                                  MaxGray="127"
+                                  ExpectRadius="79"
+                                  Percent="60"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+        
+    </CircleSearchingDefinition>
+    
+    
+    <CircleSearchingDefinition CenterX="2243"
+                               CenterY="10423"
+                               InnerRadius="0"
+                               OuterRadius="300"
+                               Name="R6"
+                               
+                               BaselineAngle="100.1675"
+                               BaselineX="-23.323"
+                               BaselineY="130.049"
+                               
+                               Domain_SaveCacheImageEnabled="false"
+                               ImageFilter_Disabled="false"
+                               ImageFilter_SaveCacheImageEnabled="false">
+        
+        <CircleSearchingDefinition.ImageFilter>
+            <LaplaceOfGaussFilter Sigma="2">
+            </LaplaceOfGaussFilter>
+        </CircleSearchingDefinition.ImageFilter>
+        
+        <CircleSearchingDefinition.CircleExtractor>
+            <HoughCircleExtractor Name=""
+                                  SaveCacheImageEnabled="false"
+                                  Sigma="1"
+                                  MinGray="1"
+                                  MaxGray="127"
+                                  ExpectRadius="124"
+                                  Percent="60"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+        
+    </CircleSearchingDefinition>
+    
+    
+    <CircleSearchingDefinition CenterX="5123"
+                               CenterY="10346"
+                               InnerRadius="0"
+                               OuterRadius="300"
+                               Name="R7"
+                               
+                               BaselineAngle="79.98916"
+                               BaselineX="22.798"
+                               BaselineY="129.151"
+                               
+                               Domain_SaveCacheImageEnabled="false"
+                               ImageFilter_Disabled="false"
+                               ImageFilter_SaveCacheImageEnabled="false">
+        
+        <CircleSearchingDefinition.ImageFilter>
+            <LaplaceOfGaussFilter Sigma="2">
+            </LaplaceOfGaussFilter>
+        </CircleSearchingDefinition.ImageFilter>
+        
+        <CircleSearchingDefinition.CircleExtractor>
+            <HoughCircleExtractor Name=""
+                                  SaveCacheImageEnabled="false"
+                                  Sigma="1"
+                                  MinGray="1"
+                                  MaxGray="127"
+                                  ExpectRadius="95"
+                                  Percent="60"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+        
+    </CircleSearchingDefinition>
+    <!---->
+    
+  </InspectionSchema.CoordinateCircles>
+</InspectionSchema>
