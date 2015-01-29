@@ -4,7 +4,7 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class ThresholdGeneralRegionExtractor : IGeneralRegionExtractor
+    public class ThresholdRegionExtractor : IRegionExtractor
     {
         public HRegion Extract(HImage image)
         {

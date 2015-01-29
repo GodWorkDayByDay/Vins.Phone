@@ -5,7 +5,7 @@ using Hdc.Mv.Halcon;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public abstract class RegionExtractor : IRectangle2RegionExtractor
+    public abstract class Rectangle2RegionExtractor : IRectangle2RegionExtractor
     {
         public string Name { get; set; }
         public bool SaveCacheImageEnabled { get; set; }

@@ -4,49 +4,43 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class SobelAmp2RegionExtractor : RegionExtractor
+    public class BinaryThresholdRectRegionExtractor : Rectangle2RegionExtractor
     {
         protected override HRegion GetRegion(HImage image)
         {
+            if(!(LightDark==LightDark.Light || LightDark==LightDark.Dark))
+                throw new InvalidOperationException("BinaryThresholdRegionExtractor.LightDark must be Light or Dark. Now is " + LightDark);
+
             HObject foundRegionObject;
 
-            HDevelopExport.Singletone.GetRegionBySobelAmp2(image,
+            HDevelopExport.Singletone.GetRegionByBinaryThresholdRect(image,
                 out foundRegionObject,
-                MedianRadius,
                 MeanMaskWidth,
                 MeanMaskHeight,
-                SobelAmpSize,
-                ScaleMult,
                 ScaleAdd,
+                LightDark.ToHalconString(),
                 AreaMin,
                 AreaMax,
                 OpeningWidth,
                 OpeningHeight,
                 ClosingWidth,
                 ClosingHeight,
-                ErosionWidth,
-                ErosionHeight,
-                DilationWidth,
-                DilationHeight);
+                DilationRadius);
 
-            return new HRegion(foundRegionObject);
+            var hRegion = new HRegion(foundRegionObject);
+            return hRegion;
         }
 
-        public int MedianRadius { get; set; }
         public int MeanMaskWidth { get; set; }
         public int MeanMaskHeight { get; set; }
-        public double ScaleMult { get; set; }
         public double ScaleAdd { get; set; }
-        public int SobelAmpSize { get; set; }
+        public LightDark LightDark { get; set; }
         public double AreaMin { get; set; }
         public double AreaMax { get; set; }
         public int OpeningWidth { get; set; }
         public int OpeningHeight { get; set; }
         public int ClosingWidth { get; set; }
         public int ClosingHeight { get; set; }
-        public int ErosionWidth { get; set; }
-        public int ErosionHeight { get; set; }
-        public int DilationWidth { get; set; }
-        public int DilationHeight { get; set; }
+        public double DilationRadius { get; set; }
     }
 }

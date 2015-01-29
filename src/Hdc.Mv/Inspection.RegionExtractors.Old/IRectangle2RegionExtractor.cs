@@ -3,7 +3,7 @@ using HalconDotNet;
 
 namespace Hdc.Mv.Inspection
 {
-    public interface IRectangle2RegionExtractor : IGeneralRegionExtractor, IRectangle2Def
+    public interface IRectangle2RegionExtractor : IRegionExtractor, IRectangle2Def
     {
 //        HRegion Process(HImage image);
 

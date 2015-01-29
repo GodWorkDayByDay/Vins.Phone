@@ -17,7 +17,7 @@ namespace Hdc.Mv.Inspection
         public IImageFilter AroundImageFilter { get; set; }
         public bool AroundImageFilter_SaveCacheImageEnabled { get; set; }
 
-        public IGeneralRegionExtractor AroundRegionExtractor { get; set; }
+        public IRegionExtractor AroundRegionExtractor { get; set; }
         public bool AroundRegionExtractor_SaveCacheImageEnabled { get; set; }
 
         public IRegionProcessor AroundRegionProcessor { get; set; }
@@ -26,7 +26,7 @@ namespace Hdc.Mv.Inspection
         public IImageFilter TargetImageFilter { get; set; }
         public bool TargetImageFilter_SaveCacheImageEnabled { get; set; }
 
-        public IGeneralRegionExtractor TargetRegionExtractor { get; set; }
+        public IRegionExtractor TargetRegionExtractor { get; set; }
         public bool TargetRegionExtractor_SaveCacheImageEnabled { get; set; }
 
         public IRegionProcessor TargetRegionProcessor { get; set; }

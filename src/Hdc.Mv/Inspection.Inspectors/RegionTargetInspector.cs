@@ -58,6 +58,13 @@ namespace Hdc.Mv.Inspection
             }
 
             HImage aroundImage = roiImage.ChangeDomain(aroundProcessedRegion);
+
+            if (definition.AroundRegionProcessor_SaveCacheImageEnabled)
+            {
+                aroundImage.WriteImageOfTiffLzwOfCropDomain(
+                    _cacheImageDir + "\\SearchRegionTarget_" + definition.Name + "_1_Around_Cropped.tif");
+            }
+
             aroundProcessedRegion.Dispose();
             aroundFilterImage.Dispose();
             aroundRegion.Dispose();

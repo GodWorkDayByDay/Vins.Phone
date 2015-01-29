@@ -310,7 +310,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                           EndPointY = ed.EndY,
                                           RegionWidth = ed.ROIWidth / 2,
                                           Stroke = Brushes.Orange,
-                                          StrokeThickness = 2,
+                                          StrokeThickness = 4,
                                       };
                 RegionIndicators.Add(regionIndicator);
             }
@@ -328,7 +328,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                           EndPointY = ed.RoiLine.Y2,
                                           RegionWidth = ed.RoiHalfWidth,
                                           Stroke = Brushes.Orange,
-                                          StrokeThickness = 2,
+                                          StrokeThickness = 4,
                                       };
                 RegionIndicators.Add(regionIndicator);
 
@@ -340,7 +340,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                            EndPointY = ed.AreaLine.Y2,
                                            RegionWidth = ed.AreaHalfWidth,
                                            Stroke = Brushes.Orange,
-                                           StrokeThickness = 2,
+                                           StrokeThickness = 4,
                                        };
                 RegionIndicators.Add(regionIndicator2);
             }
@@ -397,7 +397,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                     EndPointY = ed.RoiActualLine.Y2,
                     RegionWidth = ed.RoiHalfWidth,
                     Stroke = Brushes.Orange,
-                    StrokeThickness = 2,
+                    StrokeThickness = 4,
                 };
                 RegionIndicators.Add(regionIndicator);
             }

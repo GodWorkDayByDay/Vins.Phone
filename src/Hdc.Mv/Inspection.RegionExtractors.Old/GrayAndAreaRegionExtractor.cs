@@ -5,7 +5,7 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class GrayAndAreaRegionExtractor : RegionExtractor
+    public class GrayAndAreaRegionExtractor : Rectangle2RegionExtractor
     {
         protected override HRegion GetRegion(HImage image)
         {

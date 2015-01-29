@@ -2,7 +2,7 @@
 
 namespace Hdc.Mv.Inspection
 {
-    public interface IGeneralRegionExtractor
+    public interface IRegionExtractor
     {
         HRegion Extract(HImage image);
     }
