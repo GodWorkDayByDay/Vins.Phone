@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Markup;
 using HalconDotNet;
+using Hdc.Mv.Halcon;
 
 namespace Hdc.Mv.Inspection
 {
@@ -17,7 +18,8 @@ namespace Hdc.Mv.Inspection
             {
                 var processor = Items[i];
                 var hRegion = processor.Process(processImage);
-//                processImage.Dispose();
+                //hRegion.RegionToBin(255, 0, 8192, 12500).WriteImageOfJpeg(@"D:\TestImage_" + i);
+
                 processImage = hRegion;
             }
 

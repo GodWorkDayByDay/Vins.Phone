@@ -45,6 +45,16 @@ namespace Hdc.Mv.Inspection
             else
             {
                 aroundRegion = aroundFilterImage.GetDomain();
+            } 
+            
+            if (definition.AroundRegionExtractor_SaveCacheImageEnabled)
+            {
+//                var reducedImage = image.ChangeDomain(aroundRegion.Union1());
+//                reducedImage.WriteImageOfTiffLzwOfCropDomain(
+//                    _cacheImageDir + "\\SearchRegionTarget_" + definition.Name + "_1_AroundRegionExtractor.tif");
+//                reducedImage.Dispose();
+                image.WriteImageOfTiffLzwOfCropDomain(aroundRegion,
+                    _cacheImageDir + "\\SearchRegionTarget_" + definition.Name + "_1_AroundRegionExtractor.tif");
             }
 
             HRegion aroundProcessedRegion;
@@ -57,7 +67,7 @@ namespace Hdc.Mv.Inspection
                 aroundProcessedRegion = aroundRegion;
             }
 
-            HImage aroundImage = roiImage.ChangeDomain(aroundProcessedRegion);
+            HImage aroundImage = image.ChangeDomain(aroundProcessedRegion);
 
             if (definition.AroundRegionProcessor_SaveCacheImageEnabled)
             {

@@ -1,0 +1,14 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  TestImageFilePath="D:\WORKSPACE\hdc\视觉\手机外壳-保护壳\2015-01-26, S1423, 15000, 090us\08-C-B底面未知\2015-01-26_01.24.59_WI21.SI0._fec41f38-11f7-4ab5-be77-6c7e482a22e6.tif"
+                  CircleSearching_InspectorName="Hal"
+                  EdgeSearching_InspectorName="Hal"
+                  Defects_InspectorName="Hal"
+                  Surfaces_InspectorName="Hal"
+                  ImagePixelWidth="8192"
+                  ImagePixelHeight="12500"
+                  CoordinateType="VectorsCenter"
+                  CoordinateOriginOffsetEnable="false"
+                  CoordinateOriginOffsetX="0"
+                  CoordinateOriginOffsetY="0"
+                  >
+</InspectionSchema>
