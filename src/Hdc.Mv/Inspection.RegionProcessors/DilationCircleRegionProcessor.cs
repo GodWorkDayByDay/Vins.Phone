@@ -1,7 +1,9 @@
-﻿using HalconDotNet;
+﻿using System;
+using HalconDotNet;
 
 namespace Hdc.Mv.Inspection
 {
+    [Serializable]
     public class DilationCircleRegionProcessor : IRegionProcessor
     {
         public HRegion Process(HRegion region)

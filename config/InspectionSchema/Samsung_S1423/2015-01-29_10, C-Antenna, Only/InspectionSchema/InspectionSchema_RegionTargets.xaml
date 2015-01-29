@@ -1,0 +1,191 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.RegionTargetDefinitions>
+    <RegionTargetDefinition Name="C-Antenna-BottomLeft"
+                            Domain_SaveCacheImageEnabled="true"
+                            AroundRegionProcessor_SaveCacheImageEnabled="true"
+                            TargetImageFilter_SaveCacheImageEnabled="True"
+                            TargetRegionExtractor_SaveCacheImageEnabled="true"
+                            TargetRegionProcessor_SaveCacheImageEnabled="true"
+                            
+                            RoiHalfWidth="70">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="2300"
+              Y1="10900"
+              X2="2300"
+              Y2="11000" />
+      </RegionTargetDefinition.RoiActualLine>
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <AntennaAroundOfS1423CRegionExtractor LightDark="Dark"
+                                              WidthMin="0"
+                                              WidthMax="99999999"
+                                              HeightMin="0"
+                                              HeightMax="99999999"
+                                              SortMode="Character"
+                                              Order="Decrease"
+                                              RowOrCol="Row"
+                                              SelectIndex="1"
+                                              DilationWidth="1"
+                                              DilationHeight="11"
+                                              />
+      </RegionTargetDefinition.AroundRegionExtractor>
+      <RegionTargetDefinition.TargetImageFilter>
+        <GrayOpeningAndDilationFilter GrayOpeningMaskHeight="1"
+                                      GrayOpeningMaskWidth="0"
+                                      GrayDilationMaskHeight="2"
+                                      GrayDilationMaskWidth="8"
+                                      SubImageMult="1"
+                                      SubImageAdd="0"
+                                      />
+      </RegionTargetDefinition.TargetImageFilter>
+      <RegionTargetDefinition.TargetRegionExtractor>
+        <BinaryThresholdRegionExtractor LightDark="Light"/>
+        <!--<AntennaOfS1423RegionExtractor GrayOpeningMaskHeight="1"
+                                       GrayOpeningMaskWidth="0"
+                                       GrayDilationMaskHeight="2"
+                                       GrayDilationMaskWidth="8"
+                                       LightDark="Light"
+                                       AreaMin="500"
+                                       AreaMax="99999999"
+                                       OpeningWidth="3"
+                                       OpeningHeight="6"
+                                       ClosingWidth="3"
+                                       ClosingHeight="3"
+                                       />-->
+      </RegionTargetDefinition.TargetRegionExtractor>
+      <RegionTargetDefinition.TargetRegionProcessor>
+         <CompositeRegionProcessor>
+             <SelectShapeRegionProcessor Operation="And">
+               <SelectShapeEntry Feature="Area" Min="500" Max="99999999"/>
+               <SelectShapeEntry Feature="Height" Min="500" Max="99999999"/>
+             </SelectShapeRegionProcessor>
+             <OpeningRectangle1RegionProcessor Width="3" Height="6"/>
+             <ClosingRectangle1RegionProcessor Width="3" Height="3"/>
+         </CompositeRegionProcessor>
+      </RegionTargetDefinition.TargetRegionProcessor>
+    </RegionTargetDefinition>
+    <RegionTargetDefinition Name="C-Antenna-BottomRight"
+                            Domain_SaveCacheImageEnabled="true"
+                            AroundRegionProcessor_SaveCacheImageEnabled="true"
+                            TargetRegionProcessor_SaveCacheImageEnabled="true"
+                            RoiHalfWidth="70">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="5014"
+              Y1="10900"
+              X2="5014"
+              Y2="11000" />
+      </RegionTargetDefinition.RoiActualLine>
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <AntennaAroundOfS1423CRegionExtractor LightDark="Dark"
+                                              WidthMin="0"
+                                              WidthMax="99999999"
+                                              HeightMin="0"
+                                              HeightMax="99999999"
+                                              SortMode="Character"
+                                              Order="Decrease"
+                                              RowOrCol="Row"
+                                              SelectIndex="1"
+                                              DilationWidth="1"
+                                              DilationHeight="11"
+                                              />
+      </RegionTargetDefinition.AroundRegionExtractor>
+      <RegionTargetDefinition.TargetRegionExtractor>
+        <AntennaOfS1423RegionExtractor GrayOpeningMaskHeight="1"
+                                       GrayOpeningMaskWidth="0"
+                                       GrayDilationMaskHeight="2"
+                                       GrayDilationMaskWidth="8"
+                                       LightDark="Light"
+                                       AreaMin="500"
+                                       AreaMax="99999999"
+                                       OpeningWidth="3"
+                                       OpeningHeight="6"
+                                       ClosingWidth="3"
+                                       ClosingHeight="3"
+                                       />
+                                               
+      </RegionTargetDefinition.TargetRegionExtractor>
+    </RegionTargetDefinition>
+    <RegionTargetDefinition Name="C-Antenna-TopLeft"
+                            Domain_SaveCacheImageEnabled="true"
+                            AroundRegionProcessor_SaveCacheImageEnabled="true"
+                            TargetRegionProcessor_SaveCacheImageEnabled="true"
+                            RoiHalfWidth="70">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="2466"
+              Y1="1534"
+              X2="2466"
+              Y2="1605" />
+      </RegionTargetDefinition.RoiActualLine>
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <AntennaAroundOfS1423CRegionExtractor LightDark="Dark"
+                                              WidthMin="0"
+                                              WidthMax="99999999"
+                                              HeightMin="0"
+                                              HeightMax="99999999"
+                                              SortMode="Character"
+                                              Order="Decrease"
+                                              RowOrCol="Row"
+                                              SelectIndex="1"
+                                              DilationWidth="1"
+                                              DilationHeight="11"
+                                              />
+      </RegionTargetDefinition.AroundRegionExtractor>
+      <RegionTargetDefinition.TargetRegionExtractor>
+        <AntennaOfS1423RegionExtractor GrayOpeningMaskHeight="1"
+                                       GrayOpeningMaskWidth="0"
+                                       GrayDilationMaskHeight="2"
+                                       GrayDilationMaskWidth="8"
+                                       LightDark="Light"
+                                       AreaMin="500"
+                                       AreaMax="99999999"
+                                       OpeningWidth="3"
+                                       OpeningHeight="6"
+                                       ClosingWidth="3"
+                                       ClosingHeight="3"
+                                       />
+                                               
+      </RegionTargetDefinition.TargetRegionExtractor>
+    </RegionTargetDefinition>
+    <RegionTargetDefinition Name="C-Antenna-TopRight"
+                            Domain_SaveCacheImageEnabled="true"
+                            AroundRegionProcessor_SaveCacheImageEnabled="true"
+                            TargetRegionProcessor_SaveCacheImageEnabled="true"
+                            RoiHalfWidth="70">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="4906"
+              Y1="1534"
+              X2="4906"
+              Y2="1605" />
+      </RegionTargetDefinition.RoiActualLine>
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <AntennaAroundOfS1423CRegionExtractor LightDark="Dark"
+                                              WidthMin="0"
+                                              WidthMax="99999999"
+                                              HeightMin="0"
+                                              HeightMax="99999999"
+                                              SortMode="Character"
+                                              Order="Decrease"
+                                              RowOrCol="Row"
+                                              SelectIndex="1"
+                                              DilationWidth="1"
+                                              DilationHeight="11"
+                                              />
+      </RegionTargetDefinition.AroundRegionExtractor>
+      <RegionTargetDefinition.TargetRegionExtractor>
+        <AntennaOfS1423RegionExtractor GrayOpeningMaskHeight="1"
+                                       GrayOpeningMaskWidth="0"
+                                       GrayDilationMaskHeight="2"
+                                       GrayDilationMaskWidth="8"
+                                       LightDark="Light"
+                                       AreaMin="500"
+                                       AreaMax="99999999"
+                                       OpeningWidth="3"
+                                       OpeningHeight="6"
+                                       ClosingWidth="3"
+                                       ClosingHeight="3"
+                                       />
+                                               
+      </RegionTargetDefinition.TargetRegionExtractor>
+    </RegionTargetDefinition>
+  </InspectionSchema.RegionTargetDefinitions>
+</InspectionSchema>

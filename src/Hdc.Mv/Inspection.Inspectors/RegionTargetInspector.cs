@@ -81,6 +81,12 @@ namespace Hdc.Mv.Inspection
                 targetFilterImage = aroundImage;
             }
 
+            if (definition.TargetImageFilter_SaveCacheImageEnabled)
+            {
+                targetFilterImage.WriteImageOfTiffLzwOfCropDomain(
+                    _cacheImageDir + "\\SearchRegionTarget_" + definition.Name + "_1_TargetImageFilter_Cropped.tif");
+            }
+
             HRegion targetRegion;
             if (definition.TargetRegionExtractor != null)
             {

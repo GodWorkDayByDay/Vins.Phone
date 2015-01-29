@@ -75,6 +75,8 @@
     <Compile Include="CircleDirect.cs" />
     <Compile Include="Halcon\HRectangle2.cs" />
     <Compile Include="Inspection.Coordination\CreateCoordinateFailedException.cs" />
+    <Compile Include="Inspection.Filters\Exports\GrayOpeningAndDilationFilter.cs" />
+    <Compile Include="Inspection.Filters\GrayOpeningAndDilationFilter.cs" />
     <Compile Include="Inspection.RegionExtractors.Exports\AntennaOfS1423RegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors.Exports\Exports\GetRegionOfAntennaAroundOfS1423A.cs" />
     <Compile Include="Inspection.RegionExtractors.Exports\Exports\GetRegionOfAntennaAroundOfS1423C.cs" />
