@@ -5,9 +5,9 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class GrayAndAreaRegionExtractor : Rectangle2RegionExtractor
+    public class GrayAndAreaRegionExtractor : IRegionExtractor
     {
-        protected override HRegion GetRegion(HImage image)
+        public HRegion Extract(HImage image)
         {
             var foundRegion = image.GetRegionByGrayAndArea(
                 MedianRadius,

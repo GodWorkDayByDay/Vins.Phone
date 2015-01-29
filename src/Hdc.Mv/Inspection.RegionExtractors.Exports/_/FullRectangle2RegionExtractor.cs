@@ -1,10 +1,10 @@
-using System;
+/*using System;
 using HalconDotNet;
 
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class Rectanle2RegionExtractor : Rectangle2RegionExtractor
+    public class FullRectangle2RegionExtractor : Rectangle2RegionExtractor
     {
         protected override HRegion GetRegion(HImage image)
         {
@@ -13,4 +13,4 @@ namespace Hdc.Mv.Inspection
             return rect;
         }
     }
-}
+}*/

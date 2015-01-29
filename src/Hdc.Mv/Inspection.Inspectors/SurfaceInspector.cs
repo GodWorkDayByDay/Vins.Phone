@@ -24,12 +24,12 @@ namespace Hdc.Mv.Inspection
             unionExcludeRegion.GenEmptyRegion();
             unionExcludeDomain.GenEmptyRegion();
 
-            foreach (var excludeRegion in definition.ExcludeRegions)
+            foreach (var excludeRegion in definition.ExcludeParts)
             {
-                HRegion region;
-                using (new NotifyStopwatch("excludeRegion.Process: " + excludeRegion.Name))
-                    region = excludeRegion.Extract(image);
-                var domain = excludeRegion.GetRegion();
+                var sw = new NotifyStopwatch("excludeRegion.Process: " + excludeRegion.Name);
+                HRegion region = excludeRegion.Extract(image);
+                sw.Dispose();
+                var domain = excludeRegion.Domain;
 
                 unionExcludeRegion = unionExcludeRegion.Union2(region);
                 unionExcludeDomain = unionExcludeDomain.Union2(domain);
@@ -53,16 +53,17 @@ namespace Hdc.Mv.Inspection
                 //                    domain.Dispose();
             }
 
-            foreach (var includeRegion in definition.IncludeRegions)
+            foreach (var includeRegion in definition.IncludeParts)
             {
-                var domain = includeRegion.GetRegion();
+                var domain = includeRegion.Domain;
                 unionIncludeDomain = unionIncludeDomain.Union2(domain);
 
                 var remainDomain = domain.Difference(unionExcludeRegion);
+                var reducedImage = image.ChangeDomain(remainDomain);
 
                 HRegion region;
                 using (new NotifyStopwatch("includeRegion.Process: " + includeRegion.Name))
-                    region = includeRegion.Extract(image, remainDomain);
+                    region = includeRegion.Extract(reducedImage);
                 var remainRegion = region.Difference(unionExcludeRegion);
                 unionIncludeRegion = unionIncludeRegion.Union2(remainRegion);
 
@@ -84,14 +85,14 @@ namespace Hdc.Mv.Inspection
                                                        });
             }
 
-            if (definition.SaveCacheImageEnabled && definition.IncludeRegions.Any())
+            if (definition.SaveCacheImageEnabled && definition.IncludeParts.Any())
             {
                 var fileName = "SurfaceDefinition_" + definition.Name + "_Include";
                 image.SaveCacheImagesForRegion(unionIncludeDomain, unionIncludeRegion,
                     unionExcludeRegion, fileName);
             }
 
-            if (definition.SaveCacheImageEnabled && definition.ExcludeRegions.Any())
+            if (definition.SaveCacheImageEnabled && definition.ExcludeParts.Any())
             {
                 var fileName = "SurfaceDefinition_" + definition.Name + "_Exclude";
                 image.SaveCacheImagesForRegion(unionExcludeDomain, unionExcludeRegion,

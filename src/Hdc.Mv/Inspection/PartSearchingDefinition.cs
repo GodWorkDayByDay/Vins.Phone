@@ -18,7 +18,7 @@ namespace Hdc.Mv.Inspection
         public Line AreaRelativeLine { get; set; }
         public double AreaHalfWidth { get; set; }
 
-        public IRectangle2RegionExtractor RegionExtractor { get; set; }
+        public IRegionExtractor RegionExtractor { get; set; }
         public bool RegionExtractor_Disabled { get; set; }
         public bool RegionExtractor_SaveCacheImageEnabled { get; set; }
 
@@ -26,8 +26,8 @@ namespace Hdc.Mv.Inspection
         public bool ImageFilter_Disabled { get; set; }
         public bool ImageFilter_SaveCacheImageEnabled { get; set; }
 
-        public IRectangle2RegionExtractor AreaExtractor { get; set; }
-        public IRectangle2RegionExtractor PartExtractor { get; set; }
+        public IRegionExtractor AreaExtractor { get; set; }
+        public IRegionExtractor PartExtractor { get; set; }
     }
 }
 

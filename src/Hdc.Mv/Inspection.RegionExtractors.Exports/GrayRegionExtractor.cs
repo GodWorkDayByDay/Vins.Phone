@@ -4,20 +4,19 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class SobelAmpRegionExtractor : Rectangle2RegionExtractor
+    public class GrayRegionExtractor : IRegionExtractor
     {
-        protected override HRegion GetRegion(HImage image)
+        public HRegion Extract(HImage image)
         {
             HObject foundRegionObject;
 
-            HDevelopExport.Singletone.GetRegionBySobelAmp(image,
+            HDevelopExport.Singletone.GetRegionByGray(image,
                 out foundRegionObject,
                 MeanMaskWidth,
                 MeanMaskHeight,
                 EmpMaskWidth,
                 EmpMaskHeight,
                 EmpFactor,
-                SobelAmpSize,
                 ScaleMult,
                 ScaleAdd,
                 ThresholdMinGray,
@@ -38,15 +37,14 @@ namespace Hdc.Mv.Inspection
         public int EmpMaskWidth { get; set; }
         public int EmpMaskHeight { get; set; }
         public double EmpFactor { get; set; }
-        public int SobelAmpSize { get; set; }
         public double ScaleMult { get; set; }
         public double ScaleAdd { get; set; }
-        public int ThresholdMinGray { get; set; }
-        public int ThresholdMaxGray { get; set; }
+        public double ThresholdMinGray { get; set; }
+        public double ThresholdMaxGray { get; set; }
         public double ErosionRadius { get; set; }
         public double ClosingCircleRadius { get; set; }
-        public double ClosingRectWidth { get; set; }
-        public double ClosingRectHeight { get; set; }
+        public int ClosingRectWidth { get; set; }
+        public int ClosingRectHeight { get; set; }
         public double DilationRadius { get; set; }
         public double AreaMin { get; set; }
         public double AreaMax { get; set; }

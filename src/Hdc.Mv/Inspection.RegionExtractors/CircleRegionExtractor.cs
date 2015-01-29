@@ -4,15 +4,17 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class CircleRegionExtractor : Rectangle2RegionExtractor
+    public class CircleRegionExtractor : IRegionExtractor
     {
-        protected override HRegion GetRegion(HImage image)
+        public HRegion Extract(HImage image)
         {
             var rect = new HRegion();
             rect.GenCircle(Y, X, Radius);
             return rect;
         }
 
+        public double X { get; set; }
+        public double Y { get; set; }
         public double Radius { get; set; }
     }
 }

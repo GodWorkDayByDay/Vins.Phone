@@ -4,9 +4,9 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class GrowingRegionExtractor : Rectangle2RegionExtractor
+    public class GrowingRegionExtractor : IRegionExtractor
     {
-        protected override HRegion GetRegion(HImage image)
+        public HRegion Extract(HImage image)
         {
             var foundRegion = image.GetRegionByGrowing(
                 MedianRadius,

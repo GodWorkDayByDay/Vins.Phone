@@ -4,9 +4,9 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class RoiByBinaryThresholdRegionExtractor : Rectangle2RegionExtractor
+    public class RoiByBinaryThresholdRegionExtractor : IRegionExtractor
     {
-        protected override HRegion GetRegion(HImage image)
+        public HRegion Extract(HImage image)
         {
             if(!(LightDark==LightDark.Light || LightDark==LightDark.Dark))
                 throw new InvalidOperationException("BinaryThresholdRegionExtractor.LightDark must be Light or Dark. Now is " + LightDark);

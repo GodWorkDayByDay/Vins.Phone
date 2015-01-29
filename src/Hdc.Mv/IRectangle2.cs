@@ -1,6 +1,6 @@
 ﻿namespace Hdc.Mv
 {
-    public interface IRectangle2Def
+    public interface IRectangle2
     {
         double X { get; set; }
         double Y { get; set; }

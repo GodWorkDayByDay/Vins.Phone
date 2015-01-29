@@ -4,7 +4,7 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class RoughWithSobelMeanRegionExtractor : IRectangle2RegionExtractor
+    public class RoughWithSobelMeanRegionExtractor : IRegionExtractor
     {
         public double ThresholdMinGray { get; set; }
         public double ThresholdMaxGray { get; set; }
@@ -20,11 +20,6 @@ namespace Hdc.Mv.Inspection
         public int SobelAmpSize { get; set; }
         public double SobelAmpMeanMin { get; set; }
         public double SobelAmpThresholdMinGray { get; set; }
-        public double X { get; set; }
-        public double Y { get; set; }
-        public double Angle { get; set; }
-        public double HalfWidth { get; set; }
-        public double HalfHeight { get; set; }
 
 
         public HRegion Extract(HImage image)
@@ -56,6 +51,6 @@ namespace Hdc.Mv.Inspection
 
         public string Name { get; set; }
         public bool SaveCacheImageEnabled { get; set; }
-        public IRectangle2Def RelativeRect { get; set; }
+        public IRectangle2 RelativeRect { get; set; }
     }
 }

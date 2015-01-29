@@ -10,12 +10,12 @@ namespace Hdc.Mv.Inspection
     {
         public ClosedRegionDefinition()
         {
-            Rect = new Rectangle2Def();
+            Rect = new Rectangle2();
         }
 
         public string Name { get; set; }
 
-        public Rectangle2Def Rect { get; set; }
+        public Rectangle2 Rect { get; set; }
 
         public int MedianRadius { get; set; }
         public int EmpWidth { get; set; }

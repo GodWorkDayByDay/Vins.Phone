@@ -280,7 +280,7 @@ namespace Hdc.Mv
         }
 
 
-        public static HRegion GetRegion(this IRectangle2Def rect)
+        public static HRegion GetRegion(this IRectangle2 rect)
         {
             var processRegion = new HRegion();
             processRegion.GenRectangle2(rect.Y, rect.X, rect.Angle, rect.HalfWidth, rect.HalfHeight);
@@ -557,7 +557,7 @@ namespace Hdc.Mv
             var vector2BToA = vector2B - vector2A;
             var angle2 = Vector.AngleBetween(vector2BToA, vectorAxisX);
 
-            var angleAvg = (angle1 + angle2) / 2.0;
+            var angleAvg = (angle1 + angle2)/2.0;
 
             var matrix1 = new Matrix();
             matrix1.Rotate(angle1 - angleAvg + 90);
@@ -586,11 +586,11 @@ namespace Hdc.Mv
                 vector1A.Y, vector1A.X, v1C.Y, v1C.X, out row2, out column2, out isOverlapping2);
 
 
-            var middle1X = (vector2B.X + columnB) / 2.0;
-            var middle1Y = (vector2B.Y + rowB) / 2.0;
+            var middle1X = (vector2B.X + columnB)/2.0;
+            var middle1Y = (vector2B.Y + rowB)/2.0;
 
-            var middle2X = (vector1A.X + column2) / 2.0;
-            var middle2Y = (vector1A.Y + row2) / 2.0;
+            var middle2X = (vector1A.X + column2)/2.0;
+            var middle2Y = (vector1A.Y + row2)/2.0;
 
             return new Line(middle2X, middle2Y, middle1X, middle1Y);
         }
@@ -606,6 +606,18 @@ namespace Hdc.Mv
                 roiRectangle.StartY,
                 roiRectangle.EndX,
                 roiRectangle.EndY);
+        }
+
+        public static HRegion GenRegion(this IRectangle2 rectangle2)
+        {
+            var region = new HRegion();
+            region.GenRectangle2(
+                rectangle2.Y, 
+                rectangle2.X, 
+                rectangle2.Angle,
+                rectangle2.HalfHeight, 
+                rectangle2.HalfWidth);
+            return region;
         }
     }
 }

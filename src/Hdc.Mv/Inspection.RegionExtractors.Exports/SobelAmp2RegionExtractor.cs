@@ -4,21 +4,20 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class BinaryThresholdRect2RegionExtractor : Rectangle2RegionExtractor
+    public class SobelAmp2RegionExtractor : IRegionExtractor
     {
-        protected override HRegion GetRegion(HImage image)
+        public HRegion Extract(HImage image)
         {
-            if(!(LightDark==LightDark.Light || LightDark==LightDark.Dark))
-                throw new InvalidOperationException("BinaryThresholdRegionExtractor.LightDark must be Light or Dark. Now is " + LightDark);
-
             HObject foundRegionObject;
 
-            HDevelopExport.Singletone.GetRegionByBinaryThresholdRect2(image,
+            HDevelopExport.Singletone.GetRegionBySobelAmp2(image,
                 out foundRegionObject,
+                MedianRadius,
                 MeanMaskWidth,
                 MeanMaskHeight,
+                SobelAmpSize,
+                ScaleMult,
                 ScaleAdd,
-                LightDark.ToHalconString(),
                 AreaMin,
                 AreaMax,
                 OpeningWidth,
@@ -30,14 +29,15 @@ namespace Hdc.Mv.Inspection
                 DilationWidth,
                 DilationHeight);
 
-            var hRegion = new HRegion(foundRegionObject);
-            return hRegion;
+            return new HRegion(foundRegionObject);
         }
 
+        public int MedianRadius { get; set; }
         public int MeanMaskWidth { get; set; }
         public int MeanMaskHeight { get; set; }
+        public double ScaleMult { get; set; }
         public double ScaleAdd { get; set; }
-        public LightDark LightDark { get; set; }
+        public int SobelAmpSize { get; set; }
         public double AreaMin { get; set; }
         public double AreaMax { get; set; }
         public int OpeningWidth { get; set; }

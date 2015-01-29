@@ -142,19 +142,21 @@ namespace Hdc.Mv.Inspection
             }
         }
 
-        public static void UpdateRelativeCoordinate(this IRectangle2RegionExtractor regionExtractor,
+        public static IRectangle2 UpdateRelativeCoordinate(this IRectangle2 rectangle2,
                                                     IRelativeCoordinate relativeCoordinate)
         {
-            if (regionExtractor.RelativeRect == null)
-                return;
-
-            var relativeCenterVector = new Vector(regionExtractor.RelativeRect.X, regionExtractor.RelativeRect.Y);
+            var relativeCenterVector = new Vector(rectangle2.X, rectangle2.Y);
             var actualCenterVector = relativeCoordinate.GetOriginalVector(relativeCenterVector);
-            regionExtractor.X = actualCenterVector.X;
-            regionExtractor.Y = actualCenterVector.Y;
-            regionExtractor.Angle = relativeCoordinate.GetCoordinateAngle() + regionExtractor.RelativeRect.Angle;
-            regionExtractor.HalfWidth = regionExtractor.RelativeRect.HalfWidth;
-            regionExtractor.HalfHeight = regionExtractor.RelativeRect.HalfHeight;
+
+            var relativeRect = new Rectangle2
+                               {
+                                   X = actualCenterVector.X,
+                                   Y = actualCenterVector.Y,
+                                   Angle = relativeCoordinate.GetCoordinateAngle() + rectangle2.Angle,
+                                   HalfWidth = rectangle2.HalfWidth,
+                                   HalfHeight = rectangle2.HalfHeight
+                               };
+            return relativeRect;
         }
 
         public static void UpdateRelativeCoordinate(this RegionTargetDefinition definition,
@@ -181,15 +183,22 @@ namespace Hdc.Mv.Inspection
             return actualLine;
         }
 
+        public static void UpdateRelativeCoordinate(this SurfacePartDefinition def,
+                                                    IRelativeCoordinate relativeCoordinate)
+        {
+            var rect= def.RoiRelativeRect.UpdateRelativeCoordinate(relativeCoordinate);
+            def.RoiActualRect = rect;
+        }
+
         public static void UpdateRelativeCoordinate(this SurfaceDefinition def,
                                                     IRelativeCoordinate relativeCoordinate)
         {
-            foreach (var includeRegion in def.IncludeRegions)
+            foreach (var includeRegion in def.IncludeParts)
             {
                 includeRegion.UpdateRelativeCoordinate(relativeCoordinate);
             }
 
-            foreach (var excludeRegion in def.ExcludeRegions)
+            foreach (var excludeRegion in def.ExcludeParts)
             {
                 excludeRegion.UpdateRelativeCoordinate(relativeCoordinate);
             }

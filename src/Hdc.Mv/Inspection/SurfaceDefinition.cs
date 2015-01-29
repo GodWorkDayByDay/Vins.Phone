@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 
 namespace Hdc.Mv.Inspection
 {
@@ -7,9 +8,9 @@ namespace Hdc.Mv.Inspection
     {
         public SurfaceDefinition()
         {
-            IncludeRegions = new RegionExtractorCollection();
+            IncludeParts = new Collection<SurfacePartDefinition>();
 
-            ExcludeRegions = new RegionExtractorCollection();
+            ExcludeParts = new Collection<SurfacePartDefinition>();
         }
 
         public string Name { get; set; }
@@ -20,8 +21,8 @@ namespace Hdc.Mv.Inspection
 
         public bool SaveAllCacheImageEnabled { get; set; }
 
-        public RegionExtractorCollection ExcludeRegions { get; set; }
+        public Collection<SurfacePartDefinition> ExcludeParts { get; set; }
 
-        public RegionExtractorCollection IncludeRegions { get; set; }
+        public Collection<SurfacePartDefinition> IncludeParts { get; set; }
     }
 }

@@ -4,16 +4,16 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class BinaryThresholdRectRegionExtractor : Rectangle2RegionExtractor
+    public class BinaryThresholdRect2RegionExtractor : IRegionExtractor
     {
-        protected override HRegion GetRegion(HImage image)
+        public HRegion Extract(HImage image)
         {
             if(!(LightDark==LightDark.Light || LightDark==LightDark.Dark))
                 throw new InvalidOperationException("BinaryThresholdRegionExtractor.LightDark must be Light or Dark. Now is " + LightDark);
 
             HObject foundRegionObject;
 
-            HDevelopExport.Singletone.GetRegionByBinaryThresholdRect(image,
+            HDevelopExport.Singletone.GetRegionByBinaryThresholdRect2(image,
                 out foundRegionObject,
                 MeanMaskWidth,
                 MeanMaskHeight,
@@ -25,7 +25,10 @@ namespace Hdc.Mv.Inspection
                 OpeningHeight,
                 ClosingWidth,
                 ClosingHeight,
-                DilationRadius);
+                ErosionWidth,
+                ErosionHeight,
+                DilationWidth,
+                DilationHeight);
 
             var hRegion = new HRegion(foundRegionObject);
             return hRegion;
@@ -41,6 +44,9 @@ namespace Hdc.Mv.Inspection
         public int OpeningHeight { get; set; }
         public int ClosingWidth { get; set; }
         public int ClosingHeight { get; set; }
-        public double DilationRadius { get; set; }
+        public int ErosionWidth { get; set; }
+        public int ErosionHeight { get; set; }
+        public int DilationWidth { get; set; }
+        public int DilationHeight { get; set; }
     }
 }
