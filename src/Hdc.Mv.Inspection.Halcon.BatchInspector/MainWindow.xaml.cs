@@ -22,7 +22,6 @@ using Hdc.Collections.Generic;
 using Hdc.Collections.ObjectModel;
 using Hdc.Linq;
 using Hdc.Mv.Inspection.Halcon.BatchInspector.Properties;
-using Hdc.Mv.Inspection.Mil;
 using Hdc.Serialization;
 using MessageBox = System.Windows.MessageBox;
 using Path = System.IO.Path;
@@ -303,8 +302,9 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
             Debug.WriteLine("SaveCsvGroupByEdge() end");
 
 
-            var defectsGroups = inspectionResults.Select(x => x.DefectResults).ToList();
-            ReportManager.SaveDefectResultsToCsvGroupByWorkpiece(defectsGroups, exportDir, "Defects");
+            List<RegionDefectResult> defectsGroups = inspectionResults.SelectMany(x => x.RegionDefectResults).ToList();
+            var dgs = defectsGroups.Select(x => x.DefectResults).ToList();
+            ReportManager.SaveDefectResultsToCsvGroupByWorkpiece(dgs, exportDir, "Defects");
             Debug.WriteLine("SaveDefectResultsToCsvGroupByWorkpiece() end");
 
             // SaveToXaml

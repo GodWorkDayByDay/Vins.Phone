@@ -245,13 +245,13 @@ namespace Hdc.Mv.Inspection
                         .CreateSurfaceInspector(inspectionSchema.Surfaces_InspectorName)
                         .SearchSurfaces(_image, inspectionSchema.SurfaceDefinitions);
 
-                IList<DefectResult> defectResultCollection = null;
+//                IList<DefectResult> defectResultCollection = null;
                 if (inspectionSchema.DefectDefinitions.Any())
                 {
                     var defectInspector = InspectorFactory.CreateDefectInspector(inspectionSchema.Defects_InspectorName);
-                    defectResultCollection = defectInspector.SearchDefects(_image, inspectionSchema.DefectDefinitions,
+                    var defectResultCollection = defectInspector.SearchDefects(_image, inspectionSchema.DefectDefinitions,
                         regionResults);
-                    _inspectionResult.DefectResults = new DefectResultCollection(defectResultCollection);
+                    _inspectionResult.RegionDefectResults = defectResultCollection;
                     //                inspectionResult.ClosedRegionResults = regionResults;
                 }
             }

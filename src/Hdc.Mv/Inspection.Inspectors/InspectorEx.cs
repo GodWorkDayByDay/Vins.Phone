@@ -56,7 +56,8 @@ namespace Hdc.Mv.Inspection
         }
 
         public static IList<RegionTargetResult> SearchRegionTargets(this IRegionTargetInspector inspector,
-                                                          HImage image, IList<RegionTargetDefinition> definitions)
+                                                                    HImage image,
+                                                                    IList<RegionTargetDefinition> definitions)
         {
             var csrs = new List<RegionTargetResult>();
 
@@ -67,6 +68,23 @@ namespace Hdc.Mv.Inspection
                 csr.Index = index;
                 csrs.Add(csr);
                 index++;
+            }
+            return csrs;
+        }
+
+        public static IList<RegionDefectResult> SearchDefects(this IDefectInspector inspector,
+                                                              HImage image, IList<DefectDefinition> definitions,
+                                                              IList<SurfaceResult> surfaceResults)
+        {
+            var csrs = new List<RegionDefectResult>();
+
+//            int index = 0;
+            foreach (var definition in definitions)
+            {
+                var csr = inspector.SearchDefects(image, definition, surfaceResults);
+//                csr.Index = index;
+                csrs.AddRange(csr);
+//                index++;
             }
             return csrs;
         }

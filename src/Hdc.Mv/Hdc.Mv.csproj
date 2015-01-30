@@ -76,6 +76,7 @@
     <Compile Include="Halcon\HRectangle2.cs" />
     <Compile Include="Halcon\SobelAmpFilterType.cs" />
     <Compile Include="Inspection.Coordination\CreateCoordinateFailedException.cs" />
+    <Compile Include="Inspection.Filters\ChangeDomainFilter.cs" />
     <Compile Include="Inspection.Filters\Exports\GrayOpeningAndDilationFilter.cs" />
     <Compile Include="Inspection.Filters\GrayClosingRectFilter.cs" />
     <Compile Include="Inspection.Filters\GrayDilationRectFilter.cs" />
@@ -151,6 +152,8 @@
     <Compile Include="Inspection.Inspectors\SimEdgeInspector.cs" />
     <Compile Include="Inspection.Inspectors\SurfaceInspector.cs" />
     <Compile Include="Inspection.RegionProcessors\ConnectionRegionProcessor.cs" />
+    <Compile Include="Inspection.RegionProcessors\FillUpRegionProcessor.cs" />
+    <Compile Include="Inspection.RegionProcessors\MoveRegionProcessor.cs" />
     <Compile Include="Inspection.RegionProcessors\SmallestRectangle1RegionProcessor.cs" />
     <Compile Include="Inspection.RegionProcessors\SmallestRectangle2RegionProcessor.cs" />
     <Compile Include="Inspection.ShapeExtractors\Exports\FindCircleCenterUseHough.cs" />
@@ -197,6 +200,7 @@
     <Compile Include="Inspection\RegionResult.cs" />
     <Compile Include="Inspection\RegionTargetDefinition.cs" />
     <Compile Include="Inspection\RegionTargetResult.cs" />
+    <Compile Include="Inspection\RegionDefectResult.cs" />
     <Compile Include="IRoiRectangle.cs" />
     <Compile Include="LightDark.cs" />
     <Compile Include="Ex.cs" />

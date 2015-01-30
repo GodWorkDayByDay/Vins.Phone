@@ -1,4 +1,6 @@
-﻿namespace MeasurementTestApp
+﻿using System.Windows.Media;
+
+namespace MeasurementTestApp
 {
     public class RectangleIndicatorViewModel
     {
@@ -7,5 +9,8 @@
         public double Width { get; set; }
         public double Height { get; set; }
         public bool IsShown { get; set; }
+        public Brush Stroke { get; set; }
+        public DoubleCollection StrokeDashArray { get; set; }
+        public double StrokeThickness { get; set; }
     }
 }

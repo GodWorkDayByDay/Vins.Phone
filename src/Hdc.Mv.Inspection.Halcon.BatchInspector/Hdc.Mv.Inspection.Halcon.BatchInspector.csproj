@@ -110,10 +110,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hdc.Mv.Inspection.Mil.Interop\Hdc.Mv.Inspection.Mil.Interop.csproj">
-      <Project>{FAECBE0C-329A-4510-9B73-371515E411CC}</Project>
-      <Name>Hdc.Mv.Inspection.Mil.Interop</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Hdc.Mv\Hdc.Mv.csproj">
       <Project>{1345186b-af53-4db9-a1d9-64ec7f14ee2f}</Project>
       <Name>Hdc.Mv</Name>

@@ -1,0 +1,441 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="true">
+  <InspectionSchema.SurfaceDefinitions>
+      <SurfaceDefinition Name="C_General"
+                         SaveCacheImageEnabled="false"
+                         SaveAllCacheImageEnabled="false">
+                         
+          <SurfaceDefinition.ExcludeParts>
+          
+          	 <SurfacePartDefinition Name="C-Hole-01"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="2749"
+                                Y="2867"
+                                Angle="0"
+                                HalfWidth="300"
+                                HalfHeight="300"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                        <MedianFilter Radius="7"/>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <BinaryThresholdRegionExtractor LightDark="Dark"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <DilationCircleRegionProcessor Radius="30"/>
+                         <SmallestRectangle1RegionProcessor/>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+          
+          	 <SurfacePartDefinition Name="C-Hole-02"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3685"
+                                Y="2870"
+                                Angle="0"
+                                HalfWidth="500"
+                                HalfHeight="500"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                        <MedianFilter Radius="7"/>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <BinaryThresholdRegionExtractor LightDark="Dark"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <DilationCircleRegionProcessor Radius="30"/>
+                         <SmallestRectangle1RegionProcessor/>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+          
+          	 <SurfacePartDefinition Name="C-Hole-03"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="4625"
+                                Y="2869"
+                                Angle="0"
+                                HalfWidth="300"
+                                HalfHeight="300"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                        <MedianFilter Radius="7"/>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <BinaryThresholdRegionExtractor LightDark="Dark"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <DilationCircleRegionProcessor Radius="30"/>
+                         <SmallestRectangle1RegionProcessor/>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+             
+          	 <SurfacePartDefinition Name="C-Word-01"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3680"
+                                Y="4542"
+                                Angle="0"
+                                HalfWidth="858"
+                                HalfHeight="183"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                        <MedianFilter Radius="7"/>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <BinaryThresholdRegionExtractor LightDark="Dark"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <DilationCircleRegionProcessor Radius="10"/>
+                         <SmallestRectangle1RegionProcessor/>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+             
+          	 <SurfacePartDefinition Name="C-Word-02"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3695"
+                                Y="8634"
+                                Angle="0"
+                                HalfWidth="409"
+                                HalfHeight="471"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                        <MedianFilter Radius="7"/>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <BinaryThresholdRegionExtractor LightDark="Dark"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <DilationCircleRegionProcessor Radius="10"/>
+                         <SmallestRectangle1RegionProcessor/>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+             
+          	 <SurfacePartDefinition Name="C-Word-03"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3693"
+                                Y="9623"
+                                Angle="0"
+                                HalfWidth="477"
+                                HalfHeight="225"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                        <MedianFilter Radius="7"/>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <BinaryThresholdRegionExtractor LightDark="Dark"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <DilationCircleRegionProcessor Radius="10"/>
+                         <SmallestRectangle1RegionProcessor/>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+          
+          	 <SurfacePartDefinition Name="C-Word-04"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3678"
+                                Y="9968"
+                                Angle="0"
+                                HalfWidth="740"
+                                HalfHeight="130"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                        <MedianFilter Radius="7"/>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <BinaryThresholdRegionExtractor LightDark="Dark"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <DilationCircleRegionProcessor Radius="10"/>
+                         <SmallestRectangle1RegionProcessor/>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+          
+          </SurfaceDefinition.ExcludeParts>
+                  
+          <SurfaceDefinition.IncludeParts>
+          	 <SurfacePartDefinition Name="C-Middle-1"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3675"
+                                Y="2084"
+                                Angle="0"
+                                HalfWidth="2100"
+                                HalfHeight="280"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+             </SurfacePartDefinition>
+          	 <SurfacePartDefinition Name="C-Middle-2"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3675"
+                                Y="2823"
+                                Angle="0"
+                                HalfWidth="2100"
+                                HalfHeight="800"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+             </SurfacePartDefinition>
+          	 <SurfacePartDefinition Name="C-Middle-2b"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3675"
+                                Y="3900"
+                                Angle="0"
+                                HalfWidth="2100"
+                                HalfHeight="400"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+             </SurfacePartDefinition>
+          	 <SurfacePartDefinition Name="C-Middle-3"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3675"
+                                Y="4506"
+                                Angle="0"
+                                HalfWidth="2100"
+                                HalfHeight="400"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+             </SurfacePartDefinition>
+          	 <SurfacePartDefinition Name="C-Middle-4"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3675"
+                                Y="6496"
+                                Angle="0"
+                                HalfWidth="2100"
+                                HalfHeight="1613"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+             </SurfacePartDefinition>
+          	 <SurfacePartDefinition Name="C-Middle-5a"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="2271"
+                                Y="9348"
+                                Angle="0"
+                                HalfWidth="692"
+                                HalfHeight="1323"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+             </SurfacePartDefinition>
+          	 <SurfacePartDefinition Name="C-Middle-5b"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3693"
+                                Y="9348"
+                                Angle="0"
+                                HalfWidth="767"
+                                HalfHeight="1323"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+             </SurfacePartDefinition>
+          	 <SurfacePartDefinition Name="C-Middle-5c"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="5105"
+                                Y="9348"
+                                Angle="0"
+                                HalfWidth="692"
+                                HalfHeight="1323"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+             </SurfacePartDefinition>
+             
+          	 <SurfacePartDefinition Name="C-Bottom"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3675"
+                                Y="10802"
+                                Angle="0"
+                                HalfWidth="1900"
+                                HalfHeight="160"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                       <CompositeFilter>
+                         <!--<MedianFilter Radius="1"/>-->
+                         <MeanFilter MaskWidth="55" MaskHeight="1"/>
+                         <!--<MeanSpFilter MaskWidth="3" MaskHeight="3" MinThresh="1" MaxThresh="254"/>-->
+                         <!--<SobelAmpImageFilter Size="3"/>-->
+                       </CompositeFilter>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <!-- <BinaryThresholdDualRegionExtractor LightDark1="Light" LightDark2="Dark"/>-->
+                        <BinaryThresholdRegionExtractor LightDark="Light"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <ConnectionRegionProcessor/>
+                         <SelectShapeRegionProcessor>
+                           <SelectShapeEntry Feature="Height" Min="200" Max="99999"/>
+                         </SelectShapeRegionProcessor>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+             
+          	 <SurfacePartDefinition Name="C-Top"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3675"
+                                Y="1646"
+                                Angle="0"
+                                HalfWidth="1900"
+                                HalfHeight="170"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                       <CompositeFilter>
+                         <!--<MedianFilter Radius="1"/>-->
+                         <MeanFilter MaskWidth="55" MaskHeight="1"/>
+                         <!--<SobelAmpImageFilter Size="3"/>-->
+                       </CompositeFilter>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <!-- <BinaryThresholdDualRegionExtractor LightDark1="Light" LightDark2="Dark"/>-->
+                        <BinaryThresholdRegionExtractor LightDark="Light"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <ConnectionRegionProcessor/>
+                         <SelectShapeRegionProcessor>
+                           <SelectShapeEntry Feature="Height" Min="200" Max="99999"/>
+                         </SelectShapeRegionProcessor>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+             
+          	 <SurfacePartDefinition Name="C-Left"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="1424"
+                                Y="6224"
+                                Angle="0"
+                                HalfWidth="160"
+                                HalfHeight="4170"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                       <CompositeFilter>
+                         <MeanFilter MaskWidth="1" MaskHeight="55"/>
+                         <GrayRangeRectFilter MaskHeight="5" MaskWidth="10"/>
+                       </CompositeFilter>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <!--<BinaryThresholdDualRegionExtractor LightDark1="Light" LightDark2="Dark"/>-->
+                        <ThresholdRegionExtractor MinGray="0" MaxGray="20"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <ConnectionRegionProcessor/>
+                         <SelectShapeRegionProcessor>
+                           <SelectShapeEntry Feature="Width" Min="160" Max="99999"/>
+                         </SelectShapeRegionProcessor>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+             
+          	 <SurfacePartDefinition Name="C-Right"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="5930"
+                                Y="6224"
+                                Angle="0"
+                                HalfWidth="160"
+                                HalfHeight="4170"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                       <CompositeFilter>
+                         <MeanFilter MaskWidth="1" MaskHeight="55"/>
+                         <GrayRangeRectFilter MaskHeight="5" MaskWidth="10"/>
+                       </CompositeFilter>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <!--<BinaryThresholdRegionExtractor LightDark="Dark"/>-->
+                        <ThresholdRegionExtractor MinGray="0" MaxGray="20"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <ConnectionRegionProcessor/>
+                         <SelectShapeRegionProcessor>
+                           <SelectShapeEntry Feature="Width" Min="200" Max="99999"/>
+                         </SelectShapeRegionProcessor>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+          </SurfaceDefinition.IncludeParts>   
+          
+      </SurfaceDefinition>
+  </InspectionSchema.SurfaceDefinitions>
+  
+</InspectionSchema>

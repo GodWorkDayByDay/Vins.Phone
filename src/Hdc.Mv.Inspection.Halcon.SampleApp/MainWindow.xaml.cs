@@ -25,7 +25,6 @@ using Hdc.Mv.Inspection;
 using Hdc.Mv.Inspection.Halcon;
 using Hdc.Mv.Inspection.Halcon.SampleApp;
 using Hdc.Mv.Inspection.Halcon.SampleApp.Annotations;
-using Hdc.Mv.Inspection.Mil;
 using Hdc.Reflection;
 using Hdc.Serialization;
 using Hdc.Windows.Media.Imaging;
@@ -150,7 +149,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                 Show_DistanceBetweenPointsResults(InspectionController.InspectionResult.DistanceBetweenPointsResults);
 
                 // Defects
-                Show_DefectResults(InspectionController.InspectionResult.DefectResults);
+                Show_DefectResults(InspectionController.InspectionResult.RegionDefectResults);
 
                 // Parts
                 Show_PartSearchingDefinitions(InspectionController.InspectionResult.GetPartSearchingDefinitions());
@@ -426,8 +425,10 @@ namespace ODM.Inspectors.Halcon.SampleApp
         }
 
 
-        public void Show_DefectResults(IEnumerable<DefectResult> defectResults)
+        public void Show_DefectResults(IEnumerable<RegionDefectResult> regionDefectResults)
         {
+            var defectResults = regionDefectResults.SelectMany(x => x.DefectResults);
+
             foreach (var dr in defectResults)
             {
                 var regionIndicator = new RectangleIndicatorViewModel
@@ -437,6 +438,8 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                           Width = dr.Width,
                                           Height = dr.Height,
                                           IsShown = true,
+                                          Stroke = Brushes.Lime,
+                                          StrokeThickness = 2,
                                       };
                 DefectIndicators.Add(regionIndicator);
             }
@@ -534,7 +537,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
             IndicatorViewer.X = - IndicatorViewer.BitmapSource.PixelWidth/2.0 + IndicatorViewer.ActualWidth/2.0;
             IndicatorViewer.Y = - IndicatorViewer.BitmapSource.PixelHeight/2.0 + IndicatorViewer.ActualHeight/2.0;
             IndicatorViewer.ZoomOut();
-            IndicatorViewer.ZoomOut();
+//            IndicatorViewer.ZoomOut();
 //            IndicatorViewer.Zoom(new Point(IndicatorViewer.BitmapSource.PixelWidth/2.0,IndicatorViewer.BitmapSource.PixelHeight/2.0 ),
 //                0.5);
         }

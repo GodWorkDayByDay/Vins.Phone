@@ -20,7 +20,7 @@ namespace Hdc.Mv.Inspection
             Edges = new EdgeSearchingResultCollection();
             DistanceBetweenLinesResults = new DistanceBetweenLinesResultCollection();
             DistanceBetweenPointsResults = new DistanceBetweenPointsResultCollection();
-            DefectResults = new DefectResultCollection();
+            RegionDefectResults = new List<RegionDefectResult>();
             ClosedRegionResults = new ClosedRegionResultCollection();
             Parts = new List<PartSearchingResult>();
             RegionTargets = new List<RegionTargetResult>();
@@ -32,7 +32,8 @@ namespace Hdc.Mv.Inspection
         public EdgeSearchingResultCollection Edges { get; set; }
         public DistanceBetweenLinesResultCollection DistanceBetweenLinesResults { get; set; }
         public DistanceBetweenPointsResultCollection DistanceBetweenPointsResults { get; set; }
-        public DefectResultCollection DefectResults { get; set; }
+//        public DefectResultCollection DefectResults { get; set; }
+        public IList<RegionDefectResult> RegionDefectResults { get; set; }
         public ClosedRegionResultCollection ClosedRegionResults { get; set; }
         public IList<PartSearchingResult> Parts { get; set; }
         public IList<RegionTargetResult> RegionTargets { get; set; }

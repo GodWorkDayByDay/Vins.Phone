@@ -593,7 +593,7 @@ namespace Hdc.Mv.Inspection.Halcon.BatchInspector
             }
         }
 
-        public static void SaveDefectResultsToCsvGroupByWorkpiece(IList<DefectResultCollection> taskList,
+        public static void SaveDefectResultsToCsvGroupByWorkpiece(IList<IList<DefectResult>> taskList,
                                                                    string dir, string suffix = null)
         {
             DateTime dateTime = DateTime.Now;
