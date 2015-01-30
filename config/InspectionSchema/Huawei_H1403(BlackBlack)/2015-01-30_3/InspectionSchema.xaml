@@ -1,0 +1,10 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  TestImageFilePath="D:\2014-09_BYD\2015-01-30_To_T1700\Vins.Phone_3.x(git)\bin\Debug\ImageStore\2015-01-30\2015-01-30_22.10.50_WI0.SI0._a223c33c-9916-4d68-b1ae-5ac2adb936e6.tif"
+                  CircleSearching_InspectorName="Hal"
+                  EdgeSearching_InspectorName="Hal"
+                  Defects_InspectorName="Hal"
+                  ImagePixelWidth="8192"
+                  ImagePixelHeight="12500"
+                  CoordinateType="VectorsCenter"
+                  >
+</InspectionSchema>

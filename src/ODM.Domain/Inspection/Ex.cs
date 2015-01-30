@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -146,6 +147,8 @@ namespace ODM.Domain.Inspection
         {
             var inspectionInfo = new InspectionInfo();
 
+            Debug.WriteLine("GetInspectionInfo().Start");
+
             for (int i = 0; i < inspectionResult.DistanceBetweenPointsResults.Count; i++)
             {
                 var distanceBetweenPointsResult = inspectionResult.DistanceBetweenPointsResults[i];
@@ -178,10 +181,25 @@ namespace ODM.Domain.Inspection
                 }
             }
 
+            Debug.WriteLine("GetInspectionInfo().DistanceBetweenPointsResults");
+
             for (int i = 0; i < inspectionResult.Parts.Count; i++)
             {
                 var part = inspectionResult.Parts[i];
+
+                if (part.PartRegion==null)
+                {
+                    Debug.WriteLine("GetInspectionInfo().Parts: PartRegion == null");
+                    continue;
+                }
+
+                if (part.PartRegion.CountObj() == 0)
+                {
+                    Debug.WriteLine("GetInspectionInfo().Parts: PartRegion.CountObj == 0");
+                    continue;
+                }
                 var partRegion = part.PartRegion;
+
                 var centerX = partRegion.GetColumn();
                 var centerY = partRegion.GetRow();
                 var x = partRegion.GetColumn1();
@@ -211,9 +229,13 @@ namespace ODM.Domain.Inspection
                 inspectionInfo.DefectInfos.Add(di);
             }
 
-            for (int i = 0; i < inspectionResult.DefectResults.Count; i++)
+            Debug.WriteLine("GetInspectionInfo().Parts");
+
+            var drs = inspectionResult.RegionDefectResults.SelectMany(x => x.DefectResults).ToList();
+
+            for (int i = 0; i < drs.Count; i++)
             {
-                var dr = inspectionResult.DefectResults[i];
+                var dr = drs[i];
 
                 var relPoint = coordinate.GetRelativeVector(new Vector(dr.X - dr.Width / 2.0, dr.Y - dr.Height / 2.0));
 
@@ -235,6 +257,8 @@ namespace ODM.Domain.Inspection
 
                 inspectionInfo.DefectInfos.Add(di);
             }
+
+            Debug.WriteLine("GetInspectionInfo().RegionDefectResults");
 
             return inspectionInfo;
         }

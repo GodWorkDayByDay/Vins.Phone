@@ -1,0 +1,41 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.RegionTargetDefinitions>
+    <RegionTargetDefinition Name="Bottom"
+                            Domain_SaveCacheImageEnabled="true"
+                            AroundRegionProcessor_SaveCacheImageEnabled="true"
+                            TargetRegionProcessor_SaveCacheImageEnabled="true"
+                            RoiHalfWidth="160">
+      <RegionTargetDefinition.RoiRelativeLine>
+        <Line X1="2105"
+              Y1="6220"
+              X2="2105"
+              Y2="6670" />
+      </RegionTargetDefinition.RoiRelativeLine>
+      <RegionTargetDefinition.TargetImageFilter>
+         <MedianFilter Radius="3"/>
+      </RegionTargetDefinition.TargetImageFilter>
+      <RegionTargetDefinition.TargetRegionExtractor>
+        <!--<ThresholdRegionExtractor MinGray="60" MaxGray="120"/>-->
+        <RoughWithSobelMeanRegionExtractor ThresholdMinGray="0"
+                                           ThresholdMaxGray="150"
+                                           MinMaxGrayPercent="5"
+                                           HatWidth="7" 
+                                           HatHeight="7" 
+                                           SelectAreaMin="50000" 
+                                           SelectAreaMax="80000" 
+                                           RoughAreaClosingWidth="5" 
+                                           RoughAreaClosingHeight="20" 
+                                           RoughAreaOpeningWidth="5" 
+                                           RoughAreaOpeningHeight="50" 
+                                           SobelAmpSize="7" 
+                                           SobelAmpMeanMin="5" 
+                                           SobelAmpThresholdMinGray="30" 
+                                           />
+      </RegionTargetDefinition.TargetRegionExtractor>
+      <RegionTargetDefinition.TargetRegionProcessor>
+        <OpeningRectangle1RegionProcessor Width="5" Height="5"/>
+      </RegionTargetDefinition.TargetRegionProcessor>
+    </RegionTargetDefinition>
+  </InspectionSchema.RegionTargetDefinitions>
+</InspectionSchema>

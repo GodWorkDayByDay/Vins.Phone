@@ -48,6 +48,8 @@ namespace ODM.Domain.Inspection
 
         public void HandleSurfaceInspectionInfo(SurfaceInspectInfo inspectInfo)
         {
+            Debug.WriteLine("InspectionDomainService.HandleSurfaceInspectionInfo(): " + inspectInfo.SurfaceTypeIndex);
+
             lock (locker)
             {
                 WorkpieceInfo wi;

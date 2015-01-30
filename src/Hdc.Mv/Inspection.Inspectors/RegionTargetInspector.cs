@@ -122,7 +122,7 @@ namespace Hdc.Mv.Inspection
 
             result.TargetRegion = targetProcessedRegion;
 
-            if (targetRegion.GetArea() < 1)
+            if (targetProcessedRegion.CountObj() == 0)
                 result.HasError = true;
 
             return result;

@@ -42,7 +42,7 @@ namespace ODM.Presentation.ViewModels.Inspection
         private bool _isZoomActualEnabled;
         private bool _displayAllDefectsOnImages;
         private bool _displayAllMeasurementInfosOnImages;
-        private int _inspectionCounter;
+        //        private int _inspectionCounter;
 
         [Microsoft.Practices.Unity.Dependency]
         public IMachineConfigProvider MachineConfigProvider { get; set; }
@@ -112,7 +112,7 @@ namespace ODM.Presentation.ViewModels.Inspection
                     DefectInfosCollectionView.Filter =
                         x =>
                         {
-                            var di = (DefectInfoViewModel) x;
+                            var di = (DefectInfoViewModel)x;
                             return di.SurfaceTypeIndex == SelectedSurfaceMonitor.SurfaceTypeIndex;
                         };
                     DefectInfosCollectionView.Refresh();
@@ -127,7 +127,7 @@ namespace ODM.Presentation.ViewModels.Inspection
                     MeasurementInfosCollectionView.Filter =
                         x =>
                         {
-                            var di = (MeasurementInfoViewModel) x;
+                            var di = (MeasurementInfoViewModel)x;
                             return di.SurfaceTypeIndex == SelectedSurfaceMonitor.SurfaceTypeIndex;
                         };
                     MeasurementInfosCollectionView.Refresh();
@@ -156,9 +156,9 @@ namespace ODM.Presentation.ViewModels.Inspection
                                  {
                                      Title = "Load image to surface " + surfaceTypeIndex,
                                      Filter =
-//                                     "BMP files (*.bmp)|*.bmp|" +
-//                                              "TIFF files (*.tif)|*.tif|" +
-//                                              "JPG files (*.jpg)|*.jpg|" +
+                                         //                                     "BMP files (*.bmp)|*.bmp|" +
+                                         //                                              "TIFF files (*.tif)|*.tif|" +
+                                         //                                              "JPG files (*.jpg)|*.jpg|" +
                                          "All files (*.*)|*.*",
                                  };
                     var result = dialog.ShowDialog();
@@ -321,13 +321,11 @@ namespace ODM.Presentation.ViewModels.Inspection
                 .ObserveOnDispatcher()
                 .Subscribe(inspectInfo =>
                            {
-                               if (_inspectionCounter%1 == 0)
-                               {
-                                   DefectInfos.Clear();
-//                                   MeasurementInfos.Clear();
-                               }
+                               HideAll();
 
-                               _inspectionCounter++;
+                               DefectInfos.Clear();
+                               MeasurementInfos.Clear();
+
 
                                var surfaceMonitor = SurfaceMonitors[inspectInfo.SurfaceTypeIndex];
                                surfaceMonitor.InspectState = inspectInfo.InspectInfo.DefectInfos.Count == 0
@@ -341,22 +339,6 @@ namespace ODM.Presentation.ViewModels.Inspection
 
                                DefectInfos.AddRange(iiVm.DefectInfos);
                                MeasurementInfos.AddRange(iiVm.MeasurementInfos);
-
-                               //                               if (MeasurementInfos.Count > 8)
-                               //                               {
-                               //                                   for (int i = 0; i < MeasurementInfos.Count - 8; i++)
-                               //                                   {
-                               //                                       MeasurementInfos.RemoveAt(0);
-                               //                                   }    
-                               //                               }
-
-                               if (MeasurementInfos.Count > 10)
-                               {
-                                   for (int i = 0; i < 5; i++)
-                                   {
-                                       MeasurementInfos.RemoveAt(0);
-                                   }
-                               }
 
                                UpdateCommandStates();
                            });
@@ -445,7 +427,7 @@ namespace ODM.Presentation.ViewModels.Inspection
 
             Predicate<object> filter = x =>
                                        {
-                                           var mi = ((MeasurementInfoViewModel) x);
+                                           var mi = ((MeasurementInfoViewModel)x);
                                            return mi.SurfaceTypeIndex == surfaceTypeIndex && mi.GroupIndex == groupIndex;
                                        };
 
