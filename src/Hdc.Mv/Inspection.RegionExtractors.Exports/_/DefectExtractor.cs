@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using HalconDotNet;
 
 namespace Hdc.Mv.Inspection
@@ -26,4 +26,4 @@ namespace Hdc.Mv.Inspection
 
         public IRegionProcessor Selector { get; set; }
     }
-}
+}*/

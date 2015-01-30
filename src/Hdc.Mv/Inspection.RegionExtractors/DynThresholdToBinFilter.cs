@@ -10,8 +10,6 @@ namespace Hdc.Mv.Inspection
     {
         public HRegion Extract(HImage image)
         {
-//            image.WriteImage("tiff", 0, @"B:\Test_Ori");
-
             HImage preprocessImage;
             if (PreprocessFilter != null)
                 preprocessImage = PreprocessFilter.Process(image);
@@ -19,10 +17,16 @@ namespace Hdc.Mv.Inspection
             {
                 preprocessImage = image;
             }
-//            preprocessImage.WriteImage("tiff", 0, @"B:\Test_preprocessImage");
 
-            var thresholdImage = ThresholdImageFilter.Process(preprocessImage);
-//            thresholdImage.WriteImage("tiff", 0, @"B:\Test_thresholdImage");
+            HImage thresholdImage;
+            if (SeparateFilter)
+            {
+                thresholdImage = ThresholdImageFilter.Process(image);
+            }
+            else
+            {
+                thresholdImage = ThresholdImageFilter.Process(preprocessImage);
+            }
 
             HRegion region = preprocessImage.DynThreshold(
                 thresholdImage,
@@ -41,5 +45,6 @@ namespace Hdc.Mv.Inspection
         public IImageFilter ThresholdImageFilter { get; set; }
         public double Offset { get; set; }
         public LightDark LightDark { get; set; }
+        public bool SeparateFilter { get; set; }
     }
 }

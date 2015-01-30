@@ -518,26 +518,32 @@ namespace Hdc.Mv
                     return "bulkiness";
                 case SharpFeature.Circularity:
                     return "circularity";
+                case SharpFeature.Row:
+                    return "row";
                 case SharpFeature.Column:
                     return "column";
+                case SharpFeature.Row1:
+                    return "row1";
                 case SharpFeature.Column1:
                     return "column1";
+                case SharpFeature.Row2:
+                    return "row2";
                 case SharpFeature.Column2:
                     return "column2";
                 case SharpFeature.Convexity:
                     return "convexity";
                 case SharpFeature.Height:
                     return "height";
-                case SharpFeature.Roundness:
-                    return "roundness";
-                case SharpFeature.Row:
-                    return "row";
-                case SharpFeature.Row1:
-                    return "row1";
-                case SharpFeature.Row2:
-                    return "row2";
                 case SharpFeature.Width:
                     return "width";
+                case SharpFeature.Roundness:
+                    return "roundness";
+                case SharpFeature.Rect2Len1:
+                    return "rect2_len1";
+                case SharpFeature.Rect2Len2:
+                    return "rect2_len2";
+                case SharpFeature.Rect2Phi:
+                    return "rect2_phi";
                 default:
                     throw new InvalidOperationException("SharpFeature cannot convert to string: " + feature);
             }

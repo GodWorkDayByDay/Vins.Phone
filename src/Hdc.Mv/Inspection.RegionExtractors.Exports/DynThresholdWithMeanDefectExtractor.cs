@@ -4,16 +4,15 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class DynThresholdWithMeanExcludedDefectExtractor : DefectExtractor
+    public class DynThresholdWithMeanDefectExtractor : IRegionExtractor
     {
-        public override HRegion GetBlobsInner(HImage image, HRegion domain)
+        public HRegion Extract(HImage image)
         {
-            var reducedImage = image.ReduceDomain(domain);
-
             HObject foundRegionObject;
 
-            HDevelopExport.Singletone.GetBlobsByDynThresholdWithMeanExcluded(reducedImage,
+            HDevelopExport.Singletone.GetBlobsByDynThresholdWithMean(image,
                 out foundRegionObject,
+                ZoomFactor,
                 MedianRadius,
                 DynMeanMaskWidth,
                 DynMeanMaskHeight,
@@ -26,12 +25,11 @@ namespace Hdc.Mv.Inspection
                 Rect2Length1Max
                 );
 
-            reducedImage.Dispose();
-
             var hRegion = new HRegion(foundRegionObject);
             return hRegion;
         }
 
+        public double ZoomFactor { get; set; }
         public int MedianRadius { get; set; }
         public double DynMeanMaskWidth { get; set; }
         public double DynMeanMaskHeight { get; set; }

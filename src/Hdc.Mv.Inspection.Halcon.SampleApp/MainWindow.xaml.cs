@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Hdc.Collections.Generic;
+using Hdc.Collections.ObjectModel;
 using Hdc.Diagnostics;
 using Hdc.Mv;
 using Hdc.Mv.Halcon;
@@ -43,7 +44,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public ObservableCollection<RegionIndicatorViewModel> RegionIndicators { get; set; }
-        public ObservableCollection<RectangleIndicatorViewModel> DefectIndicators { get; set; }
+        public BindableCollection<RectangleIndicatorViewModel> DefectIndicators { get; set; }
         public ObservableCollection<RectangleIndicatorViewModel> ObjectIndicators { get; set; }
         public ObservableCollection<LineIndicatorViewModel> LineIndicators { get; set; }
         public ObservableCollection<CircleIndicatorViewModel> CircleIndicators { get; set; }
@@ -55,7 +56,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
             InitializeComponent();
 
             RegionIndicators = new ObservableCollection<RegionIndicatorViewModel>();
-            DefectIndicators = new ObservableCollection<RectangleIndicatorViewModel>();
+            DefectIndicators = new BindableCollection<RectangleIndicatorViewModel>();
             ObjectIndicators = new ObservableCollection<RectangleIndicatorViewModel>();
             LineIndicators = new ObservableCollection<LineIndicatorViewModel>();
             CircleIndicators = new ObservableCollection<CircleIndicatorViewModel>();
@@ -424,11 +425,11 @@ namespace ODM.Inspectors.Halcon.SampleApp
             }
         }
 
-
         public void Show_DefectResults(IEnumerable<RegionDefectResult> regionDefectResults)
         {
             var defectResults = regionDefectResults.SelectMany(x => x.DefectResults);
 
+            var RectangleIndicatorViewModels = new List<RectangleIndicatorViewModel>();
             foreach (var dr in defectResults)
             {
                 var regionIndicator = new RectangleIndicatorViewModel
@@ -441,8 +442,9 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                           Stroke = Brushes.Lime,
                                           StrokeThickness = 2,
                                       };
-                DefectIndicators.Add(regionIndicator);
+                RectangleIndicatorViewModels.Add(regionIndicator);
             }
+            DefectIndicators.AddRange(RectangleIndicatorViewModels);
         }
 
         private void SaveImageButton_OnClick(object sender, RoutedEventArgs e)
@@ -456,10 +458,6 @@ namespace ODM.Inspectors.Halcon.SampleApp
             var r = dialog.ShowDialog();
             if (r == true)
             {
-                //                if (!dialog.FileName.Contains(".tif"))
-                //                {
-                //                    dialog.FileName += ".tif";
-                //                }
                 IndicatorViewer.BitmapSource.SaveToTiff(dialog.FileName);
             }
         }

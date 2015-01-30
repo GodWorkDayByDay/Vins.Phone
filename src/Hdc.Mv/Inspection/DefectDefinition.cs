@@ -5,24 +5,22 @@ using System.Windows.Markup;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    [ContentProperty("Extractor")]
+    [ContentProperty("RegionExtractor")]
     public class DefectDefinition
     {
         public DefectDefinition()
         {
-            RegionReferences = new Collection<RegionReference>();
+            References = new Collection<SurfacePartReference>();
         }
 
         public string Name { get; set; }
 
         public bool SaveCacheImageEnabled { get; set; }
 
-        public Collection<RegionReference> RegionReferences { get; set; }
+        public Collection<SurfacePartReference> References { get; set; }
 
-//        public Collection<SurfaceDefinition> Surfaces { get; set; }
-
-        public IDefectExtractor Extractor { get; set; }
-
-//        public IShapeSelector Selector { get; set; }
+        public IImageFilter ImageFilter { get; set; }
+        public IRegionExtractor RegionExtractor { get; set; }
+        public IRegionProcessor RegionProcessor { get; set; }
     }
 }

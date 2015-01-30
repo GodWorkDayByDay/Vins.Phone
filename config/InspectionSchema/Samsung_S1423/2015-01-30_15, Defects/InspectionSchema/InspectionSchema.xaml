@@ -1,0 +1,15 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  TestImageFilePath="D:\@\Vins.Phone\_Photos\Samsung S1423\S1423, 2015-01-26, 15000, 090us\_1\13-C-凹坑\S1423_2015-01-26_01.35.35.tif"
+                  CircleSearching_InspectorName="Hal"
+                  EdgeSearching_InspectorName="Hal"
+                  Defects_InspectorName="Hal"
+                  Surfaces_InspectorName="Hal"
+                  ImagePixelWidth="8192"
+                  ImagePixelHeight="12500"
+                  CoordinateType="VectorsCenter"
+                  CoordinateOriginOffsetEnable="false"
+                  CoordinateOriginOffsetX="0"
+                  CoordinateOriginOffsetY="0"
+                  >
+                  <!-- S1423_2015-01-26_01.08.01.tif -->
+</InspectionSchema>

@@ -12,8 +12,7 @@ public partial class HDevelopExport
   // Procedures 
   public void GetBlobsByDynThresholdWithMeanExcluded (HObject ho_Image, out HObject ho_FoundRegion, 
       HTuple hv_MedianRadius, HTuple hv_DynMeanMaskWidth, HTuple hv_DynMeanMaskHeight, 
-      HTuple hv_DynOffset, HTuple hv_DynLightDark, HTuple hv_ClosingRedius, HTuple hv_AreaMin, 
-      HTuple hv_AreaMax, HTuple hv_Rect2Length1Min, HTuple hv_Rect2Length1Max)
+      HTuple hv_DynOffset, HTuple hv_DynLightDark)
   {
 
 
@@ -23,8 +22,7 @@ public partial class HDevelopExport
 
     HObject ho_Domain, ho_ExpandedImage, ho_ImageMedian;
     HObject ho_ImageMean=null, ho_ImageMedianReduced, ho_ImageMeanReduced;
-    HObject ho_RegionDynThresh2, ho_RegionClosing2, ho_ConnectedRegions2;
-    HObject ho_SelectedRegions2;
+    HObject ho_DynRegion;
 
     // Local control variables 
 
@@ -39,17 +37,12 @@ public partial class HDevelopExport
     HOperatorSet.GenEmptyObj(out ho_ImageMean);
     HOperatorSet.GenEmptyObj(out ho_ImageMedianReduced);
     HOperatorSet.GenEmptyObj(out ho_ImageMeanReduced);
-    HOperatorSet.GenEmptyObj(out ho_RegionDynThresh2);
-    HOperatorSet.GenEmptyObj(out ho_RegionClosing2);
-    HOperatorSet.GenEmptyObj(out ho_ConnectedRegions2);
-    HOperatorSet.GenEmptyObj(out ho_SelectedRegions2);
+    HOperatorSet.GenEmptyObj(out ho_DynRegion);
     ho_Domain.Dispose();
     HOperatorSet.GetDomain(ho_Image, out ho_Domain);
     HOperatorSet.RegionFeatures(ho_Domain, "width", out hv_Width);
     HOperatorSet.RegionFeatures(ho_Domain, "height", out hv_Height);
     HOperatorSet.RegionFeatures(ho_Domain, "area", out hv_Area);
-
-
 
     hv_ExpandRange = hv_MedianRadius+1;
     if ((int)(new HTuple(hv_DynMeanMaskWidth.TupleGreater(hv_MedianRadius))) != 0)
@@ -112,32 +105,18 @@ public partial class HDevelopExport
     ho_ImageMeanReduced.Dispose();
     HOperatorSet.ReduceDomain(ho_ImageMean, ho_Domain, out ho_ImageMeanReduced);
 
-    ho_RegionDynThresh2.Dispose();
-    HOperatorSet.DynThreshold(ho_ImageMedianReduced, ho_ImageMeanReduced, out ho_RegionDynThresh2, 
+    ho_DynRegion.Dispose();
+    HOperatorSet.DynThreshold(ho_ImageMedianReduced, ho_ImageMeanReduced, out ho_DynRegion, 
         hv_DynOffset, hv_DynLightDark);
-
-    ho_RegionClosing2.Dispose();
-    HOperatorSet.ClosingCircle(ho_RegionDynThresh2, out ho_RegionClosing2, hv_ClosingRedius);
-    ho_ConnectedRegions2.Dispose();
-    HOperatorSet.Connection(ho_RegionClosing2, out ho_ConnectedRegions2);
-    ho_SelectedRegions2.Dispose();
-    HOperatorSet.SelectShape(ho_ConnectedRegions2, out ho_SelectedRegions2, (new HTuple("area")).TupleConcat(
-        "rect2_len1"), "or", hv_AreaMin.TupleConcat(hv_Rect2Length1Min), hv_AreaMax.TupleConcat(
-        hv_Rect2Length1Max));
-
     ho_FoundRegion.Dispose();
-    HOperatorSet.MoveRegion(ho_SelectedRegions2, out ho_FoundRegion, 0, 0);
-
+    HOperatorSet.Connection(ho_DynRegion, out ho_FoundRegion);
     ho_Domain.Dispose();
     ho_ExpandedImage.Dispose();
     ho_ImageMedian.Dispose();
     ho_ImageMean.Dispose();
     ho_ImageMedianReduced.Dispose();
     ho_ImageMeanReduced.Dispose();
-    ho_RegionDynThresh2.Dispose();
-    ho_RegionClosing2.Dispose();
-    ho_ConnectedRegions2.Dispose();
-    ho_SelectedRegions2.Dispose();
+    ho_DynRegion.Dispose();
 
     return;
   }

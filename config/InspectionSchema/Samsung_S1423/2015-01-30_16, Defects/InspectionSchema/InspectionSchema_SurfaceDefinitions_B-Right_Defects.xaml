@@ -1,0 +1,81 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.DefectDefinitions>
+      <DefectDefinition Name="B-Right-01.03_BlobDark"
+                        SaveCacheImageEnabled="false">
+          <DefectDefinition.References>
+              <SurfacePartReference SurfaceName="B-Right" RegionName="B-Right-01"/>
+              <SurfacePartReference SurfaceName="B-Right" RegionName="B-Right-03"/>
+          </DefectDefinition.References>
+          <DynThresholdRegionExtractor Offset="15" 
+                                       LightDark="Dark" 
+                                       SeparateFilter="true">
+            <DynThresholdRegionExtractor.PreprocessFilter>
+              <MedianFilter Radius="3"/>
+            </DynThresholdRegionExtractor.PreprocessFilter>
+            <DynThresholdRegionExtractor.ThresholdImageFilter>
+              <MeanFilter MaskWidth="3" MaskHeight="200"/>
+            </DynThresholdRegionExtractor.ThresholdImageFilter>
+          </DynThresholdRegionExtractor>
+          <DefectDefinition.RegionProcessor>
+            <CompositeRegionProcessor>
+              <Union1RegionProcessor/>
+              <ClosingCircleRegionProcessor Radius="20"/>
+              <ConnectionRegionProcessor/>
+              <SelectShapeRegionProcessor>
+                <SelectShapeEntry Feature="Area" Min="100" Max="99999999"/>
+                <SelectShapeEntry Feature="Rect2Len1" Min="15" Max="99999999"/>
+              </SelectShapeRegionProcessor>
+            </CompositeRegionProcessor>
+          </DefectDefinition.RegionProcessor>
+      </DefectDefinition>
+      <DefectDefinition Name="B-Right-02_BlobDark"
+                        SaveCacheImageEnabled="false">
+          <DefectDefinition.References>
+              <SurfacePartReference SurfaceName="B-Right" RegionName="B-Right-02"/>
+          </DefectDefinition.References>
+          <DynThresholdWithMeanExcludedDefectExtractor MedianRadius="1"
+                                                       DynMeanMaskWidth="1"
+                                                       DynMeanMaskHeight="100"
+                                                       DynOffset="15"
+                                                       DynLightDark="Dark"
+                                                       />
+          <DefectDefinition.RegionProcessor>
+            <CompositeRegionProcessor>
+              <Union1RegionProcessor/>
+              <ClosingCircleRegionProcessor Radius="5"/>
+              <ConnectionRegionProcessor/>
+              <SelectShapeRegionProcessor>
+                <SelectShapeEntry Feature="Area" Min="100" Max="99999999"/>
+                <SelectShapeEntry Feature="Rect2Len1" Min="15" Max="99999999"/>
+              </SelectShapeRegionProcessor>
+            </CompositeRegionProcessor>
+          </DefectDefinition.RegionProcessor>
+      </DefectDefinition>
+      
+      <DefectDefinition Name="B-Right-02_BlobDark2"
+                        SaveCacheImageEnabled="false">
+          <DefectDefinition.References>
+              <SurfacePartReference SurfaceName="B-Right" RegionName="B-Right-02"/>
+          </DefectDefinition.References>
+          <DynThresholdWithMeanExcludedDefectExtractor MedianRadius="1"
+                                                       DynMeanMaskWidth="1"
+                                                       DynMeanMaskHeight="100"
+                                                       DynOffset="20"
+                                                       DynLightDark="Dark"
+                                                       />
+          <DefectDefinition.RegionProcessor>
+            <CompositeRegionProcessor>
+              <Union1RegionProcessor/>
+              <ClosingCircleRegionProcessor Radius="5"/>
+              <ConnectionRegionProcessor/>
+              <SelectShapeRegionProcessor>
+                <SelectShapeEntry Feature="Area" Min="75" Max="99999999"/>
+                <SelectShapeEntry Feature="Rect2Len1" Min="10" Max="99999999"/>
+              </SelectShapeRegionProcessor>
+            </CompositeRegionProcessor>
+          </DefectDefinition.RegionProcessor>
+      </DefectDefinition>
+  </InspectionSchema.DefectDefinitions>
+  
+</InspectionSchema>

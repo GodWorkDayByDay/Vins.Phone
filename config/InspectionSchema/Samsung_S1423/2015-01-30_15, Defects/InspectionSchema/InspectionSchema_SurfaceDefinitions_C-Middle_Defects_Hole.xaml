@@ -1,0 +1,60 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.DefectDefinitions>
+      <DefectDefinition Name="C-Hole"
+                        SaveCacheImageEnabled="false">
+          <DefectDefinition.References>
+              <SurfacePartReference SurfaceName="C" RegionName="C-Middle-02"/>
+              <SurfacePartReference SurfaceName="C" RegionName="C-Middle-03"/>
+              <SurfacePartReference SurfaceName="C" RegionName="C-Middle-05b"/>
+          </DefectDefinition.References>
+          <DynThresholdWithMeanExcludedDefectExtractor MedianRadius="5"
+                                                       DynMeanMaskWidth="5"
+                                                       DynMeanMaskHeight="100"
+                                                       DynOffset="15"
+                                                       DynLightDark="Dark"
+                                                       />
+          <DefectDefinition.RegionProcessor>
+            <CompositeRegionProcessor>
+              <Union1RegionProcessor/>
+              <ClosingCircleRegionProcessor Radius="30"/>
+              <ConnectionRegionProcessor/>
+              <SelectShapeRegionProcessor>
+                <SelectShapeEntry Feature="Area" Min="100" Max="99999999"/>
+                <SelectShapeEntry Feature="Rect2Len1" Min="15" Max="99999999"/>
+              </SelectShapeRegionProcessor>
+            </CompositeRegionProcessor>
+          </DefectDefinition.RegionProcessor>
+      </DefectDefinition>
+      <!--
+      <DefectDefinition Name="C-Left.Right_2"
+                        SaveCacheImageEnabled="false">
+          <DefectDefinition.References>
+              <SurfacePartReference SurfaceName="C" RegionName="C-Left"/>
+              <SurfacePartReference SurfaceName="C" RegionName="C-Right"/>
+          </DefectDefinition.References>
+          <DynThresholdRegionExtractor Offset="15" 
+                                       LightDark="Dark" 
+                                       SeparateFilter="true">
+            <DynThresholdRegionExtractor.PreprocessFilter>
+              <MedianFilter Radius="3"/>
+            </DynThresholdRegionExtractor.PreprocessFilter>
+            <DynThresholdRegionExtractor.ThresholdImageFilter>
+              <MeanFilter MaskWidth="10" MaskHeight="200"/>
+            </DynThresholdRegionExtractor.ThresholdImageFilter>
+          </DynThresholdRegionExtractor>
+          <DefectDefinition.RegionProcessor>
+            <CompositeRegionProcessor>
+              <Union1RegionProcessor/>
+              <ClosingCircleRegionProcessor Radius="20"/>
+              <ConnectionRegionProcessor/>
+              <SelectShapeRegionProcessor>
+                <SelectShapeEntry Feature="Area" Min="200" Max="99999999"/>
+                <SelectShapeEntry Feature="Rect2Len1" Min="15" Max="99999999"/>
+              </SelectShapeRegionProcessor>
+            </CompositeRegionProcessor>
+          </DefectDefinition.RegionProcessor>
+      </DefectDefinition>-->
+  </InspectionSchema.DefectDefinitions>
+  
+</InspectionSchema>

@@ -1,4 +1,4 @@
-﻿using HalconDotNet;
+﻿/*using HalconDotNet;
 
 namespace Hdc.Mv.Inspection
 {
@@ -10,4 +10,4 @@ namespace Hdc.Mv.Inspection
 
         HRegion GetDefectRegion(HImage image, HRegion domain);
     }
-}
+}*/

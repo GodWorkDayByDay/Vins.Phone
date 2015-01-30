@@ -1,0 +1,69 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.DefectDefinitions>
+      <DefectDefinition Name="C-Solid"
+                        SaveCacheImageEnabled="false">
+          <DefectDefinition.References>
+              <SurfacePartReference SurfaceName="C-Middle" RegionName="C-Middle-01"/>
+              <SurfacePartReference SurfaceName="C-Middle" RegionName="C-Middle-02b"/>
+              <SurfacePartReference SurfaceName="C-Middle" RegionName="C-Middle-04"/>
+              <SurfacePartReference SurfaceName="C-Middle" RegionName="C-Middle-05a"/>
+              <SurfacePartReference SurfaceName="C-Middle" RegionName="C-Middle-05c"/>
+          </DefectDefinition.References>
+          <DynThresholdRegionExtractor Offset="18" 
+                                       LightDark="Dark" 
+                                       SeparateFilter="true">
+            <DynThresholdRegionExtractor.PreprocessFilter>
+              <MedianFilter Radius="7"/>
+            </DynThresholdRegionExtractor.PreprocessFilter>
+            <DynThresholdRegionExtractor.ThresholdImageFilter>
+              <MeanFilter MaskWidth="7" MaskHeight="150"/>
+            </DynThresholdRegionExtractor.ThresholdImageFilter>
+          </DynThresholdRegionExtractor>
+          <DefectDefinition.RegionProcessor>
+            <CompositeRegionProcessor>
+              <Union1RegionProcessor/>
+              <ClosingCircleRegionProcessor Radius="20"/>
+              <ConnectionRegionProcessor/>
+              <SelectShapeRegionProcessor>
+                <SelectShapeEntry Feature="Area" Min="100" Max="99999999"/>
+                <SelectShapeEntry Feature="Rect2Len1" Min="10" Max="99999999"/>
+              </SelectShapeRegionProcessor>
+            </CompositeRegionProcessor>
+          </DefectDefinition.RegionProcessor>
+      </DefectDefinition>
+      <!--
+      <DefectDefinition Name="C-Solid"
+                        SaveCacheImageEnabled="false">
+          <DefectDefinition.References>
+              <SurfacePartReference SurfaceName="C-Middle" RegionName="C-Middle-01"/>
+              <SurfacePartReference SurfaceName="C-Middle" RegionName="C-Middle-02b"/>
+              <SurfacePartReference SurfaceName="C-Middle" RegionName="C-Middle-04"/>
+              <SurfacePartReference SurfaceName="C-Middle" RegionName="C-Middle-05a"/>
+              <SurfacePartReference SurfaceName="C-Middle" RegionName="C-Middle-05c"/>
+          </DefectDefinition.References>
+          <DynThresholdRegionExtractor Offset="20" 
+                                       LightDark="Dark" 
+                                       SeparateFilter="true">
+            <DynThresholdRegionExtractor.PreprocessFilter>
+              <MedianFilter Radius="5"/>
+            </DynThresholdRegionExtractor.PreprocessFilter>
+            <DynThresholdRegionExtractor.ThresholdImageFilter>
+              <MeanFilter MaskWidth="5" MaskHeight="200"/>
+            </DynThresholdRegionExtractor.ThresholdImageFilter>
+          </DynThresholdRegionExtractor>
+          <DefectDefinition.RegionProcessor>
+            <CompositeRegionProcessor>
+              <Union1RegionProcessor/>
+              <ClosingCircleRegionProcessor Radius="20"/>
+              <ConnectionRegionProcessor/>
+              <SelectShapeRegionProcessor>
+                <SelectShapeEntry Feature="Area" Min="80" Max="99999999"/>
+                <SelectShapeEntry Feature="Rect2Len1" Min="10" Max="99999999"/>
+              </SelectShapeRegionProcessor>
+            </CompositeRegionProcessor>
+          </DefectDefinition.RegionProcessor>
+      </DefectDefinition>-->
+  </InspectionSchema.DefectDefinitions>
+  
+</InspectionSchema>

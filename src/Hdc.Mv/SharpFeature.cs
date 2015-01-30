@@ -15,5 +15,8 @@
         Circularity,
         Bulkiness,
         Roundness,
+        Rect2Len1,
+        Rect2Len2,
+        Rect2Phi,
     }
 }

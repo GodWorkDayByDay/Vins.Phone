@@ -3,7 +3,7 @@
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class RegionReference
+    public class SurfacePartReference
     {
         public string SurfaceName { get; set; }
 
