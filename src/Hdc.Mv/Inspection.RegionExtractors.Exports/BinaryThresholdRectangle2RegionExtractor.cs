@@ -29,6 +29,7 @@ namespace Hdc.Mv.Inspection
             return hRegion;
         }
 
+        public string Name { get; set; }
         public int MedianRadius { get; set; }
         public int EmpWidth { get; set; }
         public int EmpHeight { get; set; }

@@ -111,6 +111,7 @@ namespace Hdc.Mv.Halcon
             if (!fileName.EndsWith(".tif"))
                 finalFileName += ".tif";
 
+            var count = image.CountObj();
             image.WriteImage("tiff", background, finalFileName);
         }
 

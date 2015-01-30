@@ -14,5 +14,6 @@ namespace Hdc.Mv.Inspection
         }
 
         public LightDark LightDark { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -299,19 +299,19 @@ namespace Hdc.Mv
 
             var reducedImage = image.ReduceDomain(domain);
             var croppedImage = reducedImage.CropDomain();
-            croppedImage.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Ori.tif");
+            croppedImage.WriteImageOfTiff(cacheDir.CombilePath(fileName) + ".Ori.tif");
 
             var paintRegion = reducedImage.PaintRegion(region, 255.0, "margin");
             var croppedImage2 = paintRegion.CropDomain();
-            croppedImage2.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Paint.Margin.tif");
+            croppedImage2.WriteImageOfTiff(cacheDir.CombilePath(fileName) + ".Paint.Margin.tif");
 
             var paintRegion2 = reducedImage.PaintRegion(region, 255.0, "fill");
             var croppedImage2b = paintRegion2.CropDomain();
-            croppedImage2b.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Paint.Fill.tif");
+            croppedImage2b.WriteImageOfTiff(cacheDir.CombilePath(fileName) + ".Paint.Fill.tif");
 
             var reducedImage3 = image.ReduceDomain(region);
             var croppedImage3 = reducedImage3.CropDomain();
-            croppedImage3.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Crop.tif");
+            croppedImage3.WriteImageOfTiff(cacheDir.CombilePath(fileName) + ".Crop.tif");
 
             domain.Dispose();
             reducedImage.Dispose();
@@ -338,18 +338,18 @@ namespace Hdc.Mv
             var imageHeight = image.GetHeight();
 
             // Domain.Ori
-            var reducedImage = image.ReduceDomain(domain);
+            var reducedImage = image.ChangeDomain(domain);
             var croppedImage = reducedImage.CropDomain();
-            croppedImage.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Domain.Ori.tif");
+            croppedImage.WriteImageOfTiff(cacheDir.CombilePath(fileName) + ".Domain.Ori.tif");
             reducedImage.Dispose();
             croppedImage.Dispose();
 
             // Domain.PaintMargin
-            var reducedImage4 = image.ReduceDomain(domain);
+            var reducedImage4 = image.ChangeDomain(domain);
             var paintRegionImage = reducedImage4.PaintRegion(includeRegion, 250.0, "margin");
             var paintRegion2Image = paintRegionImage.PaintRegion(excludeRegion, 5.0, "margin");
             var croppedImage2 = paintRegion2Image.CropDomain();
-            croppedImage2.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Domain.PaintMargin.tif");
+            croppedImage2.WriteImageOfTiff(cacheDir.CombilePath(fileName) + ".Domain.PaintMargin.tif");
             reducedImage4.Dispose();
             croppedImage2.Dispose();
             paintRegionImage.Dispose();
@@ -362,9 +362,9 @@ namespace Hdc.Mv
 //            croppedImage2bImage.Dispose();
 
             // Domain.Crop
-            var reducedImage3 = image.ReduceDomain(includeRegion);
+            var reducedImage3 = image.ChangeDomain(includeRegion);
             var croppedImage3 = reducedImage3.CropDomain();
-            croppedImage3.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Domain.Crop.tif");
+            croppedImage3.WriteImageOfTiff(cacheDir.CombilePath(fileName) + ".Domain.Crop.tif");
             reducedImage3.Dispose();
             croppedImage3.Dispose();
 
@@ -376,13 +376,13 @@ namespace Hdc.Mv
             var w = domain.GetWidth();
             var h = domain.GetHeight();
             var binImage = movedRegion.RegionToBin(255, 0, w, h);
-            binImage.ToBitmapSource().SaveToTiff(cacheDir.CombilePath(fileName) + ".Domain.Bin.tif");
+            binImage.WriteImageOfTiff(cacheDir.CombilePath(fileName) + ".Domain.Bin.tif");
             binImage.Dispose();
             movedRegion.Dispose();
 
             // Full.Bin, 
             var binImage2 = includeRegion.RegionToBin(255, 0, imageWidth, imageHeight);
-            binImage2.ToBitmapSource().SaveToJpeg(cacheDir.CombilePath(fileName) + ".Full.Bin.jpg");
+            binImage2.WriteImageOfJpeg(cacheDir.CombilePath(fileName) + ".Full.Bin.jpg");
             binImage2.Dispose();
 
             // Full.BinOnlyDomain
@@ -390,7 +390,7 @@ namespace Hdc.Mv
             var reducedImage5 = binImage3.ReduceDomain(domain);
             var binOnlyDomainImage = image.Clone();
             binOnlyDomainImage.OverpaintGray(reducedImage5);
-            binOnlyDomainImage.ToBitmapSource().SaveToJpeg(cacheDir.CombilePath(fileName) + ".Full.BinOnlyDomain.jpg");
+            binOnlyDomainImage.WriteImageOfJpeg(cacheDir.CombilePath(fileName) + ".Full.BinOnlyDomain.jpg");
 
             binImage3.Dispose();
             reducedImage5.Dispose();
@@ -543,6 +543,35 @@ namespace Hdc.Mv
             }
         }
 
+        public static string ToHalconString(this SobelAmpFilterType filterType)
+        {
+            switch (filterType)
+            {
+                case SobelAmpFilterType.SumAbs:
+                    return "sum_abs";
+                case SobelAmpFilterType.SumAbsBinomial:
+                    return "sum_abs_binomial";
+                case SobelAmpFilterType.SumSqrt:
+                    return "sum_sqrt";
+                case SobelAmpFilterType.SumSqrtBinomial:
+                    return "sum_sqrt_binomial";
+                case SobelAmpFilterType.ThinMaxAbs:
+                    return "thin_max_abs";
+                case SobelAmpFilterType.ThinMaxAbsBinomial:
+                    return "thin_max_abs_binomial";
+                case SobelAmpFilterType.X:
+                    return "x";
+                case SobelAmpFilterType.XBinomial:
+                    return "x_binomial";
+                case SobelAmpFilterType.Y:
+                    return "y";
+                case SobelAmpFilterType.YBinomial:
+                    return "y_binomial";
+                default:
+                    throw new InvalidOperationException("SobelAmpFilterType cannot convert to string: " + filterType);
+            }
+        }
+
         public static Line GetMiddleLineUsingAngle(this Line line1, Line line2)
         {
             var vectorAxisX = new Vector(10000, 0);
@@ -615,8 +644,8 @@ namespace Hdc.Mv
                 rectangle2.Y, 
                 rectangle2.X, 
                 rectangle2.Angle,
-                rectangle2.HalfHeight, 
-                rectangle2.HalfWidth);
+                rectangle2.HalfWidth,
+                rectangle2.HalfHeight);
             return region;
         }
     }

@@ -186,6 +186,7 @@ namespace Hdc.Mv.Inspection
         public static void UpdateRelativeCoordinate(this SurfacePartDefinition def,
                                                     IRelativeCoordinate relativeCoordinate)
         {
+            if (def.RoiRelativeRect == null) return;
             var rect= def.RoiRelativeRect.UpdateRelativeCoordinate(relativeCoordinate);
             def.RoiActualRect = rect;
         }

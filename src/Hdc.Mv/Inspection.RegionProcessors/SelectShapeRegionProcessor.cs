@@ -8,7 +8,7 @@ using HalconDotNet;
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-//    [ContentProperty("Items")]
+    [ContentProperty("Items")]
     public class SelectShapeRegionProcessor : Collection<SelectShapeEntry>, IRegionProcessor
     {
         public HRegion Process(HRegion region)

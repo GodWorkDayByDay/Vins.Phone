@@ -74,6 +74,7 @@
     <Compile Include="Circle.cs" />
     <Compile Include="CircleDirect.cs" />
     <Compile Include="Halcon\HRectangle2.cs" />
+    <Compile Include="Halcon\SobelAmpFilterType.cs" />
     <Compile Include="Inspection.Coordination\CreateCoordinateFailedException.cs" />
     <Compile Include="Inspection.Filters\Exports\GrayOpeningAndDilationFilter.cs" />
     <Compile Include="Inspection.Filters\GrayClosingRectFilter.cs" />
@@ -81,6 +82,9 @@
     <Compile Include="Inspection.Filters\GrayErosionRectFilter.cs" />
     <Compile Include="Inspection.Filters\GrayOpeningAndDilationFilter.cs" />
     <Compile Include="Inspection.Filters\GrayOpeningRectFilter.cs" />
+    <Compile Include="Inspection.Filters\GrayRangeRectFilter.cs" />
+    <Compile Include="Inspection.Filters\MeanSpFilter.cs" />
+    <Compile Include="Inspection.Filters\SobelAmpImageFilter.cs" />
     <Compile Include="Inspection.RegionExtractors.Exports\AntennaOfS1423RegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors.Exports\Exports\GetRegionOfAntennaAroundOfS1423A.cs" />
     <Compile Include="Inspection.RegionExtractors.Exports\Exports\GetRegionOfAntennaAroundOfS1423C.cs" />
@@ -92,9 +96,11 @@
     <Compile Include="Inspection.RegionExtractors.Exports\LightOrDarkRect2RegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors.Exports\LightOrDarkRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\AutoThresholdRegionExtractor.cs" />
+    <Compile Include="Inspection.RegionExtractors\BinaryThresholdDualRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\DynThresholdToBinFilter.cs" />
     <Compile Include="Inspection.RegionExtractors\Rectangle2RegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\RegiongrowingRegionExtractor.cs" />
+    <Compile Include="Inspection.RegionExtractors\StructuredRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\ThresholdRegionExtractor.cs" />
     <Compile Include="Inspection.Inspectors\CircleInspector.cs" />
     <Compile Include="Inspection.Inspectors\DefectInspector.cs" />
@@ -253,7 +259,7 @@
     <Compile Include="Inspection\EdgeSearchingResultCollection.cs" />
     <Compile Include="Inspection\Ex.cs" />
     <Compile Include="Inspection.RegionExtractors.Exports\GrayAndAreaRegionExtractor.cs" />
-    <Compile Include="Inspection\IImageFilter.cs" />
+    <Compile Include="Inspection.Filters\IImageFilter.cs" />
     <Compile Include="Calibration\IImageCalibrator.cs" />
     <Compile Include="Inspection\IMeasurementInspector.cs" />
     <Compile Include="Inspection.Inspectors\InspectionController.cs" />
