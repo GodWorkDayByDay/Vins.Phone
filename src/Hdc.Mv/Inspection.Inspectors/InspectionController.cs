@@ -105,8 +105,16 @@ namespace Hdc.Mv.Inspection
                 ds.SerializeToXamlFile(inspectionSchemaFilePath);
             }
 
-            var schema = inspectionSchemaFilePath.DeserializeFromXamlFile<InspectionSchema>();
 
+            InspectionSchema schema;
+            try
+            {
+                schema = inspectionSchemaFilePath.DeserializeFromXamlFile<InspectionSchema>();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
 
             var files = Directory.GetFiles(inspectionSchemaDirPath);
             foreach (var file in files)

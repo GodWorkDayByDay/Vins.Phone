@@ -480,10 +480,16 @@ namespace ODM.Inspectors.Halcon.SampleApp
 
         private void Refresh()
         {
-            //            var schema = "InspectionSchema.xaml".LoadFromAssemblyDir();
-            var schema = InspectionController.GetInspectionSchema();
+            try
+            {
+                var schema = InspectionController.GetInspectionSchema();
 
-            Inspect(schema);
+                Inspect(schema);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("GetInspectionSchema filed.\n\n" + e.Message);
+            }
         }
 
         private void ZoomFitButton_OnClick(object sender, RoutedEventArgs e)
