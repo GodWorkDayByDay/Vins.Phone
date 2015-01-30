@@ -1,0 +1,34 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.DefectDefinitions>
+      <DefectDefinition Name="A"
+                        SaveCacheImageEnabled="false">
+          <DefectDefinition.References>
+              <SurfacePartReference SurfaceName="A" RegionName="A-Left"/>
+              <SurfacePartReference SurfaceName="A" RegionName="A-Right"/>
+          </DefectDefinition.References>
+          <DynThresholdRegionExtractor Offset="20" 
+                                       LightDark="Dark" 
+                                       SeparateFilter="true">
+            <DynThresholdRegionExtractor.PreprocessFilter>
+              <MedianFilter Radius="1"/>
+            </DynThresholdRegionExtractor.PreprocessFilter>
+            <DynThresholdRegionExtractor.ThresholdImageFilter>
+              <MeanFilter MaskWidth="3" MaskHeight="200"/>
+            </DynThresholdRegionExtractor.ThresholdImageFilter>
+          </DynThresholdRegionExtractor>
+          <DefectDefinition.RegionProcessor>
+            <CompositeRegionProcessor>
+              <Union1RegionProcessor/>
+            <!--  <ClosingCircleRegionProcessor Radius="10"/>-->
+              <ConnectionRegionProcessor/>
+              <SelectShapeRegionProcessor>
+                <SelectShapeEntry Feature="Area" Min="100" Max="99999999"/>
+                <SelectShapeEntry Feature="Rect2Len1" Min="5" Max="99999999"/>
+              </SelectShapeRegionProcessor>
+            </CompositeRegionProcessor>
+          </DefectDefinition.RegionProcessor>
+      </DefectDefinition>
+  </InspectionSchema.DefectDefinitions>
+  
+</InspectionSchema>

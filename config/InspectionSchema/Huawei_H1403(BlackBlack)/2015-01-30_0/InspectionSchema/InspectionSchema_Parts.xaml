@@ -1,0 +1,40 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.PartSearchingDefinitions>
+    <PartSearchingDefinition Name="Bottom"
+                             Domain_SaveCacheImageEnabled="true"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             RoiHalfWidth="120"
+                             AreaHalfWidth="92">
+      <PartSearchingDefinition.RoiRelativeLine>
+        <Line X1="1960"
+              Y1="6936"
+              X2="2353"
+              Y2="6945" />
+      </PartSearchingDefinition.RoiRelativeLine>
+      <PartSearchingDefinition.AreaRelativeLine>
+        <Line X1="1980"
+              Y1="6937"
+              X2="2326"
+              Y2="6946" />
+      </PartSearchingDefinition.AreaRelativeLine>
+      <PartSearchingDefinition.PartExtractor>
+        <RoughWithSobelMeanRegionExtractor ThresholdMinGray="0"
+                                           ThresholdMaxGray="150"
+                                           MinMaxGrayPercent="5"
+                                           HatWidth="5" 
+                                           HatHeight="5" 
+                                           SelectAreaMin="30000" 
+                                           SelectAreaMax="60000" 
+                                           RoughAreaClosingWidth="20" 
+                                           RoughAreaClosingHeight="20" 
+                                           RoughAreaOpeningWidth="50" 
+                                           RoughAreaOpeningHeight="50" 
+                                           SobelAmpSize="7" 
+                                           SobelAmpMeanMin="5" 
+                                           SobelAmpThresholdMinGray="30" 
+                                           />
+      </PartSearchingDefinition.PartExtractor>
+    </PartSearchingDefinition>
+  </InspectionSchema.PartSearchingDefinitions>
+</InspectionSchema>

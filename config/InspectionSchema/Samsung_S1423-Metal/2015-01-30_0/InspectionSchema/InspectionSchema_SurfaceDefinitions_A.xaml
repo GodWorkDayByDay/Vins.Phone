@@ -1,0 +1,85 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.SurfaceDefinitions>
+      <SurfaceDefinition Name="A"
+                         SaveCacheImageEnabled="false"
+                         SaveAllCacheImageEnabled="false">
+                         
+          <SurfaceDefinition.ExcludeParts>
+          
+          </SurfaceDefinition.ExcludeParts>
+                  
+          <SurfaceDefinition.IncludeParts>
+             
+          	 <SurfacePartDefinition Name="A-Left"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="1374"
+                                Y="6224"
+                                Angle="0"
+                                HalfWidth="160"
+                                HalfHeight="4170"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                       <CompositeFilter>
+                         <MeanFilter MaskWidth="1" MaskHeight="55"/>
+                       </CompositeFilter>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <BinaryThresholdRegionExtractor LightDark="Light"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <ConnectionRegionProcessor/>
+                         <SelectShapeRegionProcessor>
+                           <SelectShapeEntry Feature="Width" Min="30" Max="300"/>
+                         </SelectShapeRegionProcessor>
+                         <ClosingRectangle1RegionProcessor Width="5" Height="33"/>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+            
+          	 <SurfacePartDefinition Name="A-Right"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="5980"
+                                Y="6224"
+                                Angle="0"
+                                HalfWidth="160"
+                                HalfHeight="4170"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                       <CompositeFilter>
+                         <MeanFilter MaskWidth="1" MaskHeight="55"/>
+                       </CompositeFilter>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <BinaryThresholdRegionExtractor LightDark="Light"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <ConnectionRegionProcessor/>
+                         <SelectShapeRegionProcessor>
+                           <SelectShapeEntry Feature="Width" Min="30" Max="300"/>
+                         </SelectShapeRegionProcessor>
+                         <ClosingRectangle1RegionProcessor Width="5" Height="33"/>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+              <!---->
+          </SurfaceDefinition.IncludeParts>   
+          
+      </SurfaceDefinition>
+  </InspectionSchema.SurfaceDefinitions>
+  
+</InspectionSchema>
