@@ -72,6 +72,22 @@ namespace Hdc.Mv.Inspection
             return csrs;
         }
 
+        public static IList<PartSearchingResult> SearchParts(this IPartInspector inspector, HImage image,
+                                                             IList<PartSearchingDefinition> definitions)
+        {
+            var csrs = new List<PartSearchingResult>();
+
+            int index = 0;
+            foreach (var definition in definitions)
+            {
+                var csr = inspector.SearchPart(image, definition);
+                csr.Index = index;
+                csrs.Add(csr);
+                index++;
+            }
+            return csrs;
+        }
+
         public static IList<RegionDefectResult> SearchDefects(this IDefectInspector inspector,
                                                               HImage image, IList<DefectDefinition> definitions,
                                                               IList<SurfaceResult> surfaceResults)

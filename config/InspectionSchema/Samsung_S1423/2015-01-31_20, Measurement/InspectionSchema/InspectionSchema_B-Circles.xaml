@@ -1,0 +1,47 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="False">
+  <InspectionSchema.CircleSearchingDefinitions>
+  	<CircleSearchingDefinition Name="C1"
+  	                           DisplayName="耳机孔内圆"
+  	                           GroupName="耳机孔"
+  	                           
+  	                           Diameter_DisplayEnabled="true"
+  	                           Diameter_DisplayName="内圆直径"
+  	                           Diameter_GroupName="耳机孔"
+  	                           
+  	                           CenterX="2783"
+                               CenterY="11355"
+                               InnerRadius="50"
+                               OuterRadius="170"
+                               
+                               Domain_SaveCacheImageEnabled="false"
+                               ImageFilter_Disabled="false"
+                               ImageFilter_SaveCacheImageEnabled="false"
+                               >
+        
+        <CircleSearchingDefinition.ImageFilter>
+            <MinMaxGrayScaleFilter Percent="5" />
+        </CircleSearchingDefinition.ImageFilter>
+        
+        <CircleSearchingDefinition.CircleExtractor>
+            <SpokeCircleExtractor Name=""
+                                  SaveCacheImageEnabled="false"
+                                  RegionsCount="100"
+                                  RegionWidth="20"
+                                  Sigma="1"
+                                  Threshold="10"
+                                  SelectionMode="First"
+                                  Transition="Positive"
+                                  Direct="Outer"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+        
+    </CircleSearchingDefinition>
+  
+  
+  </InspectionSchema.CircleSearchingDefinitions>
+  
+  
+  
+
+</InspectionSchema>

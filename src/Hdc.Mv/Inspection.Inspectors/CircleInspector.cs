@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using HalconDotNet;
+using Hdc.Diagnostics;
 using Hdc.Mv.Halcon;
 using Hdc.Reflection;
 using Hdc.Windows.Media.Imaging;
@@ -14,6 +15,8 @@ namespace Hdc.Mv.Inspection
 
         public CircleSearchingResult SearchCircle(HImage image, CircleSearchingDefinition definition)
         {
+            var swSearchCircle = new NotifyStopwatch("SearchCircle: " + definition.Name);
+
             var circleSearchingResult = new CircleSearchingResult
             {
                 Definition = definition.DeepClone(),
@@ -70,7 +73,9 @@ namespace Hdc.Mv.Inspection
             HImage filterImage = null;
             if (definition.ImageFilter != null)
             {
+                var swImageFilter = new NotifyStopwatch("CircleInspector.ImageFilter: " + definition.Name);
                 filterImage = definition.ImageFilter.Process(roiImage);
+                swImageFilter.Dispose();
 
                 if (definition.ImageFilter_SaveCacheImageEnabled)
                 {
@@ -92,8 +97,10 @@ namespace Hdc.Mv.Inspection
             var offsetCenterX = definition.CenterX - offsetX;
             var offsetCenterY = definition.CenterY - offsetY;
 
+            var swFindCircle = new NotifyStopwatch("CircleInspector.FindCircle: " + definition.Name);
             var circle = definition.CircleExtractor.FindCircle(filterImage,
                 offsetCenterX, offsetCenterY, definition.InnerRadius, definition.OuterRadius);
+            swFindCircle.Dispose();
 
             if (circle.IsEmpty)
             {
@@ -107,6 +114,7 @@ namespace Hdc.Mv.Inspection
                 circleSearchingResult.Circle = newCircle;
             }
 
+            swSearchCircle.Dispose();
             return circleSearchingResult;
         }
     }

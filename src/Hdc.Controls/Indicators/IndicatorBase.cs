@@ -84,16 +84,16 @@ namespace Hdc.Controls
 
         #endregion
 
-        #region IsShown
+        #region IsHidden
 
-        public bool IsShown
+        public bool IsHidden
         {
-            get { return (bool) GetValue(IsShownProperty); }
-            set { SetValue(IsShownProperty, value); }
+            get { return (bool)GetValue(IsHiddenProperty); }
+            set { SetValue(IsHiddenProperty, value); }
         }
 
-        public static readonly DependencyProperty IsShownProperty = DependencyProperty.Register(
-            "IsShown", typeof (bool), typeof (IndicatorBase));
+        public static readonly DependencyProperty IsHiddenProperty = DependencyProperty.Register(
+            "IsHidden", typeof(bool), typeof(IndicatorBase));
 
         #endregion
     }

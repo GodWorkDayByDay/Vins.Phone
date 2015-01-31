@@ -176,7 +176,5 @@
 
             </StackPanel>
         </Grid>
-        <!--        <Image x:Name="Image"-->
-        <!--               Stretch="None"></Image>-->
     </Grid>
 </Window>

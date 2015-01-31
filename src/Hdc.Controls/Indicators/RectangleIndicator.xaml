@@ -4,13 +4,14 @@
                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                         xmlns:controls="clr-namespace:Hdc.Controls"
+                        xmlns:hdc="http://schemas.hdcrd.com/xaml"
                         mc:Ignorable="d"
                         d:DesignHeight="300"
                         d:DesignWidth="300">
     <controls:IndicatorBase.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
+        <hdc:IsHiddenToVisibilityConverter x:Key="BooleanToVisibilityConverter"></hdc:IsHiddenToVisibilityConverter>
     </controls:IndicatorBase.Resources>
-    <Grid Visibility="{Binding IsShown,Converter={StaticResource BooleanToVisibilityConverter}}">
+    <Grid Visibility="{Binding IsHidden,Converter={StaticResource BooleanToVisibilityConverter}}">
         <Canvas x:Name="Canvas">
             <controls:RegionIndicatorMarker x:Name="RegionIndicatorMarker"></controls:RegionIndicatorMarker>
         </Canvas>

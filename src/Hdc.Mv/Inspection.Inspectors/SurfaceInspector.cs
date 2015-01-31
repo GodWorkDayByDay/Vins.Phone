@@ -9,6 +9,8 @@ namespace Hdc.Mv.Inspection
     {
         public SurfaceResult SearchSurface(HImage image, SurfaceDefinition definition)
         {
+            var swSearchSurface = new NotifyStopwatch("SearchSurface: " + definition.Name);
+
             var surfaceResult = new SurfaceResult()
                                 {
                                     Definition = definition.DeepClone(),
@@ -102,6 +104,7 @@ namespace Hdc.Mv.Inspection
             surfaceResult.ExcludeRegion = unionExcludeRegion;
             surfaceResult.IncludeRegion = unionIncludeRegion;
 
+            swSearchSurface.Dispose();
             return surfaceResult;
         }
     }

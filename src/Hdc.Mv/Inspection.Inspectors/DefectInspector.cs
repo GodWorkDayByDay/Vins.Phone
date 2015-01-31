@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
 using HalconDotNet;
+using Hdc.Diagnostics;
 using Hdc.Mv.Halcon;
 using Hdc.Reflection;
 
 namespace Hdc.Mv.Inspection
 {
-    public  class DefectInspector : IDefectInspector
+    public class DefectInspector : IDefectInspector
     {
-        private string _cacheImageDir = typeof(Mv.Ex).Assembly.GetAssemblyDirectoryPath() + "\\CacheImages";
+        private string _cacheImageDir = typeof (Mv.Ex).Assembly.GetAssemblyDirectoryPath() + "\\CacheImages";
 
         public IList<RegionDefectResult> SearchDefects(HImage image, DefectDefinition definition,
-                                                 IList<SurfaceResult> surfaceResults)
+                                                       IList<SurfaceResult> surfaceResults)
         {
+            var swSearchDefects = new NotifyStopwatch("SearchDefects: " + definition.Name);
+
             var rdrs = new List<RegionDefectResult>();
 
             foreach (var refer in definition.References)
@@ -53,11 +56,13 @@ namespace Hdc.Mv.Inspection
                     if (finalBlob.CountObj() > 0)
                     {
                         var paintImage = image2.PaintRegion(finalBlob, 222.0, "fill");
-                        paintImage.WriteImageOfTiffLzwOfCropDomain(_cacheImageDir + "\\SearchCircles_" + definition.Name + "_1_Domain.tif");
+                        paintImage.WriteImageOfTiffLzwOfCropDomain(_cacheImageDir + "\\SearchCircles_" + definition.Name +
+                                                                   "_1_Domain.tif");
                     }
                     else
                     {
-                        image2.WriteImageOfTiffLzwOfCropDomain(_cacheImageDir + "\\SearchCircles_" + definition.Name + "_1_Domain.tif");
+                        image2.WriteImageOfTiffLzwOfCropDomain(_cacheImageDir + "\\SearchCircles_" + definition.Name +
+                                                               "_1_Domain.tif");
                     }
                 }
 
@@ -81,7 +86,7 @@ namespace Hdc.Mv.Inspection
 
                 rdrs.Add(regionDefectResult);
             }
-
+            swSearchDefects.Dispose();
             return rdrs;
         }
     }

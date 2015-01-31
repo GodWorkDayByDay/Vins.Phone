@@ -12,5 +12,6 @@ namespace MeasurementTestApp
         public Brush Stroke { get; set; }
         public DoubleCollection StrokeDashArray { get; set; }
         public double StrokeThickness { get; set; }
+        public bool IsHidden { get; set; }
     }
 }

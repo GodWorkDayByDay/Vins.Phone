@@ -73,6 +73,7 @@
     <Compile Include="BitmapSourceExtensions.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="CircleDirect.cs" />
+    <Compile Include="Halcon\HRectangle1.cs" />
     <Compile Include="Halcon\HRectangle2.cs" />
     <Compile Include="Halcon\Interpolation.cs" />
     <Compile Include="Halcon\SobelAmpFilterType.cs" />
@@ -102,6 +103,10 @@
     <Compile Include="Inspection.RegionExtractors\BinaryThresholdDualRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\DynThresholdToBinFilter.cs" />
     <Compile Include="Inspection.RegionExtractors\ProcessedRegionExtractor.cs" />
+
+    <Compile Include="Inspection.RegionExtractors\CropDomainRegionExtractor.cs" />
+    <Compile Include="Inspection.RegionExtractors\DynThresholdCroppedRegionExtractor.cs" />
+    <Compile Include="Inspection.RegionExtractors\DynThresholdRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\Rectangle2RegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\RegiongrowingRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\StructuredRegionExtractor.cs" />
@@ -204,6 +209,7 @@
     <Compile Include="Inspection\RegionTargetDefinition.cs" />
     <Compile Include="Inspection\RegionTargetResult.cs" />
     <Compile Include="Inspection\RegionDefectResult.cs" />
+    <Compile Include="IRectangle1.cs" />
     <Compile Include="IRoiRectangle.cs" />
     <Compile Include="LightDark.cs" />
     <Compile Include="Ex.cs" />
@@ -266,7 +272,6 @@
     <Compile Include="Inspection.RegionExtractors.Exports\GrayAndAreaRegionExtractor.cs" />
     <Compile Include="Inspection.Filters\IImageFilter.cs" />
     <Compile Include="Calibration\IImageCalibrator.cs" />
-    <Compile Include="Inspection\_\IMeasurementInspector.cs" />
     <Compile Include="Inspection.Inspectors\InspectionController.cs" />
     <Compile Include="Inspection\InspectionReport.cs" />
     <Compile Include="Inspection\InspectionResult.cs" />
@@ -291,10 +296,6 @@
     <Compile Include="ImageAcquisition\WpfImageLoader.cs" />
     <Compile Include="ImageInfo.cs" />
     <Compile Include="ImageInfoExtensions.cs" />
-    <Compile Include="Inspection\_\DefectInfo.cs" />
-    <Compile Include="Inspection\_\InspectInfo.cs" />
-    <Compile Include="Inspection\_\InspectionInfo.cs" />
-    <Compile Include="Inspection\_\MeasurementInfo.cs" />
     <Compile Include="LogicOperation.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Orientation.cs" />
@@ -303,6 +304,7 @@
     <Compile Include="Inspection.Coordination\RelativeCoordinate.cs" />
     <Compile Include="Inspection.Coordination\RelativeCoordinateEx.cs" />
     <Compile Include="Inspection.Coordination\RelativeCoordinateFactory.cs" />
+    <Compile Include="Rectangle1.cs" />
     <Compile Include="Rectangle2.cs" />
     <Compile Include="RoiRectangle.cs" />
     <Compile Include="SelectionMode.cs" />

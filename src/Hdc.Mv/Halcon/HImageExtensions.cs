@@ -189,5 +189,23 @@ namespace Hdc.Mv.Halcon
             var hi = new HImage(hCalibImage);
             return hi;
         }
+
+        public static HImage CropRectangle1(this HImage image,
+                                       HRectangle1 rectangle1)
+        {
+            var croppedImage = image.CropRectangle1(rectangle1.Row1, rectangle1.Column1, rectangle1.Row2,
+                rectangle1.Column2);
+            return croppedImage;
+        }
+
+        public static HImage ChangeDomainForRoiRectangle(this HImage image,
+                                       Line line, double halfWidth)
+        {
+            var rectImage = HDevelopExport.Singletone.ChangeDomainForRectangle(
+             image,
+             line,
+             halfWidth);
+            return rectImage;
+        }
     }
 }

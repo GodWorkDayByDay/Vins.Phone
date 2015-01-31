@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading;
 using HalconDotNet;
+using Hdc.Diagnostics;
 using Hdc.Mv.Halcon;
 
 namespace Hdc.Mv.Inspection
@@ -15,7 +17,10 @@ namespace Hdc.Mv.Inspection
             var finalHeight = MaskHeight == 0 ? domainHeight : MaskHeight;
             var finalWidth = MaskWidth == 0 ? domainWidth : MaskWidth;
 
-            return image.GrayOpeningRect(finalHeight, finalWidth);
+//            var swGrayOpeningRect = new NotifyStopwatch("GrayOpeningRectFilter.GrayOpeningRect");
+            var hImage = image.GrayOpeningRect(finalHeight, finalWidth);
+//            swGrayOpeningRect.Dispose();
+            return hImage;
         }
 
         public int MaskHeight { get; set; }

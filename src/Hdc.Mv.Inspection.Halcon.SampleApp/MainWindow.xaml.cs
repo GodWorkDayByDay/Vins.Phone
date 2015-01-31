@@ -329,6 +329,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                           RegionWidth = ed.ROIWidth,
                                           Stroke = Brushes.Orange,
                                           StrokeThickness = 4,
+                                          IsHidden = false,
                                       };
                 RegionIndicators.Add(regionIndicator);
             }
@@ -347,6 +348,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                           RegionWidth = ed.RoiHalfWidth,
                                           Stroke = Brushes.Orange,
                                           StrokeThickness = 4,
+                                          IsHidden = false,
                                       };
                 RegionIndicators.Add(regionIndicator);
 
@@ -359,6 +361,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                            RegionWidth = ed.AreaHalfWidth,
                                            Stroke = Brushes.Orange,
                                            StrokeThickness = 4,
+                                           IsHidden = false,
                                        };
                 RegionIndicators.Add(regionIndicator2);
             }
@@ -398,6 +401,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                            RegionWidth = edgeSearchingResult.PartHalfWidth,
                                            Stroke = Brushes.Lime,
                                            StrokeThickness = 2,
+                                           IsHidden = false,
                                        };
                 RegionIndicators.Add(regionIndicator2);
             }
@@ -416,6 +420,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                     RegionWidth = ed.RoiHalfWidth,
                     Stroke = Brushes.Orange,
                     StrokeThickness = 4,
+                    IsHidden = false,
                 };
                 RegionIndicators.Add(regionIndicator);
             }
@@ -471,6 +476,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                            RegionWidth = roiRect.ROIWidth,
                                            Stroke = Brushes.Lime,
                                            StrokeThickness = 2,
+                                           IsHidden = false,
                                        };
                 RegionIndicators.Add(regionIndicator2);
             }
@@ -489,7 +495,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                                           CenterY = dr.Y,
                                           Width = dr.Width,
                                           Height = dr.Height,
-                                          IsShown = true,
+                                          IsHidden = false,
                                           Stroke = Brushes.Lime,
                                           StrokeThickness = 2,
                                       };

@@ -16,6 +16,104 @@ namespace Hdc.Mv.Inspection
 
         public EdgeSearchingResult SearchEdge(HImage image, EdgeSearchingDefinition definition)
         {
+            if (definition.CropDomainEnabled)
+            {
+                return CropDomain(image, definition);
+            }
+            else
+            {
+                return NoCropDomain(image, definition);
+            }
+        }
+
+        private EdgeSearchingResult CropDomain(HImage image, EdgeSearchingDefinition definition)
+        {
+            var swSearchEdge = new NotifyStopwatch("SearchEdge: " + definition.Name);
+
+            var esr = new EdgeSearchingResult
+                      {
+                          Definition = definition.DeepClone(),
+                          Name = definition.Name
+                      };
+
+            var rectImage = image.ChangeDomainForRoiRectangle(definition.Line, definition.ROIWidth);
+            var rectDomain = rectImage.GetDomain();
+            var rectDomainRect1 = rectDomain.GetSmallestRectangle1();
+            var rectCroppedImage = rectImage.CropDomain();
+
+            if (definition.Domain_SaveCacheImageEnabled)
+            {
+                rectCroppedImage.WriteImageOfTiffLzw(
+                    _cacheImageDir + "\\SearchEdges_" + definition.Name + "_1_Domain_Cropped.tif");
+            }
+
+            // RegionExtractor
+            HRegion roiDomain;
+            if (esr.Definition.RegionExtractor != null)
+            {
+                var croppedRoiDomain = esr.Definition.RegionExtractor.Extract(rectCroppedImage);
+                roiDomain = croppedRoiDomain.MoveRegion(rectDomainRect1.Row1, rectDomainRect1.Column1);
+            }
+            else
+            {
+                roiDomain = rectDomain;
+            }
+            var roiDomainRect1 = roiDomain.GetSmallestRectangle1();
+            HImage roiCroppedImage = image.CropRectangle1(roiDomainRect1);
+
+
+            // ImageFilter
+            HImage filterImage = null;
+            if (esr.Definition.ImageFilter != null)
+            {
+                var sw = new NotifyStopwatch("ImageFilter");
+                filterImage = esr.Definition.ImageFilter.Process(roiCroppedImage);
+                sw.Dispose();
+
+                if (definition.ImageFilter_SaveCacheImageEnabled)
+                {
+                    var cropDomain = filterImage.CropDomain();
+                    cropDomain.WriteImageOfTiffLzw(_cacheImageDir + "\\SearchEdges_" + definition.Name +
+                                                   "_3_ImageFilter_Cropped.tif");
+                    cropDomain.Dispose();
+
+//                        var paintedImage = filterImage.PaintGrayOffset(image, offsetY, offsetX);
+//                        paintedImage.WriteImageOfJpeg(_cacheImageDir + "\\SearchEdges_" + definition.Name +
+//                                                      "_3_ImageFilter_PaintGrayOffset.jpg");
+//                        paintedImage.Dispose();
+                }
+            }
+            else
+            {
+                filterImage = roiCroppedImage;
+            }
+
+            Line offsetLine = new Line(esr.Definition.Line.X1 - roiDomainRect1.Column1,
+                      esr.Definition.Line.Y1 - roiDomainRect1.Row1, esr.Definition.Line.X2 - roiDomainRect1.Column1,
+                      esr.Definition.Line.Y2 - roiDomainRect1.Row1);
+
+            var line = esr.Definition.LineExtractor.FindLine(filterImage, offsetLine);
+
+            var translatedLine = new Line(line.X1 + roiDomainRect1.Column1,
+                line.Y1 + roiDomainRect1.Row1, line.X2 + roiDomainRect1.Column1,
+                line.Y2 + roiDomainRect1.Row1);
+
+            esr.EdgeLine = translatedLine;
+
+            if (line.IsEmpty)
+            {
+                esr.IsNotFound = true;
+                Debug.WriteLine("Edge not found: " + esr.Name);
+            }
+
+            swSearchEdge.Dispose();
+            return esr;
+        }
+
+        private EdgeSearchingResult NoCropDomain(HImage image, EdgeSearchingDefinition definition)
+        {
+            var swSearchEdge = new NotifyStopwatch("SearchEdge: " + definition.Name);
+
             var esr = new EdgeSearchingResult
                       {
                           Definition = definition.DeepClone(),
@@ -48,7 +146,9 @@ namespace Hdc.Mv.Inspection
                 HRegion roiDomain;
                 if (!esr.Definition.RegionExtractor_CropDomainEnabled)
                 {
+                    var swRegionExtractor = new NotifyStopwatch("EdgeInspector.RegionExtractor: " + definition.Name);
                     roiDomain = esr.Definition.RegionExtractor.Extract(rectImage);
+                    swRegionExtractor.Dispose();
 
                     if (definition.RegionExtractor_SaveCacheImageEnabled)
                     {
@@ -83,9 +183,9 @@ namespace Hdc.Mv.Inspection
             {
                 if (!esr.Definition.ImageFilter_CropDomainEnabled)
                 {
-                    var sw = new NotifyStopwatch("ImageFilter");
+                    var swImageFilter = new NotifyStopwatch("EdgeInspector.ImageFilter: " + definition.Name);
                     filterImage = esr.Definition.ImageFilter.Process(roiImage);
-                    sw.Dispose();
+                    swImageFilter.Dispose();
 
                     roiImage.Dispose();
 
@@ -160,7 +260,9 @@ namespace Hdc.Mv.Inspection
                 filterImage = roiImage;
             }
 
+            var swLineExtractor = new NotifyStopwatch("EdgeInspector.LineExtractor: " + definition.Name);
             var line = definition.LineExtractor.FindLine(filterImage, definition.Line);
+            swLineExtractor.Dispose();
 
             if (line.IsEmpty)
             {
@@ -169,6 +271,8 @@ namespace Hdc.Mv.Inspection
             }
 
             esr.EdgeLine = line;
+
+            swSearchEdge.Dispose();
             return esr;
         }
     }

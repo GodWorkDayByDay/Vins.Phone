@@ -17,10 +17,12 @@ namespace Hdc.Mv.Inspection
         public double EndY { get; set; }
         public double ROIWidth { get; set; }
         public double ExpectAngle { get; set; }
+
+        public bool CropDomainEnabled { get; set; }
+
         public bool Domain_SaveCacheImageEnabled { get; set; }
 //        public 
 
-        [Obsolete]
         public IRegionExtractor RegionExtractor { get; set; }
         public bool RegionExtractor_Disabled { get; set; }
         public bool RegionExtractor_SaveCacheImageEnabled { get; set; }

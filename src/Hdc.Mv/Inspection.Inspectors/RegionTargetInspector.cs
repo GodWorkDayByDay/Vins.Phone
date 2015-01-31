@@ -1,4 +1,5 @@
 ﻿using HalconDotNet;
+using Hdc.Diagnostics;
 using Hdc.Mv.Halcon;
 using Hdc.Reflection;
 
@@ -10,6 +11,8 @@ namespace Hdc.Mv.Inspection
 
         public RegionTargetResult SearchRegionTarget(HImage image, RegionTargetDefinition definition)
         {
+            var swSearchRegionTarget = new NotifyStopwatch("SearchRegionTarget: " + definition.Name);
+
             var result = new RegionTargetResult
                          {
                              Definition = definition.DeepClone(),
@@ -30,7 +33,9 @@ namespace Hdc.Mv.Inspection
             HImage aroundFilterImage;
             if (definition.AroundImageFilter != null)
             {
+                var swAroundImageFilter = new NotifyStopwatch("RegionTargetInspector.AroundImageFilter: " + definition.Name);
                 aroundFilterImage = definition.AroundImageFilter.Process(roiImage);
+                swAroundImageFilter.Dispose();
             }
             else
             {
@@ -40,7 +45,9 @@ namespace Hdc.Mv.Inspection
             HRegion aroundRegion;
             if (definition.AroundRegionExtractor != null)
             {
+                var swAroundRegionExtractor = new NotifyStopwatch("RegionTargetInspector.AroundRegionExtractor: " + definition.Name);
                 aroundRegion = definition.AroundRegionExtractor.Extract(aroundFilterImage);
+                swAroundRegionExtractor.Dispose();
             }
             else
             {
@@ -60,7 +67,9 @@ namespace Hdc.Mv.Inspection
             HRegion aroundProcessedRegion;
             if (definition.AroundRegionProcessor != null)
             {
+                var swAroundRegionProcessor = new NotifyStopwatch("RegionTargetInspector.AroundRegionProcessor: " + definition.Name);
                 aroundProcessedRegion = definition.AroundRegionProcessor.Process(aroundRegion);
+                swAroundRegionProcessor.Dispose();
             }
             else
             {
@@ -84,7 +93,9 @@ namespace Hdc.Mv.Inspection
             HImage targetFilterImage;
             if (definition.TargetImageFilter != null)
             {
+                var swTargetImageFilter = new NotifyStopwatch("RegionTargetInspector.TargetImageFilter: " + definition.Name);
                 targetFilterImage = definition.TargetImageFilter.Process(aroundImage);
+                swTargetImageFilter.Dispose();
             }
             else
             {
@@ -100,7 +111,9 @@ namespace Hdc.Mv.Inspection
             HRegion targetRegion;
             if (definition.TargetRegionExtractor != null)
             {
+                var swTargetRegionExtractor = new NotifyStopwatch("RegionTargetInspector.TargetRegionExtractor: " + definition.Name);
                 targetRegion = definition.TargetRegionExtractor.Extract(targetFilterImage);
+                swTargetRegionExtractor.Dispose();
             }
             else
             {
@@ -110,7 +123,9 @@ namespace Hdc.Mv.Inspection
             HRegion targetProcessedRegion;
             if (definition.TargetRegionProcessor != null)
             {
+                var swTargetRegionProcessor = new NotifyStopwatch("RegionTargetInspector.TargetRegionProcessor: " + definition.Name);
                 targetProcessedRegion = definition.TargetRegionProcessor.Process(targetRegion);
+                swTargetRegionProcessor.Dispose();
             }
             else
             {
@@ -125,6 +140,7 @@ namespace Hdc.Mv.Inspection
             if (targetProcessedRegion.CountObj() == 0)
                 result.HasError = true;
 
+            swSearchRegionTarget.Dispose();
             return result;
         }
     }

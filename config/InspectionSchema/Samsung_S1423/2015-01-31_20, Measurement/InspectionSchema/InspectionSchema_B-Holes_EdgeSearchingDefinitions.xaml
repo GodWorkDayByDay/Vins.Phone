@@ -1,0 +1,1006 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="False">
+  <InspectionSchema.EdgeSearchingDefinitions>
+    
+    <EdgeSearchingDefinition Name="BRightHole01-L1"
+                             StartX="6299"
+                             StartY="3533"
+                             EndX="6299"
+                             EndY="3233"
+                             ROIWidth="179"
+                             Domain_SaveCacheImageEnabled="true"
+                             RegionExtractor_SaveCacheImageEnabled="true"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="true"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="100"
+                                    WidthMax="140"
+                                    HeightMin="280"
+                                    HeightMax="99999999"
+                                    DilationWidth="21"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="dark"
+          ScaleAdd="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="358"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+    
+    <EdgeSearchingDefinition Name="BRightHole01-R1"
+                             StartX="6301"
+                             StartY="3233"
+                             EndX="6301"
+                             EndY="3533"
+                             ROIWidth="179"
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="100"
+                                    WidthMax="140"
+                                    HeightMin="280"
+                                    HeightMax="99999999"
+                                    DilationWidth="21"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="dark"
+          ScaleAdd="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="358"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+
+
+    <EdgeSearchingDefinition Name="BRightHole01-L2"
+                             StartX="6299"
+                             StartY="4200"
+                             EndX="6299"
+                             EndY="3900"
+                             ROIWidth="179"
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="100"
+                                    WidthMax="140"
+                                    HeightMin="280"
+                                    HeightMax="99999999"
+                                    DilationWidth="21"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="dark"
+          ScaleAdd="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="358"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+    
+    <EdgeSearchingDefinition Name="BRightHole01-R2"
+                             StartX="6301"
+                             StartY="3900"
+                             EndX="6301"
+                             EndY="4200"
+                             ROIWidth="179"
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="100"
+                                    WidthMax="140"
+                                    HeightMin="280"
+                                    HeightMax="99999999"
+                                    DilationWidth="21"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="dark"
+          ScaleAdd="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="358"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+	
+    <EdgeSearchingDefinition Name="BLeftHole01-L1"
+                             StartX="1079"
+                             StartY="4588"
+                             EndX="1079"
+                             EndY="4288"
+                             ROIWidth="179"
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="100"
+                                    WidthMax="140"
+                                    HeightMin="280"
+                                    HeightMax="99999999"
+                                    DilationWidth="21"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="dark"
+          ScaleAdd="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="358"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+    <EdgeSearchingDefinition Name="BLeftHole01-R1"
+                             StartX="1081"
+                             StartY="4288"
+                             EndX="1081"
+                             EndY="4588"
+                             ROIWidth="179"
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="100"
+                                    WidthMax="140"
+                                    HeightMin="280"
+                                    HeightMax="99999999"
+                                    DilationWidth="21"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="dark"
+          ScaleAdd="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="358"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+	
+    <EdgeSearchingDefinition Name="BLeftHole02In-L1"
+                             StartX="1089"
+                             StartY="6650"
+                             EndX="1089"
+                             EndY="7250"
+                             ROIWidth="171"
+                             
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="80"
+                                    WidthMax="120"
+                                    HeightMin="550"
+                                    HeightMax="99999999"
+                                    DilationWidth="65"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByBinaryThresholdWithMeanFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EmpWidth="3"
+          EmpHeight="10"
+          EmpFactor="5"
+          EdgeAreaLightDark="dark"
+          AreaMin="20000"
+          AreaMax="999999999"
+          ClosingWidth="5"
+          ClosingHeight="55"
+          DilationRadius="0">
+        </EnhanceEdgeAreaByBinaryThresholdWithMeanFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="342"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+    
+    <EdgeSearchingDefinition Name="BLeftHole02In-R1"
+                             StartX="1091"
+                             StartY="7250"
+                             EndX="1091"
+                             EndY="6650"
+                             ROIWidth="171"
+                             
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="80"
+                                    WidthMax="120"
+                                    HeightMin="550"
+                                    HeightMax="99999999"
+                                    DilationWidth="65"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByBinaryThresholdWithMeanFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EmpWidth="3"
+          EmpHeight="10"
+          EmpFactor="5"
+          EdgeAreaLightDark="dark"
+          AreaMin="20000"
+          AreaMax="999999999"
+          ClosingWidth="5"
+          ClosingHeight="55"
+          DilationRadius="0">
+        </EnhanceEdgeAreaByBinaryThresholdWithMeanFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="342"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+	
+	
+    <EdgeSearchingDefinition Name="BLeftHole02Out-L1"
+                             StartX="1089"
+                             StartY="6650"
+                             EndX="1089"
+                             EndY="7250"
+                             ROIWidth="171"
+                             
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="80"
+                                    WidthMax="120"
+                                    HeightMin="550"
+                                    HeightMax="99999999"
+                                    DilationWidth="55"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleDualFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="light"
+          SelectAreaMin="1000"
+          SelectAreaMax="999999999"
+          EdgeLightDark="light"
+          ScaleAdd1="0"
+          EmpMaskWidth="7"
+          EmpMaskHeight="20"
+          EmpFactor="0"
+          ScaleAdd2="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleDualFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="342"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+    
+    <EdgeSearchingDefinition Name="BLeftHole02Out-R1"
+                             StartX="1091"
+                             StartY="7250"
+                             EndX="1091"
+                             EndY="6650"
+                             ROIWidth="171"
+                             
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="80"
+                                    WidthMax="120"
+                                    HeightMin="550"
+                                    HeightMax="99999999"
+                                    DilationWidth="61"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleDualFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="light"
+          SelectAreaMin="1000"
+          SelectAreaMax="999999999"
+          EdgeLightDark="light"
+          ScaleAdd1="0"
+          EmpMaskWidth="20"
+          EmpMaskHeight="20"
+          EmpFactor="0"
+          ScaleAdd2="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleDualFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="342"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+	
+	
+    <EdgeSearchingDefinition Name="BLeftHole03In-L1"
+                             StartX="1091"
+                             StartY="7980"
+                             EndX="1091"
+                             EndY="8380"
+                             ROIWidth="170"
+                             
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="80"
+                                    WidthMax="120"
+                                    HeightMin="350"
+                                    HeightMax="99999999"
+                                    DilationWidth="61"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByBinaryThresholdWithMeanFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EmpWidth="3"
+          EmpHeight="10"
+          EmpFactor="5"
+          EdgeAreaLightDark="dark"
+          AreaMin="20000"
+          AreaMax="999999999"
+          ClosingWidth="5"
+          ClosingHeight="55"
+          DilationRadius="0">
+        </EnhanceEdgeAreaByBinaryThresholdWithMeanFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="340"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+    
+    <EdgeSearchingDefinition Name="BLeftHole03In-R1"
+                             StartX="1092"
+                             StartY="8380"
+                             EndX="1092"
+                             EndY="7980"
+                             ROIWidth="170"
+                             
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="80"
+                                    WidthMax="120"
+                                    HeightMin="350"
+                                    HeightMax="99999999"
+                                    DilationWidth="61"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByBinaryThresholdWithMeanFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EmpWidth="3"
+          EmpHeight="10"
+          EmpFactor="5"
+          EdgeAreaLightDark="dark"
+          AreaMin="20000"
+          AreaMax="999999999"
+          ClosingWidth="5"
+          ClosingHeight="55"
+          DilationRadius="0">
+        </EnhanceEdgeAreaByBinaryThresholdWithMeanFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="340"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+	
+	
+    <EdgeSearchingDefinition Name="BLeftHole03Out-L1"
+                             StartX="1091"
+                             StartY="7980"
+                             EndX="1091"
+                             EndY="8380"
+                             ROIWidth="170"
+                             
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="80"
+                                    WidthMax="120"
+                                    HeightMin="350"
+                                    HeightMax="99999999"
+                                    DilationWidth="55"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleDualFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="light"
+          SelectAreaMin="1000"
+          SelectAreaMax="999999999"
+          EdgeLightDark="light"
+          ScaleAdd1="0"
+          EmpMaskWidth="20"
+          EmpMaskHeight="20"
+          EmpFactor="0"
+          ScaleAdd2="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleDualFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="188"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+    
+    <EdgeSearchingDefinition Name="BLeftHole03Out-R1"
+                             StartX="1092"
+                             StartY="8380"
+                             EndX="1092"
+                             EndY="7980"
+                             ROIWidth="170"
+                             
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="80"
+                                    WidthMax="120"
+                                    HeightMin="350"
+                                    HeightMax="99999999"
+                                    DilationWidth="61"
+                                    DilationHeight="1"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleDualFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="light"
+          SelectAreaMin="1000"
+          SelectAreaMax="999999999"
+          EdgeLightDark="light"
+          ScaleAdd1="0"
+          EmpMaskWidth="20"
+          EmpMaskHeight="20"
+          EmpFactor="0"
+          ScaleAdd2="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleDualFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="188"
+                             RegionWidth="12"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+
+    <EdgeSearchingDefinition Name="BBottomHole02Height-T1"
+                             StartX="3954"
+                             StartY="11369"
+                             EndX="3354"
+                             EndY="11369"
+                             ROIWidth="137"
+                             
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRect2RegionExtractor LightDark="Dark"
+                                    WidthMin="400"
+                                    WidthMax="550"
+                                    HeightMin="130"
+                                    HeightMax="200"
+                                    Rect2Len1="150"
+                                    Rect2Len2="90"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByBinaryThresholdWithMeanFilter
+          MeanMaskWidth="55"
+          MeanMaskHeight="2"
+          EmpWidth="3"
+          EmpHeight="10"
+          EmpFactor="5"
+          EdgeAreaLightDark="dark"
+          AreaMin="20000"
+          AreaMax="999999999"
+          ClosingWidth="55"
+          ClosingHeight="5"
+          DilationRadius="0">
+        </EnhanceEdgeAreaByBinaryThresholdWithMeanFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="275"
+                             RegionWidth="10"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+    
+    <EdgeSearchingDefinition Name="BBottomHole02Height-B1"
+                             StartX="3354"
+                             StartY="11370"
+                             EndX="3954"
+                             EndY="11370"
+                             ROIWidth="137"
+                             
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RegionExtractor>
+        <LightOrDarkRect2RegionExtractor LightDark="Dark"
+                                    WidthMin="400"
+                                    WidthMax="550"
+                                    HeightMin="130"
+                                    HeightMax="200"
+                                    Rect2Len1="150"
+                                    Rect2Len2="90"
+                                    />
+      </EdgeSearchingDefinition.RegionExtractor>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByBinaryThresholdWithMeanFilter
+          MeanMaskWidth="55"
+          MeanMaskHeight="2"
+          EmpWidth="3"
+          EmpHeight="3"
+          EmpFactor="5"
+          EdgeAreaLightDark="dark"
+          AreaMin="20000"
+          AreaMax="999999999"
+          ClosingWidth="55"
+          ClosingHeight="5"
+          DilationRadius="0">
+        </EnhanceEdgeAreaByBinaryThresholdWithMeanFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="218"
+                             RegionWidth="10"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    <!---->
+    
+  </InspectionSchema.EdgeSearchingDefinitions>
+
+
+
+  <InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+    
+    
+    <DistanceBetweenLinesDefinition Name="B-Right-Hole-01-01"
+                                    DisplayName="音量键内宽A"
+                                    GroupName="音量键"
+                                    Comment="使用C面照片"
+                                    
+                                    Line1Name="BRightHole01-L1"
+                                    Line2Name="BRightHole01-R1"
+                                    ExpectValue="1.77"
+                                    PositiveTolerance="0.05"
+                                    NegativeTolerance="-0.03"
+                                    />
+    
+    <DistanceBetweenLinesDefinition Name="B-Right-Hole-01-02"
+                                    DisplayName="音量键内宽B"
+                                    GroupName="音量键"
+                                    Comment="使用C面照片"
+                                    
+                                    Line1Name="BRightHole01-L2"
+                                    Line2Name="BRightHole01-R2"
+                                    ExpectValue="1.77"
+                                    PositiveTolerance="0.05"
+                                    NegativeTolerance="-0.03"/>
+	
+    <DistanceBetweenLinesDefinition Name="B-Left-Hole-01"
+                                    DisplayName="电源键内宽"
+                                    GroupName="电源键"
+                                    Comment="使用C面照片"
+                                    
+                                    Line1Name="BLeftHole01-L1"
+                                    Line2Name="BLeftHole01-R1"
+                                    ExpectValue="1.77"
+                                    PositiveTolerance="0.05"
+                                    NegativeTolerance="-0.03"/>
+    
+    <DistanceBetweenLinesDefinition Name="B-Left-Hole-02-In"
+                                    DisplayName="Sim卡槽1内宽"
+                                    GroupName="Sim卡槽1"
+                                    Comment="使用C面照片"
+                                    
+                                    Line1Name="BLeftHole02In-L1"
+                                    Line2Name="BLeftHole02In-R1"
+                                    ExpectValue="1.61"
+                                    PositiveTolerance="0.06"
+                                    NegativeTolerance="-0.03"/>
+    
+    <DistanceBetweenLinesDefinition Name="B-Left-Hole-02-Out"
+                                    DisplayName="Sim卡槽1外宽"
+                                    GroupName="Sim卡槽1"
+                                    Comment="使用C面照片"
+                                    
+                                    Line1Name="BLeftHole02Out-L1"
+                                    Line2Name="BLeftHole02Out-R1"
+                                    ExpectValue="2.04"
+                                    PositiveTolerance="0.05"
+                                    NegativeTolerance="-0.02"/>
+    
+    <DistanceBetweenLinesDefinition Name="B-Left-Hole-03-In"
+                                    DisplayName="Sim卡槽2内宽"
+                                    GroupName="Sim卡槽2"
+                                    Comment="使用C面照片"
+                                    
+                                    Line1Name="BLeftHole03In-L1"
+                                    Line2Name="BLeftHole03In-R1"
+                                    ExpectValue="1.55"
+                                    PositiveTolerance="0.06"
+                                    NegativeTolerance="-0.03"/>
+    
+    <DistanceBetweenLinesDefinition Name="B-Left-Hole-03-Out"
+                                    DisplayName="Sim卡槽2外宽"
+                                    GroupName="Sim卡槽2"
+                                    Comment="使用C面照片"
+                                    
+                                    Line1Name="BLeftHole03Out-L1"
+                                    Line2Name="BLeftHole03Out-R1"
+                                    ExpectValue="2.04"
+                                    PositiveTolerance="0.05"
+                                    NegativeTolerance="-0.02"/>
+
+    <DistanceBetweenLinesDefinition Name="B-Bottom-Hole-02-Height"
+                                    DisplayName="USB孔内宽"
+                                    GroupName="USB孔"
+                                    Comment="使用C面照片"
+                                    
+                                    Line1Name="BBottomHole02Height-T1"
+                                    Line2Name="BBottomHole02Height-B1"
+                                    ExpectValue="2.48"
+                                    PositiveTolerance="0.07"
+                                    NegativeTolerance="-0.05"/>
+    
+    
+  </InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+
+</InspectionSchema>

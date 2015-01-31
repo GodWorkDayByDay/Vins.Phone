@@ -25,5 +25,6 @@ namespace Hdc.Mv.Inspection
         public Line PartLine { get; set; }
         public double PartHalfWidth { get; set; }
         public Line PartRelativeLine { get; set; }
+        public int Index { get; set; }
     }
 }

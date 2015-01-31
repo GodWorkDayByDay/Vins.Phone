@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Markup;
 using HalconDotNet;
+using Hdc.Diagnostics;
 
 namespace Hdc.Mv.Inspection
 {
@@ -21,17 +22,23 @@ namespace Hdc.Mv.Inspection
             HImage thresholdImage;
             if (SeparateFilter)
             {
+                var swThresholdImageFilter = new NotifyStopwatch("DynThresholdRegionExtractor.ThresholdImageFilter");
                 thresholdImage = ThresholdImageFilter.Process(image);
+                swThresholdImageFilter.Dispose();
             }
             else
             {
+                var swThresholdImageFilter = new NotifyStopwatch("DynThresholdRegionExtractor.ThresholdImageFilter");
                 thresholdImage = ThresholdImageFilter.Process(preprocessImage);
+                swThresholdImageFilter.Dispose();
             }
 
+            var swDynThreshold = new NotifyStopwatch("DynThresholdRegionExtractor.DynThreshold");
             HRegion region = preprocessImage.DynThreshold(
                 thresholdImage,
                 Offset,
                 LightDark.ToHalconString());
+            swDynThreshold.Dispose();
 
             preprocessImage.Dispose();
             thresholdImage.Dispose();

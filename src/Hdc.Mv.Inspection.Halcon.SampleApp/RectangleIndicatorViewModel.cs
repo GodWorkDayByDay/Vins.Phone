@@ -8,7 +8,7 @@ namespace MeasurementTestApp
         public double CenterY { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
-        public bool IsShown { get; set; }
+        public bool IsHidden { get; set; }
         public Brush Stroke { get; set; }
         public DoubleCollection StrokeDashArray { get; set; }
         public double StrokeThickness { get; set; }

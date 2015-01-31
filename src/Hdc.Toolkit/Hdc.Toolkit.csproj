@@ -198,6 +198,7 @@
     <Compile Include="Mvvm.Converters\Int32ToRomaOffset0Converter.cs" />
     <Compile Include="Mvvm.Converters\IntConverter.cs" />
     <Compile Include="Mvvm.Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Mvvm.Converters\IsHiddenToVisibilityConverter.cs" />
     <Compile Include="Mvvm.Converters\IsNotNullToBooleanConverter.cs" />
     <Compile Include="Mvvm.Converters\IsNullToBooleanConverter.cs" />
     <Compile Include="Mvvm.Converters\IsNullToVisibilityConverter.cs" />

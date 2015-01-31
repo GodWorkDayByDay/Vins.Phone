@@ -6,6 +6,7 @@ namespace Hdc.Mv.Inspection
 {
     public interface IPartInspector
     {
-        IList<PartSearchingResult> SearchParts(HImage image, IList<PartSearchingDefinition> definitions);
+//        IList<PartSearchingResult> SearchParts(HImage image, IList<PartSearchingDefinition> definitions);
+        PartSearchingResult SearchPart(HImage image, PartSearchingDefinition definition);
     }
 }

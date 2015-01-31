@@ -124,5 +124,21 @@ namespace Hdc.Mv.Halcon
             return smallestRect;
         }
 
+        public static HRectangle1 GetSmallestRectangle1(this HRegion region)
+        {
+            int row1;
+            int column1;
+            int row2;
+            int column2;
+            region.SmallestRectangle1(out row1, out column1, out row2, out column2);
+            var smallestRect = new HRectangle1()
+                               {
+                                   Row1 = row1,
+                                   Column1 = column1,
+                                   Row2 = row2,
+                                   Column2 = column2,
+                               };
+            return smallestRect;
+        }
     }
 }
