@@ -101,6 +101,7 @@
     <Compile Include="Inspection.RegionExtractors\AutoThresholdRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\BinaryThresholdDualRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\DynThresholdToBinFilter.cs" />
+    <Compile Include="Inspection.RegionExtractors\ProcessedRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\Rectangle2RegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\RegiongrowingRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\StructuredRegionExtractor.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Inspection.Inspectors\SimCircleInspector.cs" />
     <Compile Include="Inspection.Inspectors\SimEdgeInspector.cs" />
     <Compile Include="Inspection.Inspectors\SurfaceInspector.cs" />
+    <Compile Include="Inspection.RegionExtractors\Union2RegionExtractor.cs" />
     <Compile Include="Inspection.RegionProcessors\ConnectionRegionProcessor.cs" />
     <Compile Include="Inspection.RegionProcessors\FillUpRegionProcessor.cs" />
     <Compile Include="Inspection.RegionProcessors\MoveRegionProcessor.cs" />

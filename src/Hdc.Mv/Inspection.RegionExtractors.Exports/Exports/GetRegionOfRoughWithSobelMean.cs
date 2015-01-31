@@ -11,11 +11,11 @@ public partial class HDevelopExport
 
   // Procedures 
   public void GetRegionOfRoughWithSobelMean (HObject ho_Image, out HObject ho_FoundRegion, 
-      HTuple hv_ThresholdMinGray, HTuple hv_ThresholdMaxGray, HTuple hv_MinMaxGrayPercent, 
-      HTuple hv_HatWidth, HTuple hv_HatHeight, HTuple hv_SelectAreaMin, HTuple hv_SelectAreaMax, 
-      HTuple hv_RoughAreaClosingWidth, HTuple hv_RoughAreaClosingHeight, HTuple hv_RoughAreaOpeningWidth, 
-      HTuple hv_RoughAreaOpeningHeight, HTuple hv_SobelAmpSize, HTuple hv_SobelAmpMeanMin, 
-      HTuple hv_SobelAmpThresholdMinGray)
+      HTuple hv_ThresholdMinGray, HTuple hv_ThresholdMaxGray, HTuple hv_RoughAreaMinPercent, 
+      HTuple hv_MinMaxGrayPercent, HTuple hv_HatWidth, HTuple hv_HatHeight, HTuple hv_SelectAreaMin, 
+      HTuple hv_SelectAreaMax, HTuple hv_RoughAreaClosingWidth, HTuple hv_RoughAreaClosingHeight, 
+      HTuple hv_RoughAreaOpeningWidth, HTuple hv_RoughAreaOpeningHeight, HTuple hv_SobelAmpSize, 
+      HTuple hv_SobelAmpMeanMin, HTuple hv_SobelAmpThresholdMinGray)
   {
 
 
@@ -36,8 +36,9 @@ public partial class HDevelopExport
 
     // Local control variables 
 
-    HTuple hv_Width = null, hv_Height = null, hv_Min = null;
-    HTuple hv_Max = null, hv_Range = null, hv_UsedThreshold2 = null;
+    HTuple hv_Width = null, hv_Height = null, hv_DomainArea = null;
+    HTuple hv_Number = null, hv_AreaValue = null, hv_RoughAreaPercent = null;
+    HTuple hv_Min = null, hv_Max = null, hv_Range = null, hv_UsedThreshold2 = null;
     HTuple hv_Mean = null, hv_Deviation = null;
     // Initialize local and output iconic variables 
     HOperatorSet.GenEmptyObj(out ho_FoundRegion);
@@ -75,11 +76,132 @@ public partial class HDevelopExport
     HOperatorSet.GetDomain(ho_Image, out ho_Domain);
     HOperatorSet.RegionFeatures(ho_Domain, "width", out hv_Width);
     HOperatorSet.RegionFeatures(ho_Domain, "height", out hv_Height);
+    HOperatorSet.RegionFeatures(ho_Domain, "area", out hv_DomainArea);
 
 
 
     ho_Region.Dispose();
     HOperatorSet.Threshold(ho_Image, out ho_Region, hv_ThresholdMinGray, hv_ThresholdMaxGray);
+
+    HOperatorSet.CountObj(ho_Region, out hv_Number);
+    if ((int)(new HTuple(hv_Number.TupleEqual(0))) != 0)
+    {
+      ho_FoundRegion.Dispose();
+      HOperatorSet.GenEmptyRegion(out ho_FoundRegion);
+      ho_Domain.Dispose();
+      ho_Region.Dispose();
+      ho_ImageScaled.Dispose();
+      ho_SE.Dispose();
+      ho_ImageTopHat.Dispose();
+      ho_ImageScaled4.Dispose();
+      ho_ImageBotHat.Dispose();
+      ho_ImageScaled5.Dispose();
+      ho_ImageResult.Dispose();
+      ho_ImageScaled5And6.Dispose();
+      ho_Region1.Dispose();
+      ho_RegionClosing1.Dispose();
+      ho_RegionOpening.Dispose();
+      ho_ConnectedRegions1.Dispose();
+      ho_SelectedRegions2.Dispose();
+      ho_RegionFillUp.Dispose();
+      ho_RegionClosing10.Dispose();
+      ho_RegionOpening12.Dispose();
+      ho_ImageReduced.Dispose();
+      ho_EdgeAmplitude.Dispose();
+      ho_Region2.Dispose();
+      ho_RegionClosing22.Dispose();
+      ho_ConnectedRegions2.Dispose();
+      ho_RegionFillUp2.Dispose();
+      ho_SelectedRegions3.Dispose();
+      ho_RegionFillUp1.Dispose();
+      ho_RegionClosing21.Dispose();
+      ho_RegionOpening22.Dispose();
+      ho_RegionIntersection.Dispose();
+      ho_ConnectedRegions3.Dispose();
+
+      return;
+    }
+
+    HOperatorSet.RegionFeatures(ho_Region, "area", out hv_AreaValue);
+    if ((int)(new HTuple(hv_AreaValue.TupleEqual(0))) != 0)
+    {
+      ho_FoundRegion.Dispose();
+      HOperatorSet.GenEmptyRegion(out ho_FoundRegion);
+      ho_Domain.Dispose();
+      ho_Region.Dispose();
+      ho_ImageScaled.Dispose();
+      ho_SE.Dispose();
+      ho_ImageTopHat.Dispose();
+      ho_ImageScaled4.Dispose();
+      ho_ImageBotHat.Dispose();
+      ho_ImageScaled5.Dispose();
+      ho_ImageResult.Dispose();
+      ho_ImageScaled5And6.Dispose();
+      ho_Region1.Dispose();
+      ho_RegionClosing1.Dispose();
+      ho_RegionOpening.Dispose();
+      ho_ConnectedRegions1.Dispose();
+      ho_SelectedRegions2.Dispose();
+      ho_RegionFillUp.Dispose();
+      ho_RegionClosing10.Dispose();
+      ho_RegionOpening12.Dispose();
+      ho_ImageReduced.Dispose();
+      ho_EdgeAmplitude.Dispose();
+      ho_Region2.Dispose();
+      ho_RegionClosing22.Dispose();
+      ho_ConnectedRegions2.Dispose();
+      ho_RegionFillUp2.Dispose();
+      ho_SelectedRegions3.Dispose();
+      ho_RegionFillUp1.Dispose();
+      ho_RegionClosing21.Dispose();
+      ho_RegionOpening22.Dispose();
+      ho_RegionIntersection.Dispose();
+      ho_ConnectedRegions3.Dispose();
+
+      return;
+    }
+
+    hv_RoughAreaPercent = (hv_AreaValue/hv_DomainArea)*100;
+    if ((int)(new HTuple(hv_RoughAreaPercent.TupleLess(hv_RoughAreaMinPercent))) != 0)
+    {
+      ho_FoundRegion.Dispose();
+      HOperatorSet.GenEmptyRegion(out ho_FoundRegion);
+      ho_Domain.Dispose();
+      ho_Region.Dispose();
+      ho_ImageScaled.Dispose();
+      ho_SE.Dispose();
+      ho_ImageTopHat.Dispose();
+      ho_ImageScaled4.Dispose();
+      ho_ImageBotHat.Dispose();
+      ho_ImageScaled5.Dispose();
+      ho_ImageResult.Dispose();
+      ho_ImageScaled5And6.Dispose();
+      ho_Region1.Dispose();
+      ho_RegionClosing1.Dispose();
+      ho_RegionOpening.Dispose();
+      ho_ConnectedRegions1.Dispose();
+      ho_SelectedRegions2.Dispose();
+      ho_RegionFillUp.Dispose();
+      ho_RegionClosing10.Dispose();
+      ho_RegionOpening12.Dispose();
+      ho_ImageReduced.Dispose();
+      ho_EdgeAmplitude.Dispose();
+      ho_Region2.Dispose();
+      ho_RegionClosing22.Dispose();
+      ho_ConnectedRegions2.Dispose();
+      ho_RegionFillUp2.Dispose();
+      ho_SelectedRegions3.Dispose();
+      ho_RegionFillUp1.Dispose();
+      ho_RegionClosing21.Dispose();
+      ho_RegionOpening22.Dispose();
+      ho_RegionIntersection.Dispose();
+      ho_ConnectedRegions3.Dispose();
+
+      return;
+    }
+
+
+
 
     HOperatorSet.MinMaxGray(ho_Region, ho_Image, hv_MinMaxGrayPercent, out hv_Min, 
         out hv_Max, out hv_Range);

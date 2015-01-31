@@ -8,6 +8,7 @@ namespace Hdc.Mv.Inspection
     {
         public double ThresholdMinGray { get; set; }
         public double ThresholdMaxGray { get; set; }
+        public double RoughAreaMinPercent { get; set; }
         public double MinMaxGrayPercent { get; set; }
         public int HatWidth { get; set; }
         public int HatHeight { get; set; }
@@ -29,6 +30,7 @@ namespace Hdc.Mv.Inspection
             HDevelopExport.Singletone.GetRegionOfRoughWithSobelMean(image, out regionHObject,
                 ThresholdMinGray, 
                 ThresholdMaxGray, 
+                RoughAreaMinPercent,
                 MinMaxGrayPercent,
                 HatWidth, HatHeight, 
                 SelectAreaMin, 
