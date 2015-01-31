@@ -1,0 +1,308 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="False">
+  <InspectionSchema.CoordinateCircles>
+  
+  
+  	<CircleSearchingDefinition CenterX="2783"
+                               CenterY="11355"
+                               InnerRadius="50"
+                               OuterRadius="170"
+                               Name="C1"
+                               
+                               
+                               
+                               Domain_SaveCacheImageEnabled="false"
+                               ImageFilter_Disabled="false"
+                               ImageFilter_SaveCacheImageEnabled="false">
+        
+        <CircleSearchingDefinition.ImageFilter>
+            <MinMaxGrayScaleFilter Percent="5" />
+        </CircleSearchingDefinition.ImageFilter>
+        
+        <CircleSearchingDefinition.CircleExtractor>
+            <SpokeCircleExtractor Name=""
+                                  SaveCacheImageEnabled="false"
+                                  RegionsCount="100"
+                                  RegionWidth="20"
+                                  Sigma="1"
+                                  Threshold="10"
+                                  SelectionMode="First"
+                                  Transition="Positive"
+                                  Direct="Outer"
+                                  />
+        </CircleSearchingDefinition.CircleExtractor>
+        
+    </CircleSearchingDefinition>
+  
+  
+  </InspectionSchema.CoordinateCircles>
+  
+  
+  
+  
+  <InspectionSchema.RegionTargetDefinitions>
+    
+    
+    <RegionTargetDefinition Name="B-Right-Hole-01"
+                            Domain_SaveCacheImageEnabled="false"
+                            DisplaySmallestRectangle2HeightLineEnabled="true"
+                            DisplaySmallestRectangle2WidthLineEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="814">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="6120"
+              Y1="3762"
+              X2="6484"
+              Y2="3762" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="100"
+                                    WidthMax="99999999"
+                                    HeightMin="0"
+                                    HeightMax="1400"
+                                    DilationWidth="21"
+                                    DilationHeight="21"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      	<BinaryThresholdRegionExtractor LightDark="Dark"/>
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+    </RegionTargetDefinition>
+    
+    
+    <RegionTargetDefinition Name="B-Left-Hole-01"
+                            Domain_SaveCacheImageEnabled="false"
+                            DisplaySmallestRectangle2HeightLineEnabled="true"
+                            DisplaySmallestRectangle2WidthLineEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="470">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="900"
+              Y1="4443"
+              X2="1260"
+              Y2="4443" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="50"
+                                    WidthMax="99999999"
+                                    HeightMin="0"
+                                    HeightMax="800"
+                                    DilationWidth="21"
+                                    DilationHeight="21"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      	<BinaryThresholdRegionExtractor LightDark="Dark"/>
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+    </RegionTargetDefinition>
+    
+    
+    <RegionTargetDefinition Name="B-Left-Hole-02-In"
+                            Domain_SaveCacheImageEnabled="false"
+                            DisplaySmallestRectangle2HeightLineEnabled="true"
+                            DisplaySmallestRectangle2WidthLineEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="647">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="894"
+              Y1="6929"
+              X2="1270"
+              Y2="6929" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="60"
+                                    WidthMax="99999999"
+                                    HeightMin="60"
+                                    HeightMax="1000"
+                                    DilationWidth="51"
+                                    DilationHeight="121"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      	<BinaryThresholdRegionExtractor LightDark="Dark"/>
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionProcessor>
+        <CompositeRegionProcessor>
+          <ConnectionRegionProcessor/>
+          <SelectShapeRegionProcessor Operation="And">
+            <SelectShapeEntry Feature="Height" Min="640" Max="950"/>
+          </SelectShapeRegionProcessor>
+        </CompositeRegionProcessor>
+      </RegionTargetDefinition.TargetRegionProcessor>
+      
+    </RegionTargetDefinition>
+    
+    
+    <RegionTargetDefinition Name="B-Left-Hole-02-Out"
+                            Domain_SaveCacheImageEnabled="false"
+                            DisplaySmallestRectangle2HeightLineEnabled="true"
+                            DisplaySmallestRectangle2WidthLineEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="647">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="894"
+              Y1="6929"
+              X2="1270"
+              Y2="6929" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="60"
+                                    WidthMax="99999999"
+                                    HeightMin="60"
+                                    HeightMax="1000"
+                                    DilationWidth="51"
+                                    DilationHeight="121"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      	<BinaryThresholdRegionExtractor LightDark="Dark"/>
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+    </RegionTargetDefinition>
+    
+    
+    <RegionTargetDefinition Name="B-Left-Hole-03-In"
+                            Domain_SaveCacheImageEnabled="false"
+                            DisplaySmallestRectangle2HeightLineEnabled="true"
+                            DisplaySmallestRectangle2WidthLineEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="532">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="902"
+              Y1="8147"
+              X2="1274"
+              Y2="8147" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="60"
+                                    WidthMax="99999999"
+                                    HeightMin="60"
+                                    HeightMax="1000"
+                                    DilationWidth="51"
+                                    DilationHeight="121"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      	<BinaryThresholdRegionExtractor LightDark="Dark"/>
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionProcessor>
+        <CompositeRegionProcessor>
+          <ConnectionRegionProcessor/>
+          <SelectShapeRegionProcessor Operation="And">
+            <SelectShapeEntry Feature="Height" Min="640" Max="800"/>
+          </SelectShapeRegionProcessor>
+        </CompositeRegionProcessor>
+      </RegionTargetDefinition.TargetRegionProcessor>
+      
+    </RegionTargetDefinition>
+    
+    
+    <RegionTargetDefinition Name="B-Left-Hole-03-Out"
+                            Domain_SaveCacheImageEnabled="false"
+                            DisplaySmallestRectangle2HeightLineEnabled="true"
+                            DisplaySmallestRectangle2WidthLineEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="532">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="902"
+              Y1="8147"
+              X2="1274"
+              Y2="8147" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="60"
+                                    WidthMax="99999999"
+                                    HeightMin="60"
+                                    HeightMax="700"
+                                    DilationWidth="51"
+                                    DilationHeight="121"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      	<BinaryThresholdRegionExtractor LightDark="Dark"/>
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+    </RegionTargetDefinition>
+    
+	
+    <RegionTargetDefinition Name="B-Bottom-Hole-02"
+                            Domain_SaveCacheImageEnabled="false"
+                            DisplaySmallestRectangle2HeightLineEnabled="true"
+                            DisplaySmallestRectangle2WidthLineEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="300">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="3654"
+              Y1="11231"
+              X2="3654"
+              Y2="11506" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="400"
+                                    WidthMax="550"
+                                    HeightMin="130"
+                                    HeightMax="200"
+                                    DilationWidth="25"
+                                    DilationHeight="1"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      <BinaryThresholdRegionExtractor LightDark="Dark"/>
+      <!--
+        <AntennaOfS1423RegionExtractor GrayOpeningMaskHeight="1"
+                                       GrayOpeningMaskWidth="0"
+                                       GrayDilationMaskHeight="2"
+                                       GrayDilationMaskWidth="2"
+                                       LightDark="Dark"
+                                       AreaMin="500"
+                                       AreaMax="99999999"
+                                       OpeningWidth="4"
+                                       OpeningHeight="20"
+                                       ClosingWidth="3"
+                                       ClosingHeight="3"
+                                       />-->
+                                               
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+    </RegionTargetDefinition>
+    
+    
+  </InspectionSchema.RegionTargetDefinitions>
+
+
+
+
+</InspectionSchema>

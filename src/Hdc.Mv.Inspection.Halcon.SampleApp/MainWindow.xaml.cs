@@ -393,8 +393,8 @@ namespace ODM.Inspectors.Halcon.SampleApp
                 {
                     StartPointX = ed.RoiActualLine.X1,
                     StartPointY = ed.RoiActualLine.Y1,
-                    EndPointX = ed.RoiActualLine.X2,
-                    EndPointY = ed.RoiActualLine.Y2,
+                    EndPointX =   ed.RoiActualLine.X2,
+                    EndPointY =   ed.RoiActualLine.Y2,
                     RegionWidth = ed.RoiHalfWidth,
                     Stroke = Brushes.Orange,
                     StrokeThickness = 4,
@@ -405,11 +405,44 @@ namespace ODM.Inspectors.Halcon.SampleApp
 
         public void Show_RegionTargetResults(IEnumerable<RegionTargetResult> results)
         {
-            foreach (var edgeSearchingResult in results)
+            foreach (var result in results)
             {
-                if (edgeSearchingResult.HasError) continue;
+                if (result.HasError) continue;
 
-                var roiRect = edgeSearchingResult.TargetRegion.GetRoiRectangleFromSmallestRectangle2();
+                var rect2 = result.TargetRegion.GetSmallestHRectangle2();
+                var roiRect = rect2.GetRoiRectangle();
+
+                if (result.Definition.DisplaySmallestRectangle2WidthLineEnabled)
+                {
+                    var line = roiRect.GetWidthLine();
+
+                    var lineIndicator = new LineIndicatorViewModel
+                    {
+                        StartPointX = line.X1,
+                        StartPointY = line.Y1,
+                        EndPointX = line.X2,
+                        EndPointY = line.Y2,
+                        Stroke = Brushes.DeepPink,
+                        StrokeThickness = 2,
+                    };
+                    LineIndicators.Add(lineIndicator);
+                }
+
+                if (result.Definition.DisplaySmallestRectangle2HeightLineEnabled)
+                {
+                    var line = roiRect.GetLine();
+
+                    var lineIndicator = new LineIndicatorViewModel
+                    {
+                        StartPointX = line.X1,
+                        StartPointY = line.Y1,
+                        EndPointX = line.X2,
+                        EndPointY = line.Y2,
+                        Stroke = Brushes.DeepPink,
+                        StrokeThickness = 2,
+                    };
+                    LineIndicators.Add(lineIndicator);
+                }
 
                 var regionIndicator2 = new RegionIndicatorViewModel
                                        {

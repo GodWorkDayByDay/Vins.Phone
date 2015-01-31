@@ -31,6 +31,9 @@ namespace Hdc.Mv.Inspection
 
         public IRegionProcessor TargetRegionProcessor { get; set; }
         public bool TargetRegionProcessor_SaveCacheImageEnabled { get; set; }
+
+        public bool DisplaySmallestRectangle2HeightLineEnabled { get; set; }
+        public bool DisplaySmallestRectangle2WidthLineEnabled { get; set; }
     }
 }
 

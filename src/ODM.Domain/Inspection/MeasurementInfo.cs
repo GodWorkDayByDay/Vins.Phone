@@ -33,5 +33,10 @@ namespace ODM.Domain.Inspection
         public double EndPointYActualValue { get; set; }
 //        [NotMapped]
         public double ValueActualValue { get; set; }
+
+        public bool HasError { get; set; }
+        public string TypeName { get; set; }
+        public string TypeDescription { get; set; }
+        public string GroupName { get; set; }
     };
 }

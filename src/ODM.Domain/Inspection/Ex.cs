@@ -143,6 +143,28 @@ namespace ODM.Domain.Inspection
             return inspectionController.InspectionResult.GetInspectionInfo(inspectionController.Coordinate);
         }
 
+        public static Hdc.Mv.Inspection.MeasurementInfo GetMeasurementInfo(this Line line, IRelativeCoordinate coordinate)
+        {
+            Vector relativeP1 = coordinate.GetRelativeVector(line.GetPoint1().ToVector());
+            Vector relativeP2 = coordinate.GetRelativeVector(line.GetPoint2().ToVector());
+
+            var measurement = new Hdc.Mv.Inspection.MeasurementInfo
+                              {
+                                  StartPointX = line.GetPoint1().X,
+                                  StartPointY = line.GetPoint1().Y,
+                                  EndPointX = line.GetPoint2().X,
+                                  EndPointY = line.GetPoint2().Y,
+                                  Value = line.GetLength(),
+                                  ValueActualValue = line.GetLength().ToMillimeterFromPixel(16),
+                                  StartPointXActualValue = relativeP1.X.ToMillimeterFromPixel(16),
+                                  StartPointYActualValue = relativeP1.Y.ToMillimeterFromPixel(16),
+                                  EndPointXActualValue = relativeP2.X.ToMillimeterFromPixel(16),
+                                  EndPointYActualValue = relativeP2.Y.ToMillimeterFromPixel(16),
+                              };
+
+            return measurement;
+        }
+
         public static InspectionInfo GetInspectionInfo(this InspectionResult inspectionResult, IRelativeCoordinate coordinate)
         {
             var inspectionInfo = new InspectionInfo();
@@ -151,37 +173,83 @@ namespace ODM.Domain.Inspection
 
             for (int i = 0; i < inspectionResult.DistanceBetweenPointsResults.Count; i++)
             {
-                var distanceBetweenPointsResult = inspectionResult.DistanceBetweenPointsResults[i];
-                if (!distanceBetweenPointsResult.HasError)
+                var result = inspectionResult.DistanceBetweenPointsResults[i];
+                if (result.HasError)
                 {
-                    var measurement = new Hdc.Mv.Inspection.MeasurementInfo()
-                    {
-                        Index = i,
-                        TypeCode = 100 + i,
-                        StartPointX = distanceBetweenPointsResult.Point1.X,
-                        StartPointY = distanceBetweenPointsResult.Point1.Y,
-                        EndPointX = distanceBetweenPointsResult.Point2.X,
-                        EndPointY = distanceBetweenPointsResult.Point2.Y,
-                    };
+                    var measurement2 = new Hdc.Mv.Inspection.MeasurementInfo { HasError = true };
+                    inspectionInfo.MeasurementInfos.Add(measurement2);
+                    continue;
+                };
 
-                    measurement.Index = i;
-                    measurement.GroupIndex = i;
-                    measurement.Value = distanceBetweenPointsResult.DistanceInPixel;
-                    measurement.ValueActualValue = distanceBetweenPointsResult.DistanceInPixel.ToMillimeterFromPixel(16);
+                var line = new Line(result.Point1, result.Point2);
+                var measurement = line.GetMeasurementInfo(coordinate);
+                measurement.Index = i;
+                measurement.GroupIndex = i;
+                measurement.TypeCode = 100 + i;
+                measurement.TypeName = result.Definition.Name;
+                inspectionInfo.MeasurementInfos.Add(measurement);
 
-                    Vector relativeP1 = coordinate.GetRelativeVector(distanceBetweenPointsResult.Point1.ToVector());
-                    Vector relativeP2 = coordinate.GetRelativeVector(distanceBetweenPointsResult.Point2.ToVector());
+//                var measurement = new Hdc.Mv.Inspection.MeasurementInfo()
+//                                  {
+//                                      Index = i,
+//                                      TypeCode = 100 + i,
+//                                      StartPointX = distanceBetweenPointsResult.Point1.X,
+//                                      StartPointY = distanceBetweenPointsResult.Point1.Y,
+//                                      EndPointX = distanceBetweenPointsResult.Point2.X,
+//                                      EndPointY = distanceBetweenPointsResult.Point2.Y,
+//                                  };
+//
+//                measurement.Index = i;
+//                measurement.GroupIndex = i;
+//                measurement.Value = distanceBetweenPointsResult.DistanceInPixel;
+//                measurement.ValueActualValue = distanceBetweenPointsResult.DistanceInPixel.ToMillimeterFromPixel(16);
+//
+//                Vector relativeP1 = coordinate.GetRelativeVector(distanceBetweenPointsResult.Point1.ToVector());
+//                Vector relativeP2 = coordinate.GetRelativeVector(distanceBetweenPointsResult.Point2.ToVector());
+//
+//                measurement.StartPointXActualValue = relativeP1.X.ToMillimeterFromPixel(16);
+//                measurement.StartPointYActualValue = relativeP1.Y.ToMillimeterFromPixel(16);
+//                measurement.EndPointXActualValue = relativeP2.X.ToMillimeterFromPixel(16);
+//                measurement.EndPointYActualValue = relativeP2.Y.ToMillimeterFromPixel(16);
+//
+//                inspectionInfo.MeasurementInfos.Add(measurement);
+            }
 
-                    measurement.StartPointXActualValue = relativeP1.X.ToMillimeterFromPixel(16);
-                    measurement.StartPointYActualValue = relativeP1.Y.ToMillimeterFromPixel(16);
-                    measurement.EndPointXActualValue = relativeP2.X.ToMillimeterFromPixel(16);
-                    measurement.EndPointYActualValue = relativeP2.Y.ToMillimeterFromPixel(16);
+            Debug.WriteLine("GetInspectionInfo().DistanceBetweenPointsResults");
 
+
+            for (int i = 0; i < inspectionResult.RegionTargets.Count; i++)
+            {
+                var result = inspectionResult.RegionTargets[i];
+
+                if (result.HasError)
+                {
+                    var measurement = new Hdc.Mv.Inspection.MeasurementInfo {HasError = true};
+                    inspectionInfo.MeasurementInfos.Add(measurement);
+                    continue;
+                };
+
+                var rect2 = result.TargetRegion.GetSmallestHRectangle2();
+                var roiRect = rect2.GetRoiRectangle();
+
+                if (result.Definition.DisplaySmallestRectangle2WidthLineEnabled)
+                {
+                    var line = roiRect.GetWidthLine();
+                    var measurement = line.GetMeasurementInfo(coordinate);
+                    measurement.TypeName = result.Definition.Name + "Width";
+                    inspectionInfo.MeasurementInfos.Add(measurement);
+                }
+
+                if (result.Definition.DisplaySmallestRectangle2HeightLineEnabled)
+                {
+                    var line = roiRect.GetLine();
+                    var measurement = line.GetMeasurementInfo(coordinate);
+                    measurement.TypeName = result.Definition.Name + "Height";
                     inspectionInfo.MeasurementInfos.Add(measurement);
                 }
             }
 
-            Debug.WriteLine("GetInspectionInfo().DistanceBetweenPointsResults");
+            Debug.WriteLine("GetInspectionInfo().RegionTargets");
 
             for (int i = 0; i < inspectionResult.Parts.Count; i++)
             {

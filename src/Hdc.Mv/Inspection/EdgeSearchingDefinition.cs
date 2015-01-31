@@ -17,6 +17,7 @@ namespace Hdc.Mv.Inspection
         public double ROIWidth { get; set; }
         public double ExpectAngle { get; set; }
         public bool Domain_SaveCacheImageEnabled { get; set; }
+//        public 
 
         [Obsolete]
         public IRegionExtractor RegionExtractor { get; set; }

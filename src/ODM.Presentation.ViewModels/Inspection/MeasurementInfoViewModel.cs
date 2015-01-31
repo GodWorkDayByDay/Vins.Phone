@@ -150,6 +150,19 @@ namespace ODM.Presentation.ViewModels
             get { return GroupIndex + 1; }
         }
 
+        private string _groupName;
+
+        public string GroupName
+        {
+            get { return _groupName; }
+            set
+            {
+                if (Equals(_groupName, value)) return;
+                _groupName = value;
+                RaisePropertyChanged(() => GroupName);
+            }
+        }
+
         private int _surfaceTypeIndex;
 
         public int SurfaceTypeIndex

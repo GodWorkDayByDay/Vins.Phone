@@ -114,6 +114,21 @@ namespace Hdc.Mv.Halcon
             return roiRect;
         }
 
+        public static RoiRectangle GetRoiRectangle(this HRectangle2 rectangle2)
+        {
+            var roiLine = rectangle2.GetRoiLineFromRectangle2Phi();
+            var roiRect = new RoiRectangle
+                          {
+                              StartX = roiLine.X1,
+                              StartY = roiLine.Y1,
+                              EndX = roiLine.X2,
+                              EndY = roiLine.Y2,
+                              ROIWidth = rectangle2.Length2
+                          };
+
+            return roiRect;
+        }
+
         public static Line GetRoiLineFromRectangle2Phi(double row, double column, double phi, double length1)
         {
             var angle = -phi / 3.141592654 * 180;

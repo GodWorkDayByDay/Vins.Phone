@@ -124,6 +124,11 @@ namespace Hdc.Mv
             return Vector.AngleBetween(fromVector, toVector);
         }
 
+        public static double GetAngleToX(this Vector fromVector)
+        {
+            return Vector.AngleBetween(fromVector, new Vector(10000,0));
+        }
+
         public static Point GetRelativePoint(this Point point, Line baseLine, double angle)
         {
             var vFromOriginToTarget = point.GetVectorTo(baseLine.GetPoint1());
@@ -648,12 +653,39 @@ namespace Hdc.Mv
             return new Line(line.X2, line.Y2, line.X1, line.Y1);
         }
 
-        public static Line GetLine(IRoiRectangle roiRectangle)
+        public static Line GetLine(this IRoiRectangle roiRectangle)
         {
             return new Line(roiRectangle.StartX,
                 roiRectangle.StartY,
                 roiRectangle.EndX,
                 roiRectangle.EndY);
+        }
+
+        public static Line GetWidthLine(this IRoiRectangle roiRectangle)
+        {
+            var centerVector = roiRectangle.GetCenterVector();
+            var linkLine = roiRectangle.GetLine().GetVectorFrom2To1().GetAngleToX();
+
+            var leftVector = new Vector(roiRectangle.ROIWidth, 0).Rotate(linkLine - 90);
+            var rightVector = new Vector(roiRectangle.ROIWidth, 0).Rotate(linkLine + 90);
+            var offsetLeft = leftVector + centerVector;
+            var offsetRight = rightVector + centerVector;
+            return new Line(offsetLeft.ToPoint(),offsetRight.ToPoint());
+        }
+
+        public static Vector GetStartVector(this IRoiRectangle roiRectangle)
+        {
+            return new Vector(roiRectangle.StartX , roiRectangle.StartY);
+        }
+
+        public static Vector GetEndVector(this IRoiRectangle roiRectangle)
+        {
+            return new Vector(roiRectangle.EndX , roiRectangle.EndY);
+        }
+
+        public static Vector GetCenterVector(this IRoiRectangle roiRectangle)
+        {
+            return new Vector((roiRectangle.StartX + roiRectangle.EndX) / 2.0, (roiRectangle.StartY + roiRectangle.EndY) / 2.0);
         }
 
         public static HRegion GenRegion(this IRectangle2 rectangle2)

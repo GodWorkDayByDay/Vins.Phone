@@ -1,0 +1,223 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.RegionTargetDefinitions>
+    
+    
+    <RegionTargetDefinition Name="C-Antenna-TopLeft"
+                            Domain_SaveCacheImageEnabled="false"
+                            DisplaySmallestRectangle2HeightLineEnabled="true"
+                            DisplaySmallestRectangle2WidthLineEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="74">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="2359"
+              Y1="1583"
+              X2="2571"
+              Y2="1583" />
+      </RegionTargetDefinition.RoiActualLine>
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <DynThresholdRegionExtractor LightDark="Light"
+                                     Offset="25">
+           <DynThresholdRegionExtractor.ThresholdImageFilter>
+             <GrayOpeningRectFilter MaskHeight="2" MaskWidth="0"/>
+           </DynThresholdRegionExtractor.ThresholdImageFilter>
+        </DynThresholdRegionExtractor>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      <RegionTargetDefinition.AroundRegionProcessor>
+        <CompositeRegionProcessor>
+          <ConnectionRegionProcessor/>
+          <OpeningRectangle1RegionProcessor Width="7" Height="7"/>
+          <SelectShapeRegionProcessor Operation="And">
+            <SelectShapeEntry Feature="Width" Min="80" Max="200"/>
+            <SelectShapeEntry Feature="Height" Min="15" Max="35"/>
+            <SelectShapeEntry Feature="Area" Min="1200" Max="4000"/>
+          </SelectShapeRegionProcessor>
+          <OpeningRectangle1RegionProcessor Width="7" Height="7"/>
+          <SmallestRectangle1RegionProcessor/>
+          <DilationRectangle1RegionProcessor Width="31" Height="1"/>
+        </CompositeRegionProcessor>
+      </RegionTargetDefinition.AroundRegionProcessor>
+      <RegionTargetDefinition.TargetRegionExtractor>
+        <AntennaOfS1423RegionExtractor GrayOpeningMaskHeight="1"
+                                       GrayOpeningMaskWidth="0"
+                                       GrayDilationMaskHeight="2"
+                                       GrayDilationMaskWidth="8"
+                                       LightDark="Light"
+                                       AreaMin="500"
+                                       AreaMax="99999999"
+                                       OpeningWidth="3"
+                                       OpeningHeight="6"
+                                       ClosingWidth="3"
+                                       ClosingHeight="3"
+                                       />
+                                               
+      </RegionTargetDefinition.TargetRegionExtractor>
+    </RegionTargetDefinition>
+    
+    
+    <RegionTargetDefinition Name="C-Antenna-TopRight"
+                            Domain_SaveCacheImageEnabled="false"
+                            DisplaySmallestRectangle2HeightLineEnabled="true"
+                            DisplaySmallestRectangle2WidthLineEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="74">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="4807"
+              Y1="1590"
+              X2="5013"
+              Y2="1590" />
+      </RegionTargetDefinition.RoiActualLine>
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <DynThresholdRegionExtractor LightDark="Light"
+                                     Offset="25">
+           <DynThresholdRegionExtractor.ThresholdImageFilter>
+             <GrayOpeningRectFilter MaskHeight="2" MaskWidth="0"/>
+           </DynThresholdRegionExtractor.ThresholdImageFilter>
+        </DynThresholdRegionExtractor>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      <RegionTargetDefinition.AroundRegionProcessor>
+        <CompositeRegionProcessor>
+          <ConnectionRegionProcessor/>
+          <OpeningRectangle1RegionProcessor Width="7" Height="7"/>
+          <SelectShapeRegionProcessor Operation="And">
+            <SelectShapeEntry Feature="Width" Min="70" Max="200"/>
+            <SelectShapeEntry Feature="Height" Min="15" Max="45"/>
+            <SelectShapeEntry Feature="Area" Min="1000" Max="5000"/>
+          </SelectShapeRegionProcessor>
+          <OpeningRectangle1RegionProcessor Width="7" Height="7"/>
+          <SmallestRectangle1RegionProcessor/>
+          <DilationRectangle1RegionProcessor Width="31" Height="1"/>
+        </CompositeRegionProcessor>
+      </RegionTargetDefinition.AroundRegionProcessor>
+      <RegionTargetDefinition.TargetRegionExtractor>
+        <AntennaOfS1423RegionExtractor GrayOpeningMaskHeight="1"
+                                       GrayOpeningMaskWidth="0"
+                                       GrayDilationMaskHeight="2"
+                                       GrayDilationMaskWidth="8"
+                                       LightDark="Light"
+                                       AreaMin="500"
+                                       AreaMax="99999999"
+                                       OpeningWidth="3"
+                                       OpeningHeight="6"
+                                       ClosingWidth="3"
+                                       ClosingHeight="3"
+                                       />
+                                               
+      </RegionTargetDefinition.TargetRegionExtractor>
+    </RegionTargetDefinition>
+    
+    
+    <RegionTargetDefinition Name="C-Antenna-BottomLeft"
+                            Domain_SaveCacheImageEnabled="false"
+                            DisplaySmallestRectangle2HeightLineEnabled="true"
+                            DisplaySmallestRectangle2WidthLineEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="72">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="2195"
+              Y1="10956"
+              X2="2405"
+              Y2="10956" />
+      </RegionTargetDefinition.RoiActualLine>
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <DynThresholdRegionExtractor LightDark="Light"
+                                     Offset="25">
+           <DynThresholdRegionExtractor.ThresholdImageFilter>
+             <GrayOpeningRectFilter MaskHeight="2" MaskWidth="0"/>
+           </DynThresholdRegionExtractor.ThresholdImageFilter>
+        </DynThresholdRegionExtractor>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      <RegionTargetDefinition.AroundRegionProcessor>
+        <CompositeRegionProcessor>
+          <ConnectionRegionProcessor/>
+          <OpeningRectangle1RegionProcessor Width="7" Height="7"/>
+          <SelectShapeRegionProcessor Operation="And">
+            <SelectShapeEntry Feature="Width" Min="70" Max="200"/>
+            <SelectShapeEntry Feature="Height" Min="15" Max="45"/>
+            <SelectShapeEntry Feature="Area" Min="1000" Max="5000"/>
+          </SelectShapeRegionProcessor>
+          <OpeningRectangle1RegionProcessor Width="7" Height="7"/>
+          <SmallestRectangle1RegionProcessor/>
+          <DilationRectangle1RegionProcessor Width="31" Height="1"/>
+        </CompositeRegionProcessor>
+      </RegionTargetDefinition.AroundRegionProcessor>
+      <RegionTargetDefinition.TargetRegionExtractor>
+        <AntennaOfS1423RegionExtractor GrayOpeningMaskHeight="1"
+                                       GrayOpeningMaskWidth="0"
+                                       GrayDilationMaskHeight="2"
+                                       GrayDilationMaskWidth="8"
+                                       LightDark="Light"
+                                       AreaMin="500"
+                                       AreaMax="99999999"
+                                       OpeningWidth="3"
+                                       OpeningHeight="6"
+                                       ClosingWidth="3"
+                                       ClosingHeight="3"
+                                       />
+                                               
+      </RegionTargetDefinition.TargetRegionExtractor>
+    </RegionTargetDefinition>
+    
+    
+    <RegionTargetDefinition Name="C-Antenna-BottomRight"
+                            Domain_SaveCacheImageEnabled="false"
+                            DisplaySmallestRectangle2HeightLineEnabled="true"
+                            DisplaySmallestRectangle2WidthLineEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="72">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="4905"
+              Y1="10965"
+              X2="5115"
+              Y2="10965" />
+      </RegionTargetDefinition.RoiActualLine>
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <DynThresholdRegionExtractor LightDark="Light"
+                                     Offset="25">
+           <DynThresholdRegionExtractor.ThresholdImageFilter>
+             <GrayOpeningRectFilter MaskHeight="2" MaskWidth="0"/>
+           </DynThresholdRegionExtractor.ThresholdImageFilter>
+        </DynThresholdRegionExtractor>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      <RegionTargetDefinition.AroundRegionProcessor>
+        <CompositeRegionProcessor>
+          <ConnectionRegionProcessor/>
+          <OpeningRectangle1RegionProcessor Width="7" Height="7"/>
+          <SelectShapeRegionProcessor Operation="And">
+            <SelectShapeEntry Feature="Width" Min="70" Max="200"/>
+            <SelectShapeEntry Feature="Height" Min="15" Max="45"/>
+            <SelectShapeEntry Feature="Area" Min="1000" Max="5000"/>
+          </SelectShapeRegionProcessor>
+          <OpeningRectangle1RegionProcessor Width="7" Height="7"/>
+          <SmallestRectangle1RegionProcessor/>
+          <DilationRectangle1RegionProcessor Width="31" Height="1"/>
+        </CompositeRegionProcessor>
+      </RegionTargetDefinition.AroundRegionProcessor>
+      <RegionTargetDefinition.TargetRegionExtractor>
+        <AntennaOfS1423RegionExtractor GrayOpeningMaskHeight="1"
+                                       GrayOpeningMaskWidth="0"
+                                       GrayDilationMaskHeight="2"
+                                       GrayDilationMaskWidth="8"
+                                       LightDark="Light"
+                                       AreaMin="500"
+                                       AreaMax="99999999"
+                                       OpeningWidth="3"
+                                       OpeningHeight="6"
+                                       ClosingWidth="3"
+                                       ClosingHeight="3"
+                                       />
+                                               
+      </RegionTargetDefinition.TargetRegionExtractor>
+    </RegionTargetDefinition>
+    <!---->
+    
+  </InspectionSchema.RegionTargetDefinitions>
+</InspectionSchema>

@@ -18,5 +18,9 @@ namespace Hdc.Mv.Inspection
         public double EndPointXActualValue { get; set; }
         public double EndPointYActualValue { get; set; }
         public double ValueActualValue { get; set; }
+        public bool HasError { get; set; }
+        public string TypeName { get; set; }
+        public string TypeDescription { get; set; }
+        public string GroupName { get; set; }
     };
 }

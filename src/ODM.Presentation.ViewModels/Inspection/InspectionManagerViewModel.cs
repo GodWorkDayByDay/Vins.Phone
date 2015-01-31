@@ -260,6 +260,8 @@ namespace ODM.Presentation.ViewModels.Inspection
                            {
                                var surfaceMonitor = SurfaceMonitors[surfaceIndex];
                                surfaceMonitor.BitmapSource = null;
+                               surfaceMonitor.DefectInfos = null;
+                               surfaceMonitor.MeasurementInfos = null;
                                surfaceMonitor.InspectState = InspectState.Grabbing;
                                Debug.WriteLine("InspectState.Grabbing");
                                //                               surfaceMonitor.MeasurementInfos.Clear();
@@ -274,6 +276,8 @@ namespace ODM.Presentation.ViewModels.Inspection
                            {
                                var surfaceMonitor = SurfaceMonitors[imageInfo.SurfaceTypeIndex];
                                surfaceMonitor.BitmapSource = null;
+                               surfaceMonitor.DefectInfos = null;
+                               surfaceMonitor.MeasurementInfos = null;
                                surfaceMonitor.InspectState = InspectState.Grabbed;
                                Debug.WriteLine("InspectState.Grabbed");
 
@@ -286,6 +290,8 @@ namespace ODM.Presentation.ViewModels.Inspection
                                  {
                                      var surfaceMonitor = SurfaceMonitors[surfaceIndex];
                                      surfaceMonitor.BitmapSource = null;
+                                     surfaceMonitor.DefectInfos = null;
+                                     surfaceMonitor.MeasurementInfos = null;
                                      surfaceMonitor.InspectState = InspectState.Calibrating;
                                      Debug.WriteLine("InspectState.Calibrating");
 
@@ -321,11 +327,8 @@ namespace ODM.Presentation.ViewModels.Inspection
                 .ObserveOnDispatcher()
                 .Subscribe(inspectInfo =>
                            {
-                               HideAll();
-
                                DefectInfos.Clear();
                                MeasurementInfos.Clear();
-
 
                                var surfaceMonitor = SurfaceMonitors[inspectInfo.SurfaceTypeIndex];
                                surfaceMonitor.InspectState = inspectInfo.InspectInfo.DefectInfos.Count == 0
@@ -445,32 +448,19 @@ namespace ODM.Presentation.ViewModels.Inspection
         private void OnShowAllMeasurementsCommand()
         {
             HideAll();
-
-            //            if (SelectedSurfaceMonitor == null)
-            //            {
             foreach (var surfaceMonitorViewModel in SurfaceMonitors)
             {
-                surfaceMonitorViewModel.MeasurementInfosCollectionView.Filter = null;
-                surfaceMonitorViewModel.MeasurementInfosCollectionView.Refresh();
+                if (surfaceMonitorViewModel.MeasurementInfosCollectionView != null)
+                {
+                    surfaceMonitorViewModel.MeasurementInfosCollectionView.Filter = null;
+                    surfaceMonitorViewModel.MeasurementInfosCollectionView.Refresh();
+                }
                 surfaceMonitorViewModel.DisplayAllMeasurementInfos = false;
             }
 
             SelectedMeasurementInfo = null;
             MeasurementInfosCollectionView.Filter = null;
             MeasurementInfosCollectionView.Refresh();
-            //            }
-            //            else
-            //            {
-            //                var sm = SelectedSurfaceMonitor;
-            //                var surfaceTypeIndex = SelectedSurfaceMonitor.SurfaceTypeIndex;
-            //
-            //                MeasurementInfosCollectionView.Filter =
-            //                 (x => { return ((MeasurementInfoViewModel)x).SurfaceTypeIndex == surfaceTypeIndex; });
-            //                MeasurementInfosCollectionView.Refresh();
-            //
-            //                sm.DisplayMeasurementInfo = true;
-            //
-            //            }
         }
 
         private void HideAll()
