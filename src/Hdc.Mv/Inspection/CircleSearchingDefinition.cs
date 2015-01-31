@@ -17,6 +17,7 @@ namespace Hdc.Mv.Inspection
         public bool Diameter_DisplayEnabled { get; set; }
         public string Diameter_DisplayName { get; set; }
         public string Diameter_GroupName { get; set; }
+        public double Diameter_ExpectValue { get; set; }
 
         // General
         public double CenterX { get; set; }

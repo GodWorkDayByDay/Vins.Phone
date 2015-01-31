@@ -305,7 +305,7 @@ namespace Hdc.Mv.Inspection
                     //var distance = t1.ToVector() - t2.ToVector();
                     var distance = (intersection1 - intersection2).Length;
 
-                    Debug.WriteLine("Distance {0}: {1}\t", def.Name, distance);
+//                    Debug.WriteLine("Distance {0}: {1}\t", def.Name, distance);
 
                     var distanceBetweenPointsResult = new DistanceBetweenPointsResult()
                     {

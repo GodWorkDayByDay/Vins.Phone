@@ -101,9 +101,7 @@
     <Compile Include="Inspection.RegionExtractors.Exports\LightOrDarkRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\AutoThresholdRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\BinaryThresholdDualRegionExtractor.cs" />
-    <Compile Include="Inspection.RegionExtractors\DynThresholdToBinFilter.cs" />
     <Compile Include="Inspection.RegionExtractors\ProcessedRegionExtractor.cs" />
-
     <Compile Include="Inspection.RegionExtractors\CropDomainRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\DynThresholdCroppedRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\DynThresholdRegionExtractor.cs" />

@@ -302,12 +302,18 @@
                                 <!--                                                    Width="60"/>-->
                                 <DataGridTextColumn Header="分组"
                                                     Binding="{Binding GroupName, Mode=OneWay}"
-                                                    Width="160" />
+                                                    Width="140" />
                                 <DataGridTextColumn Header="名称"
                                                     Binding="{Binding DisplayName}"
-                                                    Width="200" />
+                                                    Width="140" />
                                 <DataGridTextColumn Header="距离"
                                                     Binding="{Binding ValueDisplayValue}"
+                                                    Width="110" />
+                                <DataGridTextColumn Header="偏差"
+                                                    Binding="{Binding DiffValueDisplayValue}"
+                                                    Width="110" />
+                                <DataGridTextColumn Header="目标"
+                                                    Binding="{Binding ExpectValueDisplayValue}"
                                                     Width="110" />
                                 <DataGridTextColumn Header="X坐标"
                                                     Binding="{Binding StartPointXDisplayValue}"

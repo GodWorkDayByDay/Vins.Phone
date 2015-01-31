@@ -188,32 +188,8 @@ namespace ODM.Domain.Inspection
                 measurement.TypeCode = 100 + i;
                 measurement.Name = result.Definition.Name;
                 measurement.DisplayName = result.Definition.DisplayName;
+                measurement.ExpectValue = result.Definition.ExpectValue;
                 inspectionInfo.MeasurementInfos.Add(measurement);
-
-//                var measurement = new Hdc.Mv.Inspection.MeasurementInfo()
-//                                  {
-//                                      Index = i,
-//                                      TypeCode = 100 + i,
-//                                      StartPointX = distanceBetweenPointsResult.Point1.X,
-//                                      StartPointY = distanceBetweenPointsResult.Point1.Y,
-//                                      EndPointX = distanceBetweenPointsResult.Point2.X,
-//                                      EndPointY = distanceBetweenPointsResult.Point2.Y,
-//                                  };
-//
-//                measurement.Index = i;
-//                measurement.GroupIndex = i;
-//                measurement.Value = distanceBetweenPointsResult.DistanceInPixel;
-//                measurement.ValueActualValue = distanceBetweenPointsResult.DistanceInPixel.ToMillimeterFromPixel(16);
-//
-//                Vector relativeP1 = coordinate.GetRelativeVector(distanceBetweenPointsResult.Point1.ToVector());
-//                Vector relativeP2 = coordinate.GetRelativeVector(distanceBetweenPointsResult.Point2.ToVector());
-//
-//                measurement.StartPointXActualValue = relativeP1.X.ToMillimeterFromPixel(16);
-//                measurement.StartPointYActualValue = relativeP1.Y.ToMillimeterFromPixel(16);
-//                measurement.EndPointXActualValue = relativeP2.X.ToMillimeterFromPixel(16);
-//                measurement.EndPointYActualValue = relativeP2.Y.ToMillimeterFromPixel(16);
-//
-//                inspectionInfo.MeasurementInfos.Add(measurement);
             }
 
             Debug.WriteLine("GetInspectionInfo().DistanceBetweenPointsResults");
@@ -243,6 +219,7 @@ namespace ODM.Domain.Inspection
                     var measurement = line.GetMeasurementInfo(coordinate);
                     measurement.DisplayName = result.Definition.Rect2Len2Line_DisplayName;
                     measurement.GroupName = result.Definition.Rect2Len2Line_GroupName;
+                    measurement.ExpectValue = result.Definition.Rect2Len2Line_ExpectValue;
                     inspectionInfo.MeasurementInfos.Add(measurement);
                 }
 
@@ -252,6 +229,7 @@ namespace ODM.Domain.Inspection
                     var measurement = line.GetMeasurementInfo(coordinate);
                     measurement.DisplayName = result.Definition.Rect2Len1Line_DisplayName;
                     measurement.GroupName = result.Definition.Rect2Len1Line_GroupName;
+                    measurement.ExpectValue = result.Definition.Rect2Len1Line_ExpectValue;
                     inspectionInfo.MeasurementInfos.Add(measurement);
                 }
             }
@@ -277,6 +255,7 @@ namespace ODM.Domain.Inspection
                 var measurement = line.GetMeasurementInfo(coordinate);
                 measurement.DisplayName = result.Definition.Diameter_DisplayName;
                 measurement.GroupName = result.Definition.Diameter_GroupName;
+                measurement.ExpectValue = result.Definition.Diameter_ExpectValue;
                 inspectionInfo.MeasurementInfos.Add(measurement);
             }
 

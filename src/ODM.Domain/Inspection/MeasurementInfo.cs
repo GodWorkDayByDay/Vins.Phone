@@ -38,5 +38,6 @@ namespace ODM.Domain.Inspection
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public string GroupName { get; set; }
+        public double ExpectValue { get; set; } // in mm
     };
 }

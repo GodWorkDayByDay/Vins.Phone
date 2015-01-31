@@ -1,0 +1,361 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="False">
+  <InspectionSchema.RegionTargetDefinitions>
+    
+    
+    <RegionTargetDefinition Name="B-Right-Hole-01"
+                            Rect2Len1Line_DisplayName="音量孔内长"
+                            Rect2Len1Line_GroupName="音量键"
+                            Rect2Len1Line_DisplayEnabled="true"
+                            Rect2Len1Line_ExpectValue="22.08"
+                            
+                            Domain_SaveCacheImageEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="814">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="6120"
+              Y1="3762"
+              X2="6484"
+              Y2="3762" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="100"
+                                    WidthMax="99999999"
+                                    HeightMin="0"
+                                    HeightMax="1400"
+                                    DilationWidth="21"
+                                    DilationHeight="21"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      	<BinaryThresholdRegionExtractor LightDark="Dark"/>
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+    </RegionTargetDefinition>
+    
+    
+    <RegionTargetDefinition Name="B-Left-Hole-01"
+                            Rect2Len1Line_DisplayName="电源孔内长"
+                            Rect2Len1Line_GroupName="电源键"
+                            Rect2Len1Line_DisplayEnabled="true"
+                            Rect2Len1Line_ExpectValue="11.08"
+                            
+                            Domain_SaveCacheImageEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="470">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="900"
+              Y1="4443"
+              X2="1260"
+              Y2="4443" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="50"
+                                    WidthMax="99999999"
+                                    HeightMin="0"
+                                    HeightMax="800"
+                                    DilationWidth="21"
+                                    DilationHeight="21"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      	<BinaryThresholdRegionExtractor LightDark="Dark"/>
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+    </RegionTargetDefinition>
+    
+    
+    <RegionTargetDefinition Name="B-Left-Hole-02-In"
+                            Rect2Len1Line_DisplayName="Sim卡槽1内长"
+                            Rect2Len1Line_GroupName="Sim卡槽1"
+                            Rect2Len1Line_DisplayEnabled="true"
+                            Rect2Len1Line_ExpectValue="14.11"
+                            
+                            Domain_SaveCacheImageEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="647">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="894"
+              Y1="6929"
+              X2="1270"
+              Y2="6929" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="60"
+                                    WidthMax="99999999"
+                                    HeightMin="60"
+                                    HeightMax="1000"
+                                    DilationWidth="51"
+                                    DilationHeight="121"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      	<BinaryThresholdRegionExtractor LightDark="Dark"/>
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionProcessor>
+        <CompositeRegionProcessor>
+          <ConnectionRegionProcessor/>
+          <SelectShapeRegionProcessor Operation="And">
+            <SelectShapeEntry Feature="Height" Min="640" Max="950"/>
+          </SelectShapeRegionProcessor>
+        </CompositeRegionProcessor>
+      </RegionTargetDefinition.TargetRegionProcessor>
+      
+    </RegionTargetDefinition>
+    
+    
+    <RegionTargetDefinition Name="B-Left-Hole-02-Out"
+                            Rect2Len1Line_DisplayName="Sim卡槽1外长"
+                            Rect2Len1Line_GroupName="Sim卡槽1"
+                            Rect2Len1Line_DisplayEnabled="true"
+                            Rect2Len1Line_ExpectValue="16.82"
+                            
+                            Domain_SaveCacheImageEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="647">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="894"
+              Y1="6929"
+              X2="1270"
+              Y2="6929" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="60"
+                                    WidthMax="99999999"
+                                    HeightMin="60"
+                                    HeightMax="1000"
+                                    DilationWidth="51"
+                                    DilationHeight="121"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      <CropDomainRegionExtractor>
+      	<Union2RegionExtractor>
+      		<Union2RegionExtractor.RegionExtractor1>
+	    	  	<BinaryThresholdRegionExtractor LightDark="Dark"/>
+	  		</Union2RegionExtractor.RegionExtractor1>
+	  		
+	  		<Union2RegionExtractor.RegionExtractor2>
+	    		<StructuredRegionExtractor>
+	    	  		<StructuredRegionExtractor.ImageFilter>
+	    	  			<CompositeFilter>
+	    	  				<ChangeDomainFilter>
+	    	  					<ChangeDomainFilter.RegionExtractor>
+	    	  						<BinaryThresholdRegionExtractor LightDark="Light"/>
+	    	  					</ChangeDomainFilter.RegionExtractor>
+	    	  				</ChangeDomainFilter>
+	    	  				<ChangeDomainFilter>
+	    	  					<ChangeDomainFilter.RegionExtractor>
+	    	  						<BinaryThresholdRegionExtractor LightDark="Light"/>
+	    	  					</ChangeDomainFilter.RegionExtractor>
+	    	  				</ChangeDomainFilter>
+	    	  			</CompositeFilter>
+	    	  		</StructuredRegionExtractor.ImageFilter>
+	    	  		
+	    	  		<StructuredRegionExtractor.RegionProcessor>
+	    	  			<CompositeRegionProcessor>
+	  						<ConnectionRegionProcessor/>
+	  						<SelectShapeRegionProcessor Operation="And">
+	    						<SelectShapeEntry Feature="Area" Min="10000" Max="99999999"/>
+	  						</SelectShapeRegionProcessor>
+	  						<OpeningRectangle1RegionProcessor Width="4" Height="10"/>
+	  						<ClosingRectangle1RegionProcessor Width="4" Height="10"/>
+						</CompositeRegionProcessor>
+	    	  		</StructuredRegionExtractor.RegionProcessor>
+	    		</StructuredRegionExtractor>
+	  		</Union2RegionExtractor.RegionExtractor2>
+		</Union2RegionExtractor>
+		</CropDomainRegionExtractor>
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+    </RegionTargetDefinition>
+    
+    
+    <RegionTargetDefinition Name="B-Left-Hole-03-In"
+                            Rect2Len1Line_DisplayName="Sim卡槽2内长"
+                            Rect2Len1Line_GroupName="Sim卡槽2"
+                            Rect2Len1Line_DisplayEnabled="true"
+                            Rect2Len1Line_ExpectValue="10.59"
+                            
+                            Domain_SaveCacheImageEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="532">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="902"
+              Y1="8147"
+              X2="1274"
+              Y2="8147" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="60"
+                                    WidthMax="99999999"
+                                    HeightMin="60"
+                                    HeightMax="1000"
+                                    DilationWidth="51"
+                                    DilationHeight="121"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      	<BinaryThresholdRegionExtractor LightDark="Dark"/>
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionProcessor>
+        <CompositeRegionProcessor>
+          <ConnectionRegionProcessor/>
+          <SelectShapeRegionProcessor Operation="And">
+            <SelectShapeEntry Feature="Height" Min="640" Max="800"/>
+          </SelectShapeRegionProcessor>
+        </CompositeRegionProcessor>
+      </RegionTargetDefinition.TargetRegionProcessor>
+      
+    </RegionTargetDefinition>
+    
+    
+    <RegionTargetDefinition Name="B-Left-Hole-03-Out"
+                            Rect2Len1Line_DisplayName="Sim卡槽2外长"
+                            Rect2Len1Line_GroupName="Sim卡槽2"
+                            Rect2Len1Line_DisplayEnabled="true"
+                            Rect2Len1Line_ExpectValue="13.15"
+                            
+                            Domain_SaveCacheImageEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="532">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="902"
+              Y1="8147"
+              X2="1274"
+              Y2="8147" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="60"
+                                    WidthMax="99999999"
+                                    HeightMin="60"
+                                    HeightMax="700"
+                                    DilationWidth="51"
+                                    DilationHeight="121"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      <CropDomainRegionExtractor>
+      	<Union2RegionExtractor>
+      		<Union2RegionExtractor.RegionExtractor1>
+	    	  	<BinaryThresholdRegionExtractor LightDark="Dark"/>
+	  		</Union2RegionExtractor.RegionExtractor1>
+	  		
+	  		<Union2RegionExtractor.RegionExtractor2>
+	    		<StructuredRegionExtractor>
+	    	  		<StructuredRegionExtractor.ImageFilter>
+	    	  			<CompositeFilter>
+	    	  				<ChangeDomainFilter>
+	    	  					<ChangeDomainFilter.RegionExtractor>
+	    	  						<BinaryThresholdRegionExtractor LightDark="Light"/>
+	    	  					</ChangeDomainFilter.RegionExtractor>
+	    	  				</ChangeDomainFilter>
+	    	  				<ChangeDomainFilter>
+	    	  					<ChangeDomainFilter.RegionExtractor>
+	    	  						<BinaryThresholdRegionExtractor LightDark="Light"/>
+	    	  					</ChangeDomainFilter.RegionExtractor>
+	    	  				</ChangeDomainFilter>
+	    	  			</CompositeFilter>
+	    	  		</StructuredRegionExtractor.ImageFilter>
+	    	  		
+	    	  		<StructuredRegionExtractor.RegionProcessor>
+	    	  			<CompositeRegionProcessor>
+	  						<ConnectionRegionProcessor/>
+	  						<SelectShapeRegionProcessor Operation="And">
+	    						<SelectShapeEntry Feature="Area" Min="10000" Max="99999999"/>
+	  						</SelectShapeRegionProcessor>
+	  						<OpeningRectangle1RegionProcessor Width="4" Height="10"/>
+	  						<ClosingRectangle1RegionProcessor Width="4" Height="10"/>
+						</CompositeRegionProcessor>
+	    	  		</StructuredRegionExtractor.RegionProcessor>
+	    		</StructuredRegionExtractor>
+	  		</Union2RegionExtractor.RegionExtractor2>
+		</Union2RegionExtractor>
+      </CropDomainRegionExtractor>
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+    </RegionTargetDefinition>
+    
+	
+    <RegionTargetDefinition Name="B-Bottom-Hole-02"
+                            Rect2Len1Line_DisplayName="USB孔内长"
+                            Rect2Len1Line_GroupName="USB孔"
+                            Rect2Len1Line_DisplayEnabled="true"
+                            Rect2Len1Line_ExpectValue="7.60"
+                            
+                            Domain_SaveCacheImageEnabled="false"
+                            AroundRegionExtractor_SaveCacheImageEnabled="false"
+                            AroundRegionProcessor_SaveCacheImageEnabled="false"
+                            TargetRegionProcessor_SaveCacheImageEnabled="false"
+                            RoiHalfWidth="300">
+      <RegionTargetDefinition.RoiActualLine>
+        <Line X1="3654"
+              Y1="11231"
+              X2="3654"
+              Y2="11506" />
+      </RegionTargetDefinition.RoiActualLine>
+      
+      <RegionTargetDefinition.AroundRegionExtractor>
+        <LightOrDarkRegionExtractor LightDark="Dark"
+                                    WidthMin="400"
+                                    WidthMax="550"
+                                    HeightMin="130"
+                                    HeightMax="200"
+                                    DilationWidth="25"
+                                    DilationHeight="1"/>
+      </RegionTargetDefinition.AroundRegionExtractor>
+      
+      <RegionTargetDefinition.TargetRegionExtractor>
+      <BinaryThresholdRegionExtractor LightDark="Dark"/>
+      <!--
+        <AntennaOfS1423RegionExtractor GrayOpeningMaskHeight="1"
+                                       GrayOpeningMaskWidth="0"
+                                       GrayDilationMaskHeight="2"
+                                       GrayDilationMaskWidth="2"
+                                       LightDark="Dark"
+                                       AreaMin="500"
+                                       AreaMax="99999999"
+                                       OpeningWidth="4"
+                                       OpeningHeight="20"
+                                       ClosingWidth="3"
+                                       ClosingHeight="3"
+                                       />-->
+                                               
+      </RegionTargetDefinition.TargetRegionExtractor>
+      
+    </RegionTargetDefinition>
+    
+    
+  </InspectionSchema.RegionTargetDefinitions>
+
+
+
+
+</InspectionSchema>

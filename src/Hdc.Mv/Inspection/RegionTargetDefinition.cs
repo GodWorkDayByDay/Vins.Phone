@@ -37,12 +37,14 @@ namespace Hdc.Mv.Inspection
         public string Rect2Len1Line_DisplayName { get; set; }
         public string Rect2Len1Line_GroupName { get; set; }
         public string Rect2Len1Line_DisplayGroupName { get; set; }
+        public double Rect2Len1Line_ExpectValue { get; set; } //in mm
 
         public bool Rect2Len2Line_DisplayEnabled { get; set; }
         public string Rect2Len2Line_Name { get; set; }
         public string Rect2Len2Line_DisplayName { get; set; }
         public string Rect2Len2Line_GroupName { get; set; }
         public string Rect2Len2Line_DisplayGroupName { get; set; }
+        public double Rect2Len2Line_ExpectValue { get; set; } //in mm
     }
 }
 

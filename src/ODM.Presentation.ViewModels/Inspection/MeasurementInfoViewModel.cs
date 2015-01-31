@@ -206,27 +206,6 @@ namespace ODM.Presentation.ViewModels
             }
         }
 
-//        public string StartPointXDisplayValue { get { return Math.Round(StartPointX / 100.0).ToString("F2"); } }
-//        public string StartPointYDisplayValue { get { return Math.Round(StartPointY / 125.0).ToString("F2"); } }
-//        public string EndPointXDisplayValue { get { return Math.Round(EndPointX / 100.0).ToString("F2"); } }
-//        public string EndPointYDisplayValue { get { return Math.Round(EndPointY / 125.0).ToString("F2"); } }
-//
-//        public string ValueDisplayValue
-//        {
-//            get
-//            {
-//                var width = Math.Abs(EndPointX - StartPointX) / 100.0;
-//                var height = Math.Abs(EndPointY - StartPointY) / 125.0;
-//                var v = Math.Sqrt(Math.Pow(width, 2) + Math.Pow(height, 2));
-//                v = Math.Round(v * 100) / 100;
-//                var vString = v.ToString("F2");
-//
-//                string valueDisplayValue = (Value / 125.0).ToString("F2");
-//
-//                return vString;
-//            }
-//        }
-
         public string IndexDisplayValue
         {
             get
@@ -309,5 +288,24 @@ namespace ODM.Presentation.ViewModels
         public string EndPointXDisplayValue { get { return EndPointXActualValue.ToString("00.00"); } }
         public string EndPointYDisplayValue { get { return EndPointYActualValue.ToString("00.00"); } }
         public string ValueDisplayValue { get { return ValueActualValue.ToString("00.00"); } }
+
+        private double _expectValue;
+
+        public double ExpectValue
+        {
+            get { return _expectValue; }
+            set
+            {
+                if (Equals(_expectValue, value)) return;
+                _expectValue = value;
+                RaisePropertyChanged(() => ExpectValue);
+                RaisePropertyChanged(() => ExpectValueDisplayValue);
+                RaisePropertyChanged(() => DiffValueDisplayValue);
+            }
+        }
+
+        public string ExpectValueDisplayValue { get { return ExpectValue.ToString("00.00"); } }
+        public string DiffValueDisplayValue { get { return (ValueActualValue - ExpectValue).ToString("00.00"); } }
+
     }
 }
