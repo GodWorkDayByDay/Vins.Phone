@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿/*using System.Collections.Generic;
 using Hdc.Mv.Inspection;
 
 namespace Hdc.Mv.Inspection
@@ -18,4 +18,4 @@ namespace Hdc.Mv.Inspection
             MeasurementInfos = new List<MeasurementInfo>();
         }
     }
-}
+}*/

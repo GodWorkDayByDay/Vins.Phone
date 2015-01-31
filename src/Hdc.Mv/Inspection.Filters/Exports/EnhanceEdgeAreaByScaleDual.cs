@@ -7,9 +7,19 @@ using HalconDotNet;
 public partial class HDevelopExport
 {
 #if !(NO_EXPORT_MAIN || NO_EXPORT_APP_MAIN)
+  public HDevelopExport()
+  {
+    // Default settings used in HDevelop 
+    HOperatorSet.SetSystem("width", 512);
+    HOperatorSet.SetSystem("height", 512);
+    if (HalconAPI.isWindows)
+      HOperatorSet.SetSystem("use_window_thread","true");
+    action();
+  }
 #endif
 
   // Procedures 
+  // Local procedures 
   public void EnhanceEdgeAreaByScaleDual (HObject ho_InputImage, out HObject ho_EnhancedImage, 
       out HObject ho_EnhancedEdge, HTuple hv_MeanMaskWidth, HTuple hv_MeanMaskHeight, 
       HTuple hv_EdgeAreaLightDark, HTuple hv_SelectAreaMin, HTuple hv_SelectAreaMax, 
@@ -28,7 +38,8 @@ public partial class HDevelopExport
     HObject ho_RegionTrans, ho_ImageReduced, ho_Domain1, ho_ImageScaled=null;
     HObject ho_ImageScaleMax, ho_Region2, ho_ImageReduced1;
     HObject ho_ImageEmphasize, ho_ImageScaled2=null, ho_ImageScaleMax2;
-    HObject ho_Region1, ho_RegionOpening, ho_RegionFillUp;
+    HObject ho_Region1, ho_RegionOpening, ho_RegionFillUp, ho_ImageNew;
+    HObject ho_RegionComplement;
 
     // Local control variables 
 
@@ -56,6 +67,8 @@ public partial class HDevelopExport
     HOperatorSet.GenEmptyObj(out ho_Region1);
     HOperatorSet.GenEmptyObj(out ho_RegionOpening);
     HOperatorSet.GenEmptyObj(out ho_RegionFillUp);
+    HOperatorSet.GenEmptyObj(out ho_ImageNew);
+    HOperatorSet.GenEmptyObj(out ho_RegionComplement);
     ho_Domain.Dispose();
     HOperatorSet.GetDomain(ho_InputImage, out ho_Domain);
     HOperatorSet.RegionFeatures(ho_Domain, "width", out hv_Width);
@@ -132,9 +145,14 @@ public partial class HDevelopExport
     ho_RegionFillUp.Dispose();
     HOperatorSet.FillUp(ho_EnhancedEdge, out ho_RegionFillUp);
 
+    ho_ImageNew.Dispose();
+    HOperatorSet.ChangeDomain(ho_InputImage, ho_Domain, out ho_ImageNew);
+    ho_RegionComplement.Dispose();
+    HOperatorSet.Complement(ho_RegionFillUp, out ho_RegionComplement);
     ho_EnhancedImage.Dispose();
-    HOperatorSet.RegionToBin(ho_RegionFillUp, out ho_EnhancedImage, 255, 0, hv_Width, 
-        hv_Height);
+    HOperatorSet.PaintRegion(ho_RegionFillUp, ho_ImageNew, out ho_EnhancedImage, 
+        255, "fill");
+    HOperatorSet.OverpaintRegion(ho_EnhancedImage, ho_RegionComplement, 0, "fill");
 
     ho_Domain.Dispose();
     ho_ImageMean.Dispose();
@@ -155,9 +173,61 @@ public partial class HDevelopExport
     ho_Region1.Dispose();
     ho_RegionOpening.Dispose();
     ho_RegionFillUp.Dispose();
+    ho_ImageNew.Dispose();
+    ho_RegionComplement.Dispose();
 
     return;
   }
+
+#if !NO_EXPORT_MAIN
+  // Main procedure 
+  private void action()
+  {
+
+
+    // Local iconic variables 
+
+    HObject ho_Image, ho_EnhancedImage, ho_EnhancedEdge;
+
+    // Local control variables 
+
+    HTuple hv_Width = null, hv_Height = null;
+    // Initialize local and output iconic variables 
+    HOperatorSet.GenEmptyObj(out ho_Image);
+    HOperatorSet.GenEmptyObj(out ho_EnhancedImage);
+    HOperatorSet.GenEmptyObj(out ho_EnhancedEdge);
+    if (HDevWindowStack.IsOpen())
+    {
+      HOperatorSet.SetDraw(HDevWindowStack.GetActive(), "margin");
+    }
+
+
+
+    ho_Image.Dispose();
+    HOperatorSet.ReadImage(out ho_Image, "2015-01-14_00.26.30_A_RightTop");
+    HOperatorSet.GetImageSize(ho_Image, out hv_Width, out hv_Height);
+    ho_EnhancedImage.Dispose();ho_EnhancedEdge.Dispose();
+    EnhanceEdgeAreaByScaleDual(ho_Image, out ho_EnhancedImage, out ho_EnhancedEdge, 
+        2, 55, "dark", 1000, 99999999, "dark", 0, 20, 20, 1, 0, 2, 55, 2, 55);
+
+    ho_Image.Dispose();
+    HOperatorSet.ReadImage(out ho_Image, "2015-01-14_00.47.04_A_Bottom_Right");
+    HOperatorSet.GetImageSize(ho_Image, out hv_Width, out hv_Height);
+    ho_EnhancedImage.Dispose();ho_EnhancedEdge.Dispose();
+    EnhanceEdgeAreaByScaleDual(ho_Image, out ho_EnhancedImage, out ho_EnhancedEdge, 
+        55, 2, "light", 1000, 99999999, "dark", 0, 20, 20, 1, -0, 55, 2, 55, 2);
+
+
+    // stop(); only in hdevelop
+
+
+    ho_Image.Dispose();
+    ho_EnhancedImage.Dispose();
+    ho_EnhancedEdge.Dispose();
+
+  }
+
+#endif
 
 
 }

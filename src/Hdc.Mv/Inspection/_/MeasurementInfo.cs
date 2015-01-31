@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+﻿/*using System.Runtime.InteropServices;
 
 namespace Hdc.Mv.Inspection
 {
@@ -23,4 +23,4 @@ namespace Hdc.Mv.Inspection
         public string TypeDescription { get; set; }
         public string GroupName { get; set; }
     };
-}
+}*/

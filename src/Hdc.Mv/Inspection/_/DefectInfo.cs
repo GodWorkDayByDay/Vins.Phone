@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+/*using System.Runtime.InteropServices;
 
 namespace Hdc.Mv.Inspection
 {
@@ -18,4 +18,4 @@ namespace Hdc.Mv.Inspection
         public double Height_Real { get; set; }
         public double Size_Real { get; set; }
     };
-}
+}*/

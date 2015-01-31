@@ -337,8 +337,8 @@ namespace ODM.Presentation.ViewModels.Inspection
 
                                var iiVm = inspectInfo.InspectInfo.ToViewModel();
 
-                               surfaceMonitor.DefectInfos = iiVm.DefectInfos;
-                               surfaceMonitor.MeasurementInfos = iiVm.MeasurementInfos;
+                               surfaceMonitor.DefectInfos = iiVm.DefectInfos.OrderBy(x => x.GroupName).ToList();
+                               surfaceMonitor.MeasurementInfos = iiVm.MeasurementInfos.OrderBy(x=>x.GroupName).ToList();
 
                                DefectInfos.AddRange(iiVm.DefectInfos);
                                MeasurementInfos.AddRange(iiVm.MeasurementInfos);
@@ -424,14 +424,14 @@ namespace ODM.Presentation.ViewModels.Inspection
                 return;
 
             var surfaceTypeIndex = SelectedMeasurementInfo.SurfaceTypeIndex;
-            var groupIndex = SelectedMeasurementInfo.GroupIndex;
+            var groupIndex = SelectedMeasurementInfo.GroupName;
 
             HideAll();
 
             Predicate<object> filter = x =>
                                        {
                                            var mi = ((MeasurementInfoViewModel)x);
-                                           return mi.SurfaceTypeIndex == surfaceTypeIndex && mi.GroupIndex == groupIndex;
+                                           return mi.SurfaceTypeIndex == surfaceTypeIndex && mi.GroupName == groupIndex;
                                        };
 
             MeasurementInfosCollectionView.Filter = filter;

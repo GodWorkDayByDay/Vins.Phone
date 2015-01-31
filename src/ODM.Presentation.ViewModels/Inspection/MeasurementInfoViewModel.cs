@@ -131,24 +131,24 @@ namespace ODM.Presentation.ViewModels
             }
         }
 
-        private int _groupIndex;
+//        private int _groupIndex;
+//
+//        public int GroupIndex
+//        {
+//            get { return _groupIndex; }
+//            set
+//            {
+//                if (Equals(_groupIndex, value)) return;
+//                _groupIndex = value;
+//                RaisePropertyChanged(() => GroupIndex);
+//                RaisePropertyChanged(() => DisplayGroupIndex);
+//            }
+//        }
 
-        public int GroupIndex
-        {
-            get { return _groupIndex; }
-            set
-            {
-                if (Equals(_groupIndex, value)) return;
-                _groupIndex = value;
-                RaisePropertyChanged(() => GroupIndex);
-                RaisePropertyChanged(() => DisplayGroupIndex);
-            }
-        }
-
-        public int DisplayGroupIndex
-        {
-            get { return GroupIndex + 1; }
-        }
+//        public int DisplayGroupIndex
+//        {
+//            get { return GroupIndex + 1; }
+//        }
 
         private string _groupName;
 
@@ -190,6 +190,19 @@ namespace ODM.Presentation.ViewModels
                     default:
                         return "默认";
                 }
+            }
+        }
+
+        private string _displayName;
+
+        public string DisplayName
+        {
+            get { return _displayName; }
+            set
+            {
+                if (Equals(_displayName, value)) return;
+                _displayName = value;
+                RaisePropertyChanged(() => DisplayName);
             }
         }
 
@@ -291,10 +304,10 @@ namespace ODM.Presentation.ViewModels
             }
         }
 
-        public string StartPointXDisplayValue { get { return StartPointXActualValue.ToString("000.000"); } }
-        public string StartPointYDisplayValue { get { return StartPointYActualValue.ToString("000.000"); } }
-        public string EndPointXDisplayValue { get { return EndPointXActualValue.ToString("000.000"); } }
-        public string EndPointYDisplayValue { get { return EndPointYActualValue.ToString("000.000"); } }
-        public string ValueDisplayValue { get { return ValueActualValue.ToString("000.000"); } }
+        public string StartPointXDisplayValue { get { return StartPointXActualValue.ToString("00.00"); } }
+        public string StartPointYDisplayValue { get { return StartPointYActualValue.ToString("00.00"); } }
+        public string EndPointXDisplayValue { get { return EndPointXActualValue.ToString("00.00"); } }
+        public string EndPointYDisplayValue { get { return EndPointYActualValue.ToString("00.00"); } }
+        public string ValueDisplayValue { get { return ValueActualValue.ToString("00.00"); } }
     }
 }

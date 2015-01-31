@@ -8,6 +8,7 @@ namespace Hdc.Mv.Inspection
     public class EdgeSearchingDefinition : IRoiRectangle
     {
         public string Name { get; set; }
+        public string DisplayName { get; set; }
 
         // General
         public double StartX { get; set; }

@@ -653,6 +653,16 @@ namespace Hdc.Mv
             return new Line(line.X2, line.Y2, line.X1, line.Y1);
         }
 
+        public static Line GetLine(this Circle circle, double angle)
+        {
+            var centerVector = circle.GetCenterVector();
+            var leftVector = new Vector(circle.Radius, 0).Rotate(angle);
+            var rightVector = new Vector(circle.Radius, 0).Rotate(angle - 180);
+            var offsetLeft = leftVector + centerVector;
+            var offsetRight = rightVector + centerVector;
+            return new Line(offsetLeft.ToPoint(), offsetRight.ToPoint());
+        }
+
         public static Line GetLine(this IRoiRectangle roiRectangle)
         {
             return new Line(roiRectangle.StartX,

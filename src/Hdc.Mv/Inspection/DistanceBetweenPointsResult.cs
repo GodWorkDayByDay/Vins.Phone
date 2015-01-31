@@ -16,6 +16,5 @@ namespace Hdc.Mv.Inspection
         public double DistanceInPixel { get; set; }
         public double DistanceInWorld { get; set; }
         public double Angle { get; set; }
-        //public double Length { get; set; }
     }
 }

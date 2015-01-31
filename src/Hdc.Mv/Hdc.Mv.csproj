@@ -264,7 +264,7 @@
     <Compile Include="Inspection.RegionExtractors.Exports\GrayAndAreaRegionExtractor.cs" />
     <Compile Include="Inspection.Filters\IImageFilter.cs" />
     <Compile Include="Calibration\IImageCalibrator.cs" />
-    <Compile Include="Inspection\IMeasurementInspector.cs" />
+    <Compile Include="Inspection\_\IMeasurementInspector.cs" />
     <Compile Include="Inspection.Inspectors\InspectionController.cs" />
     <Compile Include="Inspection\InspectionReport.cs" />
     <Compile Include="Inspection\InspectionResult.cs" />
@@ -289,10 +289,10 @@
     <Compile Include="ImageAcquisition\WpfImageLoader.cs" />
     <Compile Include="ImageInfo.cs" />
     <Compile Include="ImageInfoExtensions.cs" />
-    <Compile Include="Inspection\DefectInfo.cs" />
-    <Compile Include="Inspection\InspectInfo.cs" />
-    <Compile Include="Inspection\InspectionInfo.cs" />
-    <Compile Include="Inspection\MeasurementInfo.cs" />
+    <Compile Include="Inspection\_\DefectInfo.cs" />
+    <Compile Include="Inspection\_\InspectInfo.cs" />
+    <Compile Include="Inspection\_\InspectionInfo.cs" />
+    <Compile Include="Inspection\_\MeasurementInfo.cs" />
     <Compile Include="LogicOperation.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Orientation.cs" />

@@ -29,7 +29,7 @@ namespace Hdc.Mv.Inspection
         public static Vector GetBaselineVectorInPixel(this CircleSearchingDefinition circleSearchingDefinition)
         {
             var v = circleSearchingDefinition.GetBaselineVector();
-            return new Vector(v.X*1000/16.0, v.Y*1000/16.0);
+            return new Vector(v.X * 1000 / 16.0, v.Y * 1000 / 16.0);
         }
 
         public static void UpdateRelativeCoordinate(this CircleSearchingResult circleResult,
@@ -49,13 +49,21 @@ namespace Hdc.Mv.Inspection
             }
         }
 
-        public static void UpdateObjectiveCircle(this CircleSearchingDefinition csd,
+        public static void UpdateRelativeCoordinate(this CircleSearchingDefinition csd,
                                                  IRelativeCoordinate coordinate)
         {
-            var relativeVector = new Vector(csd.BaselineX*1000.0/16.0, csd.BaselineY*1000.0/16.0);
-            var originalVector = coordinate.GetOriginalVector(relativeVector);
-            csd.CenterX = originalVector.X;
-            csd.CenterY = originalVector.Y;
+            if (csd.BaselineX > 0 || csd.BaselineY > 0)
+            {
+                var relativeVector = new Vector(csd.BaselineX * 1000.0 / 16.0, csd.BaselineY * 1000.0 / 16.0);
+                var originalVector = coordinate.GetOriginalVector(relativeVector);
+                csd.CenterX = originalVector.X;
+                csd.CenterY = originalVector.Y;
+            }
+            else
+            {
+                csd.CenterX = csd.CenterX;
+                csd.CenterY = csd.CenterY;
+            }
         }
 
         public static void UpdateRelativeCoordinate(this IEnumerable<CircleSearchingDefinition> circleResults,
@@ -63,7 +71,7 @@ namespace Hdc.Mv.Inspection
         {
             foreach (var circleResult in circleResults)
             {
-                circleResult.UpdateObjectiveCircle(relativeCoordinate);
+                circleResult.UpdateRelativeCoordinate(relativeCoordinate);
             }
         }
 
@@ -101,7 +109,7 @@ namespace Hdc.Mv.Inspection
             var actualP1 = relativeCoordinate.GetOriginalPoint(p1);
             var actualP2 = relativeCoordinate.GetOriginalPoint(p2);
 
-            var roiLine = new Line {X1 = actualP1.X, Y1 = actualP1.Y, X2 = actualP2.X, Y2 = actualP2.Y};
+            var roiLine = new Line { X1 = actualP1.X, Y1 = actualP1.Y, X2 = actualP2.X, Y2 = actualP2.Y };
             def.RoiLine = roiLine;
 
             //
@@ -111,7 +119,7 @@ namespace Hdc.Mv.Inspection
             var actualP1a = relativeCoordinate.GetOriginalPoint(p1a);
             var actualP2b = relativeCoordinate.GetOriginalPoint(p2b);
 
-            var areaLine = new Line {X1 = actualP1a.X, Y1 = actualP1a.Y, X2 = actualP2b.X, Y2 = actualP2b.Y};
+            var areaLine = new Line { X1 = actualP1a.X, Y1 = actualP1a.Y, X2 = actualP2b.X, Y2 = actualP2b.Y };
             def.AreaLine = areaLine;
         }
 
@@ -178,7 +186,7 @@ namespace Hdc.Mv.Inspection
             var actualP1 = relativeCoordinate.GetOriginalPoint(p1);
             var actualP2 = relativeCoordinate.GetOriginalPoint(p2);
 
-            var actualLine = new Line {X1 = actualP1.X, Y1 = actualP1.Y, X2 = actualP2.X, Y2 = actualP2.Y};
+            var actualLine = new Line { X1 = actualP1.X, Y1 = actualP1.Y, X2 = actualP2.X, Y2 = actualP2.Y };
 
             return actualLine;
         }
@@ -187,7 +195,7 @@ namespace Hdc.Mv.Inspection
                                                     IRelativeCoordinate relativeCoordinate)
         {
             if (def.RoiRelativeRect == null) return;
-            var rect= def.RoiRelativeRect.UpdateRelativeCoordinate(relativeCoordinate);
+            var rect = def.RoiRelativeRect.UpdateRelativeCoordinate(relativeCoordinate);
             def.RoiActualRect = rect;
         }
 

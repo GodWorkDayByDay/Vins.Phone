@@ -216,21 +216,39 @@ namespace ODM.Inspectors.Halcon.SampleApp
             if (brush == null)
                 brush = Brushes.Lime;
 
-            foreach (var circleSearchingResult in CircleSearchingResults)
+            foreach (var result in CircleSearchingResults)
             {
                 var ci = new CircleIndicatorViewModel()
                          {
-                             CenterX = circleSearchingResult.Circle.CenterX,
-                             CenterY = circleSearchingResult.Circle.CenterY,
-                             Radius = circleSearchingResult.Circle.Radius,
+                             CenterX = result.Circle.CenterX,
+                             CenterY = result.Circle.CenterY,
+                             Radius = result.Circle.Radius,
                              Stroke = brush,
                              StrokeThickness = 2,
                              StrokeDashArray = null,
                          };
-                if (circleSearchingResult.IsNotFound)
+                if (result.IsNotFound)
                     ci.Stroke = Brushes.Red;
 
                 CircleIndicators.Add(ci);
+
+
+
+                if (result.Definition.Diameter_DisplayEnabled)
+                {
+                    var line = result.Circle.GetLine(45);
+
+                    var lineIndicator = new LineIndicatorViewModel
+                    {
+                        StartPointX = line.X1,
+                        StartPointY = line.Y1,
+                        EndPointX = line.X2,
+                        EndPointY = line.Y2,
+                        Stroke = Brushes.DeepPink,
+                        StrokeThickness = 2,
+                    };
+                    LineIndicators.Add(lineIndicator);
+                }
             }
 
             if (CircleSearchingResults.Count >= 2)
@@ -412,7 +430,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                 var rect2 = result.TargetRegion.GetSmallestHRectangle2();
                 var roiRect = rect2.GetRoiRectangle();
 
-                if (result.Definition.DisplaySmallestRectangle2WidthLineEnabled)
+                if (result.Definition.Rect2Len1Line_DisplayEnabled)
                 {
                     var line = roiRect.GetWidthLine();
 
@@ -428,7 +446,7 @@ namespace ODM.Inspectors.Halcon.SampleApp
                     LineIndicators.Add(lineIndicator);
                 }
 
-                if (result.Definition.DisplaySmallestRectangle2HeightLineEnabled)
+                if (result.Definition.Rect2Len2Line_DisplayEnabled)
                 {
                     var line = roiRect.GetLine();
 

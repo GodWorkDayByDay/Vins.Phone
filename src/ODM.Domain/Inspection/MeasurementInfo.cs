@@ -15,7 +15,7 @@ namespace ODM.Domain.Inspection
         public double EndPointY { get; set; }
         public double Value { get; set; }
         public int SurfaceTypeIndex { get; set; }
-        public int GroupIndex { get; set; }
+//        public int GroupIndex { get; set; }
 
         [ForeignKey("WorkpieceInfo")]
         public long WorkpieceInfoId { get; set; }
@@ -35,8 +35,8 @@ namespace ODM.Domain.Inspection
         public double ValueActualValue { get; set; }
 
         public bool HasError { get; set; }
-        public string TypeName { get; set; }
-        public string TypeDescription { get; set; }
+        public string Name { get; set; }
+        public string DisplayName { get; set; }
         public string GroupName { get; set; }
     };
 }

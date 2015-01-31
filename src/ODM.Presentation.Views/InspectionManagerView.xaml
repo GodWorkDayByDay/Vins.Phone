@@ -61,15 +61,21 @@
                         BorderThickness="1">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="分组: "
+                                       Width="60"></TextBlock>
+                            <TextBox Text="{Binding GroupName, Mode=OneWay}"
+                                     Width="80"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="名称: "
+                                       Width="60"></TextBlock>
+                            <TextBox Text="{Binding DisplayName, Mode=OneWay}"
+                                     Width="80"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
                             <TextBlock Text="值: "
                                        Width="60"></TextBlock>
                             <TextBox Text="{Binding Value}"
-                                     Width="60"></TextBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="分组: "
-                                       Width="60"></TextBlock>
-                            <TextBox Text="{Binding DisplayGroupIndex, Mode=OneWay}"
                                      Width="60"></TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
@@ -291,16 +297,16 @@
                                 <!--                                <DataGridTextColumn Header="面"-->
                                 <!--                                                    Binding="{Binding SurfaceTypeDisplayName}"-->
                                 <!--                                                    Width="75" />-->
-                                <DataGridTextColumn Header="NO"
-                                                    Binding="{Binding IndexDisplayValue}"
-                                                    Width="60"/>
-                                <!--                                <DataGridTextColumn Header="序号"-->
-                                <!--                                                    Binding="{Binding DisplayIndex}"-->
-                                <!--                                                    Width="80" />-->
-                                <!--                                <DataGridTextColumn Header="分组"-->
-                                <!--                                                    Binding="{Binding DisplayGroupIndex, Mode=OneWay}"-->
-                                <!--                                                    Width="80" />-->
-                                <DataGridTextColumn Header="距离D"
+                                <!--                                <DataGridTextColumn Header="NO"-->
+                                <!--                                                    Binding="{Binding IndexDisplayValue}"-->
+                                <!--                                                    Width="60"/>-->
+                                <DataGridTextColumn Header="分组"
+                                                    Binding="{Binding GroupName, Mode=OneWay}"
+                                                    Width="160" />
+                                <DataGridTextColumn Header="名称"
+                                                    Binding="{Binding DisplayName}"
+                                                    Width="200" />
+                                <DataGridTextColumn Header="距离"
                                                     Binding="{Binding ValueDisplayValue}"
                                                     Width="110" />
                                 <DataGridTextColumn Header="X坐标"

@@ -1,4 +1,4 @@
-﻿namespace Hdc.Mv.Inspection
+﻿/*namespace Hdc.Mv.Inspection
 {
     public interface IMeasurementInspector
     {
@@ -14,4 +14,4 @@
 
 
     }
-}
+}*/

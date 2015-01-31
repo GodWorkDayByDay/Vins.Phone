@@ -32,8 +32,17 @@ namespace Hdc.Mv.Inspection
         public IRegionProcessor TargetRegionProcessor { get; set; }
         public bool TargetRegionProcessor_SaveCacheImageEnabled { get; set; }
 
-        public bool DisplaySmallestRectangle2HeightLineEnabled { get; set; }
-        public bool DisplaySmallestRectangle2WidthLineEnabled { get; set; }
+        public bool Rect2Len1Line_DisplayEnabled { get; set; }
+        public string Rect2Len1Line_Name { get; set; }
+        public string Rect2Len1Line_DisplayName { get; set; }
+        public string Rect2Len1Line_GroupName { get; set; }
+        public string Rect2Len1Line_DisplayGroupName { get; set; }
+
+        public bool Rect2Len2Line_DisplayEnabled { get; set; }
+        public string Rect2Len2Line_Name { get; set; }
+        public string Rect2Len2Line_DisplayName { get; set; }
+        public string Rect2Len2Line_GroupName { get; set; }
+        public string Rect2Len2Line_DisplayGroupName { get; set; }
     }
 }
 

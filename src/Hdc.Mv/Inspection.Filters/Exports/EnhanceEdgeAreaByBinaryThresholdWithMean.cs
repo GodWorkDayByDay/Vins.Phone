@@ -7,10 +7,20 @@ using HalconDotNet;
 public partial class HDevelopExport
 {
 #if !(NO_EXPORT_MAIN || NO_EXPORT_APP_MAIN)
+  public HDevelopExport()
+  {
+    // Default settings used in HDevelop 
+    HOperatorSet.SetSystem("width", 512);
+    HOperatorSet.SetSystem("height", 512);
+    if (HalconAPI.isWindows)
+      HOperatorSet.SetSystem("use_window_thread","true");
+    action();
+  }
 #endif
 
   // Procedures 
-  public void EnhanceEdgeAreaByBinaryThresholdWithMean (HObject ho_Image, out HObject ho_EnhancedImage, 
+  // Local procedures 
+  public void EnhanceEdgeAreaByBinaryThresholdWithMean (HObject ho_InputImage, out HObject ho_EnhancedImage, 
       out HObject ho_EnhancedRegion, HTuple hv_MeanMaskWidth, HTuple hv_MeanMaskHeight, 
       HTuple hv_EmpWidth, HTuple hv_EmpHeight, HTuple hv_EmpFactor, HTuple hv_LightDark, 
       HTuple hv_AreaMin, HTuple hv_AreaMax, HTuple hv_ClosingWidth, HTuple hv_ClosingHeight, 
@@ -27,7 +37,7 @@ public partial class HDevelopExport
 
     HObject ho_Domain, ho_ImageMean, ho_ImageEmphasize;
     HObject ho_Regions, ho_ConnectedRegions, ho_SelectedRegions;
-    HObject ho_RegionFillUp, ho_RegionUnion;
+    HObject ho_RegionFillUp, ho_RegionUnion, ho_ImageNew, ho_RegionComplement;
 
     // Local control variables 
 
@@ -43,13 +53,15 @@ public partial class HDevelopExport
     HOperatorSet.GenEmptyObj(out ho_SelectedRegions);
     HOperatorSet.GenEmptyObj(out ho_RegionFillUp);
     HOperatorSet.GenEmptyObj(out ho_RegionUnion);
+    HOperatorSet.GenEmptyObj(out ho_ImageNew);
+    HOperatorSet.GenEmptyObj(out ho_RegionComplement);
     ho_Domain.Dispose();
-    HOperatorSet.GetDomain(ho_Image, out ho_Domain);
+    HOperatorSet.GetDomain(ho_InputImage, out ho_Domain);
     HOperatorSet.RegionFeatures(ho_Domain, "width", out hv_Width);
     HOperatorSet.RegionFeatures(ho_Domain, "height", out hv_Height);
 
     ho_ImageMean.Dispose();
-    HOperatorSet.MeanImage(ho_Image, out ho_ImageMean, hv_MeanMaskWidth, hv_MeanMaskHeight);
+    HOperatorSet.MeanImage(ho_InputImage, out ho_ImageMean, hv_MeanMaskWidth, hv_MeanMaskHeight);
     ho_ImageEmphasize.Dispose();
     HOperatorSet.Emphasize(ho_ImageMean, out ho_ImageEmphasize, hv_EmpWidth, hv_EmpHeight, 
         hv_EmpFactor);
@@ -91,9 +103,14 @@ public partial class HDevelopExport
     ho_EnhancedRegion.Dispose();
     HOperatorSet.MoveRegion(ho_RegionUnion, out ho_EnhancedRegion, 0, 0);
 
+    ho_ImageNew.Dispose();
+    HOperatorSet.ChangeDomain(ho_InputImage, ho_Domain, out ho_ImageNew);
+    ho_RegionComplement.Dispose();
+    HOperatorSet.Complement(ho_RegionFillUp, out ho_RegionComplement);
     ho_EnhancedImage.Dispose();
-    HOperatorSet.RegionToBin(ho_EnhancedRegion, out ho_EnhancedImage, 255, 0, hv_Width, 
-        hv_Height);
+    HOperatorSet.PaintRegion(ho_RegionFillUp, ho_ImageNew, out ho_EnhancedImage, 
+        255, "fill");
+    HOperatorSet.OverpaintRegion(ho_EnhancedImage, ho_RegionComplement, 0, "fill");
 
     ho_Domain.Dispose();
     ho_ImageMean.Dispose();
@@ -103,9 +120,52 @@ public partial class HDevelopExport
     ho_SelectedRegions.Dispose();
     ho_RegionFillUp.Dispose();
     ho_RegionUnion.Dispose();
+    ho_ImageNew.Dispose();
+    ho_RegionComplement.Dispose();
 
     return;
   }
+
+#if !NO_EXPORT_MAIN
+  // Main procedure 
+  private void action()
+  {
+
+
+    // Local iconic variables 
+
+    HObject ho_Image, ho_EnhancedImage, ho_FoundRegion;
+
+    // Local control variables 
+
+    HTuple hv_Width = null, hv_Height = null;
+    // Initialize local and output iconic variables 
+    HOperatorSet.GenEmptyObj(out ho_Image);
+    HOperatorSet.GenEmptyObj(out ho_EnhancedImage);
+    HOperatorSet.GenEmptyObj(out ho_FoundRegion);
+    if (HDevWindowStack.IsOpen())
+    {
+      HOperatorSet.SetDraw(HDevWindowStack.GetActive(), "margin");
+    }
+
+    ho_Image.Dispose();
+    HOperatorSet.ReadImage(out ho_Image, "2015-01-13_23.36.52_B_Left_Hole2b.tif");
+    HOperatorSet.GetImageSize(ho_Image, out hv_Width, out hv_Height);
+
+
+    ho_EnhancedImage.Dispose();ho_FoundRegion.Dispose();
+    EnhanceEdgeAreaByBinaryThresholdWithMean(ho_Image, out ho_EnhancedImage, out ho_FoundRegion, 
+        2, 55, 10, 10, 2, "dark", 20000, 99999999, 5, 55, 0);
+
+
+    // stop(); only in hdevelop
+    ho_Image.Dispose();
+    ho_EnhancedImage.Dispose();
+    ho_FoundRegion.Dispose();
+
+  }
+
+#endif
 
 
 }

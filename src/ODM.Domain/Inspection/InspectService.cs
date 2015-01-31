@@ -185,10 +185,10 @@ namespace ODM.Domain.Inspection
             Task.Run(
                 () =>
                 {
-                    InspectionInfo inspectionInfo;
+                    InspectInfo inspectionInfo;
                     if (MachineConfigProvider.MachineConfig.MV_SimulationInspectorEnabled)
                     {
-                        inspectionInfo = new InspectionInfo();
+                        inspectionInfo = new InspectInfo();
                         calibImage.Dispose();
                     }
                     else
@@ -228,7 +228,7 @@ namespace ODM.Domain.Inspection
                                              {
                                                  SurfaceTypeIndex = surfaceTypeIndex,
                                                  ImageInfo = calibImageInfo.ToEntity(),
-                                                 InspectInfo = inspectionInfo.ToEntity(),
+                                                 InspectInfo = inspectionInfo,
                                                  WorkpieceIndex =
                                                      _inspectCounter/
                                                      MachineConfigProvider.MachineConfig
@@ -373,11 +373,11 @@ namespace ODM.Domain.Inspection
                     var to8BppHImage = imageInfo.To8BppHImage();
                     sw4.Dispose();
 
-                    InspectionInfo inspectionInfo;
+                    InspectInfo inspectionInfo;
 
                     if (MachineConfigProvider.MachineConfig.MV_SimulationInspectorEnabled)
                     {
-                        inspectionInfo = new InspectionInfo();
+                        inspectionInfo = new InspectInfo();
                     }
                     else
                     {
@@ -396,7 +396,7 @@ namespace ODM.Domain.Inspection
                                              {
                                                  SurfaceTypeIndex = surfaceTypeIndex,
                                                  BitmapSource = bi,
-                                                 InspectInfo = inspectionInfo.ToEntity(),
+                                                 InspectInfo = inspectionInfo,
                                                  WorkpieceIndex =
                                                      _inspectCounter/
                                                      MachineConfigProvider.MachineConfig

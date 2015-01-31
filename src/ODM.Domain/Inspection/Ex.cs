@@ -34,18 +34,18 @@ namespace ODM.Domain.Inspection
             return id;
         }
 
-        public static InspectInfo ToEntity(this Hdc.Mv.Inspection.InspectionInfo di)
-        {
-            var inspectInfo = new InspectInfo()
-                              {
-                                  Index = di.Index,
-                                  HasError = di.HasError,
-                                  SurfaceTypeIndex = di.SurfaceTypeIndex,
-                                  DefectInfos =  di.DefectInfos.Select(x=>x.ToEntity()).ToList(),
-                                  MeasurementInfos =  di.MeasurementInfos.Select(x=>x.ToEntity()).ToList(),
-                              };
-            return inspectInfo;
-        }
+//        public static InspectInfo ToEntity(this Hdc.Mv.Inspection.InspectionInfo di)
+//        {
+//            var inspectInfo = new InspectInfo()
+//                              {
+//                                  Index = di.Index,
+//                                  HasError = di.HasError,
+//                                  SurfaceTypeIndex = di.SurfaceTypeIndex,
+//                                  DefectInfos =  di.DefectInfos.Select(x=>x.ToEntity()).ToList(),
+//                                  MeasurementInfos =  di.MeasurementInfos.Select(x=>x.ToEntity()).ToList(),
+//                              };
+//            return inspectInfo;
+//        }
 
 
         public static ImageInfo ToEntity(this Hdc.Mv.ImageInfo ii)
@@ -61,49 +61,49 @@ namespace ODM.Domain.Inspection
             return ii2;
         }
 
-        public static DefectInfo ToEntity(this Hdc.Mv.Inspection.DefectInfo ii)
-        {
-            var ii2 = new DefectInfo()
-            {
-                Index = ii.Index,
-                TypeCode = ii.TypeCode,
-                Type = (DefectType)ii.TypeCode,
-                X = ii.X,
-                Y = ii.Y,
-                Width = ii.Width,
-                Height = ii.Height,
-                Size = ii.Size,
+//        public static DefectInfo ToEntity(this Hdc.Mv.Inspection.DefectInfo ii)
+//        {
+//            var ii2 = new DefectInfo()
+//            {
+//                Index = ii.Index,
+//                TypeCode = ii.TypeCode,
+//                Type = (DefectType)ii.TypeCode,
+//                X = ii.X,
+//                Y = ii.Y,
+//                Width = ii.Width,
+//                Height = ii.Height,
+//                Size = ii.Size,
+//
+//                XActualValue = ii.X_Real,
+//                YActualValue = ii.Y_Real,
+//                WidthActualValue = ii.Width_Real,
+//                HeightActualValue = ii.Height_Real,
+//                SizeActualValue = ii.Size_Real,
+//            };
+//            return ii2;
+//        }
 
-                XActualValue = ii.X_Real,
-                YActualValue = ii.Y_Real,
-                WidthActualValue = ii.Width_Real,
-                HeightActualValue = ii.Height_Real,
-                SizeActualValue = ii.Size_Real,
-            };
-            return ii2;
-        }
-
-        public static MeasurementInfo ToEntity(this Hdc.Mv.Inspection.MeasurementInfo ii)
-        {
-            var ii2 = new MeasurementInfo()
-            {
-                Index = ii.Index,
-                TypeCode = ii.TypeCode,
-                StartPointX = ii.StartPointX,
-                StartPointY = ii.StartPointY,
-                EndPointX = ii.EndPointX,
-                EndPointY = ii.EndPointY,
-                Value = ii.Value,
-                GroupIndex = ii.GroupIndex,
-
-                StartPointXActualValue = ii.StartPointXActualValue,
-                StartPointYActualValue = ii.StartPointYActualValue,
-                EndPointXActualValue = ii.EndPointXActualValue,
-                EndPointYActualValue = ii.EndPointYActualValue,
-                ValueActualValue = ii.ValueActualValue,
-            };
-            return ii2;
-        }
+//        public static MeasurementInfo ToEntity(this Hdc.Mv.Inspection.MeasurementInfo ii)
+//        {
+//            var ii2 = new MeasurementInfo()
+//            {
+//                Index = ii.Index,
+//                TypeCode = ii.TypeCode,
+//                StartPointX = ii.StartPointX,
+//                StartPointY = ii.StartPointY,
+//                EndPointX = ii.EndPointX,
+//                EndPointY = ii.EndPointY,
+//                Value = ii.Value,
+//                GroupIndex = ii.GroupIndex,
+//
+//                StartPointXActualValue = ii.StartPointXActualValue,
+//                StartPointYActualValue = ii.StartPointYActualValue,
+//                EndPointXActualValue = ii.EndPointXActualValue,
+//                EndPointYActualValue = ii.EndPointYActualValue,
+//                ValueActualValue = ii.ValueActualValue,
+//            };
+//            return ii2;
+//        }
 
 
         public static StoredImageInfo SaveImage(this SurfaceInspectInfo surfaceInspectInfo)
@@ -138,17 +138,17 @@ namespace ODM.Domain.Inspection
             return task;
         }
 
-        public static InspectionInfo GetInspectionInfo(this IInspectionController inspectionController)
+        public static InspectInfo GetInspectionInfo(this IInspectionController inspectionController)
         {
             return inspectionController.InspectionResult.GetInspectionInfo(inspectionController.Coordinate);
         }
 
-        public static Hdc.Mv.Inspection.MeasurementInfo GetMeasurementInfo(this Line line, IRelativeCoordinate coordinate)
+        public static MeasurementInfo GetMeasurementInfo(this Line line, IRelativeCoordinate coordinate)
         {
             Vector relativeP1 = coordinate.GetRelativeVector(line.GetPoint1().ToVector());
             Vector relativeP2 = coordinate.GetRelativeVector(line.GetPoint2().ToVector());
 
-            var measurement = new Hdc.Mv.Inspection.MeasurementInfo
+            var measurement = new MeasurementInfo
                               {
                                   StartPointX = line.GetPoint1().X,
                                   StartPointY = line.GetPoint1().Y,
@@ -165,9 +165,9 @@ namespace ODM.Domain.Inspection
             return measurement;
         }
 
-        public static InspectionInfo GetInspectionInfo(this InspectionResult inspectionResult, IRelativeCoordinate coordinate)
+        public static InspectInfo GetInspectionInfo(this InspectionResult inspectionResult, IRelativeCoordinate coordinate)
         {
-            var inspectionInfo = new InspectionInfo();
+            var inspectionInfo = new InspectInfo();
 
             Debug.WriteLine("GetInspectionInfo().Start");
 
@@ -176,7 +176,7 @@ namespace ODM.Domain.Inspection
                 var result = inspectionResult.DistanceBetweenPointsResults[i];
                 if (result.HasError)
                 {
-                    var measurement2 = new Hdc.Mv.Inspection.MeasurementInfo { HasError = true };
+                    var measurement2 = new MeasurementInfo { HasError = true };
                     inspectionInfo.MeasurementInfos.Add(measurement2);
                     continue;
                 };
@@ -184,9 +184,10 @@ namespace ODM.Domain.Inspection
                 var line = new Line(result.Point1, result.Point2);
                 var measurement = line.GetMeasurementInfo(coordinate);
                 measurement.Index = i;
-                measurement.GroupIndex = i;
+                measurement.GroupName = result.Definition.GroupName;
                 measurement.TypeCode = 100 + i;
-                measurement.TypeName = result.Definition.Name;
+                measurement.Name = result.Definition.Name;
+                measurement.DisplayName = result.Definition.DisplayName;
                 inspectionInfo.MeasurementInfos.Add(measurement);
 
 //                var measurement = new Hdc.Mv.Inspection.MeasurementInfo()
@@ -222,9 +223,13 @@ namespace ODM.Domain.Inspection
             {
                 var result = inspectionResult.RegionTargets[i];
 
+                if (!result.Definition.Rect2Len2Line_DisplayEnabled &&
+                    !result.Definition.Rect2Len1Line_DisplayEnabled)
+                    continue;
+
                 if (result.HasError)
                 {
-                    var measurement = new Hdc.Mv.Inspection.MeasurementInfo {HasError = true};
+                    var measurement = new MeasurementInfo {HasError = true};
                     inspectionInfo.MeasurementInfos.Add(measurement);
                     continue;
                 };
@@ -232,24 +237,50 @@ namespace ODM.Domain.Inspection
                 var rect2 = result.TargetRegion.GetSmallestHRectangle2();
                 var roiRect = rect2.GetRoiRectangle();
 
-                if (result.Definition.DisplaySmallestRectangle2WidthLineEnabled)
+                if (result.Definition.Rect2Len2Line_DisplayEnabled)
                 {
                     var line = roiRect.GetWidthLine();
                     var measurement = line.GetMeasurementInfo(coordinate);
-                    measurement.TypeName = result.Definition.Name + "Width";
+                    measurement.DisplayName = result.Definition.Rect2Len2Line_DisplayName;
+                    measurement.GroupName = result.Definition.Rect2Len2Line_GroupName;
                     inspectionInfo.MeasurementInfos.Add(measurement);
                 }
 
-                if (result.Definition.DisplaySmallestRectangle2HeightLineEnabled)
+                if (result.Definition.Rect2Len1Line_DisplayEnabled)
                 {
                     var line = roiRect.GetLine();
                     var measurement = line.GetMeasurementInfo(coordinate);
-                    measurement.TypeName = result.Definition.Name + "Height";
+                    measurement.DisplayName = result.Definition.Rect2Len1Line_DisplayName;
+                    measurement.GroupName = result.Definition.Rect2Len1Line_GroupName;
                     inspectionInfo.MeasurementInfos.Add(measurement);
                 }
             }
 
             Debug.WriteLine("GetInspectionInfo().RegionTargets");
+
+
+            for (int i = 0; i < inspectionResult.Circles.Count; i++)
+            {
+                var result = inspectionResult.Circles[i];
+
+                if (!result.Definition.Diameter_DisplayEnabled) 
+                    continue;
+
+                if (result.HasError)
+                {
+                    var measurement2 = new MeasurementInfo { HasError = true };
+                    inspectionInfo.MeasurementInfos.Add(measurement2);
+                    continue;
+                };
+
+                var line = result.Circle.GetLine(-45);
+                var measurement = line.GetMeasurementInfo(coordinate);
+                measurement.DisplayName = result.Definition.Diameter_DisplayName;
+                measurement.GroupName = result.Definition.Diameter_GroupName;
+                inspectionInfo.MeasurementInfos.Add(measurement);
+            }
+
+            Debug.WriteLine("GetInspectionInfo().Circles");
 
             for (int i = 0; i < inspectionResult.Parts.Count; i++)
             {
@@ -278,7 +309,7 @@ namespace ODM.Domain.Inspection
 
                 var relativeCenter = coordinate.GetRelativeVector(new Vector(centerX,centerY));
 
-                var di = new Hdc.Mv.Inspection.DefectInfo
+                var di = new DefectInfo
                 {
                     Index = i,
                     X = x,
@@ -287,11 +318,11 @@ namespace ODM.Domain.Inspection
                     Height = height,
                     TypeCode = (int) DefectType.PartExist,
                     Size = area,
-                    X_Real = relativeCenter.X.ToMillimeterFromPixel(16),
-                    Y_Real = relativeCenter.Y.ToMillimeterFromPixel(16),
-                    Width_Real = ((double)width).ToMillimeterFromPixel(16),
-                    Height_Real = ((double)height).ToMillimeterFromPixel(16),
-                    Size_Real = area * 256.0 / 1000000.0
+                    XActualValue = relativeCenter.X.ToMillimeterFromPixel(16),
+                    YActualValue = relativeCenter.Y.ToMillimeterFromPixel(16),
+                    WidthActualValue = ((double)width).ToMillimeterFromPixel(16),
+                    HeightActualValue = ((double)height).ToMillimeterFromPixel(16),
+                    SizeActualValue = area * 256.0 / 1000000.0
                 };
 
                 inspectionInfo.DefectInfos.Add(di);
@@ -307,7 +338,7 @@ namespace ODM.Domain.Inspection
 
                 var relPoint = coordinate.GetRelativeVector(new Vector(dr.X - dr.Width / 2.0, dr.Y - dr.Height / 2.0));
 
-                var di = new Hdc.Mv.Inspection.DefectInfo
+                var di = new DefectInfo
                 {
                     Index = i,
                     X = dr.X - dr.Width / 2.0,
@@ -316,11 +347,11 @@ namespace ODM.Domain.Inspection
                     Height = dr.Height,
                     TypeCode = dr.TypeCode,
                     Size = dr.Size * 256.0 / 1000000.0,
-                    X_Real = relPoint.X.ToMillimeterFromPixel(16),
-                    Y_Real = relPoint.Y.ToMillimeterFromPixel(16),
-                    Width_Real = dr.Width.ToMillimeterFromPixel(16),
-                    Height_Real = dr.Height.ToMillimeterFromPixel(16),
-                    Size_Real = dr.Size * 256.0 / 1000000.0
+                    XActualValue = relPoint.X.ToMillimeterFromPixel(16),
+                    YActualValue = relPoint.Y.ToMillimeterFromPixel(16),
+                    WidthActualValue = dr.Width.ToMillimeterFromPixel(16),
+                    HeightActualValue = dr.Height.ToMillimeterFromPixel(16),
+                    SizeActualValue = dr.Size * 256.0 / 1000000.0
                 };
 
                 inspectionInfo.DefectInfos.Add(di);

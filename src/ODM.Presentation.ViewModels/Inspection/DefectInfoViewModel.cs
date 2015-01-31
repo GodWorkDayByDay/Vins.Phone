@@ -307,5 +307,6 @@ namespace ODM.Presentation.ViewModels
         public string XDisplayValue { get { return XActualValue.ToString("0.0"); } }
         public string YDisplayValue { get { return YActualValue.ToString("0.0"); } }
         public string SizeDisplayValue { get { return SizeActualValue.ToString("0.0"); } }
+        public string GroupName { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+﻿/*using System.Runtime.InteropServices;
 
 namespace Hdc.Mv.Inspection
 {
@@ -15,4 +15,4 @@ namespace Hdc.Mv.Inspection
 
         public int MeasurementsCount;
     };
-}
+}*/
