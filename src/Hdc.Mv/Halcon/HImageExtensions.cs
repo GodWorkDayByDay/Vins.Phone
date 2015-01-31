@@ -32,7 +32,7 @@ namespace Hdc.Mv.Halcon
         }
 
         public static HImage ReduceDomainForRing(this HImage hImage, double centerX, double centerY, double innerRadius,
-                                          double outerRadius)
+                                                 double outerRadius)
         {
             var innerCircle = new HRegion();
             innerCircle.GenCircle(centerY, centerX, innerRadius);
@@ -55,7 +55,7 @@ namespace Hdc.Mv.Halcon
         }
 
         public static HImage PaintGrayOffset(this HImage imageSource, HImage imageDestination,
-                                    int offsetRow, int offsetColumn)
+                                             int offsetRow, int offsetColumn)
         {
             HObject image;
             HDevelopExport.Singletone.PaintGrayOffset(imageSource, imageDestination, out image, offsetRow, offsetColumn);
@@ -66,7 +66,7 @@ namespace Hdc.Mv.Halcon
         {
             var stride = bitmapSource.PixelWidth;
 
-            int bufferSize = stride * bitmapSource.PixelHeight;
+            int bufferSize = stride*bitmapSource.PixelHeight;
             IntPtr bufferPtr = Marshal.AllocHGlobal(bufferSize);
 
             bitmapSource.CopyPixels(Int32Rect.Empty, bufferPtr, bufferSize, bitmapSource.PixelWidth);
@@ -90,10 +90,12 @@ namespace Hdc.Mv.Halcon
         public static void SaveTiffWithPaintRegion(this HObject imageHObject, HObject regionHObject, double foreground,
                                                    double background, string fileName)
         {
-            SaveTiffWithPaintRegion(new HImage(imageHObject), new HRegion(regionHObject), foreground, background, fileName);
+            SaveTiffWithPaintRegion(new HImage(imageHObject), new HRegion(regionHObject), foreground, background,
+                fileName);
         }
 
-        public static void SaveTiffWithPaintRegion(this HImage image, HRegion region, double foreground, double background, string fileName)
+        public static void SaveTiffWithPaintRegion(this HImage image, HRegion region, double foreground,
+                                                   double background, string fileName)
         {
             var imagePainted = image.PaintRegion(region, foreground, "fill");
             imagePainted.WriteImage("tiff", background, fileName);
@@ -138,7 +140,8 @@ namespace Hdc.Mv.Halcon
             cropDomain.Dispose();
         }
 
-        public static void WriteImageOfTiffLzwOfCropDomain(this HImage image, HRegion domain, string fileName, double background = 0)
+        public static void WriteImageOfTiffLzwOfCropDomain(this HImage image, HRegion domain, string fileName,
+                                                           double background = 0)
         {
             var changeDomain = image.ChangeDomain(domain);
             changeDomain.WriteImageOfTiffLzwOfCropDomain(fileName);
@@ -170,6 +173,21 @@ namespace Hdc.Mv.Halcon
                 finalFileName += ".png";
 
             image.WriteImage("png", background, finalFileName);
+        }
+
+        public static HImage Calibrate(this HImage orignalHImage,
+                                       string cameraParams,
+                                       string cameraPose,
+                                       Interpolation interpolation)
+        {
+            HObject hCalibImage;
+            HTuple lengthPerPixelX, lengthPerPixelY;
+            HDevelopExport.Singletone.Calibrate(orignalHImage, out hCalibImage, cameraParams, cameraPose,
+                interpolation.ToHalconString(),
+                out lengthPerPixelX, out lengthPerPixelY);
+
+            var hi = new HImage(hCalibImage);
+            return hi;
         }
     }
 }

@@ -11,7 +11,7 @@ public partial class HDevelopExport
 
   // Procedures 
   public void Calibrate (HObject ho_OriginalImage, out HObject ho_CalibratedImage, 
-      HTuple hv_CameraParamsFileName, HTuple hv_CameraPoseFileName, out HTuple hv_LengthPerPixelX, 
+      HTuple hv_CameraParamsFileName, HTuple hv_CameraPoseFileName, string interpolation, out HTuple hv_LengthPerPixelX, 
       out HTuple hv_LengthPerPixelY)
   {
 
@@ -78,7 +78,7 @@ public partial class HDevelopExport
 
     ho_CalibratedImage.Dispose();
     HOperatorSet.ImageToWorldPlane(ho_OriginalImage, out ho_CalibratedImage, hv_CameraParams,
-        hv_PoseNewOrigin, hv_Width, hv_Height, hv_LengthPerPixelY, "bilinear");
+        hv_PoseNewOrigin, hv_Width, hv_Height, hv_LengthPerPixelY, interpolation); //bilinear, nearest_neighbor
 
 
     return;

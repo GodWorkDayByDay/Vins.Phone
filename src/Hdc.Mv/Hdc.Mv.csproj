@@ -74,6 +74,7 @@
     <Compile Include="Circle.cs" />
     <Compile Include="CircleDirect.cs" />
     <Compile Include="Halcon\HRectangle2.cs" />
+    <Compile Include="Halcon\Interpolation.cs" />
     <Compile Include="Halcon\SobelAmpFilterType.cs" />
     <Compile Include="Inspection.Coordination\CreateCoordinateFailedException.cs" />
     <Compile Include="Inspection.Filters\ChangeDomainFilter.cs" />
@@ -108,7 +109,6 @@
     <Compile Include="Inspection.Inspectors\DefectInspector.cs" />
     <Compile Include="Inspection.Inspectors\EdgeInspector.cs" />
     <Compile Include="Halcon\Exports\PaintGrayOffset.cs" />
-    <Compile Include="Halcon\HDevelopExportExtensions.cs" />
     <Compile Include="Inspection.Inspectors\ICircleInspector.cs" />
     <Compile Include="Inspection.Inspectors\IDefectInspector.cs" />
     <Compile Include="Inspection.Inspectors\IEdgeInspector.cs" />
@@ -238,9 +238,7 @@
     <Compile Include="Calibration\HalconImageCalibrator.cs" />
     <Compile Include="Halcon\HalconInspectorException.cs" />
     <Compile Include="Halcon\HDevelopExport.Partials.cs" />
-    <Compile Include="Halcon\HDevelopExportHelper.cs" />
     <Compile Include="Halcon\HImageExtensions.cs" />
-    <Compile Include="Halcon\HOperatorSetExtensions.cs" />
     <Compile Include="Halcon\HRegionExtensions.cs" />
     <Compile Include="Inspection\CircleSearchingDefinition.cs" />
     <Compile Include="Inspection\CircleSearchingDefinitionCollection.cs" />

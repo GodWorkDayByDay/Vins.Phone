@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Markup;
 using Hdc;
+using Hdc.Mv.Halcon;
 using ODM.Domain.Schemas;
 
 namespace ODM.Domain.Configs
@@ -34,6 +35,8 @@ namespace ODM.Domain.Configs
         public int MV_LineScanFrameHeight { get; set; }
         public int MV_LineScanMosaicCount { get; set; }
         public bool MV_SimulationAcquisitionEnabled { get; set; }
+        public bool MV_SimulationCalibrationEnabled { get; set; }
+        public Interpolation MV_CalibrationInterpolation { get; set; }
         public Collection<string> MV_SimulationImageFileNames { get; set; }
         public bool MV_SimulationInspectorEnabled { get; set; }
 

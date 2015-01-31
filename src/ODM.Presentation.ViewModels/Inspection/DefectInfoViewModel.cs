@@ -171,7 +171,9 @@ namespace ODM.Presentation.ViewModels
                         return "纵向不匀";
 
                     case DefectType.PartExist:
-                        return "部件缺失";
+                        return "部件存在";
+                    case DefectType.PartNoExist:
+                        return "部件确实";
 
                     default:
                         return "未定义-" + Type.ToString();

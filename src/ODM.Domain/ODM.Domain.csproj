@@ -191,10 +191,6 @@
       <Project>{D72F14A9-4848-4405-AA6E-99EBF8213609}</Project>
       <Name>Hdc.Mercury</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hdc.Mv.Inspection.Mil.Interop\Hdc.Mv.Inspection.Mil.Interop.csproj">
-      <Project>{FAECBE0C-329A-4510-9B73-371515E411CC}</Project>
-      <Name>Hdc.Mv.Inspection.Mil.Interop</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Hdc.Mv\Hdc.Mv.csproj">
       <Project>{1345186B-AF53-4DB9-A1D9-64EC7F14EE2F}</Project>
       <Name>Hdc.Mv</Name>

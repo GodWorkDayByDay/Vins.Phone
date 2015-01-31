@@ -578,6 +578,19 @@ namespace Hdc.Mv
             }
         }
 
+        public static string ToHalconString(this Interpolation interpolation)
+        {
+            switch (interpolation)
+            {
+                case Interpolation.Bilinear:
+                    return "bilinear";
+                case Interpolation.NearestNeighbor:
+                    return "nearest_neighbor";
+                default:
+                    throw new InvalidOperationException("Interpolation cannot convert to string: " + interpolation);
+            }
+        }
+
         public static Line GetMiddleLineUsingAngle(this Line line1, Line line2)
         {
             var vectorAxisX = new Vector(10000, 0);

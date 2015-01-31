@@ -38,5 +38,6 @@
         DefectType16 = 16,
 
         PartExist = 100,
+        PartNoExist = 101,
     }
 }

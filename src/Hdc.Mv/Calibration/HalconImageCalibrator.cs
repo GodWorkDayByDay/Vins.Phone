@@ -10,20 +10,7 @@ namespace Hdc.Mv.Calibration
 {
     public class HalconImageCalibrator //: IImageCalibrator
     {
-//        public ImageInfo CalibrateImage(ImageInfo originalImageInfo)
-//        {
-//            var cameraParamsFileName = "camera_params.cal";
-//            var cameraPoseFileName = "camera_pose.dat";
-//
-//            HImage hImage;
-//            hImage = originalImageInfo.Calibrate(cameraParamsFileName, cameraPoseFileName);
-//            var mirroredImage = hImage.MirrorImage("row");
-//            mirroredImage = mirroredImage.MirrorImage("column");
-//            var bsi = mirroredImage.ToImageInfo();
-//            return bsi;
-//        }
-
-        public HImage CalibrateImage(ImageInfo originalImageInfo)
+        public HImage CalibrateImage(HImage originalImage, Interpolation interpolation)
         {
             var cameraParamsFileName = "camera_params.cal";
             var cameraPoseFileName = "camera_pose.dat";
@@ -31,7 +18,7 @@ namespace Hdc.Mv.Calibration
             HImage hImage;
 
             var sw2 = new NotifyStopwatch("HalconImageCalibrator.Calibrate()");
-            hImage = originalImageInfo.Calibrate(cameraParamsFileName, cameraPoseFileName);
+            hImage = originalImage.Calibrate(cameraParamsFileName, cameraPoseFileName, interpolation);
             sw2.Stop();
             sw2.Dispose();
 
