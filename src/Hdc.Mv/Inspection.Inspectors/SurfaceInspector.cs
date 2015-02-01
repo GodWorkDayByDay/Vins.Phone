@@ -11,6 +11,19 @@ namespace Hdc.Mv.Inspection
         {
             var swSearchSurface = new NotifyStopwatch("SearchSurface: " + definition.Name);
 
+            if (definition.SaveAllCacheImageEnabled)
+            {
+//                definition.SaveCacheImageEnabled = true;
+                foreach (var part in definition.ExcludeParts)
+                {
+                    part.SaveCacheImageEnabled = true;
+                }
+                foreach (var part in definition.IncludeParts)
+                {
+                    part.SaveCacheImageEnabled = true;
+                }
+            }
+
             var surfaceResult = new SurfaceResult()
                                 {
                                     Definition = definition.DeepClone(),

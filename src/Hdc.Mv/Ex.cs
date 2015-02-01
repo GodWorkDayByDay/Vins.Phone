@@ -513,6 +513,21 @@ namespace Hdc.Mv
             }
         }
 
+        public static string ToHalconString(this MaskShape maskShape)
+        {
+            switch (maskShape)
+            {
+                case MaskShape.Octagon:
+                    return "octagon";
+                case MaskShape.Rectangle:
+                    return "rectangle";
+                case MaskShape.Rhombus:
+                    return "rhombus";
+                default:
+                    throw new InvalidOperationException("MaskShape cannot convert to string: " + maskShape);
+            }
+        }
+
         public static string ToHalconString(this SharpFeature feature)
         {
             switch (feature)

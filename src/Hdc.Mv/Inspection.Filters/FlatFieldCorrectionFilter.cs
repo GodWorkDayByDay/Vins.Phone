@@ -1,12 +1,11 @@
 using System;
 using HalconDotNet;
-using Hdc.Diagnostics;
 using Hdc.Mv.Halcon;
 
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
-    public class MeanFilter : IImageFilter
+    public class FlatFieldCorrectionFilter : IImageFilter
     {
         public HImage Process(HImage image)
         {
@@ -17,11 +16,17 @@ namespace Hdc.Mv.Inspection
             var maskWidth = MaskWidth == 0 ? domainWidth : MaskWidth;
             var maskHeight = MaskHeight == 0 ? domainHeight : MaskHeight;
 
-//            var swMeanImage = new NotifyStopwatch("MeanFilter.MeanImage");
-            HImage enhancedImage = image.MeanImage(maskWidth, maskHeight);
-//            swMeanImage.Dispose();
+            var oriImage = image.MeanImage(maskWidth, maskHeight);
+            var nosiedImage = image.MeanImage(1, maskHeight);
+            var correctImage = oriImage.SubImage(nosiedImage, 1.0, 0.0);
+            var correctedImage = image.AddImage(correctImage, 1.0, 0);
 
-            return enhancedImage;
+            oriImage.Dispose();
+            nosiedImage.Dispose();
+            correctImage.Dispose();
+            domain.Dispose();
+
+            return correctedImage;
         }
 
         public int MaskWidth { get; set; }

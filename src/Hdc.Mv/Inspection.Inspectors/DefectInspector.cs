@@ -21,6 +21,9 @@ namespace Hdc.Mv.Inspection
             {
                 var regionResult = surfaceResults.GetRegionResult(refer.SurfaceName, refer.RegionName);
 
+                if (regionResult == null)
+                    continue;
+
                 var regionDefectResult = new RegionDefectResult {RegionResult = regionResult};
 
                 var changeDomainImage = image.ChangeDomain(regionResult.Region);

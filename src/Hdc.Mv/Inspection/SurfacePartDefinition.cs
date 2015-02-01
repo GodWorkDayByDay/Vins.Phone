@@ -16,18 +16,15 @@ namespace Hdc.Mv.Inspection
 
         public virtual HRegion Extract(HImage image)
         {
-
-            var domainChangedImage = image.ChangeDomain(Domain);
-
-
             if (RegionExtractor == null)
-            {
-                return domainChangedImage;
-            }
-            else
-            {
-                return RegionExtractor.Extract(domainChangedImage);    
-            }
+                return Domain;
+
+            var domainRect = Domain.GetSmallestRectangle1();
+            var domainCropImage = image.CropRectangle1(domainRect);
+
+            var region = RegionExtractor.Extract(domainCropImage);
+            var movedRegion = region.MoveRegion(domainRect.Row1, domainRect.Column1);
+            return movedRegion;
         }
 
         public virtual HRegion Extract(HImage image, HRegion domain)
