@@ -1,7 +1,9 @@
-﻿using HalconDotNet;
+﻿using System;
+using HalconDotNet;
 
 namespace Hdc.Mv.Inspection
 {
+    [Serializable]
     public class Rectangle2RegionExtractor : IRegionExtractor, IRectangle2
     {
         public HRegion Extract(HImage image)

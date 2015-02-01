@@ -8,7 +8,15 @@ namespace Hdc.Mv.Inspection
     {
         public HRegion Extract(HImage image)
         {
-            var region = RegionExtractor.Extract(image);
+            HRegion region;
+            if (RegionExtractor != null)
+            {
+                region = RegionExtractor.Extract(image);
+            }
+            else
+            {
+                region = image.GetDomain();
+            }
 
             HRegion processedRegion;
             if (RegionProcessor != null)

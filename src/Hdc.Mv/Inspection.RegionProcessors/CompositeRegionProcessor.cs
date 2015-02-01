@@ -12,7 +12,7 @@ namespace Hdc.Mv.Inspection
     {
         public HRegion Process(HRegion region)
         {
-            var processImage = region;//.MoveRegion(0,0);
+            var processImage = region.MoveRegion(0,0);
 
             for (int i = 0; i < Items.Count; i++)
             {

@@ -9,7 +9,7 @@ namespace Hdc.Mv.Inspection
         public HRegion Process(HRegion region)
         {
             if (Math.Abs(Radius) < 0.0000001)
-                return region.MoveRegion(0,0);
+                return region.MoveRegion(0, 0);
 
             var dilation = region.DilationCircle(Radius);
             return dilation;

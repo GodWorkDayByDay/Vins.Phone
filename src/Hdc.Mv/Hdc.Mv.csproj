@@ -73,6 +73,7 @@
     <Compile Include="BitmapSourceExtensions.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="CircleDirect.cs" />
+    <Compile Include="Halcon\BoundaryType.cs" />
     <Compile Include="Halcon\HRectangle1.cs" />
     <Compile Include="Halcon\HRectangle2.cs" />
     <Compile Include="Halcon\Interpolation.cs" />
@@ -107,6 +108,8 @@
     <Compile Include="Inspection.RegionExtractors.Exports\LightOrDarkRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\AutoThresholdRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\BinaryThresholdDualRegionExtractor.cs" />
+    <Compile Include="Inspection.RegionExtractors\GetDomainRegionExtractor.cs" />
+    <Compile Include="Inspection.RegionExtractors\PolarTransRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\ProcessedRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\CropDomainRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\DynThresholdCroppedRegionExtractor.cs" />
@@ -162,9 +165,11 @@
     <Compile Include="Inspection.Inspectors\SimEdgeInspector.cs" />
     <Compile Include="Inspection.Inspectors\SurfaceInspector.cs" />
     <Compile Include="Inspection.RegionExtractors\Union2RegionExtractor.cs" />
+    <Compile Include="Inspection.RegionProcessors\BoundaryRegionProcessor.cs" />
     <Compile Include="Inspection.RegionProcessors\ConnectionRegionProcessor.cs" />
     <Compile Include="Inspection.RegionProcessors\FillUpRegionProcessor.cs" />
     <Compile Include="Inspection.RegionProcessors\MoveRegionProcessor.cs" />
+    <Compile Include="Inspection.RegionProcessors\SkeletonRegionProcessor.cs" />
     <Compile Include="Inspection.RegionProcessors\SmallestRectangle1RegionProcessor.cs" />
     <Compile Include="Inspection.RegionProcessors\SmallestRectangle2RegionProcessor.cs" />
     <Compile Include="Inspection.RegionProcessors\Union1RegionProcessor.cs" />

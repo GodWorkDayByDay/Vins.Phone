@@ -8,7 +8,7 @@ namespace Hdc.Mv.Inspection
     {
         public HRegion Process(HRegion region)
         {
-            if (Width<1 || Height <1)
+            if (Width < 1 || Height < 1)
                 return region.MoveRegion(0, 0);
 
             var closingRectangle1 = region.ClosingRectangle1(Width, Height);

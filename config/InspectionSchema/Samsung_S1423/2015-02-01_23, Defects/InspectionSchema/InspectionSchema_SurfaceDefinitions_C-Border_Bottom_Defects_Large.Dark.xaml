@@ -1,0 +1,63 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.DefectDefinitions>
+    <DefectDefinition Name="C-Border-Bottom_Large.Dark"
+                      SaveCacheImageEnabled="false">
+      <DefectDefinition.References>
+        <SurfacePartReference SurfaceName="C-Border-Bottom"
+                              RegionName="C-Border-Bottom"/>
+      </DefectDefinition.References>
+
+      <CropDomainRegionExtractor>
+        <StructuredRegionExtractor>
+          <StructuredRegionExtractor.ImageFilter>
+            <CompositeFilter>
+              <ExpandDomainGrayFilter ExpansionRange="50"/>
+              <FlatFieldCorrectionFilter MaskWidth="500"
+                                         MaskHeight="500"/>
+              <GrayOpeningShapeFilter MaskWidth="5"
+                                      MaskHeight="5"/>
+            </CompositeFilter>
+          </StructuredRegionExtractor.ImageFilter>
+          <StructuredRegionExtractor.RegionExtractor>
+            <DynThresholdRegionExtractor Offset="10"
+                                         LightDark="Dark"
+                                         SeparateFilter="true">
+              <DynThresholdRegionExtractor.PreprocessFilter>
+                <CompositeFilter>
+                  <MeanFilter MaskWidth="5"
+                              MaskHeight="5"/>
+                </CompositeFilter>
+              </DynThresholdRegionExtractor.PreprocessFilter>
+              <DynThresholdRegionExtractor.ThresholdImageFilter>
+                <CompositeFilter>
+                  <MeanFilter MaskWidth="400"
+                              MaskHeight="10"/>
+                </CompositeFilter>
+              </DynThresholdRegionExtractor.ThresholdImageFilter>
+            </DynThresholdRegionExtractor>
+          </StructuredRegionExtractor.RegionExtractor>
+        </StructuredRegionExtractor>
+      </CropDomainRegionExtractor>
+
+      <DefectDefinition.RegionProcessor>
+        <CompositeRegionProcessor>
+          <ConnectionRegionProcessor/>
+          <SelectShapeRegionProcessor>
+            <SelectShapeEntry Feature="Area"
+                              Min="200"
+                              Max="99999999"/>
+            <SelectShapeEntry Feature="Rect2Len1"
+                              Min="10"
+                              Max="99999999"/>
+            <SelectShapeEntry Feature="Height"
+                              Min="0"
+                              Max="99999999"/>
+          </SelectShapeRegionProcessor>
+        </CompositeRegionProcessor>
+      </DefectDefinition.RegionProcessor>
+    </DefectDefinition>
+
+  </InspectionSchema.DefectDefinitions>
+
+</InspectionSchema>

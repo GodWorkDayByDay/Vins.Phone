@@ -611,6 +611,21 @@ namespace Hdc.Mv
             }
         }
 
+        public static string ToHalconString(this BoundaryType boundaryType)
+        {
+            switch (boundaryType)
+            {
+                case BoundaryType.Inner:
+                    return "inner";
+                case BoundaryType.InnerFilled:
+                    return "inner_filled";
+                case BoundaryType.Outer:
+                    return "outer";
+                default:
+                    throw new InvalidOperationException("BoundaryType cannot convert to string: " + boundaryType);
+            }
+        }
+
         public static Line GetMiddleLineUsingAngle(this Line line1, Line line2)
         {
             var vectorAxisX = new Vector(10000, 0);

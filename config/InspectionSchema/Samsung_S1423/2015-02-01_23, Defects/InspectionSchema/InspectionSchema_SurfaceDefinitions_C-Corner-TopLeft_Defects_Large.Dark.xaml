@@ -1,0 +1,71 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.DefectDefinitions>
+    <DefectDefinition Name="C-Corner-TopLeft_Large.Dark"
+                      SaveCacheImageEnabled="false">
+      <DefectDefinition.References>
+        <SurfacePartReference SurfaceName="C-Corner-TopLeft"
+                              RegionName="C-Corner-TopLeft"/>
+      </DefectDefinition.References>
+
+      <CropDomainRegionExtractor>
+        <StructuredRegionExtractor>
+          <StructuredRegionExtractor.ImageFilter>
+            <CompositeFilter>
+            </CompositeFilter>
+          </StructuredRegionExtractor.ImageFilter>
+          <StructuredRegionExtractor.RegionExtractor>
+                        <PolarTransRegionExtractor HoughExpectRadius="385" 
+                                                   HoughPercent="20"
+                                                   AngleStart="170"
+                                                   AngleEnd="100"
+                                                   RadiusStart="380"
+                                                   RadiusEnd="280"
+                                                   >
+                          <PolarTransRegionExtractor.HoughRegionExtractor>
+                          
+                                   <StructuredRegionExtractor>
+                                     <StructuredRegionExtractor.ImageFilter>
+                                       <GrayRangeRectFilter MaskWidth="11" MaskHeight="11"/>
+                                     </StructuredRegionExtractor.ImageFilter>
+                                     <StructuredRegionExtractor.RegionExtractor>
+                                       <!--<ThresholdRegionExtractor MinGray="0" MaxGray="255"/>-->
+                                       <BinaryThresholdRegionExtractor LightDark="Light"/>
+                                     </StructuredRegionExtractor.RegionExtractor>
+                                       <StructuredRegionExtractor.RegionProcessor>
+                                         <CompositeRegionProcessor>
+                                            <DilationCircleRegionProcessor Radius="11"/>
+                                         </CompositeRegionProcessor>
+                                       </StructuredRegionExtractor.RegionProcessor>
+                                   </StructuredRegionExtractor>
+                                   
+                          </PolarTransRegionExtractor.HoughRegionExtractor>
+                          <PolarTransRegionExtractor.TargetRegionExtractor>
+                            <ThresholdRegionExtractor MinGray="0" MaxGray="255"/>
+                          </PolarTransRegionExtractor.TargetRegionExtractor>
+                        </PolarTransRegionExtractor>
+          </StructuredRegionExtractor.RegionExtractor>
+        </StructuredRegionExtractor>
+      </CropDomainRegionExtractor>
+
+      <DefectDefinition.RegionProcessor>
+        <CompositeRegionProcessor>
+          <ConnectionRegionProcessor/>
+          <SelectShapeRegionProcessor>
+            <SelectShapeEntry Feature="Area"
+                              Min="200"
+                              Max="99999999"/>
+            <SelectShapeEntry Feature="Rect2Len1"
+                              Min="10"
+                              Max="99999999"/>
+            <SelectShapeEntry Feature="Height"
+                              Min="0"
+                              Max="99999999"/>
+          </SelectShapeRegionProcessor>
+        </CompositeRegionProcessor>
+      </DefectDefinition.RegionProcessor>
+    </DefectDefinition>
+
+  </InspectionSchema.DefectDefinitions>
+
+</InspectionSchema>
