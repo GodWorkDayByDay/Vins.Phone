@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Windows.Markup;
 using HalconDotNet;
 
 namespace Hdc.Mv.Inspection
 {
     [Serializable]
+    [ContentProperty("RegionExtractor")]
     public class StructuredRegionExtractor : IRegionExtractor
     {
         public HRegion Extract(HImage image)

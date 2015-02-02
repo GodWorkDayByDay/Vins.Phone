@@ -16,7 +16,7 @@ namespace Hdc.Mv.Inspection
             var maskWidth = MaskWidth == 0 ? domainWidth : MaskWidth;
             var maskHeight = MaskHeight == 0 ? domainHeight : MaskHeight;
 
-            HImage enhancedImage = image.MeanSp(maskWidth, maskHeight, MinThresh, MaxThresh);
+            HImage enhancedImage = image.MeanSp(maskHeight, maskWidth, MinThresh, MaxThresh);
 
             return enhancedImage;
         }

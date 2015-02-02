@@ -9,20 +9,20 @@ namespace Hdc.Mv.Inspection
     {
         public HRegion Extract(HImage image)
         {
-            image.WriteImage("tiff", 0, "B:\\test-01-cropped.tif");
+//            image.WriteImage("tiff", 0, "B:\\test-01-cropped.tif");
 
             var imageWidth = image.GetWidth();
             var imageHeight = image.GetHeight();
 
-            image.GrayRangeRect(55, 55).WriteImage("tiff", 0, "B:\\test-00-GrayRangeRect.tif");
+//            image.GrayRangeRect(55, 55).WriteImage("tiff", 0, "B:\\test-00-GrayRangeRect.tif");
 
             var houghRegion = HoughRegionExtractor.Extract(image);
-            image.PaintRegion(houghRegion, 200.0, "fill").WriteImage("tiff", 0, "B:\\test-02-houghRegion.tif");
+//            image.PaintRegion(houghRegion, 200.0, "fill").WriteImage("tiff", 0, "B:\\test-02-houghRegion.tif");
 
             var houghCenterRegion = houghRegion.HoughCircles(HoughExpectRadius, HoughPercent, 0);
             var center = houghCenterRegion.GetCenterPoint();
 
-            image.PaintRegion(houghCenterRegion, 200.0, "fill").WriteImage("tiff", 0, "B:\\test-03-houghCenterRegion.tif");
+//            image.PaintRegion(houghCenterRegion, 200.0, "fill").WriteImage("tiff", 0, "B:\\test-03-houghCenterRegion.tif");
 
             var phiAngleStart = AngleStart/180.0*3.1415926;
             var phiAngleEnd = AngleEnd/180.0*3.1415926;
@@ -37,14 +37,14 @@ namespace Hdc.Mv.Inspection
                 RadiusEnd,
                 width, height, Interpolation.ToHalconString());
 
-            transImage.WriteImage("tiff", 0, "B:\\test-04-transImage.tif");
+//            transImage.WriteImage("tiff", 0, "B:\\test-04-transImage.tif");
 
             var transRegion = TargetRegionExtractor.Extract(transImage);
             var finalRegion = transRegion.PolarTransRegionInv(center.Y, center.X, phiAngleStart, phiAngleEnd,
                 RadiusStart, RadiusEnd,
                 width, height, imageWidth, imageHeight, Interpolation.ToHalconString());
 
-            image.PaintRegion(finalRegion, 200.0, "fill").WriteImage("tiff", 0, "B:\\test-04-transRegion.tif");
+//            image.PaintRegion(finalRegion, 200.0, "fill").WriteImage("tiff", 0, "B:\\test-04-transRegion.tif");
 
             return finalRegion;
         }

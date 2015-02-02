@@ -93,6 +93,7 @@
     <Compile Include="Inspection.Filters\GrayOpeningRectFilter.cs" />
     <Compile Include="Inspection.Filters\GrayOpeningShapeFilter.cs" />
     <Compile Include="Inspection.Filters\GrayRangeRectFilter.cs" />
+    <Compile Include="Inspection.Filters\HoleToMeanFilter.cs" />
     <Compile Include="Inspection.Filters\MeanSpFilter.cs" />
     <Compile Include="Inspection.Filters\MedianRectFilter.cs" />
     <Compile Include="Inspection.Filters\SobelAmpImageFilter.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Inspection.RegionExtractors\BinaryThresholdDualRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\GetDomainRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\PolarTransRegionExtractor.cs" />
+    <Compile Include="Inspection.RegionExtractors\ProcessDomainRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\ProcessedRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\CropDomainRegionExtractor.cs" />
     <Compile Include="Inspection.RegionExtractors\DynThresholdCroppedRegionExtractor.cs" />

@@ -1,0 +1,161 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.SurfaceDefinitions>
+      <SurfaceDefinition Name="B-Bottom"
+                         SaveCacheImageEnabled="false"
+                         SaveAllCacheImageEnabled="false">
+                         
+          <SurfaceDefinition.ExcludeParts>
+          
+          	 <SurfacePartDefinition Name="B-Bottom-Hole-01"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="2790"
+                                Y="11291"
+                                Angle="0"
+                                HalfWidth="170"
+                                HalfHeight="230"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                        <MedianFilter Radius="2"/>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <BinaryThresholdRegionExtractor LightDark="Dark"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <ConnectionRegionProcessor/>
+                         <SelectShapeRegionProcessor>
+                           <SelectShapeEntry Feature="Height" Min="200" Max="99999"/>
+                         </SelectShapeRegionProcessor>
+                         <OpeningCircleRegionProcessor Radius="80"/>
+                         <!--<OpeningRectangle1RegionProcessor Width="11" Height="11"/>-->
+                         <DilationCircleRegionProcessor Radius="7"/>
+                         <SmallestRectangle1RegionProcessor/>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+          
+          	 <SurfacePartDefinition Name="B-Bottom-Hole-02"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3666"
+                                Y="11325"
+                                Angle="0"
+                                HalfWidth="282"
+                                HalfHeight="170"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                        <MedianFilter Radius="7"/>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <BinaryThresholdRegionExtractor LightDark="Dark"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <ConnectionRegionProcessor/>
+                         <SelectShapeRegionProcessor>
+                           <SelectShapeEntry Feature="Height" Min="100" Max="99999"/>
+                         </SelectShapeRegionProcessor>
+                         <OpeningRectangle1RegionProcessor Width="11" Height="11"/>
+                         <DilationCircleRegionProcessor Radius="5"/>
+                         <SmallestRectangle1RegionProcessor/>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+          
+          	 <SurfacePartDefinition Name="B-Bottom-Hole-03"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="4386"
+                                Y="11361"
+                                Angle="0"
+                                HalfWidth="80"
+                                HalfHeight="110"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                        <MedianFilter Radius="3"/>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                      <ThresholdRegionExtractor MinGray="0" MaxGray="100"/>
+                        <!--<BinaryThresholdRegionExtractor LightDark="Dark"/>-->
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <ConnectionRegionProcessor/>
+                         <SelectShapeRegionProcessor>
+                           <SelectShapeEntry Feature="Height" Min="60" Max="99999"/>
+                         </SelectShapeRegionProcessor>
+                         <!--<OpeningRectangle1RegionProcessor Width="11" Height="11"/>-->
+                         <OpeningCircleRegionProcessor Radius="20"/>
+                         <DilationCircleRegionProcessor Radius="8"/>
+                         <SmallestRectangle1RegionProcessor/>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+      
+          </SurfaceDefinition.ExcludeParts>
+                  
+          <SurfaceDefinition.IncludeParts>
+         
+          	 <SurfacePartDefinition Name="B-Bottom-01"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3617"
+                                Y="11303"
+                                Angle="0"
+                                HalfWidth="1768"
+                                HalfHeight="259"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+                <SurfacePartDefinition.RegionExtractor>
+                  <StructuredRegionExtractor>
+                    <StructuredRegionExtractor.ImageFilter>
+                       <CompositeFilter>
+                         <MeanFilter MaskWidth="33" MaskHeight="1"/>
+                         <ChangeDomainFilter>
+                           <ThresholdRegionExtractor MinGray="50" MaxGray="240"/>
+                         </ChangeDomainFilter>
+                         <GrayRangeRectFilter MaskHeight="5" MaskWidth="5"/>
+                       </CompositeFilter>
+                    </StructuredRegionExtractor.ImageFilter>
+                    <StructuredRegionExtractor.RegionExtractor>
+                        <ThresholdRegionExtractor MinGray="0" MaxGray="40"/>
+                    </StructuredRegionExtractor.RegionExtractor>
+                    <StructuredRegionExtractor.RegionProcessor>
+                      <CompositeRegionProcessor>
+                         <ConnectionRegionProcessor/>
+                         <SelectShapeRegionProcessor>
+                           <SelectShapeEntry Feature="Height" Min="200" Max="99999"/>
+                         </SelectShapeRegionProcessor>
+                         <FillUpRegionProcessor/>
+                         <ErosionRectangle1RegionProcessor Width="1" Height="1"/>
+                         <OpeningRectangle1RegionProcessor Width="100" Height="10"/>
+                         <ClosingRectangle1RegionProcessor Width="110" Height="10"/>
+                      </CompositeRegionProcessor>
+                    </StructuredRegionExtractor.RegionProcessor>
+                  </StructuredRegionExtractor>
+                </SurfacePartDefinition.RegionExtractor>
+             </SurfacePartDefinition>
+             
+          </SurfaceDefinition.IncludeParts>   
+          
+      </SurfaceDefinition>
+  </InspectionSchema.SurfaceDefinitions>
+  
+</InspectionSchema>

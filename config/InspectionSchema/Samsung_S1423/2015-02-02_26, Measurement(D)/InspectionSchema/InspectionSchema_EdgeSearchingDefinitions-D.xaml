@@ -1,0 +1,385 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="False">
+  <InspectionSchema.EdgeSearchingDefinitions>
+    
+    
+    <EdgeSearchingDefinition Name="DT1"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="35"
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="246"
+              Y1="-666"
+              X2="-254"
+              Y2="-666" />
+      </EdgeSearchingDefinition.RelativeLine>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleDualFilter
+          MeanMaskWidth="55"
+          MeanMaskHeight="2"
+          EdgeAreaLightDark="light"
+          SelectAreaMin="1000"
+          SelectAreaMax="9999999999"
+          EdgeLightDark="dark"
+          ScaleAdd1="0"
+          EmpMaskWidth="20"
+          EmpMaskHeight="20"
+          EmpFactor="1"
+          ScaleAdd2="0"
+          OpeningWidth="55"
+          OpeningHeight="2"
+          ClosingWidth="55"
+          ClosingHeight="2">
+        </EnhanceEdgeAreaByScaleDualFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="70"
+                             RegionWidth="15"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+    
+    <EdgeSearchingDefinition Name="DB1"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="35"
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-254"
+              Y1="8609"
+              X2="246"
+              Y2="8609" />
+      </EdgeSearchingDefinition.RelativeLine>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleDualFilter
+          MeanMaskWidth="55"
+          MeanMaskHeight="2"
+          EdgeAreaLightDark="light"
+          SelectAreaMin="1000"
+          SelectAreaMax="9999999999"
+          EdgeLightDark="dark"
+          ScaleAdd1="0"
+          EmpMaskWidth="20"
+          EmpMaskHeight="20"
+          EmpFactor="1"
+          ScaleAdd2="0"
+          OpeningWidth="55"
+          OpeningHeight="2"
+          ClosingWidth="55"
+          ClosingHeight="2">
+        </EnhanceEdgeAreaByScaleDualFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="70"
+                             RegionWidth="15"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+	
+	
+    <EdgeSearchingDefinition Name="DL1"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="35"
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-2322"
+              Y1="1196"
+              X2="-2322"
+              Y2="1696" />
+      </EdgeSearchingDefinition.RelativeLine>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleDualFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="dark"
+          SelectAreaMin="2000"
+          SelectAreaMax="9999999999"
+          EdgeLightDark="dark"
+          ScaleAdd1="0"
+          EmpMaskWidth="20"
+          EmpMaskHeight="20"
+          EmpFactor="1"
+          ScaleAdd2="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleDualFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="70"
+                             RegionWidth="15"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+    
+    <EdgeSearchingDefinition Name="DR1"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="30"
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="2322"
+              Y1="1696"
+              X2="2322"
+              Y2="1196" />
+      </EdgeSearchingDefinition.RelativeLine>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleDualFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="Dark"
+          SelectAreaMin="1000"
+          SelectAreaMax="9999999"
+          EdgeLightDark="Dark"
+          ScaleAdd1="0"
+          EmpMaskWidth="20"
+          EmpMaskHeight="20"
+          EmpFactor="1"
+          ScaleAdd2="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleDualFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="60"
+                             RegionWidth="15"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+	
+    <EdgeSearchingDefinition Name="DL2"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="35"
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="-2318"
+              Y1="5701"
+              X2="-2318"
+              Y2="6201" />
+      </EdgeSearchingDefinition.RelativeLine>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleDualFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="dark"
+          SelectAreaMin="2000"
+          SelectAreaMax="9999999999"
+          EdgeLightDark="dark"
+          ScaleAdd1="0"
+          EmpMaskWidth="20"
+          EmpMaskHeight="20"
+          EmpFactor="1"
+          ScaleAdd2="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleDualFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="false"
+                             RegionsCount="25"
+                             RegionHeight="70"
+                             RegionWidth="15"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+    
+    <EdgeSearchingDefinition Name="DR2"
+                             StartX="0"
+                             StartY="0"
+                             EndX="0"
+                             EndY="0"
+                             ROIWidth="35"
+                             Domain_SaveCacheImageEnabled="false"
+                             RegionExtractor_SaveCacheImageEnabled="false"
+                             ImageFilter_Disabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             CropDomainEnabled="true"
+                             >
+      
+      <EdgeSearchingDefinition.RelativeLine>
+        <Line X1="2322"
+              Y1="6201"
+              X2="2322"
+              Y2="5701" />
+      </EdgeSearchingDefinition.RelativeLine>
+      
+      <EdgeSearchingDefinition.ImageFilter>
+        <EnhanceEdgeAreaByScaleDualFilter
+          MeanMaskWidth="2"
+          MeanMaskHeight="55"
+          EdgeAreaLightDark="dark"
+          SelectAreaMin="2000"
+          SelectAreaMax="9999999999"
+          EdgeLightDark="dark"
+          ScaleAdd1="0"
+          EmpMaskWidth="20"
+          EmpMaskHeight="20"
+          EmpFactor="1"
+          ScaleAdd2="0"
+          OpeningWidth="2"
+          OpeningHeight="55"
+          ClosingWidth="2"
+          ClosingHeight="55">
+        </EnhanceEdgeAreaByScaleDualFilter>
+      </EdgeSearchingDefinition.ImageFilter>
+      
+      <EdgeSearchingDefinition.LineExtractor>
+          <RakeLineExtractor Name=""
+                             SaveCacheImageEnabled="true"
+                             RegionsCount="25"
+                             RegionHeight="70"
+                             RegionWidth="15"
+                             Sigma="1"
+                             Threshold="50"
+                             SelectionMode="First"
+                             Transition="Positive"
+                             />
+      </EdgeSearchingDefinition.LineExtractor>
+      
+    </EdgeSearchingDefinition>
+    
+    
+  </InspectionSchema.EdgeSearchingDefinitions>
+
+
+
+  <InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+    
+    
+    <DistanceBetweenLinesDefinition Name="D-TopBottom-Distance-01"
+                                    DisplayName="D面内高"
+                                    GroupName="D面"
+                                    Comment="使用D面照片"
+                                    
+                                    Line1Name="DT1"
+                                    Line2Name="DB1"
+                                    ExpectValue="147.81"
+                                    PositiveTolerance="0.07"
+                                    NegativeTolerance="-0.06"/>
+    
+    <DistanceBetweenLinesDefinition Name="D-LeftRight-Distance-01"
+                                    DisplayName="D面内宽A"
+                                    GroupName="D面"
+                                    Comment="使用D面照片"
+                                    
+                                    Line1Name="DL1"
+                                    Line2Name="DR1"
+                                    ExpectValue="71.78"
+                                    PositiveTolerance="0.15"
+                                    NegativeTolerance="-0.10"/>
+	
+    <DistanceBetweenLinesDefinition Name="D-LeftRight-Distance-02"
+                                    DisplayName="D面内宽B"
+                                    GroupName="D面"
+                                    Comment="使用D面照片"
+                                    
+                                    Line1Name="DL2"
+                                    Line2Name="DR2"
+                                    ExpectValue="71.78"
+                                    PositiveTolerance="0.15"
+                                    NegativeTolerance="-0.10"/>
+    
+    
+  </InspectionSchema.DistanceBetweenIntersectionPointsDefinitions>
+
+</InspectionSchema>

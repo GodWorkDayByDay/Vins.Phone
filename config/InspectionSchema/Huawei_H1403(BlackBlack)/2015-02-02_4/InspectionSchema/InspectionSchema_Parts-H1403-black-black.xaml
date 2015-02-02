@@ -1,0 +1,155 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.PartSearchingDefinitions>
+    
+    
+    <PartSearchingDefinition Name="Bottom"
+                             Domain_SaveCacheImageEnabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             RoiHalfWidth="120"
+                             AreaHalfWidth="92">
+      <PartSearchingDefinition.RoiRelativeLine>
+        <Line X1="1960"
+              Y1="6936"
+              X2="2353"
+              Y2="6945" />
+      </PartSearchingDefinition.RoiRelativeLine>
+      <PartSearchingDefinition.AreaRelativeLine>
+        <Line X1="1980"
+              Y1="6937"
+              X2="2326"
+              Y2="6946" />
+      </PartSearchingDefinition.AreaRelativeLine>
+      <PartSearchingDefinition.PartExtractor>
+        <RoughWithSobelMeanRegionExtractor ThresholdMinGray="0"
+                                           ThresholdMaxGray="150"
+                                           MinMaxGrayPercent="5"
+                                           HatWidth="5" 
+                                           HatHeight="5" 
+                                           SelectAreaMin="30000" 
+                                           SelectAreaMax="60000" 
+                                           RoughAreaClosingWidth="20" 
+                                           RoughAreaClosingHeight="20" 
+                                           RoughAreaOpeningWidth="50" 
+                                           RoughAreaOpeningHeight="50" 
+                                           SobelAmpSize="7" 
+                                           SobelAmpMeanMin="5" 
+                                           SobelAmpThresholdMinGray="30" 
+                                           />
+      </PartSearchingDefinition.PartExtractor>
+    </PartSearchingDefinition>
+    
+    
+    <PartSearchingDefinition Name="Bottom-02"
+                             Domain_SaveCacheImageEnabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             RoiHalfWidth="175"
+                             AreaHalfWidth="175">
+      <PartSearchingDefinition.RoiRelativeLine>
+        <Line X1="1978"
+              Y1="6436"
+              X2="2235"
+              Y2="6442" />
+      </PartSearchingDefinition.RoiRelativeLine>
+      <PartSearchingDefinition.AreaRelativeLine>
+        <Line X1="1978"
+              Y1="6436"
+              X2="2235"
+              Y2="6442" />
+      </PartSearchingDefinition.AreaRelativeLine>
+      <PartSearchingDefinition.PartExtractor>
+        <RoughWithSobelMeanRegionExtractor ThresholdMinGray="0"
+                                           ThresholdMaxGray="150"
+                                           MinMaxGrayPercent="5"
+                                           HatWidth="5" 
+                                           HatHeight="5" 
+                                           SelectAreaMin="30000" 
+                                           SelectAreaMax="100000" 
+                                           RoughAreaClosingWidth="20" 
+                                           RoughAreaClosingHeight="20" 
+                                           RoughAreaOpeningWidth="50" 
+                                           RoughAreaOpeningHeight="50" 
+                                           SobelAmpSize="7" 
+                                           SobelAmpMeanMin="5" 
+                                           SobelAmpThresholdMinGray="30" 
+                                           />
+      </PartSearchingDefinition.PartExtractor>
+    </PartSearchingDefinition>
+    
+    
+    <PartSearchingDefinition Name="Top"
+                             Domain_SaveCacheImageEnabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             RoiHalfWidth="180"
+                             AreaHalfWidth="180">
+      <PartSearchingDefinition.RoiRelativeLine>
+        <Line X1="2940"
+              Y1="968"
+              X2="3201"
+              Y2="974" />
+      </PartSearchingDefinition.RoiRelativeLine>
+      <PartSearchingDefinition.AreaRelativeLine>
+        <Line X1="2940"
+              Y1="968"
+              X2="3201"
+              Y2="974" />
+      </PartSearchingDefinition.AreaRelativeLine>
+      <PartSearchingDefinition.PartExtractor>
+        <RoughWithSobelMeanRegionExtractor ThresholdMinGray="0"
+                                           ThresholdMaxGray="150"
+                                           MinMaxGrayPercent="5"
+                                           HatWidth="5" 
+                                           HatHeight="5" 
+                                           SelectAreaMin="30000" 
+                                           SelectAreaMax="100000" 
+                                           RoughAreaClosingWidth="20" 
+                                           RoughAreaClosingHeight="20" 
+                                           RoughAreaOpeningWidth="50" 
+                                           RoughAreaOpeningHeight="50" 
+                                           SobelAmpSize="7" 
+                                           SobelAmpMeanMin="5" 
+                                           SobelAmpThresholdMinGray="30" 
+                                           />
+      </PartSearchingDefinition.PartExtractor>
+    </PartSearchingDefinition>
+    
+    
+    <PartSearchingDefinition Name="Top-02"
+                             Domain_SaveCacheImageEnabled="false"
+                             ImageFilter_SaveCacheImageEnabled="false"
+                             RoiHalfWidth="154"
+                             AreaHalfWidth="154">
+      <PartSearchingDefinition.RoiRelativeLine>
+        <Line X1="-315"
+              Y1="-1246"
+              X2="118"
+              Y2="-1234" />
+      </PartSearchingDefinition.RoiRelativeLine>
+      <PartSearchingDefinition.AreaRelativeLine>
+        <Line X1="-315"
+              Y1="-1246"
+              X2="118"
+              Y2="-1234" />
+      </PartSearchingDefinition.AreaRelativeLine>
+      <PartSearchingDefinition.PartExtractor>
+        <RoughWithSobelMeanRegionExtractor ThresholdMinGray="0"
+                                           ThresholdMaxGray="150"
+                                           MinMaxGrayPercent="5"
+                                           HatWidth="5" 
+                                           HatHeight="5" 
+                                           SelectAreaMin="30000" 
+                                           SelectAreaMax="150000" 
+                                           RoughAreaClosingWidth="20" 
+                                           RoughAreaClosingHeight="20" 
+                                           RoughAreaOpeningWidth="50" 
+                                           RoughAreaOpeningHeight="50" 
+                                           SobelAmpSize="7" 
+                                           SobelAmpMeanMin="5" 
+                                           SobelAmpThresholdMinGray="30" 
+                                           />
+      </PartSearchingDefinition.PartExtractor>
+    </PartSearchingDefinition>
+    
+    
+  </InspectionSchema.PartSearchingDefinitions>
+</InspectionSchema>

@@ -1,0 +1,77 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.DefectDefinitions>
+    <DefectDefinition Name="B-Top_Large.Dark"
+                      SaveCacheImageEnabled="false">
+      <DefectDefinition.References>
+        <SurfacePartReference SurfaceName="B-Top"
+                              RegionName="B-Top-01"/>
+      </DefectDefinition.References>
+
+      <CropDomainRegionExtractor>
+        <StructuredRegionExtractor>
+          <StructuredRegionExtractor.ImageFilter>
+            <CompositeFilter>
+              <HoleToMeanFilter ExpansionRange="50">
+                <HoleToMeanFilter.RegionProcessor>
+                  <SelectShapeRegionProcessor>
+                    <SelectShapeEntry Feature="Width"
+                                      Min="50"
+                                      Max="100"/>
+                    <SelectShapeEntry Feature="Height"
+                                      Min="50"
+                                      Max="100"/>
+                  </SelectShapeRegionProcessor>
+                </HoleToMeanFilter.RegionProcessor>
+                <HoleToMeanFilter.ImageFilter>
+                  <MeanSpFilter MaskWidth="3" MaskHeight="100" MinThresh="1" MaxThresh="255"/>
+                </HoleToMeanFilter.ImageFilter>
+              </HoleToMeanFilter>
+              <FlatFieldCorrectionFilter MaskWidth="500"
+                                         MaskHeight="500"/>
+              <GrayOpeningShapeFilter MaskWidth="5"
+                                      MaskHeight="5"/>
+            </CompositeFilter>
+          </StructuredRegionExtractor.ImageFilter>
+          <StructuredRegionExtractor.RegionExtractor>
+            <DynThresholdRegionExtractor Offset="10"
+                                         LightDark="Dark"
+                                         SeparateFilter="true">
+              <DynThresholdRegionExtractor.PreprocessFilter>
+                <CompositeFilter>
+                  <MeanFilter MaskWidth="1"
+                              MaskHeight="1"/>
+                </CompositeFilter>
+              </DynThresholdRegionExtractor.PreprocessFilter>
+              <DynThresholdRegionExtractor.ThresholdImageFilter>
+                <CompositeFilter>
+                  <MeanFilter MaskWidth="200"
+                              MaskHeight="5"/>
+                </CompositeFilter>
+              </DynThresholdRegionExtractor.ThresholdImageFilter>
+            </DynThresholdRegionExtractor>
+          </StructuredRegionExtractor.RegionExtractor>
+        </StructuredRegionExtractor>
+      </CropDomainRegionExtractor>
+
+      <DefectDefinition.RegionProcessor>
+        <CompositeRegionProcessor>
+          <ConnectionRegionProcessor/>
+          <SelectShapeRegionProcessor>
+            <SelectShapeEntry Feature="Area"
+                              Min="200"
+                              Max="99999999"/>
+            <SelectShapeEntry Feature="Rect2Len1"
+                              Min="10"
+                              Max="99999999"/>
+            <SelectShapeEntry Feature="Height"
+                              Min="0"
+                              Max="99999999"/>
+          </SelectShapeRegionProcessor>
+        </CompositeRegionProcessor>
+      </DefectDefinition.RegionProcessor>
+    </DefectDefinition>
+
+  </InspectionSchema.DefectDefinitions>
+
+</InspectionSchema>

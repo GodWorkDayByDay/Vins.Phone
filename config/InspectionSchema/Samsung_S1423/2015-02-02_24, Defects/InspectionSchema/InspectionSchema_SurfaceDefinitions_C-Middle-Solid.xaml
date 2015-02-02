@@ -1,0 +1,78 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  Disabled="false">
+  <InspectionSchema.SurfaceDefinitions>
+      <SurfaceDefinition Name="C-Middle"
+                         SaveCacheImageEnabled="false"
+                         SaveAllCacheImageEnabled="true">
+                         
+          <SurfaceDefinition.ExcludeParts>
+          
+          
+          </SurfaceDefinition.ExcludeParts>
+                  
+          <SurfaceDefinition.IncludeParts>
+          	 <SurfacePartDefinition Name="C-Middle-01"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3675"
+                                Y="2164"
+                                Angle="0"
+                                HalfWidth="2100"
+                                HalfHeight="200"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+             </SurfacePartDefinition>
+
+          	 <SurfacePartDefinition Name="C-Middle-02b"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3675"
+                                Y="3900"
+                                Angle="0"
+                                HalfWidth="2100"
+                                HalfHeight="400"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+             </SurfacePartDefinition>
+
+          	 <SurfacePartDefinition Name="C-Middle-04"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="3675"
+                                Y="6496"
+                                Angle="0"
+                                HalfWidth="2100"
+                                HalfHeight="1613"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+             </SurfacePartDefinition>
+          	 <SurfacePartDefinition Name="C-Middle-05a"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="2221"
+                                Y="9348"
+                                Angle="0"
+                                HalfWidth="692"
+                                HalfHeight="1323"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+             </SurfacePartDefinition>
+
+          	 <SurfacePartDefinition Name="C-Middle-05c"
+                                    SaveCacheImageEnabled="false">
+                <SurfacePartDefinition.RoiActualRect>
+                    <Rectangle2 X="5105"
+                                Y="9348"
+                                Angle="0"
+                                HalfWidth="692"
+                                HalfHeight="1323"
+                                />
+                </SurfacePartDefinition.RoiActualRect>
+             </SurfacePartDefinition>
+             
+          </SurfaceDefinition.IncludeParts>   
+          
+      </SurfaceDefinition>
+  </InspectionSchema.SurfaceDefinitions>
+  
+</InspectionSchema>
