@@ -1,0 +1,15 @@
+﻿<InspectionSchema xmlns="http://schemas.hdcrd.com/mv"
+                  TestImageFilePath="B:\S1423_2015-01-31_00.15.18.tif"
+                  CircleSearching_InspectorName="Hal"
+                  EdgeSearching_InspectorName="Hal"
+                  Defects_InspectorName="Hal"
+                  Surfaces_InspectorName="Hal"
+                  ImagePixelWidth="8192"
+                  ImagePixelHeight="12500"
+                  CoordinateType="VectorsCenter"
+                  CoordinateOriginOffsetEnable="false"
+                  CoordinateOriginOffsetX="0"
+                  CoordinateOriginOffsetY="0"
+                  >
+                  <!-- S1423_2015-01-26_01.08.01.tif -->
+</InspectionSchema>

@@ -276,6 +276,13 @@ namespace ODM.Domain.Inspection
                     Debug.WriteLine("GetInspectionInfo().Parts: PartRegion.CountObj == 0");
                     continue;
                 }
+
+                if (part.PartRegion.GetArea() < 1)
+                {
+                    Debug.WriteLine("GetInspectionInfo().Parts: PartRegion.GetArea() < 1");
+                    continue;
+                }
+
                 var partRegion = part.PartRegion;
 
                 var centerX = partRegion.GetColumn();

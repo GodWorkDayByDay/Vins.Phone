@@ -50,7 +50,7 @@ namespace Hdc.Mv.Inspection
             //
             var expandImage = image.ExpandDomainGray(ExpansionRange);
             var expandFullImage = expandImage.FullDomain();
-//            expandFullImage.WriteImage("tiff", 0, "B:\\test-0-expandFullImage.tif");
+//            expandFullImage.WriteImage("tiff", 0, "D:\\test-0-expandFullImage.tif");
 
             //
             var holeRegion = fullDomain.Difference(domain);
@@ -62,12 +62,12 @@ namespace Hdc.Mv.Inspection
                 var imageFilter = Items[i];
                 var reducedImage = image.ChangeDomain(holeRegion);
                 var meanedImage = imageFilter.Process(reducedImage);
-//                meanedImage.WriteImage("tiff", 0, "B:\\test-1-meanedImage_" + i + ".tif");
+//                meanedImage.WriteImage("tiff", 0, "D:\\test-1-meanedImage_" + i + ".tif");
 
                 var paintedImage2 = meanedImage.PaintGray(paintedImage);
                 paintedImage.Dispose();
                 paintedImage = paintedImage2;
-//                paintedImage.WriteImage("tiff", 0, "B:\\test-2-paintedImage_" + i + ".tif");
+//                paintedImage.WriteImage("tiff", 0, "D:\\test-2-paintedImage_" + i + ".tif");
             }
 
             return paintedImage;
